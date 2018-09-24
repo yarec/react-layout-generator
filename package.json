@@ -1,21 +1,21 @@
 {
   "name": "react-layout-generator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "In developement. Do NOT use.",
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development"
   },
-  "author": "Chet Murphy <chet@neq1.io>",
+  "author": "Chet Murphy <rlg@neq1.io>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chetmurphy/react-layout-generator.git"
-   },
+  },
   "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.4.14",
@@ -31,7 +31,6 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "style-loader": "^0.23.0",
-    "ts-loader": "^5.1.1",
     "typescript": "^3.0.3",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
