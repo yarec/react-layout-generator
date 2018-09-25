@@ -118,6 +118,16 @@ export default class LayoutGenerator implements ILayoutGenerator {
   }
 }
 
+export interface IResponsiveLayoutGenerator {
+  name: string;
+  mobile: (width: number, generator: LayoutGenerator) => LayoutGenerator,
+  mobileLandscape: LayoutGenerator,
+  tablet: LayoutGenerator,
+  tabletLandscape: LayoutGenerator,
+  desktop: LayoutGenerator,
+  wideDesktop: LayoutGenerator
+}
+
 export interface IGridGenerator {
   cols: number;
   rows: number;
@@ -137,15 +147,16 @@ export interface IGridGenerator {
 //   }
 // }
 
-export function centerLayout(
+export function fitLayout(
   width: number, 
   g: LayoutGenerator
   ): LayoutGenerator {
 
   g.reset();
-  let o: IPoint = {x: Infinity, y: -Infinity};
+  let o: IPoint = {x: g.origin.x, y: -Infinity};
   let r: IRect | undefined = g.next();
   while (r) {
+    console.log ('fitLayout item rect: ', r);
     if (r.left < o.x) {
       o.x = r.left;
     }
@@ -156,17 +167,10 @@ export function centerLayout(
   }
 
   let origin = g.origin;
-  let scale = g.scale;
+  let scale = width / (o.y-o.x);
 
-  const layoutW2 = (o.y - o.x) / 2;
-  const containerW2 = width / 2; 
-
-  if (containerW2 - layoutW2 > 0) {
-    origin.x = containerW2 - layoutW2;
-  }
-
-  console.log ('centerLayout', origin.x, scale.x);
-  g.update(origin, scale);
+  console.log ('fitLayout', width, o.x, o.y, scale);
+  g.update(origin, {x: scale, y: scale});
   g.reset();
 
   return g;
