@@ -14,13 +14,13 @@ function tileStyle(scale: number, x: number, y: number, width: number, height: n
   height *= scale;
 
   // define box model - assumes box-sizing set to border-box
-  x += margin.left;
-  y += margin.top;
-  width -= (margin.left + margin.right);
-  height -= (margin.top + margin.bottom);
+  // x += margin.left;//  + padding.left;
+  // y += margin.top; // + padding.top;
+  width -= margin.left + margin.right + padding.left + padding.right;
+  height -= margin.top + margin.bottom + padding.top + padding.bottom;
 
   return {
-    boxSizing: 'border-box' as 'border-box',
+    // boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
     transform: `translate(${x}px, ${y}px)`,
     width: `${width}px`,
@@ -69,7 +69,7 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
 
   handleWindowSizeChange = () => {
     if (this.divElement.offsetWidth) {
-      this.setState({ width: this.divElement.clientWidth });
+      this.setState({ width: this.divElement.offsetWidth });
       console.log('Container width: ', this.divElement.offsetWidth);
     }
   }
@@ -86,8 +86,8 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
 
     const args: IGridGenerator = {
       cols: 2,
-      rows: 1,
-      blockSize: { x: 250, y: 250 }
+      rows: 2,
+      blockSize: { x: 200, y: 200 }
     };
 
     let g = fitLayout(this.state.width ? this.state.width : 700, mobileDashboard(args));
@@ -100,8 +100,8 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
         item.top,
         (item.right - item.left),
         (item.bottom - item.top),
-        { top: 5, bottom: 5, left: 5, right: 5 },
-        { top: 5, bottom: 5, left: 5, right: 5 }
+        { top: 0, bottom: 0, left: 0, right: 0 },
+        { top: 10, bottom: 10, left: 10, right: 10 }
       );
       // console.log('CreateElements style', style);
       elements.push(
@@ -113,6 +113,8 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
             height: '100%',
             width: '100%',
             border: '1px solid red',
+            //padding: '10px',
+            //margin: '10px',
             backgroundColor: 'grey',
             color: 'white'
           }}>
@@ -131,8 +133,10 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
       <>
         <div
           ref={(divElement) => this.divElement = divElement!}
+          style={{position: 'relative'}}
         >
           {this.createElements()}
+          
         </div>
       </>
     );

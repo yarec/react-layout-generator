@@ -1,5 +1,10 @@
 src
 examples
+test
 .babelrc
 .gitignore
 webpack.config.js
+tsconfig.json
+tsconfig.prod.json
+tsconfig.test.json
+tslint.json
