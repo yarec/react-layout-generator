@@ -1,12 +1,14 @@
 {
   "name": "react-layout-generator",
   "version": "0.1.0",
-  "description": "In developement. Do NOT use.",
+  "description": "In developement. Not ready to use.",
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
-    "dts": "dts-generator --exclude node_modules/**/*.d.ts --exclude dist/**/*.d.ts --exclude test/**/*.test.ts --name react-layout-generator --project C:/Users/chetm/projects/react-layout-generator --out react-layout-generator.d.ts"
+    "build": "webpack --mode production",
+    "deploy": "gh-pages -d examples/dist",
+    "publish-demo": "npm run build && npm run deploy"
   },
   "author": "Chet Murphy <rlg@neq1.io>",
   "license": "MIT",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/react-resize-detector": "^3.1.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -28,10 +31,10 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
-    "dts-generator": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-resize-detector": "^3.1.2",
     "style-loader": "^0.23.0",
     "typescript": "^3.0.3",
     "webpack": "^4.19.1",

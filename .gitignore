@@ -4,7 +4,8 @@
 /node_modules
 
 # production
-/dist
+/lib
+/examples/dist
 
 
 npm-debug.log*

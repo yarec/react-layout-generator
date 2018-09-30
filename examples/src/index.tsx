@@ -61,16 +61,14 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
-  // make sure to remove the listener
-  // when the component is not mounted anymore
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
 
   handleWindowSizeChange = () => {
-    if (this.divElement.offsetWidth) {
+    if (this.divElement.offsetWidth != this.state.width) {
       this.setState({ width: this.divElement.offsetWidth });
-      console.log('Container width: ', this.divElement.offsetWidth);
+      console.log('Container WindowSizeChange width: ', this.divElement.offsetWidth);
     }
   }
 
