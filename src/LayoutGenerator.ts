@@ -17,7 +17,17 @@ export interface LayoutGeneratorProps {
 export interface ILayoutGenerator {
   origin: IPoint;
   scale: IPoint;
-  next: () => IRect | undefined ;
+  next: () => IBlock | undefined;
+}
+
+export interface IReset {
+  scale: IPoint | undefined; 
+  origin: IPoint | undefined;
+}
+
+export interface IBlock {
+  name: string;
+  location: IRect;
 }
 
 export default class LayoutGenerator implements ILayoutGenerator {
@@ -33,31 +43,35 @@ export default class LayoutGenerator implements ILayoutGenerator {
   blockTemplate: Rect;
   layout: ILayout | undefined;
 
-  state: () => IRect | undefined;
+  state: () => IBlock | undefined;
 
   constructor(props: LayoutGeneratorProps) {
     this.props = props;
     this.origin = props.origin;
-    this.scale = props.scale;
+    // this.scale = props.scale;
     this.state = this.init;
     this.layoutCounter = 0;
   }
 
-  update = (origin: IPoint, scale: IPoint) => {
-    this.origin = origin;
-    this.scale = scale;
-  }
-
-  reset = () => {
-    this.state = this.init;   
+  reset = (params: IReset) => {
+    this.state = this.init;
     this.layoutCounter = 0;
+    const r: IReset = { origin: this.origin, scale: this.scale };
+    if (params.origin) {
+      this.origin = params.origin;
+    }
+    if (params.scale) {
+      this.scale = params.scale;
+    }
+
+    return r;
   }
 
-  init = (): IRect | undefined => {
+  init = (): IBlock | undefined => {
     return this.nextBlock();
   }
 
-  nextBlock = (): IRect | undefined => {
+  nextBlock = (): IBlock | undefined => {
     this.layout = this.props.layouts[this.layoutCounter++];
     if (this.layout) {
       this.rowCounter = 0;
@@ -76,13 +90,16 @@ export default class LayoutGenerator implements ILayoutGenerator {
     }
   }
 
-  nextTile = (): IRect | undefined => {
-    let r: IRect | undefined = undefined;
+  nextTile = (): IBlock | undefined => {
+    let r: IBlock | undefined = undefined;
     if (this.layout) {
-      r = this.blockTemplate.translate({
-        x: this.origin.x + this.layout.location.x + this.colCounter * this.layout.blockSize.x,
-        y: this.origin.y + this.layout.location.y + this.rowCounter * this.layout.blockSize.y
-      });
+      r = {
+        name: `${this.layout.name}[${this.rowCounter},${this.colCounter}]`,
+        location: this.blockTemplate.translate({
+          x: this.origin.x + this.layout.location.x + this.colCounter * this.layout.blockSize.x,
+          y: this.origin.y + this.layout.location.y + this.rowCounter * this.layout.blockSize.y
+        })
+      }
 
       // LOGGER.log(
       //   'LayoutGenerator',
@@ -104,16 +121,16 @@ export default class LayoutGenerator implements ILayoutGenerator {
     }
 
     if (r) {
-      r.top *= this.scale.y;
-      r.left *= this.scale.x;
-      r.bottom *= this.scale.y;
-      r.right *= this.scale.x;
+      r.location.top *= this.scale.y;
+      r.location.left *= this.scale.x;
+      r.location.bottom *= this.scale.y;
+      r.location.right *= this.scale.x;
     }
 
     return r;
   }
 
-  next = (): IRect | undefined => {
+  next = (): IBlock | undefined => {
     return this.state();
   }
 }
@@ -134,44 +151,28 @@ export interface IGridGenerator {
   blockSize: IPoint;
 }
 
-// export class LayoutGenerators {
-//   layouts: Array<LayoutGenerator> = [];
-//   layout: LayoutGenerator;
-
-//   nextLayout = () => {
-//     return this.layout.next();
-//   }
-
-//   next = (): IRect | undefined => {
-//     return this.layout.next();
-//   }
-// }
-
 export function fitLayout(
-  width: number, 
+  width: number,
   g: LayoutGenerator
-  ): LayoutGenerator {
+): LayoutGenerator {
 
-  g.reset();
-  let o: IPoint = {x: g.origin.x, y: -Infinity};
-  let r: IRect | undefined = g.next();
+  g.reset({origin: undefined, scale: {x: 1, y: 1}});
+  let o: IPoint = { x: +Infinity, y: -Infinity };
+  let r: IBlock | undefined = g.next();
   while (r) {
-    console.log ('fitLayout item rect: ', r);
-    if (r.left < o.x) {
-      o.x = r.left;
+    // console.log ('fitLayout item rect: ', r);
+    if (r.location.left < o.x) {
+      o.x = r.location.left;
     }
-    if (r.right > o.y) {
-      o.y = r.right;
+    if (r.location.right > o.y) {
+      o.y = r.location.right;
     }
     r = g.next();
   }
 
-  let origin = g.origin;
-  let scale = width / (o.y-o.x);
-
-  console.log ('fitLayout', width, o.x, o.y, scale);
-  g.update(origin, {x: scale, y: scale});
-  g.reset();
+  let scale = width / (o.y - o.x);
+  console.log('fitLayout', width, o.x, o.y, scale);
+  g.reset({origin: undefined, scale: {x: scale, y: scale}});
 
   return g;
 }
@@ -185,8 +186,8 @@ export function simpleGrid(args: IGridGenerator) {
     blockSize: args.blockSize
   };
   const props: LayoutGeneratorProps = {
-    origin: {x: 0, y: 0},
-    scale: {x: 1, y: 1},
+    origin: { x: 0, y: 0 },
+    scale: { x: 1, y: 1 },
     layouts: [layout]
   };
   return new LayoutGenerator(props);
@@ -205,7 +206,7 @@ export function mobileDashboard(args: IGridGenerator) {
     location: { x: xCenter, y: 0 },
     rows: 1,
     cols: 1,
-    blockSize: {x: args.blockSize.x * headerSize, y: args.blockSize.y}
+    blockSize: { x: args.blockSize.x * headerSize, y: args.blockSize.y }
   };
   const layout = {
     name: 'mobileGrid',
@@ -215,9 +216,13 @@ export function mobileDashboard(args: IGridGenerator) {
     blockSize: args.blockSize
   };
   const props: LayoutGeneratorProps = {
-    origin: {x: 0, y: 0},
-    scale: {x: 1, y: 1},
+    origin: { x: 0, y: 0 },
+    scale: { x: 1, y: 1 },
     layouts: [header, layout]
   };
   return new LayoutGenerator(props);
+}
+
+export function transition(from: LayoutGenerator, to: LayoutGenerator) {
+  
 }
