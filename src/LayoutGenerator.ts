@@ -1,130 +1,298 @@
-import { IRect, Rect, IPoint } from './types';
+import { height, IRect, translate, width, IPoint } from './types';
+
+type FValue = (p: Params) => number;
+type Value = number | FValue;
+export class Params {
+  params: Map<string, Value>;
+  changeCount: number = 0;
+
+  constructor(values: Array<[string, Value]>) {
+    this.params = new Map(values);
+  }
+
+  changed(): boolean {
+    const changed = this.changeCount != 0;
+    this.changeCount = 0;
+    return changed;
+  }
+
+  // define(key: string, v: number): number {
+  //   this.params.set(key, v);
+  //   return v;
+  // }
+
+  get(key: string, v: Value) {
+    const r = this.params.get(key);
+    if (r === undefined) {
+      return EvalCell(v, this);
+    }
+    return EvalCell(r, this);
+  }
+
+  set(key: string, v: Value) {
+    const r = this.params.get(key);
+    if (r === undefined) {
+      throw `variable ${key} not defined`;
+    }
+    if (EvalCell(r, this) != EvalCell(v, this)) {
+      this.changeCount += 1;
+      this.params.set(key, v);
+    }
+  }
+}
+
+export function EvalCell(cell: Value, p: Params) {
+  if (typeof cell  === 'number') {
+    return cell;
+  }
+  return cell(p);
+}
 
 export interface ILayout {
   name: string;
-  location: IPoint; // relative to origin
-  rows: number;
-  cols: number;
-  blockSize: IPoint;
+  location: (p: Params) => IRect; // relative to origin
+  g?: ILayoutGenerator;
 }
 
-export interface LayoutGeneratorProps {
-  origin: IPoint;
-  scale: IPoint;
-  layouts: Array<ILayout>;
-}
-
-export interface ILayoutGenerator {
-  origin: IPoint;
-  scale: IPoint;
-  next: () => IBlock | undefined;
-}
-
-export interface IReset {
-  scale: IPoint | undefined; 
-  origin: IPoint | undefined;
-}
+// export interface LayoutGeneratorArgs {
+//   origin: IPoint;
+//   scale: IPoint;
+//   layouts: Map<string, ILayout>;
+//   params: Params;
+// }
 
 export interface IBlock {
   name: string;
   location: IRect;
+  css?: {
+    [id: string]: string;
+  }
 }
 
-export default class LayoutGenerator implements ILayoutGenerator {
+export interface IDef {
+  [key: string]: Object | IDef;
+}
 
-  props: LayoutGeneratorProps;
+export interface ILayoutGenerator {
+   params: () => Params;
+   reset: () => void;
+   next: () => IBlock | undefined;
+   lookup: (name: string) => IBlock | undefined;
+}
 
+export class ResizeLayout implements ILayoutGenerator {
+  g: ILayoutGenerator;
   origin: IPoint;
   scale: IPoint;
 
-  layoutCounter: number;
-  rowCounter: number;
-  colCounter: number;
-  blockTemplate: Rect;
-  layout: ILayout | undefined;
+  constructor(g: ILayoutGenerator, origin: IPoint, scale: IPoint) {
+    this.g = g;
+    this.origin = origin;
+    this.scale = scale;
+  }
+
+  params = () => {
+    return this.g.params();
+  }
+
+  protected transform = (b: IBlock | undefined) => {
+    if (b) {
+      b.location.top += this.origin.y;
+      b.location.left += this.origin.x;
+      b.location.bottom += this.origin.y;
+      b.location.right += this.origin.x;
+
+      b.location.top *= this.scale.y;
+      b.location.left *= this.scale.x;
+      b.location.bottom *= this.scale.y;
+      b.location.right *= this.scale.x;
+    }
+    return b;
+  }
+
+  next = (): IBlock | undefined => {
+    return this.transform(this.g.next());
+  }
+
+  reset = () => {
+    this.g.reset();
+  }
+
+  lookup = (name: string): IBlock | undefined => {
+    return this.transform(this.g.lookup(name));
+  };
+
+  // layout = (name: string): ILayout | undefined => {
+  //   return this.g.layout(name);
+  // };
+}
+
+export default class BasicLayoutGenerator implements ILayoutGenerator {
+
+  // params: Params;
+
+  private xparams: Params;
+  layouts: Map<string, ILayout>;
+  layoutsIterator: IterableIterator<ILayout>;
+  currentLayout: ILayout | undefined;
 
   state: () => IBlock | undefined;
 
-  constructor(props: LayoutGeneratorProps) {
-    this.props = props;
-    this.origin = props.origin;
-    // this.scale = props.scale;
+  constructor(layouts: Map<string, ILayout>, params: Params) {
+    this.layouts = layouts;
+    this.layoutsIterator = layouts.values();
     this.state = this.init;
-    this.layoutCounter = 0;
+    this.xparams = params;
   }
 
-  reset = (params: IReset) => {
-    this.state = this.init;
-    this.layoutCounter = 0;
-    const r: IReset = { origin: this.origin, scale: this.scale };
-    if (params.origin) {
-      this.origin = params.origin;
-    }
-    if (params.scale) {
-      this.scale = params.scale;
-    }
+  params = () => {
+    return this.xparams;
+  }
 
-    return r;
+  lookup = (name: string): IBlock | undefined => {
+    const parts = name.split('/');
+    let r = this.layouts.get(parts[0]);
+    if (r) {
+      if (r.g) {
+        let n = r.g.lookup(name);
+        if (n) {
+          return {
+            name: name,
+            location: n.location
+          }
+        }
+      }
+      return {
+        name: name,
+        location: r.location(this.params())
+      } 
+    }
+    return undefined;
+  }
+
+  reset = () => {
+    this.state = this.init;
+    this.layoutsIterator = this.layouts.values();
+    this.layouts.forEach((item: ILayout) => {
+      if (item.g) {
+        item.g.reset();
+      }
+    })
   }
 
   init = (): IBlock | undefined => {
     return this.nextBlock();
   }
 
-  nextBlock = (): IBlock | undefined => {
-    this.layout = this.props.layouts[this.layoutCounter++];
-    if (this.layout) {
-      this.rowCounter = 0;
-      this.colCounter = 0;
-      this.blockTemplate = new Rect({
-        top: 0,
-        left: 0,
-        bottom: this.layout.blockSize.y,
-        right: this.layout.blockSize.x
-      });
-      this.state = this.nextTile;
-      return this.nextTile();
+  private nextBlock = (): IBlock | undefined => {
+    this.currentLayout = this.layoutsIterator.next().value;
+    if (this.currentLayout) {
+      if (this.currentLayout.g) {
+        this.state = this.nestedBlock;
+        return this.nestedBlock();
+      } else {
+        this.state = this.nextTile;
+        return this.nextTile();
+      }
+
     } else {
       this.state = this.init;
       return undefined;
     }
   }
 
+  private nestedBlock = (): IBlock | undefined => {
+    let b: IBlock | undefined = undefined;
+    if (this.currentLayout && this.currentLayout.g) {
+      b = this.currentLayout.g.next();
+    }
+    if (b === undefined) {
+      this.state = this.nextBlock;
+      return this.nextBlock();
+    }
+    return b;
+  }
+
+  private nextTile = (): IBlock | undefined => {
+    let b: IBlock | undefined = undefined;
+    if (this.currentLayout) {
+      const r = this.currentLayout.location(this.params());
+      b = {
+        name: this.currentLayout.name,
+        location: r
+      }
+      this.state = this.nextBlock;
+    }
+
+    return b;
+  }
+
+  next = (): IBlock | undefined => {
+    return this.state();
+  }
+}
+
+// interface INestedGenerator {
+//   next: () => IBlock | undefined;
+//   init: (name: string, location: Location, params: Params) => void;
+//   lookup: (part: string) => ILayout | undefined;
+// }
+
+export class GridGenerator implements ILayoutGenerator {
+
+  xparams: Params;
+  state: () => IBlock | undefined;
+  block: IBlock;
+  cols: number;
+  rows: number;
+  colCounter: number;
+  rowCounter: number;
+
+  constructor(name: string, cols: number, rows: number, blockSize: IPoint) {
+    this.cols = cols;
+    this.rows = rows;
+    this.block = {
+      name: name,
+      location: {left: 0, top: 0, right: blockSize.x, bottom: blockSize.y}
+    }
+    this.colCounter = 0;
+    this.rowCounter = 0;
+
+    this.state = this.nextTile;
+    this.xparams = new Params([]);
+  }
+
+  params = () => {return this.xparams}
+
+  lookup = (name: string) => {
+
+    return undefined;
+  }
+
+  reset = () => {
+    this.colCounter = 0;
+    this.rowCounter = 0;
+  }
+
   nextTile = (): IBlock | undefined => {
     let r: IBlock | undefined = undefined;
-    if (this.layout) {
+    if (this.block) {
       r = {
-        name: `${this.layout.name}[${this.rowCounter},${this.colCounter}]`,
-        location: this.blockTemplate.translate({
-          x: this.origin.x + this.layout.location.x + this.colCounter * this.layout.blockSize.x,
-          y: this.origin.y + this.layout.location.y + this.rowCounter * this.layout.blockSize.y
+        name: `${this.block.name}/${this.rowCounter},${this.colCounter}`,
+        location: translate(this.block.location, {
+          x: this.block.location.left + this.colCounter * width(this.block.location),
+          y: this.block.location.top + this.rowCounter * height(this.block.location)
         })
       }
 
-      // LOGGER.log(
-      //   'LayoutGenerator',
-      //   'LayoutGenerator nextTile',
-      //   {
-      //     'colCounter': this.colCounter,
-      //     'rowCounter': this.rowCounter,
-      //     'result': r
-      //   });
-
-      if (this.colCounter < (this.layout.cols - 1)) {
+      if (this.colCounter < (this.cols - 1)) {
         this.colCounter += 1;
-      } else if (this.rowCounter < (this.layout.rows - 1)) {
+      } else if (this.rowCounter < (this.rows - 1)) {
         this.colCounter = 0;
         this.rowCounter += 1;
       } else {
-        this.state = this.nextBlock;
+        r = undefined;
       }
-    }
-
-    if (r) {
-      r.location.top *= this.scale.y;
-      r.location.left *= this.scale.x;
-      r.location.bottom *= this.scale.y;
-      r.location.right *= this.scale.x;
     }
 
     return r;
@@ -135,28 +303,84 @@ export default class LayoutGenerator implements ILayoutGenerator {
   }
 }
 
-export interface IResponsiveLayoutGenerator {
-  name: string;
-  mobile: (width: number, generator: LayoutGenerator) => LayoutGenerator,
-  mobileLandscape: LayoutGenerator,
-  tablet: LayoutGenerator,
-  tabletLandscape: LayoutGenerator,
-  desktop: LayoutGenerator,
-  wideDesktop: LayoutGenerator
-}
+export function DesktopLayout(width: number, height: number) {
+  const sideRight = 200;
+  const headerHeight = 18;
+  const footerHeight = 18;
 
-export interface IGridGenerator {
-  cols: number;
-  rows: number;
-  blockSize: IPoint;
+  const params = new Params([
+    ['width', width],
+    ['height', height],
+    ['sideRight', sideRight],
+    ['headerHeight', headerHeight],
+    ['footerHeight', footerHeight]
+  ])
+
+  const side: ILayout = {
+    name: 'side',
+    location: (p: Params) => {
+      return {
+        left: 0,
+        top: 0,
+        right: p.get('sideRight', sideRight),
+        bottom: p.get('height', height)
+      }
+    }
+  };
+
+  const header: ILayout = {
+    name: 'header',
+    location: (p: Params) => {
+      return {
+        left: p.get('sideRight', sideRight),
+        top: 0,
+        right: p.get('width', width),
+        bottom: p.get('headerHeight', headerHeight)
+      }
+    }
+  };
+
+  const content: ILayout = {
+    name: 'content',
+    location: (p: Params) => {
+      return {
+        left: p.get('sideRight', sideRight),
+        top: p.get('headerHeight', headerHeight),
+        right: p.get('width', width),
+        bottom: p.get('height', height) - (p.get('footerHeight', footerHeight) + p.get('headerHeight', headerHeight))
+      }
+    }
+  }
+
+  const footer = {
+    name: 'footer',
+    location: (p: Params) => {
+      return {
+        left: p.get('sideRight', sideRight),
+        top: p.get('height', height) - (p.get('footerHeight', footerHeight) + p.get('headerHeight', headerHeight)),
+        right: p.get('width', width),
+        bottom: p.get('height', height) - p.get('footerHeight', footerHeight)
+      }
+    }
+  }
+
+  const layouts = new Map([
+    [side.name, side],
+    [header.name, header],
+    [content.name, content],
+    [footer.name, footer]
+  ])
+
+
+  return new BasicLayoutGenerator(layouts, params);
 }
 
 export function fitLayout(
   width: number,
-  g: LayoutGenerator
-): LayoutGenerator {
+  g: ILayoutGenerator
+): ILayoutGenerator {
 
-  g.reset({origin: undefined, scale: {x: 1, y: 1}});
+  g.reset();
   let o: IPoint = { x: +Infinity, y: -Infinity };
   let r: IBlock | undefined = g.next();
   while (r) {
@@ -170,59 +394,46 @@ export function fitLayout(
     r = g.next();
   }
 
+  let origin = {x: 0, y: 0};
   let scale = width / (o.y - o.x);
-  console.log('fitLayout', width, o.x, o.y, scale);
-  g.reset({origin: undefined, scale: {x: scale, y: scale}});
-
-  return g;
+  return new ResizeLayout(g, origin, {x: scale, y: scale});
 }
 
-export function simpleGrid(args: IGridGenerator) {
-  const layout = {
-    name: 'simpleGrid',
-    location: { x: 0, y: 0 },
-    rows: args.rows,
-    cols: args.cols,
-    blockSize: args.blockSize
-  };
-  const props: LayoutGeneratorProps = {
-    origin: { x: 0, y: 0 },
-    scale: { x: 1, y: 1 },
-    layouts: [layout]
-  };
-  return new LayoutGenerator(props);
-}
+export function mobileDashboard( cols: number, rows: number, blockSize: IPoint) {
 
-export function mobileDashboard(args: IGridGenerator) {
+  const params = new Params([
+    ['cols', cols],
+    ['rows', rows],
+    ['x', (p: Params) => { return ((cols * blockSize.x) / 2) - (blockSize.x * headerSize / 2);} ] 
+  ]);
+
   let headerSize = 2.5;
-  if (args.cols === 1) {
+  if (cols === 1) {
     headerSize = 1;
-  } else if (args.cols === 2) {
+  } else if (cols === 2) {
     headerSize = 2;
   }
-  const xCenter = ((args.cols * args.blockSize.x) / 2) - (args.blockSize.x * headerSize / 2);
+  const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerSize / 2);
   const header = {
     name: 'mobileHeader',
-    location: { x: xCenter, y: 0 },
-    rows: 1,
-    cols: 1,
-    blockSize: { x: args.blockSize.x * headerSize, y: args.blockSize.y }
+    location: (parms: Params): IRect => {return { left: xCenter, top: 0, right: blockSize.x * headerSize, bottom: blockSize.y }}
   };
   const layout = {
     name: 'mobileGrid',
-    location: { x: 0, y: args.blockSize.y },
-    rows: args.rows,
-    cols: args.cols,
-    blockSize: args.blockSize
-  };
-  const props: LayoutGeneratorProps = {
-    origin: { x: 0, y: 0 },
-    scale: { x: 1, y: 1 },
-    layouts: [header, layout]
-  };
-  return new LayoutGenerator(props);
-}
+    location:  (p: Params): IRect => {
+      return { 
+        left: p.get('xCenter', 0), 
+        top: blockSize.y, 
+        right: blockSize.x * 
+        headerSize, 
+        bottom: blockSize.y }},
+    g: new GridGenerator('Mobile', 3, 4, {x: 100, y: 100})
+  }
+  const layouts = new Map([
+    [header.name, header],
+    [layout.name, layout]
+  ]);
 
-export function transition(from: LayoutGenerator, to: LayoutGenerator) {
-  
+
+  return new BasicLayoutGenerator(layouts, params);
 }

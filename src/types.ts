@@ -1,21 +1,47 @@
-export interface Layout {
-  viewport: {
-    w: number;
-    h: number;
-  };
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  static: boolean;
-  active: boolean;
-}
+// export interface Layout {
+//   viewport: {
+//     w: number;
+//     h: number;
+//   };
+//   x: number;
+//   y: number;
+//   w: number;
+//   h: number;
+//   static: boolean;
+//   active: boolean;
+// }
 
 export interface IRect {
   top: number;
   left: number;
   bottom: number;
   right: number;
+}
+
+export function translate(r: IRect, p: IPoint): IRect {
+  return {
+    top: r.top + p.y,
+    left: r.left + p.x,
+    bottom: r.bottom + p.y,
+    right: r.right + p.x
+  };  
+}
+
+export function scale(r: IRect, p: IPoint): IRect {
+  return {
+    top: r.top * p.y,
+    left: r.left * p.x,
+    bottom: r.bottom * p.y,
+    right: r.right * p.x
+  };  
+}
+
+export function width(r: IRect) {
+  return r.right - r.left;
+}
+
+export function height(r: IRect) {
+  return r.bottom - r.top;
 }
 
 export class Rect implements IRect {

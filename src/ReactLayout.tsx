@@ -1,22 +1,12 @@
 import * as React from 'react';
 import ResizeDetector from 'react-resize-detector';
 
-import LayoutGenerator, { fitLayout, IBlock } from './LayoutGenerator';
-import { IRect } from './types';
+import LayoutGenerator, { ILayoutGenerator, fitLayout, IBlock } from './LayoutGenerator';
+import { IPoint, IRect } from './types';
 
 function tileStyle(x: number, y: number, width: number, height: number, padding: IRect, margin: IRect) {
 
   // Assumes box-sizing set to border-box
-
-  // apply scale
-  // x *= scale;
-  // y *= scale;
-  // width *= scale;
-  // height *= scale;
-
-  // define box model - assumes box-sizing set to border-box
-  // x += margin.left;//  + padding.left;
-  // y += margin.top; // + padding.top;
   width -= margin.left + margin.right + padding.left + padding.right;
   height -= margin.top + margin.bottom + padding.top + padding.bottom;
 
@@ -40,36 +30,39 @@ function tileStyle(x: number, y: number, width: number, height: number, padding:
 
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   autoFit: boolean;
-  autoFitLimits: [number, number];
+  autoFitLimits: IPoint;
+  elementPadding: IRect;
   g: LayoutGenerator;
 
 }
 
 export interface ReactLayoutState {
   width: number;
+  height: number;
 }
 
 export default class ReactLayout extends React.Component<ReactLayoutProps, ReactLayoutState> {
   
-  derivedLayout: LayoutGenerator;
+  derivedLayout: ILayoutGenerator;
   key: number;
 
   constructor(props: ReactLayoutProps) {
     super(props);
     this.key = 0;
     this.state = {
-      width: 0
+      width: 0,
+      height: 0
     }
   }
 
-  onResize = (width: number) => {
-    console.log('onResize', width);
-    this.setState({ width: width });
+  onResize = (width: number, height: number) => {
+    console.log('onResize', width, height);
+    this.setState({ width: width, height: height });
   }
 
   initLayout = () => {
     this.key = 0;
-    this.derivedLayout = fitLayout(this.state.width ? this.state.width : 700, this.props.g);
+    this.derivedLayout = fitLayout(this.state.width, this.props.g);
   }
 
   nextLayout = () => {
@@ -80,6 +73,17 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     // tslint:disable-next-line:no-any
     let item: IBlock | undefined = this.derivedLayout.next();
     if(item) {
+      // Adjust for padding if autoFit
+      
+      // Infinity mapped to this.height & this.width - padding
+      if (item.location.bottom === NaN) {
+        item.location.bottom = this.state.height - this.props.elementPadding.bottom;
+      }
+
+      if (item.location.right === NaN) {
+        
+      }
+
       const style = tileStyle(
         item.location.left,
         item.location.top,
@@ -92,8 +96,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       return (
         <div
           style={style}
-          key={item.name + child.key}
+          key={item.name + '-' + child.key}
         >
+          {/* Design Layout */}
           <div style={{
             height: '100%',
             width: '100%',
@@ -103,8 +108,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
             backgroundColor: 'grey',
             color: 'white'
           }}>
-            {item.name}
+            {item.name + '-' + child.key}
           </div>
+          {/* Child with modification Infinity mapped to this.height this.width - padding*/}
         </div>
       );
     }
