@@ -347,7 +347,7 @@ export function DesktopLayout(width: number, height: number) {
         left: p.get('sideRight', sideRight),
         top: p.get('headerHeight', headerHeight),
         right: p.get('width', width),
-        bottom: p.get('height', height) - (p.get('footerHeight', footerHeight) + p.get('headerHeight', headerHeight))
+        bottom: p.get('height', height) - p.get('footerHeight', footerHeight)
       }
     }
   }
@@ -357,7 +357,7 @@ export function DesktopLayout(width: number, height: number) {
     location: (p: Params) => {
       return {
         left: p.get('sideRight', sideRight),
-        top: p.get('height', height) - (p.get('footerHeight', footerHeight) + p.get('headerHeight', headerHeight)),
+        top: p.get('height', height) - p.get('footerHeight', footerHeight),
         right: p.get('width', width),
         bottom: p.get('height', height) - p.get('footerHeight', footerHeight)
       }

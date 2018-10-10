@@ -1,7 +1,7 @@
 import * as React from 'react';
-import ResizeDetector from 'react-resize-detector';
+import ReactResizeDetector from 'react-resize-detector';
 
-import LayoutGenerator, { ILayoutGenerator, fitLayout, IBlock } from './LayoutGenerator';
+import LayoutGenerator, { ILayoutGenerator, IBlock } from './LayoutGenerator';
 import { IPoint, IRect } from './types';
 
 function tileStyle(x: number, y: number, width: number, height: number, padding: IRect, margin: IRect) {
@@ -25,6 +25,7 @@ function tileStyle(x: number, y: number, width: number, height: number, padding:
     paddingRight: `${padding.right}px`,
     paddingBottom: `${padding.bottom}px`,
     paddingLeft: `${padding.left}px`,
+    border: '1px solid red'
   };
 }
 
@@ -43,6 +44,7 @@ export interface ReactLayoutState {
 
 export default class ReactLayout extends React.Component<ReactLayoutProps, ReactLayoutState> {
   
+  divRef: React.RefObject<HTMLDivElement>;
   derivedLayout: ILayoutGenerator;
   key: number;
 
@@ -53,24 +55,83 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       width: 0,
       height: 0
     }
+    this.divRef = React.createRef();
+
+    this.derivedLayout = this.props.g;
   }
 
   onResize = (width: number, height: number) => {
     console.log('onResize', width, height);
-    this.setState({ width: width, height: height });
+    if (this.state.width != width || this.state.height != height) {
+      
+      this.setState({ width: width, height: height });
+    }
   }
+
+  
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+
+    // console.log(`handleWindowSizeChange: width: ${window.innerWidth}, element height: ${window.innerHeight}`);
+
+    // if (this.divRef && this.divRef.current ) {
+    //   const width = this.divRef.current.clientWidth;
+    //   const height = this.divRef.current.clientHeight;
+
+    //   this.setState({width: width, height: height})
+
+    //   console.log(`handleWindowSizeChange: element width: ${width}, element height: ${height}`);
+    // }
+
+    // this.windowSize.width = window.innerWidth;
+    // this.windowSize.height = window.innerHeight;
+
+    // this.g.params().set('width', this.windowSize.width);
+    // this.g.params().set('height', this.windowSize.height);
+
+    // console.log('handleWindowSizeChange',  window.innerWidth, window.innerHeight);
+  }
+
 
   initLayout = () => {
     this.key = 0;
-    this.derivedLayout = fitLayout(this.state.width, this.props.g);
+    const p = this.derivedLayout.params();
+    p.set('width', this.state.width);
+    p.set('height', this.state.height);
   }
 
   nextLayout = () => {
 
   }
 
-  createElement = (child: React.ReactElement<any>) => {
-    // tslint:disable-next-line:no-any
+  createPositionedElemement = (child: React.ReactElement<any>, name: string) => {
+
+    const b = this.derivedLayout.lookup(name);
+    if (b) {
+      console.log('createPositionedElemement', b);
+      const style = tileStyle(
+        b.location.left,
+        b.location.top,
+        (b.location.right - b.location.left),
+        (b.location.bottom - b.location.top),
+        { top: 0, bottom: 0, left: 0, right: 0 },
+        { top: 0, bottom: 0, left:0, right: 0 }
+      );
+      let props = {style: style};
+      return React.cloneElement(child, props, child.props.children);
+    }
+
+    return null;
+  }
+
+  createListElemement = (child: React.ReactElement<any>) => {
     let item: IBlock | undefined = this.derivedLayout.next();
     if(item) {
       // Adjust for padding if autoFit
@@ -117,6 +178,18 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     return null;
   }
 
+  createElement = (child: React.ReactElement<any>) => {
+    // tslint:disable-next-line:no-any
+    const e: Object = child.props['data-layout'];
+    if (e && e['name']) {
+      return this.createPositionedElemement(child, e['name']);
+    } else {
+
+    }
+    
+    return null;
+  }
+
   placeHolder = () => {
     return null;
   }
@@ -124,16 +197,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   render(): React.ReactNode {
     this.initLayout();
     return (
-      <div>
+      /* style height of 100% necessary for correct height  */
+      <div ref={this.divRef} style={{height: '100%'}}>
         {React.Children.map(this.props.children, child =>
           // tslint:disable-next-line:no-any
           this.createElement(child as React.ReactElement<any>)
         )}
         {this.placeHolder()}
-        <ResizeDetector handleWidth onResize={this.onResize} />
+        <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
       </div>
      
     )
-    
   }
 }

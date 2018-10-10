@@ -23,29 +23,10 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
   constructor(props: ExampleProps) {
     super(props);
 
-    this.g = DesktopLayout(this.windowSize.width, this.windowSize.height);
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  // make sure to remove the listener
-  // when the component is not mounted anymore
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange = () => {
-    this.windowSize.width = window.innerWidth;
-    this.windowSize.height = window.innerHeight;
-
-    this.g.params().set('width', this.windowSize.width);
-    this.g.params().set('height', this.windowSize.height);
+    this.g = DesktopLayout(0, 0);
   }
 
   render() {
-
 
     return (
       <ReactLayout
@@ -56,19 +37,19 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
         g={this.g}
       >
         <div data-layout={{ name: 'side' }} >
-
+          <span>Side</span>
         </div>
 
          <div data-layout={{ name: 'header' }} >
-        
+          <span>Header</span>
         </div>
 
          <div data-layout={{ name: 'content' }} >
-        
+          <span>Content</span>
         </div>
 
         <div data-layout={{ name: 'footer' }} >
-        
+         <span>Footer</span>
         </div>
       </ReactLayout>
     );
