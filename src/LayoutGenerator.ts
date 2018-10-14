@@ -1,7 +1,7 @@
 import { height, IRect, translate, width, IPoint } from './types';
 
-type FValue = (p: Params) => number;
-type Value = number | FValue;
+type FValue = (p: Params) => any; // number | IRect | IPoint | FRect;
+type Value = number | IRect | IPoint | FValue;
 export class Params {
   params: Map<string, Value>;
   changeCount: number = 0;
@@ -21,12 +21,15 @@ export class Params {
   //   return v;
   // }
 
-  get(key: string, v: Value) {
+  get(key: string, v?: Value) {
     const r = this.params.get(key);
-    if (r === undefined) {
+    if (r != undefined) {
+      return EvalCell(r, this);
+    }
+    if (v) {
       return EvalCell(v, this);
     }
-    return EvalCell(r, this);
+    return EvalCell(NaN, this);
   }
 
   set(key: string, v: Value) {
@@ -39,18 +42,36 @@ export class Params {
       this.params.set(key, v);
     }
   }
+
+
 }
 
 export function EvalCell(cell: Value, p: Params) {
-  if (typeof cell  === 'number') {
-    return cell;
+  if (typeof cell === 'function') {
+    return cell(p);
   }
-  return cell(p);
+  return cell;
+}
+
+export class API {
+  params: Params;
+
+  constructor(params: Params) {
+    this.params = params;
+  }
+
+  hide(component: string) {
+
+  }
+
+  show(component: string) {
+
+  }
 }
 
 export interface ILayout {
   name: string;
-  location: (p: Params) => IRect; // relative to origin
+  location: IRect; // relative to origin
   g?: ILayoutGenerator;
 }
 
@@ -74,10 +95,11 @@ export interface IDef {
 }
 
 export interface ILayoutGenerator {
-   params: () => Params;
-   reset: () => void;
-   next: () => IBlock | undefined;
-   lookup: (name: string) => IBlock | undefined;
+  params: () => Params;
+  reset: () => void;
+  next: () => IBlock | undefined;
+  lookup: (name: string) => IBlock | undefined;
+  api: () => API | undefined;
 }
 
 export class ResizeLayout implements ILayoutGenerator {
@@ -93,6 +115,10 @@ export class ResizeLayout implements ILayoutGenerator {
 
   params = () => {
     return this.g.params();
+  }
+
+  api = () => {
+    return this.g.api();
   }
 
   protected transform = (b: IBlock | undefined) => {
@@ -127,26 +153,32 @@ export class ResizeLayout implements ILayoutGenerator {
   // };
 }
 
+type IInit = (params: Params) => Map<string, ILayout>;
 export default class BasicLayoutGenerator implements ILayoutGenerator {
-
-  // params: Params;
-
-  private xparams: Params;
+  private _params: Params;
+  private _api: API | undefined;
+  private _init: IInit;
   layouts: Map<string, ILayout>;
   layoutsIterator: IterableIterator<ILayout>;
   currentLayout: ILayout | undefined;
 
   state: () => IBlock | undefined;
 
-  constructor(layouts: Map<string, ILayout>, params: Params) {
-    this.layouts = layouts;
-    this.layoutsIterator = layouts.values();
+  constructor(init: (params: Params) => Map<string, ILayout>, params: Params, api?: API) {
+    this._init = init;
+    this.layouts = init(params);
+    this.layoutsIterator = this.layouts.values();
     this.state = this.init;
-    this.xparams = params;
+    this._params = params;
+    this._api = api;
   }
 
   params = () => {
-    return this.xparams;
+    return this._params;
+  }
+
+  api = () => {
+    return this._api;
   }
 
   lookup = (name: string): IBlock | undefined => {
@@ -164,13 +196,17 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
       }
       return {
         name: name,
-        location: r.location(this.params())
-      } 
+        location: r.location
+      }
     }
     return undefined;
   }
 
   reset = () => {
+    if (this._params.changed()) {
+      console.log('reset update layouts')
+      this.layouts = this._init(this._params);
+    }
     this.state = this.init;
     this.layoutsIterator = this.layouts.values();
     this.layouts.forEach((item: ILayout) => {
@@ -216,7 +252,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   private nextTile = (): IBlock | undefined => {
     let b: IBlock | undefined = undefined;
     if (this.currentLayout) {
-      const r = this.currentLayout.location(this.params());
+      const r = this.currentLayout.location;
       b = {
         name: this.currentLayout.name,
         location: r
@@ -240,7 +276,8 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
 
 export class GridGenerator implements ILayoutGenerator {
 
-  xparams: Params;
+  _params: Params;
+  _api: API;
   state: () => IBlock | undefined;
   block: IBlock;
   cols: number;
@@ -253,16 +290,23 @@ export class GridGenerator implements ILayoutGenerator {
     this.rows = rows;
     this.block = {
       name: name,
-      location: {left: 0, top: 0, right: blockSize.x, bottom: blockSize.y}
+      location: { left: 0, top: 0, right: blockSize.x, bottom: blockSize.y }
     }
     this.colCounter = 0;
     this.rowCounter = 0;
 
     this.state = this.nextTile;
-    this.xparams = new Params([]);
+    this._params = new Params([]);
   }
 
-  params = () => {return this.xparams}
+  params = () => {
+    return this._params;
+  }
+
+  api = () => {
+    return this._api;
+  }
+
 
   lookup = (name: string) => {
 
@@ -303,76 +347,166 @@ export class GridGenerator implements ILayoutGenerator {
   }
 }
 
-export function DesktopLayout(width: number, height: number) {
-  const sideRight = 200;
-  const headerHeight = 18;
-  const footerHeight = 18;
+export function DesktopLayout() {
+
+  const fullWidthHeaders = 0;
+  const leftSideWidth = 200;
+  const rightSideWidth = 0;
+  const headerHeight = 24;
+  const footerHeight = 24;
 
   const params = new Params([
-    ['width', width],
-    ['height', height],
-    ['sideRight', sideRight],
+    ['width', 0],
+    ['height', 0],
+    ['fullWidthHeaders', fullWidthHeaders],
+    ['leftSideWidth', leftSideWidth],
+    ['rightSideWidth', rightSideWidth],
     ['headerHeight', headerHeight],
     ['footerHeight', footerHeight]
   ])
 
-  const side: ILayout = {
-    name: 'side',
-    location: (p: Params) => {
-      return {
-        left: 0,
-        top: 0,
-        right: p.get('sideRight', sideRight),
-        bottom: p.get('height', height)
-      }
-    }
-  };
+  function init(params: Params): Map<string, ILayout> {
+    const width = params.get('width');
+    const height = params.get('height');
+    const fullWidthHeaders = params.get('fullWidthHeaders');
+    const leftSideWidth = params.get('leftSideWidth');
+    const rightSideWidth = params.get('rightSideWidth');
+    const headerHeight = params.get('headerHeight');
+    const footerHeight = params.get('footerHeight');
 
-  const header: ILayout = {
-    name: 'header',
-    location: (p: Params) => {
-      return {
-        left: p.get('sideRight', sideRight),
-        top: 0,
-        right: p.get('width', width),
-        bottom: p.get('headerHeight', headerHeight)
-      }
-    }
-  };
+    console.log('rightSideWidth', rightSideWidth)
 
-  const content: ILayout = {
-    name: 'content',
-    location: (p: Params) => {
-      return {
-        left: p.get('sideRight', sideRight),
-        top: p.get('headerHeight', headerHeight),
-        right: p.get('width', width),
-        bottom: p.get('height', height) - p.get('footerHeight', footerHeight)
+    const leftSide = function (): ILayout {
+      let location: IRect;
+      if (fullWidthHeaders) {
+        location = {
+          left: 0,
+          top: headerHeight,
+          right: leftSideWidth,
+          bottom: height - footerHeight
+        }
+      } else {
+        location = {
+          left: 0,
+          top: 0,
+          right: leftSideWidth,
+          bottom: height
+        }
       }
-    }
+      console.log('leftSide', location);
+      return {
+        name: 'leftSide',
+        location: location
+      }
+    }();
+
+    const rightSide = function (): ILayout {
+      let location: IRect;
+
+      if (fullWidthHeaders) {
+        location = {
+          left:  width - rightSideWidth,
+          top: headerHeight,
+          right: width,
+          bottom: height - footerHeight
+        }
+      } else {
+        location = {
+          left: width - rightSideWidth,
+          top: 0,
+          right: width,
+          bottom: height
+        }
+      }
+      console.log('rightSide', location);
+      return {
+        name: 'rightSide',
+        location: location
+      }
+    }();
+
+    const header = function (): ILayout {
+      let location: IRect;
+      if (fullWidthHeaders) {
+        location = {
+          left: 0,
+          top: 0,
+          right: width,
+          bottom: headerHeight
+        }
+      } else {
+        location = {
+          left: leftSideWidth,
+          top: 0,
+          right: width,
+          bottom: headerHeight
+        }
+      }
+      console.log('header', location);
+      return {
+        name: 'header',
+        location: location
+      }
+    }();
+
+    const content = function (): ILayout {
+      let location: IRect;
+      if (fullWidthHeaders) {
+        location = {
+          left: leftSideWidth,
+          top: headerHeight,
+          right: width - rightSideWidth,
+          bottom: height - footerHeight
+        }
+      } else {
+        location = {
+          left: leftSideWidth,
+          top: headerHeight,
+          right: width - rightSideWidth,
+          bottom: height - footerHeight
+        }
+      }
+      console.log('content', location);
+      return {
+        name: 'content',
+        location: location
+      }
+    }();
+
+    const footer = function (): ILayout {
+      let location: IRect;
+      if (fullWidthHeaders) {
+        location = {
+          left: 0,
+          top: height - footerHeight,
+          right: width,
+          bottom: height
+        }
+      } else {
+        location = {
+          left: leftSideWidth,
+          top: height - footerHeight,
+          right: width,
+          bottom: height
+        }
+      }
+      console.log('footer', location);
+      return {
+        name: 'footer',
+        location: location
+      }
+    }();
+
+    return new Map([
+      [leftSide.name, leftSide],
+      [rightSide.name, rightSide],
+      [header.name, header],
+      [content.name, content],
+      [footer.name, footer]
+    ])
   }
 
-  const footer = {
-    name: 'footer',
-    location: (p: Params) => {
-      return {
-        left: p.get('sideRight', sideRight),
-        top: p.get('height', height) - p.get('footerHeight', footerHeight),
-        right: p.get('width', width),
-        bottom: p.get('height', height) - p.get('footerHeight', footerHeight)
-      }
-    }
-  }
-
-  const layouts = new Map([
-    [side.name, side],
-    [header.name, header],
-    [content.name, content],
-    [footer.name, footer]
-  ])
-
-
-  return new BasicLayoutGenerator(layouts, params);
+  return new BasicLayoutGenerator(init, params);
 }
 
 export function fitLayout(
@@ -394,46 +528,68 @@ export function fitLayout(
     r = g.next();
   }
 
-  let origin = {x: 0, y: 0};
+  let origin = { x: 0, y: 0 };
   let scale = width / (o.y - o.x);
-  return new ResizeLayout(g, origin, {x: scale, y: scale});
+  return new ResizeLayout(g, origin, { x: scale, y: scale });
 }
 
-export function mobileDashboard( cols: number, rows: number, blockSize: IPoint) {
+export function mobileDashboard() {
+  const width = 0;
+  const height = 0;
+  const headerWidth = 1.5;
+  const cols = 2;
+  const rows = 3;
+
+  
 
   const params = new Params([
+    ['width', width],
+    ['height', height],
     ['cols', cols],
     ['rows', rows],
-    ['x', (p: Params) => { return ((cols * blockSize.x) / 2) - (blockSize.x * headerSize / 2);} ] 
   ]);
 
-  let headerSize = 2.5;
-  if (cols === 1) {
-    headerSize = 1;
-  } else if (cols === 2) {
-    headerSize = 2;
-  }
-  const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerSize / 2);
-  const header = {
-    name: 'mobileHeader',
-    location: (parms: Params): IRect => {return { left: xCenter, top: 0, right: blockSize.x * headerSize, bottom: blockSize.y }}
-  };
-  const layout = {
-    name: 'mobileGrid',
-    location:  (p: Params): IRect => {
-      return { 
-        left: p.get('xCenter', 0), 
-        top: blockSize.y, 
-        right: blockSize.x * 
-        headerSize, 
-        bottom: blockSize.y }},
-    g: new GridGenerator('Mobile', 3, 4, {x: 100, y: 100})
-  }
-  const layouts = new Map([
-    [header.name, header],
-    [layout.name, layout]
-  ]);
+  function init(params: Params): Map<string, ILayout> {
+    const width = params.get('width');
+    const cols = params.get('cols');
+    const rows = params.get('rows');
 
+    const blockSize: IPoint = {
+      x: width/cols,
+      y: width/cols
+    };
+    const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerWidth / 2);
 
-  return new BasicLayoutGenerator(layouts, params);
+    const header = function (): ILayout {
+      return {
+        name: 'mobileHeader',
+        location: {
+          left: xCenter,
+          top: 0,
+          right: blockSize.x * headerWidth,
+          bottom: blockSize.y
+        }
+      }
+    }();
+
+    const grid = function (): ILayout {
+      return {
+        name: 'mobileGrid',
+        location: {
+          left: 0,
+          top: blockSize.y,
+          right: blockSize.x,
+          bottom: blockSize.y
+        },
+        g: new GridGenerator('Mobile', cols, rows, blockSize)
+      }
+    }();
+
+    return new Map([
+      [header.name, header],
+      [grid.name, grid]
+    ]);
+  }
+
+  return new BasicLayoutGenerator(init, params);
 }

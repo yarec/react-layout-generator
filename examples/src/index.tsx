@@ -23,7 +23,16 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
   constructor(props: ExampleProps) {
     super(props);
 
-    this.g = DesktopLayout(0, 0);
+    this.g = DesktopLayout();
+
+    const p = this.g.params();
+
+    // hide header and footer
+    p.set('headerHeight', 24);
+    p.set('footerHeight', 24);
+    p.set('fullWidthHeaders', 1)
+    p.set('leftSideWidth', 200);
+    p.set('rightSideWidth', 200)
   }
 
   render() {
@@ -33,22 +42,25 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
         autoFit={true}
         data-layout={[['width', 100]]}
         autoFitLimits={{ x: .75, y: 1.25 }}
-        elementPadding={{ top: 0, left: 0, right: 0, bottom: 0 }}
         g={this.g}
       >
-        <div data-layout={{ name: 'side' }} >
-          <span>Side</span>
+        <div data-layout={{ name: 'leftSide' }} style={{backgroundColor:'hsl(200,100%,80%)'}} >
+          <span >LeftSide</span>
         </div>
 
-         <div data-layout={{ name: 'header' }} >
+         <div data-layout={{ name: 'rightSide' }} style={{backgroundColor:'hsl(205,100%,80%)'}} >
+          <span >RightSide</span>
+        </div>
+
+         <div data-layout={{ name: 'header' }}  style={{backgroundColor:'hsl(210,100%,80%)'}} >
           <span>Header</span>
         </div>
 
-         <div data-layout={{ name: 'content' }} >
+         <div data-layout={{ name: 'content' }}  style={{backgroundColor:'hsl(215,100%,80%)'}}>
           <span>Content</span>
         </div>
 
-        <div data-layout={{ name: 'footer' }} >
+        <div data-layout={{ name: 'footer' }}  style={{backgroundColor:'hsl(220,100%,80%)'}}>
          <span>Footer</span>
         </div>
       </ReactLayout>

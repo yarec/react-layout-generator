@@ -2,37 +2,25 @@ import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
 import LayoutGenerator, { ILayoutGenerator, IBlock } from './LayoutGenerator';
-import { IPoint, IRect } from './types';
+import { IPoint } from './types';
 
-function tileStyle(x: number, y: number, width: number, height: number, padding: IRect, margin: IRect) {
+function tileStyle(style: any, x: number, y: number, width: number, height: number) {
 
-  // Assumes box-sizing set to border-box
-  width -= margin.left + margin.right + padding.left + padding.right;
-  height -= margin.top + margin.bottom + padding.top + padding.bottom;
-
+  console.log(style);
   return {
-    // boxSizing: 'border-box' as 'border-box',
+    boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
     transform: `translate(${x}px, ${y}px)`,
     width: `${width}px`,
     height: `${height}px`,
     position: 'absolute' as 'absolute',
-    marginTop: `${margin.top}px`,
-    marginRight: `${margin.right}px`,
-    marginBottom: `${margin.bottom}px`,
-    marginLeft: `${margin.left}px`,
-    paddingTop: `${padding.top}px`,
-    paddingRight: `${padding.right}px`,
-    paddingBottom: `${padding.bottom}px`,
-    paddingLeft: `${padding.left}px`,
-    border: '1px solid red'
+    ...style
   };
 }
 
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   autoFit: boolean;
   autoFitLimits: IPoint;
-  elementPadding: IRect;
   g: LayoutGenerator;
 
 }
@@ -68,47 +56,13 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     }
   }
 
-  
-  componentDidMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange = () => {
-
-    // console.log(`handleWindowSizeChange: width: ${window.innerWidth}, element height: ${window.innerHeight}`);
-
-    // if (this.divRef && this.divRef.current ) {
-    //   const width = this.divRef.current.clientWidth;
-    //   const height = this.divRef.current.clientHeight;
-
-    //   this.setState({width: width, height: height})
-
-    //   console.log(`handleWindowSizeChange: element width: ${width}, element height: ${height}`);
-    // }
-
-    // this.windowSize.width = window.innerWidth;
-    // this.windowSize.height = window.innerHeight;
-
-    // this.g.params().set('width', this.windowSize.width);
-    // this.g.params().set('height', this.windowSize.height);
-
-    // console.log('handleWindowSizeChange',  window.innerWidth, window.innerHeight);
-  }
-
-
   initLayout = () => {
     this.key = 0;
+   
     const p = this.derivedLayout.params();
     p.set('width', this.state.width);
     p.set('height', this.state.height);
-  }
-
-  nextLayout = () => {
-
+    this.derivedLayout.reset();
   }
 
   createPositionedElemement = (child: React.ReactElement<any>, name: string) => {
@@ -116,13 +70,11 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     const b = this.derivedLayout.lookup(name);
     if (b) {
       console.log('createPositionedElemement', b);
-      const style = tileStyle(
+      const style = tileStyle(child.props['style'],
         b.location.left,
         b.location.top,
         (b.location.right - b.location.left),
-        (b.location.bottom - b.location.top),
-        { top: 0, bottom: 0, left: 0, right: 0 },
-        { top: 0, bottom: 0, left:0, right: 0 }
+        (b.location.bottom - b.location.top)
       );
       let props = {style: style};
       return React.cloneElement(child, props, child.props.children);
@@ -138,7 +90,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       
       // Infinity mapped to this.height & this.width - padding
       if (item.location.bottom === NaN) {
-        item.location.bottom = this.state.height - this.props.elementPadding.bottom;
+        // item.location.bottom = this.state.height
       }
 
       if (item.location.right === NaN) {
@@ -146,12 +98,11 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       }
 
       const style = tileStyle(
+        child.props['style'],
         item.location.left,
         item.location.top,
         (item.location.right - item.location.left),
-        (item.location.bottom - item.location.top),
-        { top: 0, bottom: 0, left: 0, right: 0 },
-        { top: 10, bottom: 10, left: 10, right: 10 }
+        (item.location.bottom - item.location.top)
       );
       // console.log('CreateElements style', style);
       return (
