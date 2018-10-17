@@ -42,8 +42,6 @@ export class Params {
       this.params.set(key, v);
     }
   }
-
-
 }
 
 export function EvalCell(cell: Value, p: Params) {
@@ -69,9 +67,29 @@ export class API {
   }
 }
 
+export enum PositionRef {
+  top = 1,
+  left,
+  bottom,
+  right,
+  leftTop,
+  rightTop,
+  leftBottom,
+  rightBottom
+};
+
+
+export interface IEdit {
+  positionRef: PositionRef;
+  variable: string;
+}
+
 export interface ILayout {
   name: string;
   location: IRect; // relative to origin
+  editSize?: Array<IEdit>;
+  editVisiblity?: boolean;
+  style?: React.CSSProperties;
   g?: ILayoutGenerator;
 }
 
@@ -82,23 +100,11 @@ export interface ILayout {
 //   params: Params;
 // }
 
-export interface IBlock {
-  name: string;
-  location: IRect;
-  css?: {
-    [id: string]: string;
-  }
-}
-
-export interface IDef {
-  [key: string]: Object | IDef;
-}
-
 export interface ILayoutGenerator {
   params: () => Params;
   reset: () => void;
-  next: () => IBlock | undefined;
-  lookup: (name: string) => IBlock | undefined;
+  next: () => ILayout | undefined;
+  lookup: (name: string) => ILayout | undefined;
   api: () => API | undefined;
 }
 
@@ -121,7 +127,7 @@ export class ResizeLayout implements ILayoutGenerator {
     return this.g.api();
   }
 
-  protected transform = (b: IBlock | undefined) => {
+  protected transform = (b: ILayout | undefined) => {
     if (b) {
       b.location.top += this.origin.y;
       b.location.left += this.origin.x;
@@ -136,7 +142,7 @@ export class ResizeLayout implements ILayoutGenerator {
     return b;
   }
 
-  next = (): IBlock | undefined => {
+  next = (): ILayout | undefined => {
     return this.transform(this.g.next());
   }
 
@@ -144,7 +150,7 @@ export class ResizeLayout implements ILayoutGenerator {
     this.g.reset();
   }
 
-  lookup = (name: string): IBlock | undefined => {
+  lookup = (name: string): ILayout | undefined => {
     return this.transform(this.g.lookup(name));
   };
 
@@ -162,7 +168,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   layoutsIterator: IterableIterator<ILayout>;
   currentLayout: ILayout | undefined;
 
-  state: () => IBlock | undefined;
+  state: () => ILayout | undefined;
 
   constructor(init: (params: Params) => Map<string, ILayout>, params: Params, api?: API) {
     this._init = init;
@@ -181,7 +187,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return this._api;
   }
 
-  lookup = (name: string): IBlock | undefined => {
+  lookup = (name: string): ILayout | undefined => {
     const parts = name.split('/');
     let r = this.layouts.get(parts[0]);
     if (r) {
@@ -196,6 +202,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
       }
       return {
         name: name,
+        editSize: r.editSize,
         location: r.location
       }
     }
@@ -216,11 +223,11 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     })
   }
 
-  init = (): IBlock | undefined => {
+  init = (): ILayout | undefined => {
     return this.nextBlock();
   }
 
-  private nextBlock = (): IBlock | undefined => {
+  private nextBlock = (): ILayout | undefined => {
     this.currentLayout = this.layoutsIterator.next().value;
     if (this.currentLayout) {
       if (this.currentLayout.g) {
@@ -237,8 +244,8 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     }
   }
 
-  private nestedBlock = (): IBlock | undefined => {
-    let b: IBlock | undefined = undefined;
+  private nestedBlock = (): ILayout | undefined => {
+    let b: ILayout | undefined = undefined;
     if (this.currentLayout && this.currentLayout.g) {
       b = this.currentLayout.g.next();
     }
@@ -249,8 +256,8 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return b;
   }
 
-  private nextTile = (): IBlock | undefined => {
-    let b: IBlock | undefined = undefined;
+  private nextTile = (): ILayout | undefined => {
+    let b: ILayout | undefined = undefined;
     if (this.currentLayout) {
       const r = this.currentLayout.location;
       b = {
@@ -263,13 +270,13 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return b;
   }
 
-  next = (): IBlock | undefined => {
+  next = (): ILayout | undefined => {
     return this.state();
   }
 }
 
 // interface INestedGenerator {
-//   next: () => IBlock | undefined;
+//   next: () => ILayout | undefined;
 //   init: (name: string, location: Location, params: Params) => void;
 //   lookup: (part: string) => ILayout | undefined;
 // }
@@ -278,8 +285,8 @@ export class GridGenerator implements ILayoutGenerator {
 
   _params: Params;
   _api: API;
-  state: () => IBlock | undefined;
-  block: IBlock;
+  state: () => ILayout | undefined;
+  block: ILayout;
   cols: number;
   rows: number;
   colCounter: number;
@@ -318,8 +325,8 @@ export class GridGenerator implements ILayoutGenerator {
     this.rowCounter = 0;
   }
 
-  nextTile = (): IBlock | undefined => {
-    let r: IBlock | undefined = undefined;
+  nextTile = (): ILayout | undefined => {
+    let r: ILayout | undefined = undefined;
     if (this.block) {
       r = {
         name: `${this.block.name}/${this.rowCounter},${this.colCounter}`,
@@ -342,7 +349,7 @@ export class GridGenerator implements ILayoutGenerator {
     return r;
   }
 
-  next = (): IBlock | undefined => {
+  next = (): ILayout | undefined => {
     return this.state();
   }
 }
@@ -369,12 +376,18 @@ export function DesktopLayout() {
     const width = params.get('width');
     const height = params.get('height');
     const fullWidthHeaders = params.get('fullWidthHeaders');
-    const leftSideWidth = params.get('leftSideWidth');
-    const rightSideWidth = params.get('rightSideWidth');
+    let leftSideWidth = params.get('leftSideWidth');
+    let rightSideWidth = params.get('rightSideWidth');
     const headerHeight = params.get('headerHeight');
     const footerHeight = params.get('footerHeight');
 
-    console.log('rightSideWidth', rightSideWidth)
+    if(width < 800) {
+      leftSideWidth = 0;
+      rightSideWidth = 0;
+    }
+    
+    
+    // console.log('rightSideWidth', rightSideWidth)
 
     const leftSide = function (): ILayout {
       let location: IRect;
@@ -393,9 +406,10 @@ export function DesktopLayout() {
           bottom: height
         }
       }
-      console.log('leftSide', location);
+      //  console.log('leftSide', location);
       return {
         name: 'leftSide',
+        editSize: [{ positionRef: PositionRef.right, variable: 'leftSideWidth' }],
         location: location
       }
     }();
@@ -405,7 +419,7 @@ export function DesktopLayout() {
 
       if (fullWidthHeaders) {
         location = {
-          left:  width - rightSideWidth,
+          left: width - rightSideWidth,
           top: headerHeight,
           right: width,
           bottom: height - footerHeight
@@ -418,7 +432,7 @@ export function DesktopLayout() {
           bottom: height
         }
       }
-      console.log('rightSide', location);
+      // console.log('rightSide', location);
       return {
         name: 'rightSide',
         location: location
@@ -442,7 +456,7 @@ export function DesktopLayout() {
           bottom: headerHeight
         }
       }
-      console.log('header', location);
+      // console.log('header', location);
       return {
         name: 'header',
         location: location
@@ -466,7 +480,7 @@ export function DesktopLayout() {
           bottom: height - footerHeight
         }
       }
-      console.log('content', location);
+      // console.log('content', location);
       return {
         name: 'content',
         location: location
@@ -490,7 +504,7 @@ export function DesktopLayout() {
           bottom: height
         }
       }
-      console.log('footer', location);
+      //console.log('footer', location);
       return {
         name: 'footer',
         location: location
@@ -516,7 +530,7 @@ export function fitLayout(
 
   g.reset();
   let o: IPoint = { x: +Infinity, y: -Infinity };
-  let r: IBlock | undefined = g.next();
+  let r: ILayout | undefined = g.next();
   while (r) {
     // console.log ('fitLayout item rect: ', r);
     if (r.location.left < o.x) {
@@ -540,7 +554,7 @@ export function mobileDashboard() {
   const cols = 2;
   const rows = 3;
 
-  
+
 
   const params = new Params([
     ['width', width],
@@ -555,8 +569,8 @@ export function mobileDashboard() {
     const rows = params.get('rows');
 
     const blockSize: IPoint = {
-      x: width/cols,
-      y: width/cols
+      x: width / cols,
+      y: width / cols
     };
     const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerWidth / 2);
 
