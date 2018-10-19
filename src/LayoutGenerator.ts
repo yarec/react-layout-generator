@@ -1,7 +1,7 @@
 import { height, IRect, translate, width, IPoint } from './types';
 
-type FValue = (p: Params) => any; // number | IRect | IPoint | FRect;
-type Value = number | IRect | IPoint | FValue;
+// type FValue = (p: Params) => number; // number | IRect | IPoint | FRect;
+type Value = number | IRect | IPoint // /*| FValue */;
 export class Params {
   params: Map<string, Value>;
   changeCount: number = 0;
@@ -21,35 +21,36 @@ export class Params {
   //   return v;
   // }
 
-  get(key: string, v?: Value) {
+  get(key: string, member?: string) {
     const r = this.params.get(key);
-    if (r != undefined) {
-      return EvalCell(r, this);
+    if (!r) {
+      return NaN;
     }
-    if (v) {
-      return EvalCell(v, this);
+    if(member && typeof r === 'object') {
+      const result = r[member];
+      if(!result) {
+        return NaN;
+      }
+      return result;
     }
-    return EvalCell(NaN, this);
+    return r;
   }
 
   set(key: string, v: Value) {
     const r = this.params.get(key);
-    if (r === undefined) {
-      throw `variable ${key} not defined`;
-    }
-    if (EvalCell(r, this) != EvalCell(v, this)) {
+    if (r != v) {
       this.changeCount += 1;
       this.params.set(key, v);
     }
   }
 }
 
-export function EvalCell(cell: Value, p: Params) {
-  if (typeof cell === 'function') {
-    return cell(p);
-  }
-  return cell;
-}
+// export function EvalCell(cell: Value, p: Params) {
+//   if (typeof cell === 'function') {
+//     return cell(p);
+//   }
+//   return cell;
+// }
 
 export class API {
   params: Params;
@@ -72,10 +73,12 @@ export enum PositionRef {
   left,
   bottom,
   right,
-  leftTop,
-  rightTop,
-  leftBottom,
-  rightBottom
+  height,
+  width,
+  pointleftTop,
+  pointrightTop,
+  pointleftBottom,
+  pointrightBottom
 };
 
 
@@ -194,17 +197,10 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
       if (r.g) {
         let n = r.g.lookup(name);
         if (n) {
-          return {
-            name: name,
-            location: n.location
-          }
+          return Object.assign({}, n);
         }
       }
-      return {
-        name: name,
-        editSize: r.editSize,
-        location: r.location
-      }
+      return Object.assign({}, r);
     }
     return undefined;
   }
@@ -369,7 +365,8 @@ export function DesktopLayout() {
     ['leftSideWidth', leftSideWidth],
     ['rightSideWidth', rightSideWidth],
     ['headerHeight', headerHeight],
-    ['footerHeight', footerHeight]
+    ['footerHeight', footerHeight],
+    ['rect',{top:1, left:2, bottom: 3, right: 4}]
   ])
 
   function init(params: Params): Map<string, ILayout> {
@@ -380,6 +377,11 @@ export function DesktopLayout() {
     let rightSideWidth = params.get('rightSideWidth');
     const headerHeight = params.get('headerHeight');
     const footerHeight = params.get('footerHeight');
+
+    // console.log( 'get Rect top', params.get('rect', 'top'));
+    // console.log( 'get Rect xxx', params.get('rect', 'xxx'));
+    // console.log( 'get Rect', params.get('rect'));
+    // console.log( 'get Rect 2', params.get('rect') + 1);
 
     if(width < 800) {
       leftSideWidth = 0;
@@ -409,7 +411,7 @@ export function DesktopLayout() {
       //  console.log('leftSide', location);
       return {
         name: 'leftSide',
-        editSize: [{ positionRef: PositionRef.right, variable: 'leftSideWidth' }],
+        editSize: [{ positionRef: PositionRef.width, variable: 'leftSideWidth' }],
         location: location
       }
     }();
