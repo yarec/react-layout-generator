@@ -1,7 +1,19 @@
 import { height, IRect, translate, width, IPoint } from './types';
+// import { string } from 'prop-types';
+// import { number } from 'prop-types';
+// import { reduceRight } from 'async';
 
 // type FValue = (p: Params) => number; // number | IRect | IPoint | FRect;
-type Value = number | IRect | IPoint // /*| FValue */;
+export type Value = number | IRect | IPoint; // /*| FValue */;
+
+// export class ParamValue {
+//   value: Value;
+
+//   constructor(value: Value) {
+
+//   }
+// }
+
 export class Params {
   params: Map<string, Value>;
   changeCount: number = 0;
@@ -26,9 +38,9 @@ export class Params {
     if (!r) {
       return NaN;
     }
-    if(member && typeof r === 'object') {
+    if (member && typeof r === 'object') {
       const result = r[member];
-      if(!result) {
+      if (!result) {
         return NaN;
       }
       return result;
@@ -69,22 +81,22 @@ export class API {
 }
 
 export enum PositionRef {
-  top = 1,
-  left,
-  bottom,
-  right,
-  height,
-  width,
-  pointleftTop,
-  pointrightTop,
-  pointleftBottom,
-  pointrightBottom
+  rect = 1,
+  height_top,
+  height_bottom,
+  width_left,
+  width_right,
+  point_left_top,
+  point_right_top,
+  point_left_bottom,
+  point_right_bottom
 };
 
 
 export interface IEdit {
   positionRef: PositionRef;
   variable: string;
+  update: (v: Value, ref: PositionRef, deltaX: number, deltaY: number) => Value;
 }
 
 export interface ILayout {
@@ -104,6 +116,7 @@ export interface ILayout {
 // }
 
 export interface ILayoutGenerator {
+  name: () => string;
   params: () => Params;
   reset: () => void;
   next: () => ILayout | undefined;
@@ -112,14 +125,20 @@ export interface ILayoutGenerator {
 }
 
 export class ResizeLayout implements ILayoutGenerator {
+  private _name: string;
   g: ILayoutGenerator;
   origin: IPoint;
   scale: IPoint;
 
-  constructor(g: ILayoutGenerator, origin: IPoint, scale: IPoint) {
+  constructor(name: string, g: ILayoutGenerator, origin: IPoint, scale: IPoint) {
+    this._name = name;
     this.g = g;
     this.origin = origin;
     this.scale = scale;
+  }
+
+  name = () => {
+    return this._name;
   }
 
   params = () => {
@@ -162,8 +181,9 @@ export class ResizeLayout implements ILayoutGenerator {
   // };
 }
 
-type IInit = (params: Params) => Map<string, ILayout>;
+type IInit = (params: Params, layouts?: Array<ILayout>) => Map<string, ILayout>;
 export default class BasicLayoutGenerator implements ILayoutGenerator {
+  private _name: string;
   private _params: Params;
   private _api: API | undefined;
   private _init: IInit;
@@ -171,15 +191,20 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   layoutsIterator: IterableIterator<ILayout>;
   currentLayout: ILayout | undefined;
 
-  state: () => ILayout | undefined;
+  state: () => ILayout | undefined; 
 
-  constructor(init: (params: Params) => Map<string, ILayout>, params: Params, api?: API) {
+  constructor(name: string, init: (params: Params) => Map<string, ILayout>, params: Params, api?: API) {
+    this._name = name;
     this._init = init;
     this.layouts = init(params);
     this.layoutsIterator = this.layouts.values();
     this.state = this.init;
     this._params = params;
     this._api = api;
+  }
+
+  name = () => {
+    return this._name;
   }
 
   params = () => {
@@ -208,7 +233,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   reset = () => {
     if (this._params.changed()) {
       console.log('reset update layouts')
-      this.layouts = this._init(this._params);
+      this.layouts = this._init(this._params); // unless external
     }
     this.state = this.init;
     this.layoutsIterator = this.layouts.values();
@@ -278,7 +303,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
 // }
 
 export class GridGenerator implements ILayoutGenerator {
-
+  _name: string;
   _params: Params;
   _api: API;
   state: () => ILayout | undefined;
@@ -300,6 +325,10 @@ export class GridGenerator implements ILayoutGenerator {
 
     this.state = this.nextTile;
     this._params = new Params([]);
+  }
+
+  name = () => {
+    return this._name;
   }
 
   params = () => {
@@ -350,7 +379,7 @@ export class GridGenerator implements ILayoutGenerator {
   }
 }
 
-export function DesktopLayout() {
+export function DesktopLayout(name: string) {
 
   const fullWidthHeaders = 0;
   const leftSideWidth = 200;
@@ -365,11 +394,10 @@ export function DesktopLayout() {
     ['leftSideWidth', leftSideWidth],
     ['rightSideWidth', rightSideWidth],
     ['headerHeight', headerHeight],
-    ['footerHeight', footerHeight],
-    ['rect',{top:1, left:2, bottom: 3, right: 4}]
+    ['footerHeight', footerHeight]
   ])
 
-  function init(params: Params): Map<string, ILayout> {
+  function init(params: Params, layouts?: Array<ILayout>): Map<string, ILayout> {
     const width = params.get('width');
     const height = params.get('height');
     const fullWidthHeaders = params.get('fullWidthHeaders');
@@ -383,12 +411,12 @@ export function DesktopLayout() {
     // console.log( 'get Rect', params.get('rect'));
     // console.log( 'get Rect 2', params.get('rect') + 1);
 
-    if(width < 800) {
+    if (width < 800) {
       leftSideWidth = 0;
       rightSideWidth = 0;
     }
-    
-    
+
+
     // console.log('rightSideWidth', rightSideWidth)
 
     const leftSide = function (): ILayout {
@@ -411,7 +439,7 @@ export function DesktopLayout() {
       //  console.log('leftSide', location);
       return {
         name: 'leftSide',
-        editSize: [{ positionRef: PositionRef.width, variable: 'leftSideWidth' }],
+        editSize: [{ positionRef: PositionRef.width_right, variable: 'leftSideWidth', update: widthUpdate }],
         location: location
       }
     }();
@@ -522,7 +550,70 @@ export function DesktopLayout() {
     ])
   }
 
-  return new BasicLayoutGenerator(init, params);
+  return new BasicLayoutGenerator(name, init, params);
+}
+
+// Value of key name is an IRect
+// returns the value to set in Params
+export function rectUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
+  const vr = v as IRect;
+ return {
+   top: vr.top + deltaY,
+   left: vr.left + deltaX,
+   bottom: vr.bottom + deltaY,
+   right: vr.right + deltaX
+ }
+}
+
+export function rectWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
+  const vr = v as IRect;
+  const width = vr.right - vr.left;
+  return {
+    top: vr.top,
+    left: vr.left,
+    bottom: vr.bottom,
+    right: vr.left + width + deltaX
+  }
+}
+
+export function widthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
+  const width = v as number;
+  return width + deltaX;
+}
+
+export function DiagramLayout(name: string) {
+
+  const boxRect = { top: 0, left: 0, bottom: 200, right: 200 };
+
+  const params = new Params([
+    ['width', 0],
+    ['height', 0],
+    ['boxRect', boxRect]
+  ])
+
+  function init(params: Params, layouts?: Array<ILayout>): Map<string, ILayout> {
+    // const width = params.get('width');
+    // const height = params.get('height');
+    const boxRect = params.get('boxRect');
+
+    const box = function (): ILayout {
+      let location: IRect = boxRect;
+      return {
+        name: 'box',
+        editSize: [
+          { positionRef: PositionRef.rect, variable: 'boxRect', update: rectUpdate },
+          { positionRef: PositionRef.width_right, variable: 'boxRect', update:  rectWidthUpdate }
+        ],
+        location: location
+      }
+    }();
+
+    return new Map([
+      [box.name, box]
+    ])
+  }
+
+  return new BasicLayoutGenerator(name, init, params);
 }
 
 export function fitLayout(
@@ -546,17 +637,15 @@ export function fitLayout(
 
   let origin = { x: 0, y: 0 };
   let scale = width / (o.y - o.x);
-  return new ResizeLayout(g, origin, { x: scale, y: scale });
+  return new ResizeLayout('resize.' + g.name(), g, origin, { x: scale, y: scale });
 }
 
-export function mobileDashboard() {
+export function mobileDashboard(name: 'mobile.layout') {
   const width = 0;
   const height = 0;
   const headerWidth = 1.5;
   const cols = 2;
   const rows = 3;
-
-
 
   const params = new Params([
     ['width', width],
@@ -565,7 +654,7 @@ export function mobileDashboard() {
     ['rows', rows],
   ]);
 
-  function init(params: Params): Map<string, ILayout> {
+  function init(params: Params, layouts?: Array<ILayout>): Map<string, ILayout> {
     const width = params.get('width');
     const cols = params.get('cols');
     const rows = params.get('rows');
@@ -607,5 +696,5 @@ export function mobileDashboard() {
     ]);
   }
 
-  return new BasicLayoutGenerator(init, params);
+  return new BasicLayoutGenerator(name, init, params);
 }

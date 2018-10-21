@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
-import LayoutGenerator, { DesktopLayout } from '../../src/LayoutGenerator';
+import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
 
 interface ExampleProps {
 
@@ -19,11 +19,13 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
   };
 
   g: LayoutGenerator;
+  d: LayoutGenerator;
 
   constructor(props: ExampleProps) {
     super(props);
 
-    this.g = DesktopLayout();
+    this.g = DesktopLayout('rlg.desktop.example');
+    this.d = DiagramLayout('rlg.diagram.example');
 
     const p = this.g.params();
 
@@ -39,6 +41,7 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
 
     return (
       <ReactLayout
+        name={'reactLayout.desktop.example'}
         autoFit={true}
         editLayout={true}
         data-layout={[['width', 100]]}
@@ -58,7 +61,18 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
         </div>
 
         <div data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)' }}>
-          <span>Content</span>
+          <ReactLayout
+            name={'reactLayout.content'}
+            autoFit={true}
+            editLayout={true}
+            data-layout={[['width', 100]]}
+            autoFitLimits={{ x: .75, y: 1.25 }}
+            g={this.d}
+          >
+            <div data-layout={{ name: 'box' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+              <span>Box</span>
+            </div>
+          </ReactLayout>
         </div>
 
         <div data-layout={{ name: 'footer' }} style={{ backgroundColor: 'hsl(220,100%,80%)' }}>

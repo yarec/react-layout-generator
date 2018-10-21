@@ -3,8 +3,7 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params } from './LayoutGenerator';
 import { IPoint, IRect } from './types';
-
-let gCount = 1;
+// import { string } from 'prop-types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
 
@@ -20,28 +19,38 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
   };
 }
 
-function editStyle(cursor: string, x: number, y: number, width: number, height: number): React.CSSProperties {
-  console.log('editStyle', x, y, width, height);
+interface editStyleProps {
+  cursor: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+function editStyle(props: editStyleProps): React.CSSProperties {
+  //  console.log('editStyle', props.x, props.y, props.width, props.height);
 
   // console.log(style);
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
-    transform: `translate(${x}px, ${y}px)`,
-    width: `${width}px`,
-    height: `${height}px`,
+    transform: `translate(${props.x}px, ${props.y}px)`,
+    width: `${props.width}px`,
+    height: `${props.height}px`,
     position: 'absolute' as 'absolute',
-    cursor: cursor,
-    background: 'rgba(0, 0, 0, 0.1)',
-    zIndex: 1000
+    cursor: props.cursor,
+    background: 'rgba(0, 0, 0, 0.0)',
+    zIndex: 1000,
+    borderWidth: '4px'
   }
 }
 
 export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
-  rlgDrag: React.CSSProperties;
+  rlgDrag: editStyleProps;
   params: Params;
   edit: IEdit;
   layout: ILayout;
+  generateSvg?: boolean;
   onUpdate: () => void
 }
 
@@ -50,8 +59,6 @@ interface RLGHandleState {
 }
 
 export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
-
-  private dragRef = React.createRef<HTMLDivElement>();
 
   value: number | IPoint | IRect;
   origin: IPoint;
@@ -68,7 +75,6 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     document.addEventListener('mouseup', this.onHtmlMouseUp);
     document.addEventListener('mousemove', this.onHtmlMouseMove);
     document.addEventListener('touchmove', this.onHtmlTouchMove);
-    // this.setState(SplitPane.getSizeUpdate(this.props, this.state));
   }
 
   removeEventListenrs() {
@@ -78,47 +84,23 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
   }
 
   initUpdate(x: number, y: number) {
-    this.origin = {x, y};
+    this.origin = { x, y };
     this.value = this.props.params.get(this.props.edit.variable);
   }
 
   moveUpdate(x: number, y: number) {
+
     let value;
-    switch (this.props.edit.positionRef) {
-      case PositionRef.top: {
-
-        break;
-      }
-      case PositionRef.left: {
-
-        break;
-      }
-      case PositionRef.height: {
-
-        break;
-      }
-      case PositionRef.width: {
-        value = this.value as number - (this.origin.x - x);
-        this.props.params.set(this.props.edit.variable, value);
-        break;
-      }
-      case PositionRef.pointleftTop: {
-
-        break;
-      }
-      case PositionRef.pointrightTop: {
-
-        break;
-      }
-      case PositionRef.pointleftBottom: {
-
-        break;
-      }
-      case PositionRef.pointrightBottom: {
-
-        break;
-      }
+    if (typeof this.value === 'number') {
+      value = this.value;
+    } else {
+      // Clone value
+      value = Object.assign({}, this.value);
     }
+
+    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y));
+    console.log('v', v);
+    this.props.params.set(this.props.edit.variable, v);
 
     this.props.onUpdate();
   }
@@ -154,20 +136,31 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
 
   render = () => {
     console.log('RLGHandleProps', this.props.rlgDrag);
-    return (
-      <div ref={this.dragRef} style={this.props.rlgDrag}
-        onMouseDown={this.onMouseDown}
-      />
-    );
+    if (!this.props.generateSvg) {
+      return (
+        <div style={editStyle(this.props.rlgDrag)}
+          onMouseDown={this.onMouseDown}
+        />
+      );
+    } else {
+      return (
+        <svg >
+          <path style={editStyle(this.props.rlgDrag)} d={''} onMouseDown={this.onMouseDown} />
+        </svg>
+      )
+    }
   }
 }
 
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
+  name: string;
   autoFit?: boolean;
   autoFitLimits?: IPoint;
   editLayout?: boolean;
+  generateSvg?: boolean;
+  save?: (name: string, params: string, layouts: string) => void;
+  load?: (name: string) => { params: string, layouts: string }
   g: LayoutGenerator;
-
 }
 
 export interface ReactLayoutState {
@@ -177,12 +170,11 @@ export interface ReactLayoutState {
 }
 
 export default class ReactLayout extends React.Component<ReactLayoutProps, ReactLayoutState> {
-
-  // divRef: React.RefObject<HTMLDivElement>;
   derivedLayout: ILayoutGenerator;
   key: number;
   editLayout: boolean = false;
   editOverlay: Array<ILayout> = [];
+  startRendering: number;
 
   constructor(props: ReactLayoutProps) {
     super(props);
@@ -240,6 +232,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   createListElemement = (child: React.ReactElement<any>) => {
+    // TODO: Not called - still needed?
     let item: ILayout | undefined = this.derivedLayout.next();
     if (item) {
       // Adjust for padding if autoFit
@@ -261,26 +254,32 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         (item.location.bottom - item.location.top)
       );
       // console.log('CreateElements style', style);
-      return (
-        <div
-          style={style}
-          key={item.name + '-' + child.key}
-        >
-          {/* Design Layout */}
-          <div style={{
-            height: '100%',
-            width: '100%',
-            border: '1px solid red',
-            //padding: '10px',
-            //margin: '10px',
-            backgroundColor: 'grey',
-            color: 'white'
-          }}>
-            {item.name + '-' + child.key}
+      if (this.props.generateSvg) {
+        return (
+          null
+        );
+      } else {
+        return (
+          <div
+            style={style}
+            key={item.name + '-' + child.key}
+          >
+            {/* Design Layout */}
+            <div style={{
+              height: '100%',
+              width: '100%',
+              border: '1px solid red',
+              //padding: '10px',
+              //margin: '10px',
+              backgroundColor: 'grey',
+              color: 'white'
+            }}>
+              {item.name + '-' + child.key}
+            </div>
+            {/* Child with modification Infinity mapped to this.height this.width - padding*/}
           </div>
-          {/* Child with modification Infinity mapped to this.height this.width - padding*/}
-        </div>
-      );
+        );
+      }
     }
     return null;
   }
@@ -309,48 +308,49 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
             let width = 0;
             let height = 0;
             switch (item.positionRef) {
-              case PositionRef.top: {
-                cursor = 'row-resize';
-
+              case PositionRef.rect: {
+                cursor = 'move';
+                left = layout.location.left;
+                top = layout.location.top;
+                width = layout.location.right - layout.location.left;
+                height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.left: {
+              case PositionRef.height_top: {
+                break;
+              }
+              case PositionRef.height_bottom: {
+                break;
+              }
+              case PositionRef.width_left: {
                 cursor = 'col-resize';
+                left = layout.location.left;
+                top = layout.location.top;
+                width = 1;
+                height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.bottom: {
-                cursor = 'row-resize';
-                break;
-              }
-              case PositionRef.right: {
-                
-                break;
-              }
-              case PositionRef.height: {
-                break;
-              }
-              case PositionRef.width: {
+              case PositionRef.width_right: {
                 cursor = 'col-resize';
-                left = layout.location.right - 2;
+                left = layout.location.right;
                 top = layout.location.top;
                 width = 4;
                 height = layout.location.bottom - layout.location.top;
-                console.log('PositionRef.width');
                 break;
               }
-              case PositionRef.pointleftTop: {
+              case PositionRef.point_left_top: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.pointrightTop: {
+              case PositionRef.point_right_top: {
                 cursor: 'ne-resize';
                 break;
               }
-              case PositionRef.pointleftBottom: {
+              case PositionRef.point_left_bottom: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.pointrightBottom: {
+              case PositionRef.point_right_bottom: {
                 cursor: 'ne-resize';
                 break;
               }
@@ -365,7 +365,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 edit={item}
                 layout={layout}
                 params={this.derivedLayout.params()}
-                rlgDrag={editStyle(cursor, left, top, width, height)} />)
+                rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
             }
           });
         }
@@ -375,11 +375,21 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onUpdate = () => {
-    this.setState({update: 1});
+    this.setState({ update: 1 });
+  }
+
+  frameStart = () => {
+    this.startRendering = Date.now();
+    return null;
+  }
+
+  frameEnd = () => {
+    console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
+    return null;
   }
 
   render(): React.ReactNode {
-    console.log('render', gCount++)
+    this.frameStart();
     this.initLayout();
     return (
       /* style height of 100% necessary for correct height  */
@@ -390,8 +400,8 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         )}
         {this.createEditHandles()}
         <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
+        {this.frameEnd()}
       </div>
-
     )
   }
 }
