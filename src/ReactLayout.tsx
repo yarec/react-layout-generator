@@ -216,12 +216,12 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         let props = { style: style };
         return React.cloneElement(child, props, child.props.children);
       }
-    } 
+    }
 
     return null;
   }
 
-  createListElemement = (child: React.ReactElement<any>) => {
+  createListElement = (child: React.ReactElement<any>) => {
     // TODO: Not called - still needed?
     let item: ILayout | undefined = this.derivedLayout.next();
     if (item) {
@@ -263,7 +263,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     if (p && p['name']) {
       return this.createPositionedElement(child, p['name'], p['create']);
     } else {
-     
+
     }
 
     return null;
@@ -361,17 +361,31 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     return null;
   }
 
+  content = () => {
+    if (this.state.width && this.state.height) {
+      // Only show content if width and height are not 0
+      return (
+        <>
+          {React.Children.map(this.props.children, child =>
+            // tslint:disable-next-line:no-any
+            this.createElement(child as React.ReactElement<any>)
+          )}
+          {this.createEditHandles()}
+        </>
+      )
+    }
+
+    return null;
+  }
+
   render(): React.ReactNode {
     this.frameStart();
     this.initLayout();
+
     return (
       /* style height of 100% necessary for correct height  */
       <div style={{ height: '100%' }}>
-        {React.Children.map(this.props.children, child =>
-          // tslint:disable-next-line:no-any
-          this.createElement(child as React.ReactElement<any>)
-        )}
-        {this.createEditHandles()}
+        {this.content()}
         <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
         {this.frameEnd()}
       </div>
