@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
 import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
 
+const card2C = require('./assets/cards/2C.jpg');
+
 interface ExampleProps {
 
 }
@@ -56,6 +58,7 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
           >
             <div data-layout={{ name: 'box' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
               <span>Box</span>
+              <img src={card2C} />
             </div>
             
           </ReactLayout>
