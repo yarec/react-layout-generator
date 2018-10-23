@@ -1,7 +1,7 @@
 {
   "name": "react-layout-generator",
   "version": "0.1.0",
-  "description": "In developement. Not ready to use.",
+  "description": "In development. Not ready to use.",
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

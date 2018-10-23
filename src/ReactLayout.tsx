@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params } from './LayoutGenerator';
+import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
 import { IPoint, IRect } from './types';
 // import { string } from 'prop-types';
 
@@ -50,7 +50,6 @@ export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
   params: Params;
   edit: IEdit;
   layout: ILayout;
-  generateSvg?: boolean;
   onUpdate: () => void
 }
 
@@ -60,7 +59,7 @@ interface RLGHandleState {
 
 export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
 
-  value: number | IPoint | IRect;
+  value: Value | undefined;
   origin: IPoint;
 
   constructor(props: RLGHandleProps) {
@@ -68,7 +67,7 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     this.state = {
 
     }
-    console.log('RLGHandleProps', this.props);
+    // console.log('RLGHandleProps', this.props);
   }
 
   addEventListeners() {
@@ -77,7 +76,7 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     document.addEventListener('touchmove', this.onHtmlTouchMove);
   }
 
-  removeEventListenrs() {
+  removeEventListeners() {
     document.removeEventListener('mouseup', this.onHtmlMouseUp);
     document.removeEventListener('mousemove', this.onHtmlMouseMove);
     document.removeEventListener('touchmove', this.onHtmlTouchMove);
@@ -99,7 +98,7 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     }
 
     const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y));
-    console.log('v', v);
+    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
     this.props.params.set(this.props.edit.variable, v);
 
     this.props.onUpdate();
@@ -118,46 +117,35 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     if (event) {
       event.preventDefault();
       this.moveUpdate(event.clientX, event.clientY);
-      console.log('onMouseMove', event.clientX, event.clientY);
+      // console.log('onMouseMove', event.clientX, event.clientY);
     }
   }
 
   onHtmlMouseUp = (event: MouseEvent) => {
     if (event) {
       event.preventDefault();
-      this.removeEventListenrs();
+      this.removeEventListeners();
       console.log('onMouseUp', event.clientX, event.clientY);
     }
   }
 
   onHtmlTouchMove = (event: TouchEvent) => {
-
+    // TODO implement support for touch
   }
 
   render = () => {
-    console.log('RLGHandleProps', this.props.rlgDrag);
-    if (!this.props.generateSvg) {
-      return (
-        <div style={editStyle(this.props.rlgDrag)}
-          onMouseDown={this.onMouseDown}
-        />
-      );
-    } else {
-      return (
-        <svg >
-          <path style={editStyle(this.props.rlgDrag)} d={''} onMouseDown={this.onMouseDown} />
-        </svg>
-      )
-    }
+    // console.log('RLGHandleProps', this.props.rlgDrag);
+    return (
+      <div style={editStyle(this.props.rlgDrag)}
+        onMouseDown={this.onMouseDown}
+      />
+    );
   }
 }
 
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   name: string;
-  autoFit?: boolean;
-  autoFitLimits?: IPoint;
   editLayout?: boolean;
-  generateSvg?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
   g: LayoutGenerator;
@@ -209,24 +197,26 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.derivedLayout.reset();
   }
 
-  createPositionedElemement = (child: React.ReactElement<any>, name: string) => {
+  createPositionedElement = (child: React.ReactElement<any>, name: string, rect: IRect) => {
 
-    const b = this.derivedLayout.lookup(name);
-    if (b && (b.location.right - b.location.left) && (b.location.bottom - b.location.top)) {
-      // console.log('createPositionedElemement', b);
-      const style = tileStyle(child.props['style'],
-        b.location.left,
-        b.location.top,
-        (b.location.right - b.location.left),
-        (b.location.bottom - b.location.top)
-      );
+    const b = this.derivedLayout.lookup(name, rect);
+    if (b) {
+      if ((b.location.right - b.location.left) && (b.location.bottom - b.location.top)) {
+        console.log('createPositionedElement', b);
+        const style = tileStyle(child.props['style'],
+          b.location.left,
+          b.location.top,
+          (b.location.right - b.location.left),
+          (b.location.bottom - b.location.top)
+        );
 
-      if (this.editLayout && b.editSize) {
-        this.editOverlay.push(b)
+        if (this.editLayout && b.editSize) {
+          this.editOverlay.push(b)
+        }
+        let props = { style: style };
+        return React.cloneElement(child, props, child.props.children);
       }
-      let props = { style: style };
-      return React.cloneElement(child, props, child.props.children);
-    }
+    } 
 
     return null;
   }
@@ -235,17 +225,6 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     // TODO: Not called - still needed?
     let item: ILayout | undefined = this.derivedLayout.next();
     if (item) {
-      // Adjust for padding if autoFit
-
-      // Infinity mapped to this.height & this.width - padding
-      if (item.location.bottom === NaN) {
-        // item.location.bottom = this.state.height
-      }
-
-      if (item.location.right === NaN) {
-
-      }
-
       const style = tileStyle(
         child.props['style'],
         item.location.left,
@@ -254,43 +233,37 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         (item.location.bottom - item.location.top)
       );
       // console.log('CreateElements style', style);
-      if (this.props.generateSvg) {
-        return (
-          null
-        );
-      } else {
-        return (
-          <div
-            style={style}
-            key={item.name + '-' + child.key}
-          >
-            {/* Design Layout */}
-            <div style={{
-              height: '100%',
-              width: '100%',
-              border: '1px solid red',
-              //padding: '10px',
-              //margin: '10px',
-              backgroundColor: 'grey',
-              color: 'white'
-            }}>
-              {item.name + '-' + child.key}
-            </div>
-            {/* Child with modification Infinity mapped to this.height this.width - padding*/}
+      return (
+        <div
+          style={style}
+          key={item.name + '-' + child.key}
+        >
+          {/* Design Layout */}
+          <div style={{
+            height: '100%',
+            width: '100%',
+            border: '1px solid red',
+            //padding: '10px',
+            //margin: '10px',
+            backgroundColor: 'grey',
+            color: 'white'
+          }}>
+            {item.name + '-' + child.key}
           </div>
-        );
-      }
+          {/* Child with modification Infinity mapped to this.height this.width - padding*/}
+        </div>
+      );
     }
+
     return null;
   }
 
   createElement = (child: React.ReactElement<any>) => {
-    // tslint:disable-next-line:no-any
-    const e: Object = child.props['data-layout'];
-    if (e && e['name']) {
-      return this.createPositionedElemement(child, e['name']);
+    const p: Object = child.props['data-layout'];
+    if (p && p['name']) {
+      return this.createPositionedElement(child, p['name'], p['create']);
     } else {
-
+     
     }
 
     return null;
@@ -326,7 +299,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 cursor = 'col-resize';
                 left = layout.location.left;
                 top = layout.location.top;
-                width = 1;
+                width = 4;
                 height = layout.location.bottom - layout.location.top;
                 break;
               }
