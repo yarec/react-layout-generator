@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
 import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
-import { IPoint, IRect } from './types';
+import { IPoint, IPosition } from './types';
 // import { string } from 'prop-types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
@@ -97,8 +97,8 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
       value = Object.assign({}, this.value);
     }
 
-    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y));
-    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
+    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
+    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
     this.props.params.set(this.props.edit.variable, v);
 
     this.props.onUpdate();
@@ -109,7 +109,7 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
       event.preventDefault();
       this.addEventListeners();
       this.initUpdate(event.clientX, event.clientY);
-      console.log('onMouseDown', event.clientX, event.clientY);
+      // console.log('onMouseDown', event.clientX, event.clientY);
     }
   }
 
@@ -125,7 +125,7 @@ export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
     if (event) {
       event.preventDefault();
       this.removeEventListeners();
-      console.log('onMouseUp', event.clientX, event.clientY);
+      // console.log('onMouseUp', event.clientX, event.clientY);
     }
   }
 
@@ -181,7 +181,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onResize = (width: number, height: number) => {
-    console.log('onResize', width, height);
+    // console.log('onResize', width, height);
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
@@ -197,12 +197,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.derivedLayout.reset();
   }
 
-  createPositionedElement = (child: React.ReactElement<any>, name: string, rect: IRect) => {
+  createPositionedElement = (child: React.ReactElement<any>, name: string, position: IPosition) => {
 
-    const b = this.derivedLayout.lookup(name, rect);
+    let b = this.derivedLayout.lookup(name);
+    if (!b && position && this.derivedLayout.create) {
+      b = this.derivedLayout.create(name, position);
+      // console.log('createPositionedElement', b, position);
+    }
+
     if (b) {
       if ((b.location.right - b.location.left) && (b.location.bottom - b.location.top)) {
-        console.log('createPositionedElement', b);
         const style = tileStyle(child.props['style'],
           b.location.left,
           b.location.top,
@@ -261,7 +265,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createElement = (child: React.ReactElement<any>) => {
     const p: Object = child.props['data-layout'];
     if (p && p['name']) {
-      return this.createPositionedElement(child, p['name'], p['create']);
+      return this.createPositionedElement(child, p['name'], p['position']);
     } else {
 
     }
@@ -357,7 +361,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   frameEnd = () => {
-    console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
+    // console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
     return null;
   }
 

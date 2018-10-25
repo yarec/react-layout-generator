@@ -2,8 +2,10 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
 import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
+// import { OriginX, OriginY } from '../../src/types';
+import Deck from './Deck';
 
-const card2C = require('./assets/cards/2C.jpg');
+// const card2C = require('./assets/cards/2C.jpg');
 
 interface ExampleProps {
 
@@ -34,6 +36,11 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
     p.set('rightSideWidth', 0)
   }
 
+  elements = () => {
+    const deck = new Deck();
+    return deck.createElements();
+  }
+
   render() {
 
     return (
@@ -56,11 +63,7 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
             editLayout={true}
             g={this.d}
           >
-            <div data-layout={{ name: 'box' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-              <span>Box</span>
-              <img src={card2C} />
-            </div>
-            
+            {this.elements()}
           </ReactLayout>
         </div>
 
@@ -70,3 +73,18 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
 }
 
 render(<ExampleLayout />, document.getElementById("root"));
+
+
+{/* <div
+  data-layout={{
+    name: 'box',
+    position: {
+      origin: { x: OriginX.Center, y: OriginY.Center },
+      position: { x: -50, y: -75 },
+      percent: { x: 0, y: 0 },
+      size: { x: 100, y: 150 }
+    }
+  }}
+  style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+  <img width={100} height={150} src={card2C} />
+</div> */}

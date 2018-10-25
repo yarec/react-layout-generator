@@ -84,10 +84,41 @@ export class Rect implements IRect {
   }
 }
 
+export enum OriginX {
+  None = 1,
+  Left,
+  Q1,
+  Center,
+  Q3,
+  Right
+}
+
+export enum OriginY {
+  None = 1,
+  Top,
+  Q1,
+  Center,
+  Q3,
+  Bottom
+}
+
+export interface Origin {
+  x: OriginX;
+  y: OriginY;
+}
+
+export interface IPosition {
+  origin: Origin;  
+  position: IPoint;
+  size: IPoint;
+  def?: IPoint;
+}
+
 export interface IPoint {
   x: number;
   y: number;
 }
+
 export class Point implements IPoint {
   x: number = 0;
   y: number = 0;

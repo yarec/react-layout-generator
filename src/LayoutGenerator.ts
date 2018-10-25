@@ -1,10 +1,10 @@
-import { height, IRect, translate, width, IPoint } from './types';
+import { height, IRect, translate, width, IPoint, IPosition, OriginX, OriginY } from './types';
 // import { string } from 'prop-types';
 // import { number } from 'prop-types';
 // import { reduceRight } from 'async';
 
-type FValue = (p: Params) => number | IRect | IPoint;
-export type Value = number | IRect | IPoint | FValue;
+type FValue = (p: Params) => number | IRect | IPoint | IPosition;
+export type Value = number | IRect | IPoint | IPosition | FValue;
 
 export class Params {
   params: Map<string, Value>;
@@ -44,7 +44,7 @@ export class Params {
     const r = this.params.get(key);
     if (r != v) {
       this.changeCount += 1;
-      console.log('Param.set ', key, v)
+      // console.log('Param.set ', key, v)
       this.params.set(key, v);
     }
   }
@@ -89,7 +89,7 @@ export enum PositionRef {
 export interface IEdit {
   positionRef: PositionRef;
   variable: string;
-  update: (v: Value, ref: PositionRef, deltaX: number, deltaY: number) => Value;
+  update: (v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params) => Value;
 }
 
 export interface ILayout {
@@ -113,7 +113,8 @@ export interface ILayoutGenerator {
   params: () => Params;
   reset: () => void;
   next: () => ILayout | undefined;
-  lookup: (name: string, rect?: IRect) => ILayout | undefined;
+  lookup: (name: string) => ILayout | undefined;
+  create?: (name: string, position: IPosition) => ILayout | undefined;
   api: () => API | undefined;
 }
 
@@ -175,7 +176,7 @@ export class ResizeLayout implements ILayoutGenerator {
 }
 
 export type IInit = (params: Params, layouts?: Map<string, ILayout>) => Map<string, ILayout>;
-export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>) => ILayout;
+export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition) => ILayout;
 export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _name: string;
   private _params: Params;
@@ -211,7 +212,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return this._api;
   }
 
-  lookup = (name: string, rect?: IRect): ILayout | undefined => {
+  lookup = (name: string): ILayout | undefined => {
     const parts = name.split('/');
     let r = this.layouts.get(parts[0]);
     if (r) {
@@ -222,16 +223,20 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
         }
       }
       return Object.assign({}, r);
-    } else if (this._create) {
-      const l = this._create(name, this._params, this.layouts);
-      return Object.assign({}, l);
+    }
+    return undefined;
+  }
+
+  create = (name: string, position: IPosition) => {
+    if (this._create) {
+      return this._create(name, this._params, this.layouts, position);
     }
     return undefined;
   }
 
   reset = () => {
     if (this._params.changed()) {
-      console.log('reset update layouts')
+      // console.log('reset update layouts')
       this.layouts = this._init(this._params, this.layouts); // unless external
     }
     this.state = this.init;
@@ -592,76 +597,175 @@ export function widthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: 
   return width + deltaX;
 }
 
+export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
+  const width = params.get('width') as number;
+  const height = params.get('height') as number;
+
+  const vr = v as IPosition;
+
+  const x = vr.position.x + deltaX;
+  const y = vr.position.y + deltaY;
+
+  return {
+    origin: vr.origin,
+    position: {
+      x: x,
+      y: y
+    },
+    def: {
+      x: width,
+      y: height
+    },
+    size: vr.size
+  }
+}
+
+export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
+
+  const vr = v as IPosition;
+  return {
+    origin: vr.origin,
+    position: vr.position,
+    def: vr.def,
+    size: {
+      x: vr.size.x + deltaX,
+      y: vr.size.y
+    }
+  }
+}
+
+export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
+
+  const vr = v as IPosition;
+  return {
+    origin: vr.origin,
+    position: vr.position,
+    def: vr.def,
+    size: {
+      x: vr.size.x,
+      y: vr.size.y + deltaY
+    }
+  }
+}
+
+
 export function DiagramLayout(name: string) {
 
+  function computePosition(position: IPosition, width: number, height: number): IRect {
+    let x = 0;
+    let y = 0;
+    switch (position.origin.x) {
+      case OriginX.None: {
+        x = position.position.x;
+        break; 
+      }
+      case OriginX.Left: {
+        x = 0 + position.position.x * width / position.def!.x;
+        break;
+      }
+      case OriginX.Q1: {
+        x = width / 4 + position.position.x * width / position.def!.x;
+        break;  
+      }
+      case OriginX.Center: {
+        x = width / 2 + position.position.x * width / position.def!.x;
+        break;
+      }
+      case OriginX.Q3: {
+        x = 3 * width / 4 + position.position.x * width / position.def!.x;
+        break;  
+      }
+      case OriginX.Right: {
+        x = width + position.position.x * width / position.def!.x;
+        break;
+      }
+      default: {
+        console.error(`computePosition: Illegal value of position.origin.x`, position.origin.x);
+      }
+    }
+    switch (position.origin.y) {
+      case OriginY.None: {
+        y = position.position.y;
+        break; 
+      }
+      case OriginY.Top: {
+        y = 0 + position.position.y *  height / position.def!.y;
+        break;
+      }
+      case OriginY.Q1: {
+        y = height / 4 + position.position.y * height / position.def!.y;
+        break;
+      }
+      case OriginY.Center: {
+        y = height / 2 + position.position.y * height / position.def!.y;
+        break;
+      }
+      case OriginY.Q3: {
+        y = 3 * height / 4 + position.position.y * height / position.def!.y;
+        break;
+      }
+      case OriginY.Bottom: {
+        y = height + position.position.y * height / position.def!.y;
+        break;
+      }
+      default: {
+        console.error(`computePosition: Illegal value of position.origin.y`, position.origin.y);
+      }
+    }
+
+    return {
+      top: y,
+      left: x,
+      bottom: y + position.size.y,
+      right: x + position.size.x
+    }
+  }
   const params = new Params([
     ['width', 0],
     ['height', 0]
   ])
 
   function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout> {
+    const width = params.get('width') as number;
+    const height = params.get('height') as number;
 
-    // const box = function (): ILayout {
-    //   const width = params.get('width') as number;
-    //   const height = params.get('height') as number;
-    //   const size: IPoint = {x: 100, y: 100};
-
-    //   let boxRect = { top: height/2 - size.x/2 , left: width/2 - size.y/2, bottom: 200, right: 200 }; 
-    //   const boxRect = params.get('boxRect') as IRect;
-    //   let location: IRect = boxRect;
-    //   return {
-    //     name: 'box',
-    //     editSize: [
-    //       { positionRef: PositionRef.rect, variable: 'boxRect', update: rectUpdate },
-    //       { positionRef: PositionRef.width_right, variable: 'boxRect', update: rectWidthUpdate }
-    //     ],
-    //     location: location
-    //   }
-    // }();
-    // }
     if (!layouts) {
       const l: Map<string, ILayout> = new Map();
       return l;
-    } else {
+    } 
+    else {
       layouts.forEach((layout) => {
-        let r = params.get(layout.name);
-        if (r) {
-          console.log('init ' + layout.name + ' params', r)
-          layout.location = r as IRect;
-          layouts.set(layout.name, layout) ;
-          
+        let p = params.get(layout.name) as IPosition;
+        if (p) {
+          // console.log('init ' + layout.name + ' params', p)
+          layout.location = computePosition(p, width, height);
+          layouts.set(layout.name, layout);
         }
       });
     }
     return layouts;
   }
 
-  function create(name: string, params: Params, layouts: Map<string, ILayout>, rect?: IRect): ILayout {
+  function create(name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition): ILayout {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
-    const size: IPoint = { x: 50, y: 50 };
 
-    const boxRect = rect ? rect : {
-      top: height / 2 - size.y - size.y / 4,
-      left: width / 2 - size.x - size.x / 4,
-      bottom: size.y,
-      right: size.x
-    };
-    boxRect.bottom = boxRect.top + size.y;
-    boxRect.right = boxRect.left + size.x;
+    position.def = {
+      x: width,
+      y: height
+    }
 
-    let location: IRect = boxRect;
     const box = {
       name: name,
       editSize: [
-        { positionRef: PositionRef.rect, variable: name, update: rectUpdate },
-        { positionRef: PositionRef.width_right, variable: name, update: rectWidthUpdate },
-        { positionRef: PositionRef.height_bottom, variable: name, update: rectHeightUpdate }
+        { positionRef: PositionRef.rect, variable: name, update: positionUpdate },
+        { positionRef: PositionRef.width_right, variable: name, update: positionWidthUpdate },
+        { positionRef: PositionRef.height_bottom, variable: name, update: positionHeightUpdate }
       ],
-      location: location
+      location: computePosition(position, width, height)
     }
     layouts.set(box.name, box);
-    params.set(name, boxRect);
+    params.set(name, position);
     return box;
   }
 
