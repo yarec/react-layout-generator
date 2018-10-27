@@ -96,7 +96,7 @@ export interface ILayout {
   name: string;
   location: IRect; // relative to origin
   editSize?: Array<IEdit>;
-  editVisiblity?: boolean;
+  editVisibility?: boolean;
   style?: React.CSSProperties;
   g?: ILayoutGenerator;
 }
@@ -648,78 +648,80 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
   }
 }
 
+export function computePosition(position: IPosition, width: number, height: number): IRect {
+  let x = 0;
+  let y = 0;
+  switch (position.origin.x) {
+    case OriginX.None: {
+      x = position.position.x;
+      break; 
+    }
+    case OriginX.Left: {
+      x = 0 + position.position.x * width / position.def!.x;
+      break;
+    }
+    case OriginX.Q1: {
+      x = width / 4 + position.position.x * width / position.def!.x;
+      break;  
+    }
+    case OriginX.Center: {
+      x = width / 2 + position.position.x * width / position.def!.x;
+      break;
+    }
+    case OriginX.Q3: {
+      x = 3 * width / 4 + position.position.x * width / position.def!.x;
+      break;  
+    }
+    case OriginX.Right: {
+      x = width + position.position.x * width / position.def!.x;
+      break;
+    }
+    default: {
+      console.error(`computePosition: Illegal value of position.origin.x`, position.origin.x);
+    }
+  }
+  switch (position.origin.y) {
+    case OriginY.None: {
+      y = position.position.y;
+      break; 
+    }
+    case OriginY.Top: {
+      y = 0 + position.position.y *  height / position.def!.y;
+      break;
+    }
+    case OriginY.Q1: {
+      y = height / 4 + position.position.y * height / position.def!.y;
+      break;
+    }
+    case OriginY.Center: {
+      y = height / 2 + position.position.y * height / position.def!.y;
+      break;
+    }
+    case OriginY.Q3: {
+      y = 3 * height / 4 + position.position.y * height / position.def!.y;
+      break;
+    }
+    case OriginY.Bottom: {
+      y = height + position.position.y * height / position.def!.y;
+      break;
+    }
+    default: {
+      console.error(`computePosition: Illegal value of position.origin.y`, position.origin.y);
+    }
+  }
+
+  return {
+    top: y,
+    left: x,
+    bottom: y + position.size.y,
+    right: x + position.size.x
+  }
+}
 
 export function DiagramLayout(name: string) {
 
-  function computePosition(position: IPosition, width: number, height: number): IRect {
-    let x = 0;
-    let y = 0;
-    switch (position.origin.x) {
-      case OriginX.None: {
-        x = position.position.x;
-        break; 
-      }
-      case OriginX.Left: {
-        x = 0 + position.position.x * width / position.def!.x;
-        break;
-      }
-      case OriginX.Q1: {
-        x = width / 4 + position.position.x * width / position.def!.x;
-        break;  
-      }
-      case OriginX.Center: {
-        x = width / 2 + position.position.x * width / position.def!.x;
-        break;
-      }
-      case OriginX.Q3: {
-        x = 3 * width / 4 + position.position.x * width / position.def!.x;
-        break;  
-      }
-      case OriginX.Right: {
-        x = width + position.position.x * width / position.def!.x;
-        break;
-      }
-      default: {
-        console.error(`computePosition: Illegal value of position.origin.x`, position.origin.x);
-      }
-    }
-    switch (position.origin.y) {
-      case OriginY.None: {
-        y = position.position.y;
-        break; 
-      }
-      case OriginY.Top: {
-        y = 0 + position.position.y *  height / position.def!.y;
-        break;
-      }
-      case OriginY.Q1: {
-        y = height / 4 + position.position.y * height / position.def!.y;
-        break;
-      }
-      case OriginY.Center: {
-        y = height / 2 + position.position.y * height / position.def!.y;
-        break;
-      }
-      case OriginY.Q3: {
-        y = 3 * height / 4 + position.position.y * height / position.def!.y;
-        break;
-      }
-      case OriginY.Bottom: {
-        y = height + position.position.y * height / position.def!.y;
-        break;
-      }
-      default: {
-        console.error(`computePosition: Illegal value of position.origin.y`, position.origin.y);
-      }
-    }
-
-    return {
-      top: y,
-      left: x,
-      bottom: y + position.size.y,
-      right: x + position.size.x
-    }
-  }
+  
+  
   const params = new Params([
     ['width', 0],
     ['height', 0]

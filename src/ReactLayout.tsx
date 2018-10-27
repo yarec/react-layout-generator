@@ -1,9 +1,9 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-
-import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
-import { IPoint, IPosition } from './types';
-// import { string } from 'prop-types';
+import RLGHandle from './RLGHandle'
+import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef } from './LayoutGenerator';
+import { IPosition } from './types';
+import RLGQuadTree from './RLGQuadTree';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
 
@@ -17,130 +17,6 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
     position: 'absolute' as 'absolute',
     ...style
   };
-}
-
-interface editStyleProps {
-  cursor: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-function editStyle(props: editStyleProps): React.CSSProperties {
-  //  console.log('editStyle', props.x, props.y, props.width, props.height);
-
-  // console.log(style);
-  return {
-    boxSizing: 'border-box' as 'border-box',
-    transformOrigin: 0,
-    transform: `translate(${props.x}px, ${props.y}px)`,
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    position: 'absolute' as 'absolute',
-    cursor: props.cursor,
-    background: 'rgba(0, 0, 0, 0.0)',
-    zIndex: 1000,
-    borderWidth: '4px'
-  }
-}
-
-export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
-  rlgDrag: editStyleProps;
-  params: Params;
-  edit: IEdit;
-  layout: ILayout;
-  onUpdate: () => void
-}
-
-interface RLGHandleState {
-
-}
-
-export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
-
-  value: Value | undefined;
-  origin: IPoint;
-
-  constructor(props: RLGHandleProps) {
-    super(props);
-    this.state = {
-
-    }
-    // console.log('RLGHandleProps', this.props);
-  }
-
-  addEventListeners() {
-    document.addEventListener('mouseup', this.onHtmlMouseUp);
-    document.addEventListener('mousemove', this.onHtmlMouseMove);
-    document.addEventListener('touchmove', this.onHtmlTouchMove);
-  }
-
-  removeEventListeners() {
-    document.removeEventListener('mouseup', this.onHtmlMouseUp);
-    document.removeEventListener('mousemove', this.onHtmlMouseMove);
-    document.removeEventListener('touchmove', this.onHtmlTouchMove);
-  }
-
-  initUpdate(x: number, y: number) {
-    this.origin = { x, y };
-    this.value = this.props.params.get(this.props.edit.variable);
-  }
-
-  moveUpdate(x: number, y: number) {
-
-    let value;
-    if (typeof this.value === 'number') {
-      value = this.value;
-    } else {
-      // Clone value
-      value = Object.assign({}, this.value);
-    }
-
-    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
-    this.props.params.set(this.props.edit.variable, v);
-
-    this.props.onUpdate();
-  }
-
-  onMouseDown = (event: React.MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.addEventListeners();
-      this.initUpdate(event.clientX, event.clientY);
-      // console.log('onMouseDown', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlMouseMove = (event: MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.moveUpdate(event.clientX, event.clientY);
-      // console.log('onMouseMove', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlMouseUp = (event: MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.removeEventListeners();
-      // console.log('onMouseUp', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlTouchMove = (event: TouchEvent) => {
-    // TODO implement support for touch
-  }
-
-  render = () => {
-    // console.log('RLGHandleProps', this.props.rlgDrag);
-    return (
-      <div style={editStyle(this.props.rlgDrag)}
-        onMouseDown={this.onMouseDown}
-      />
-    );
-  }
 }
 
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
@@ -163,6 +39,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   editLayout: boolean = false;
   editOverlay: Array<ILayout> = [];
   startRendering: number;
+  quadTree: RLGQuadTree;
 
   constructor(props: ReactLayoutProps) {
     super(props);
@@ -185,6 +62,8 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
+      this.initLayout();
+
     }
   }
 
@@ -195,6 +74,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     p.set('width', this.state.width);
     p.set('height', this.state.height);
     this.derivedLayout.reset();
+    this.quadTree = new RLGQuadTree(0, 0, this.state.width, this.state.height);
   }
 
   createPositionedElement = (child: React.ReactElement<any>, name: string, position: IPosition) => {
@@ -341,6 +221,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 onUpdate={this.onUpdate}
                 edit={item}
                 layout={layout}
+                quadTree={this.quadTree}
                 params={this.derivedLayout.params()}
                 rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
             }
