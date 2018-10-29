@@ -75,16 +75,3 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
 render(<ExampleLayout />, document.getElementById("root"));
 
 
-{/* <div
-  data-layout={{
-    name: 'box',
-    position: {
-      origin: { x: OriginX.Center, y: OriginY.Center },
-      position: { x: -50, y: -75 },
-      percent: { x: 0, y: 0 },
-      size: { x: 100, y: 150 }
-    }
-  }}
-  style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-  <img width={100} height={150} src={card2C} />
-</div> */}

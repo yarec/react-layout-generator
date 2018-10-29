@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { /* computePosition, */ ILayout, IEdit,  PositionRef, Params, Value } from './LayoutGenerator';
-import { IPoint, IPosition } from './types';
+import { computePosition, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
+import { IPoint, IPosition, IRect } from './types';
 import RLGQuadTree, { IBounds } from './RLGQuadTree';
 // import { IRect } from 'lib/src/types';
 
@@ -37,6 +37,7 @@ export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
   edit: IEdit;
   layout: ILayout;
   quadTree: RLGQuadTree;
+  boundary: IRect;
   onUpdate: () => void
 }
 
@@ -74,62 +75,220 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     this.value = this.props.params.get(this.props.edit.variable);
   }
 
-  getExtent(v: Value, ref: PositionRef): IBounds {
+  pin(v: Value, ref: PositionRef, item: IBounds): Value {
+    let r: Value = v;
+
+    let deltaLeft = item.x - this.props.boundary.left;
+    let deltaRight = this.props.boundary.right - item.right;
+    let deltaTop = item.y - this.props.boundary.top;
+    let deltaBottom = this.props.boundary.bottom - item.bottom;
+
+    if (deltaLeft >= 0) {
+      deltaLeft = 0;
+    }
+
+    if (deltaRight <= 0) {
+      deltaRight = 0;
+    }
+
+    if (deltaTop <= 0) {
+      deltaTop = 0;
+    }
+
+    if (deltaBottom <= 0) {
+      deltaBottom = 0;
+    }
+
+    switch (ref) {
+      case PositionRef.rect: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left - (deltaLeft + deltaRight),
+          top: vr.top - (deltaTop + deltaBottom),
+          right: vr.right - (deltaLeft + deltaRight),
+          bottom: vr.bottom - (deltaTop + deltaBottom)
+        }
+        break;
+      }
+      case PositionRef.position: {
+        const vr = v as IPosition;
+        const width = this.props.rlgDrag.width;
+        const height = this.props.rlgDrag.height;
+        r = {
+          location: {
+            // In percent
+            x: (vr.location.x * width - (deltaLeft + deltaRight)) / width,
+            y: (vr.location.y * height - (deltaTop + deltaBottom)) / height
+          },
+          size: vr.size
+        }
+        break;
+      }
+      case PositionRef.scalar_height_top: {
+        const vr = v as number;
+        r = vr - (deltaTop + deltaBottom);
+        break;
+      }
+      case PositionRef.scalar_height_bottom: {
+        const vr = v as number;
+        r = vr - (deltaTop + deltaBottom);
+        break;
+      }
+      case PositionRef.scalar_width_left: {
+        const vr = v as number;
+        r = vr - (deltaLeft + deltaRight);
+        break;
+      }
+      case PositionRef.scalar_width_right: {
+        const vr = v as number;
+        r = vr - (deltaLeft + deltaRight);
+        break;
+      }
+      case PositionRef.rect_point_left_top: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left - (deltaLeft + deltaRight),
+          top: vr.top - (deltaTop + deltaBottom),
+          right: vr.right,
+          bottom: vr.bottom
+        }
+        break;
+      }
+      case PositionRef.rect_point_right_top: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left,
+          top: vr.top - (deltaTop + deltaBottom),
+          right: vr.right - (deltaLeft + deltaRight),
+          bottom: vr.bottom
+        }
+        break;
+      }
+      case PositionRef.rect_point_left_bottom: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left - (deltaLeft + deltaRight),
+          top: vr.top,
+          right: vr.right,
+          bottom: vr.bottom - (deltaTop + deltaBottom)
+        }
+        break;
+      }
+      case PositionRef.rect_point_right_bottom: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left,
+          top: vr.top,
+          right: vr.right - (deltaLeft + deltaRight),
+          bottom: vr.bottom - (deltaTop + deltaBottom)
+        }
+        break;
+      }
+      case PositionRef.position_point_left_top: {
+        const vr = v as IPosition;
+        r = {
+          location: {
+            // In percent
+            x: vr.location.x  - (deltaLeft + deltaRight),
+            y: vr.location.y - (deltaTop + deltaBottom),
+          },
+          size: {
+            x: vr.size.x,
+            y: vr.size.y
+          }
+        }
+        break;
+      }
+      case PositionRef.rect_point_right_top: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left,
+          top: vr.top - (deltaTop + deltaBottom),
+          right: vr.right - (deltaLeft + deltaRight),
+          bottom: vr.bottom
+        }
+        break;
+      }
+      case PositionRef.rect_point_left_bottom: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left - (deltaLeft + deltaRight),
+          top: vr.top,
+          right: vr.right,
+          bottom: vr.bottom - (deltaTop + deltaBottom)
+        }
+        break;
+      }
+      case PositionRef.rect_point_right_bottom: {
+        const vr = v as IRect;
+        r = {
+          left: vr.left,
+          top: vr.top,
+          right: vr.right - (deltaLeft + deltaRight),
+          bottom: vr.bottom - (deltaTop + deltaBottom)
+        }
+        break;
+      }
+      default: {
+        console.error(`pin refPosition: unexpected value`, ref);
+        break;
+      }
+    }
+    return r;
+  }
+
+  extent(v: Value, ref: PositionRef): IBounds {
     let left = this.props.layout.location.left;
     let top = this.props.layout.location.top;
     let right = this.props.layout.location.right;
     let bottom = this.props.layout.location.bottom;
     switch (ref) {
       case PositionRef.rect: {
-        const vr = v as IPosition;
-        left = vr.position.x;
-        top = vr.position.y;
-        right = vr.size.x;
-        bottom = vr.size.y;
+        const vr = v as IRect;
+        left = vr.left;
+        top = vr.top;
+        right = vr.right;
+        bottom = vr.bottom;
         break;
       }
-      case PositionRef.height_top: {
+      case PositionRef.position: {
+        const vr = v as IPosition;
+        const r = computePosition(vr, this.props.rlgDrag.width, this.props.rlgDrag.height);
+        left = r.left;
+        top = r.top;
+        right = r.right;
+        bottom = r.bottom;
+        break;
+      }
+      case PositionRef.scalar_height_top: {
         top = this.origin.y - (v as number);
         break;
       }
-      case PositionRef.height_bottom: {
+      case PositionRef.scalar_height_bottom: {
         bottom += (v as number)
         break;
       }
-      case PositionRef.width_left: {
+      case PositionRef.scalar_width_left: {
         left = this.origin.y - (v as number);
         break;
       }
-      case PositionRef.width_right: {
+      case PositionRef.scalar_width_right: {
         right += (v as number);
         break;
       }
-      case PositionRef.point_left_top: {
-        const p = v as IPoint;
-        left = p.x;
-        top = p.y;
-        break;
-      }
-      case PositionRef.point_right_top: {
-        const p = v as IPoint;
-        right = p.x;
-        top = p.y;
-        break;
-      }
-      case PositionRef.point_left_bottom: {
-        const p = v as IPoint;
-        left = p.x;
-        bottom = p.y;
-        break;
-      }
-      case PositionRef.point_right_bottom: {
-        const p = v as IPoint;
-        right = p.x;
-        bottom = p.y;
+      case PositionRef.rect_point_left_top: 
+      case PositionRef.rect_point_right_top:
+      case PositionRef.rect_point_left_bottom: 
+      case PositionRef.rect_point_right_bottom: {
+        const vr = v as IRect;
+        left = vr.left;
+        top = vr.top;
+        right = vr.right;
+        bottom = vr.bottom;
         break;
       }
       default: {
-        console.error(`refPosition: Illegal value`, ref);
+        console.error(`extent refPosition: Illegal value`, ref);
         break;
       }
     }
@@ -161,12 +320,20 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
 
     const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
     // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
-    // const r = this.getExtent(v, this.props.edit.positionRef);
-    // if (this.props.quadTree.getIndex(r) != -1) {
-      this.props.params.set(this.props.edit.variable, v);
-    // }
-
-    this.props.onUpdate();
+    const r = this.extent(v, this.props.edit.positionRef);
+    console.log('moveUpdate', r);
+    if (r.x >= this.props.boundary.left &&
+      r.right <= this.props.boundary.right &&
+      r.y >= this.props.boundary.top &&
+      r.bottom <= this.props.boundary.bottom
+    ) {
+      this.props.params.set(this.props.edit.variable, v, this.props.layout);
+      this.props.onUpdate();
+    } else {
+      const uv = this.pin(v, this.props.edit.positionRef, r);
+      this.props.params.set(this.props.edit.variable, uv, this.props.layout);
+      console.log('moveUpdate pin: ', uv);
+    }
   }
 
   onMouseDown = (event: React.MouseEvent) => {
@@ -174,7 +341,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       event.preventDefault();
       this.addEventListeners();
       this.initUpdate(event.clientX, event.clientY);
-      // console.log('onMouseDown', event.clientX, event.clientY);
+      console.log('onMouseDown', event.clientX, event.clientY);
     }
   }
 

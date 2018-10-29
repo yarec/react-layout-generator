@@ -101,8 +101,8 @@ export default class RLGQuadTree {
       height: height,
       subWidth: Math.floor(width / 2),
       subHeight: Math.floor(height / 2),
-      right: Math.round(x) + Math.floor(width / 2),
-      bottom: Math.round(y) + Math.floor(height / 2)
+      right: Math.round(x) + Math.floor(width),
+      bottom: Math.round(y) + Math.floor(height)
     };
 
     this.objects = [];

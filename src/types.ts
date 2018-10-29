@@ -1,15 +1,4 @@
-// export interface Layout {
-//   viewport: {
-//     w: number;
-//     h: number;
-//   };
-//   x: number;
-//   y: number;
-//   w: number;
-//   h: number;
-//   static: boolean;
-//   active: boolean;
-// }
+
 
 export interface IRect {
   top: number;
@@ -24,7 +13,7 @@ export function translate(r: IRect, p: IPoint): IRect {
     left: r.left + p.x,
     bottom: r.bottom + p.y,
     right: r.right + p.x
-  };  
+  };
 }
 
 export function scale(r: IRect, p: IPoint): IRect {
@@ -33,7 +22,7 @@ export function scale(r: IRect, p: IPoint): IRect {
     left: r.left * p.x,
     bottom: r.bottom * p.y,
     right: r.right * p.x
-  };  
+  };
 }
 
 export function width(r: IRect) {
@@ -82,36 +71,18 @@ export class Rect implements IRect {
       right: this.right + rect.right
     };
   }
-}
 
-export enum OriginX {
-  None = 1,
-  Left,
-  Q1,
-  Center,
-  Q3,
-  Right
-}
-
-export enum OriginY {
-  None = 1,
-  Top,
-  Q1,
-  Center,
-  Q3,
-  Bottom
-}
-
-export interface Origin {
-  x: OriginX;
-  y: OriginY;
+  intersect(r: Rect): boolean {
+    return !(r.left > this.right
+      || r.right < this.left
+      || r.top > this.bottom
+      || r.bottom < this.top);
+  }
 }
 
 export interface IPosition {
-  origin: Origin;  
-  position: IPoint;
-  size: IPoint;
-  def?: IPoint;
+  location: IPoint; // in percent
+  size: IPoint; // in absolute
 }
 
 export interface IPoint {

@@ -1,4 +1,4 @@
-import { height, IRect, translate, width, IPoint, IPosition, OriginX, OriginY } from './types';
+import { height, IRect, translate, width, IPoint, IPosition } from './types';
 // import { string } from 'prop-types';
 // import { number } from 'prop-types';
 // import { reduceRight } from 'async';
@@ -8,16 +8,27 @@ export type Value = number | IRect | IPoint | IPosition | FValue;
 
 export class Params {
   params: Map<string, Value>;
-  changeCount: number = 0;
+  _changed: Array<ILayout> = new Array<ILayout>();
+  changeCount: number;
 
   constructor(values: Array<[string, Value]>) {
     this.params = new Map(values);
+    this.changeCount = 0;
   }
 
   changed(): boolean {
-    const changed = this.changeCount != 0;
+    return this.changeCount != 0 || this._changed.length != 0;
+  }
+
+  updates(): Array<ILayout> {
+    const r: Array<ILayout> = new Array<ILayout>();
+    this._changed.forEach((layout) => {
+      r.push(layout);
+    });
+    // Object.assign({}, this._changed);
+    this._changed = new Array<ILayout>();
     this.changeCount = 0;
-    return changed;
+    return r;
   }
 
   // define(key: string, v: number): number {
@@ -40,13 +51,22 @@ export class Params {
     return r;
   }
 
-  set(key: string, v: Value) {
+  touch(layout: ILayout) {
+    this._changed.push(layout);
+  }
+
+  set(key: string, v: Value, layout?: ILayout) {
     const r = this.params.get(key);
     if (r != v) {
-      this.changeCount += 1;
       // console.log('Param.set ', key, v)
+      if (layout) {
+        this._changed.push(layout)
+      }
+      this.changeCount += 1;
       this.params.set(key, v);
+      return true;
     }
+    return false;
   }
 }
 
@@ -72,17 +92,29 @@ export class API {
 
   }
 }
-
 export enum PositionRef {
   rect = 1,
-  height_top,
-  height_bottom,
-  width_left,
-  width_right,
-  point_left_top,
-  point_right_top,
-  point_left_bottom,
-  point_right_bottom
+  position,
+  scalar_height_top,
+  scalar_height_bottom,
+  scalar_width_left,
+  scalar_width_right,
+  rect_height_top,
+  rect_height_bottom,
+  rect_width_left,
+  rect_width_right,
+  position_height_top,
+  position_height_bottom,
+  position_width_left,
+  position_width_right,
+  rect_point_left_top,
+  rect_point_right_top,
+  rect_point_left_bottom,
+  rect_point_right_bottom,
+  position_point_left_top,
+  position_point_right_top,
+  position_point_left_bottom,
+  position_point_right_bottom
 };
 
 
@@ -96,8 +128,8 @@ export interface ILayout {
   name: string;
   location: IRect; // relative to origin
   editSize?: Array<IEdit>;
-  editVisibility?: boolean;
-  style?: React.CSSProperties;
+  // editVisibility?: boolean;
+  // style?: React.CSSProperties;
   g?: ILayoutGenerator;
 }
 
@@ -114,6 +146,7 @@ export interface ILayoutGenerator {
   reset: () => void;
   next: () => ILayout | undefined;
   lookup: (name: string) => ILayout | undefined;
+  layouts: () => Map<string, ILayout> | undefined;
   create?: (name: string, position: IPosition) => ILayout | undefined;
   api: () => API | undefined;
 }
@@ -137,6 +170,10 @@ export class ResizeLayout implements ILayoutGenerator {
 
   params = () => {
     return this.g.params();
+  }
+
+  layouts = () => {
+    return this.g.layouts();
   }
 
   api = () => {
@@ -177,14 +214,15 @@ export class ResizeLayout implements ILayoutGenerator {
 
 export type IInit = (params: Params, layouts?: Map<string, ILayout>) => Map<string, ILayout>;
 export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition) => ILayout;
+
 export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _name: string;
   private _params: Params;
   private _api: API | undefined;
   private _init: IInit;
   private _create: ICreate | undefined;
-  layouts: Map<string, ILayout>;
-  layoutsIterator: IterableIterator<ILayout>;
+  private _layouts: Map<string, ILayout>;
+  private _layoutsIterator: IterableIterator<ILayout> | undefined;
   currentLayout: ILayout | undefined;
 
   state: () => ILayout | undefined;
@@ -193,8 +231,8 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     this._name = name;
     this._init = init;
     this._create = create;
-    this.layouts = init(params);
-    this.layoutsIterator = this.layouts.values();
+    this._layouts = new Map(); // init(params);
+    this._layoutsIterator = this._layouts.values();
     this.state = this.init;
     this._params = params;
     this._api = api;
@@ -208,13 +246,17 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return this._params;
   }
 
+  layouts = () => {
+    return this._layouts;
+  }
+
   api = () => {
     return this._api;
   }
 
   lookup = (name: string): ILayout | undefined => {
     const parts = name.split('/');
-    let r = this.layouts.get(parts[0]);
+    let r = this._layouts.get(parts[0]);
     if (r) {
       if (r.g) {
         let n = r.g.lookup(name);
@@ -229,19 +271,20 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
 
   create = (name: string, position: IPosition) => {
     if (this._create) {
-      return this._create(name, this._params, this.layouts, position);
+      return this._create(name, this._params, this._layouts, position);
     }
     return undefined;
   }
 
   reset = () => {
-    if (this._params.changed()) {
+    // const changed: Array<ILayout> = this._params.changed();
+    if (this._params.changed() || this._layouts.size === 0) {
       // console.log('reset update layouts')
-      this.layouts = this._init(this._params, this.layouts); // unless external
+      this._layouts = this._init(this._params, this._layouts); // unless external
     }
     this.state = this.init;
-    this.layoutsIterator = this.layouts.values();
-    this.layouts.forEach((item: ILayout) => {
+    this._layoutsIterator = this._layouts.values();
+    this._layouts.forEach((item: ILayout) => {
       if (item.g) {
         item.g.reset();
       }
@@ -253,7 +296,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   }
 
   private nextBlock = (): ILayout | undefined => {
-    this.currentLayout = this.layoutsIterator.next().value;
+    this.currentLayout = this._layoutsIterator!.next().value;
     if (this.currentLayout) {
       if (this.currentLayout.g) {
         this.state = this.nestedBlock;
@@ -337,6 +380,10 @@ export class GridGenerator implements ILayoutGenerator {
 
   params = () => {
     return this._params;
+  }
+
+  layouts = () => {
+    return undefined;
   }
 
   api = () => {
@@ -443,7 +490,7 @@ export function DesktopLayout(name: string) {
       //  console.log('leftSide', location);
       return {
         name: 'leftSide',
-        editSize: [{ positionRef: PositionRef.width_right, variable: 'leftSideWidth', update: widthUpdate }],
+        editSize: [{ positionRef: PositionRef.scalar_width_right, variable: 'leftSideWidth', update: scalarWidthUpdate }],
         location: location
       }
     }();
@@ -469,6 +516,7 @@ export function DesktopLayout(name: string) {
       // console.log('rightSide', location);
       return {
         name: 'rightSide',
+        editSize: [{ positionRef: PositionRef.scalar_width_left, variable: 'rightSideWidth', update: scalarWidthUpdate }],
         location: location
       }
     }();
@@ -592,7 +640,7 @@ export function rectHeightUpdate(v: Value, ref: PositionRef, deltaX: number, del
   }
 }
 
-export function widthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
+export function scalarWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
   const width = v as number;
   return width + deltaX;
 }
@@ -603,18 +651,13 @@ export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, delta
 
   const vr = v as IPosition;
 
-  const x = vr.position.x + deltaX;
-  const y = vr.position.y + deltaY;
+  const x = vr.location.x * width / 100 + deltaX;
+  const y = vr.location.y * height / 100 + deltaY;
 
   return {
-    origin: vr.origin,
-    position: {
-      x: x,
-      y: y
-    },
-    def: {
-      x: width,
-      y: height
+    location: {
+      x: x / width * 100,
+      y: y / height * 100
     },
     size: vr.size
   }
@@ -624,9 +667,7 @@ export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, 
 
   const vr = v as IPosition;
   return {
-    origin: vr.origin,
-    position: vr.position,
-    def: vr.def,
+    location: vr.location,
     size: {
       x: vr.size.x + deltaX,
       y: vr.size.y
@@ -638,9 +679,7 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
 
   const vr = v as IPosition;
   return {
-    origin: vr.origin,
-    position: vr.position,
-    def: vr.def,
+    location: vr.location,
     size: {
       x: vr.size.x,
       y: vr.size.y + deltaY
@@ -649,94 +688,35 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
 }
 
 export function computePosition(position: IPosition, width: number, height: number): IRect {
-  let x = 0;
-  let y = 0;
-  switch (position.origin.x) {
-    case OriginX.None: {
-      x = position.position.x;
-      break; 
-    }
-    case OriginX.Left: {
-      x = 0 + position.position.x * width / position.def!.x;
-      break;
-    }
-    case OriginX.Q1: {
-      x = width / 4 + position.position.x * width / position.def!.x;
-      break;  
-    }
-    case OriginX.Center: {
-      x = width / 2 + position.position.x * width / position.def!.x;
-      break;
-    }
-    case OriginX.Q3: {
-      x = 3 * width / 4 + position.position.x * width / position.def!.x;
-      break;  
-    }
-    case OriginX.Right: {
-      x = width + position.position.x * width / position.def!.x;
-      break;
-    }
-    default: {
-      console.error(`computePosition: Illegal value of position.origin.x`, position.origin.x);
-    }
-  }
-  switch (position.origin.y) {
-    case OriginY.None: {
-      y = position.position.y;
-      break; 
-    }
-    case OriginY.Top: {
-      y = 0 + position.position.y *  height / position.def!.y;
-      break;
-    }
-    case OriginY.Q1: {
-      y = height / 4 + position.position.y * height / position.def!.y;
-      break;
-    }
-    case OriginY.Center: {
-      y = height / 2 + position.position.y * height / position.def!.y;
-      break;
-    }
-    case OriginY.Q3: {
-      y = 3 * height / 4 + position.position.y * height / position.def!.y;
-      break;
-    }
-    case OriginY.Bottom: {
-      y = height + position.position.y * height / position.def!.y;
-      break;
-    }
-    default: {
-      console.error(`computePosition: Illegal value of position.origin.y`, position.origin.y);
-    }
+  const top = position.location.y * height / 100 - (position.size.x / 2);
+  const left = position.location.x * width / 100 - (position.size.y / 2);
+  console.log('computePosition')
+  return {
+    top: top,
+    left: left,
+    bottom: top + position.size.y,
+    right: left + position.size.x
   }
 
-  return {
-    top: y,
-    left: x,
-    bottom: y + position.size.y,
-    right: x + position.size.x
-  }
 }
 
 export function DiagramLayout(name: string) {
-
-  
-  
   const params = new Params([
     ['width', 0],
     ['height', 0]
   ])
 
-  function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout> {
+  function init(params: Params, layouts?: Map<string, ILayout>)  {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
+    let updates: Array<ILayout> = params.updates();
 
     if (!layouts) {
       const l: Map<string, ILayout> = new Map();
       return l;
-    } 
-    else {
-      layouts.forEach((layout) => {
+    }
+    else if (updates && layouts) {
+      updates.forEach((layout) => {
         let p = params.get(layout.name) as IPosition;
         if (p) {
           // console.log('init ' + layout.name + ' params', p)
@@ -752,17 +732,12 @@ export function DiagramLayout(name: string) {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
 
-    position.def = {
-      x: width,
-      y: height
-    }
-
     const box = {
       name: name,
       editSize: [
-        { positionRef: PositionRef.rect, variable: name, update: positionUpdate },
-        { positionRef: PositionRef.width_right, variable: name, update: positionWidthUpdate },
-        { positionRef: PositionRef.height_bottom, variable: name, update: positionHeightUpdate }
+        { positionRef: PositionRef.position, variable: name, update: positionUpdate },
+        { positionRef: PositionRef.position_width_right, variable: name, update: positionWidthUpdate },
+        { positionRef: PositionRef.position_height_bottom, variable: name, update: positionHeightUpdate }
       ],
       location: computePosition(position, width, height)
     }

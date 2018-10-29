@@ -71,8 +71,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.key = 0;
     this.editOverlay = [];
     const p = this.derivedLayout.params();
-    p.set('width', this.state.width);
-    p.set('height', this.state.height);
+    const w = p.set('width', this.state.width);
+    const h = p.set('height', this.state.height);
+    if (w || h) {
+      const layouts = this.derivedLayout.layouts();
+      if (layouts) {
+        layouts.forEach((layout) => {
+          p.touch(layout);
+        });
+      }
+    }
     this.derivedLayout.reset();
     this.quadTree = new RLGQuadTree(0, 0, this.state.width, this.state.height);
   }
@@ -173,45 +181,74 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.height_top: {
+              case PositionRef.position: {
+                cursor = 'move';
+                left = layout.location.left;
+                top = layout.location.top;
+                width = layout.location.right - layout.location.left;
+                height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.height_bottom: {
+              case PositionRef.scalar_height_top: {
                 break;
               }
-              case PositionRef.width_left: {
-                cursor = 'col-resize';
+              case PositionRef.scalar_height_bottom: {
+                break;
+              }
+              case PositionRef.scalar_width_left: {
+                cursor = 'w-resize';
                 left = layout.location.left;
                 top = layout.location.top;
                 width = 4;
                 height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.width_right: {
-                cursor = 'col-resize';
+              case PositionRef.scalar_width_right: {
+                cursor = 'w-resize';
                 left = layout.location.right;
                 top = layout.location.top;
                 width = 4;
                 height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.point_left_top: {
+              case PositionRef.position_height_top: {
+                cursor = 'n-resize';
+                break;
+              }
+              case PositionRef.position_height_bottom: {
+                cursor = 'w-resize';
+                break;
+              }
+              case PositionRef.position_width_left: {
+                cursor = 'w-resize';
+                break;
+              }
+              case PositionRef.position_width_right: {
+                cursor = 'w-resize';
+                left = layout.location.right;
+                top = layout.location.top;
+                width = 4;
+                height = layout.location.bottom - layout.location.top;
+                break;
+              }
+              case PositionRef.rect_point_left_top: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.point_right_top: {
+              case PositionRef.rect_point_right_top: {
                 cursor: 'ne-resize';
                 break;
               }
-              case PositionRef.point_left_bottom: {
+              case PositionRef.rect_point_left_bottom: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.point_right_bottom: {
+              case PositionRef.rect_point_right_bottom: {
                 cursor: 'ne-resize';
                 break;
               }
               default: {
+                console.error(`Invalid PositionRef ${item.positionRef}`);
                 break;
               }
             }
@@ -221,6 +258,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 onUpdate={this.onUpdate}
                 edit={item}
                 layout={layout}
+                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height }}
                 quadTree={this.quadTree}
                 params={this.derivedLayout.params()}
                 rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
