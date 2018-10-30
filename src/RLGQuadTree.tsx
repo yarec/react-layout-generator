@@ -46,7 +46,7 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-// import {Rect} from './types';
+import { IRect } from './types';
 
 export interface IBounds {
   x: number;
@@ -57,6 +57,28 @@ export interface IBounds {
   subHeight: number;
   right: number;
   bottom: number;
+}
+
+export class Bounds implements IBounds {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  subWidth: number;
+  subHeight: number;
+  right: number;
+  bottom: number;
+
+  constructor(v: IRect) {
+    this.x = v.left;
+    this.y = v.right;
+    this.width = v.right - v.left;
+    this.height = v.bottom - v.top;
+    this.subWidth = this.width / 2;
+    this.subHeight = this.height / 2;
+    this.right = v.right;
+    this.bottom = v.bottom;
+  }
 }
 
 export interface IShadowRoot {

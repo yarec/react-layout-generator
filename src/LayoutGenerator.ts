@@ -687,17 +687,31 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
   }
 }
 
-export function computePosition(position: IPosition, width: number, height: number): IRect {
+export function positionToRect(position: IPosition, width: number, height: number): IRect {
   const top = position.location.y * height / 100 - (position.size.x / 2);
   const left = position.location.x * width / 100 - (position.size.y / 2);
-  console.log('computePosition')
+  // console.log('computePosition')
   return {
     top: top,
     left: left,
     bottom: top + position.size.y,
     right: left + position.size.x
   }
+}
 
+export function rectToPosition(rect: IRect, width: number, height: number): IPosition {
+  const xc = rect.left + (rect.right - rect.left) / 2;
+  const yc = rect.top + (rect.bottom - rect.top) / 2;
+  return {
+    location: {
+      x: xc / width * 100,
+      y: yc / height * 100
+    },
+    size: {
+      x: rect.right - rect.left,
+      y: rect.bottom - rect.top
+    }
+  }
 }
 
 export function DiagramLayout(name: string) {
@@ -705,7 +719,7 @@ export function DiagramLayout(name: string) {
     ['width', 0],
     ['height', 0]
   ])
-
+   
   function init(params: Params, layouts?: Map<string, ILayout>)  {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
@@ -720,7 +734,7 @@ export function DiagramLayout(name: string) {
         let p = params.get(layout.name) as IPosition;
         if (p) {
           // console.log('init ' + layout.name + ' params', p)
-          layout.location = computePosition(p, width, height);
+          layout.location = positionToRect(p, width, height);
           layouts.set(layout.name, layout);
         }
       });
@@ -739,7 +753,7 @@ export function DiagramLayout(name: string) {
         { positionRef: PositionRef.position_width_right, variable: name, update: positionWidthUpdate },
         { positionRef: PositionRef.position_height_bottom, variable: name, update: positionHeightUpdate }
       ],
-      location: computePosition(position, width, height)
+      location: positionToRect(position, width, height)
     }
     layouts.set(box.name, box);
     params.set(name, position);
