@@ -36,7 +36,7 @@ export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
   params: Params;
   edit: IEdit;
   layout: ILayout;
-  quadTree: RLGQuadTree;
+  quadTree?: RLGQuadTree;
   boundary: IRect;
   onUpdate: () => void
 }
@@ -78,35 +78,44 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
   pin(v: Value, ref: PositionRef, item: IBounds): Value {
     let r: Value = v;
 
-    let deltaLeft = item.x - this.props.boundary.left;
-    let deltaRight = this.props.boundary.right - item.right;
-    let deltaTop = item.y - this.props.boundary.top;
-    let deltaBottom = this.props.boundary.bottom - item.bottom;
+    const deltaLeft = item.x - this.props.boundary.left;
+    const deltaRight = this.props.boundary.right - item.right;
+    const deltaTop = item.y - this.props.boundary.top;
+    const deltaBottom = this.props.boundary.bottom - item.bottom;
 
-    if (deltaLeft >= 0) {
-      deltaLeft = 0;
-    }
+    console.log(`pin layout Location: ${this.props.layout.location.left}, ${this.props.layout.location.top}, ${this.props.layout.location.right}, ${this.props.layout.location.bottom} `)
 
-    if (deltaRight <= 0) {
-      deltaRight = 0;
-    }
-
-    if (deltaTop <= 0) {
-      deltaTop = 0;
-    }
-
-    if (deltaBottom <= 0) {
-      deltaBottom = 0;
-    }
+    console.log(`pin deltaLeft: ${deltaLeft}, deltaRight: ${deltaRight}, deltaTop: ${deltaTop}, deltaBottom: ${deltaBottom}`);
 
     switch (ref) {
       case PositionRef.rect: {
         const vr = v as IRect;
+        let left = vr.left;
+        let top = vr.top;
+        let right = vr.right;
+        let bottom = vr.bottom;
+        
+        if (vr.left < this.props.boundary.left) {
+         left = this.props.boundary.left;
+         right = left + item.width;
+        }
+        if (vr.right > this.props.boundary.right) {
+          right = this.props.boundary.right;
+          left = right - item.width;
+        }
+        if (vr.top < this.props.boundary.top) {
+          top = this.props.boundary.top;
+          bottom = top + item.height;
+        }
+        if (vr.bottom > this.props.boundary.bottom) {
+          bottom = this.props.boundary.bottom;
+          top = bottom - item.height;
+        }
         r = {
-          left: vr.left - (deltaLeft + deltaRight),
-          top: vr.top - (deltaTop + deltaBottom),
-          right: vr.right - (deltaLeft + deltaRight),
-          bottom: vr.bottom - (deltaTop + deltaBottom)
+         left: left,
+         top: top,
+         right: right,
+         bottom: bottom
         }
         break;
       }
@@ -126,22 +135,47 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       }
       case PositionRef.scalar_height_top: {
         const vr = v as number;
-        r = vr - (deltaTop + deltaBottom);
+        if (vr - item.height - deltaTop > 0) {
+          r = item.height + deltaTop;
+        }
         break;
       }
       case PositionRef.scalar_height_bottom: {
         const vr = v as number;
-        r = vr - (deltaTop + deltaBottom);
+        if (vr - item.height - deltaBottom > 0) {
+          r = item.height + deltaBottom;
+        }
         break;
       }
       case PositionRef.scalar_width_left: {
         const vr = v as number;
-        r = vr - (deltaLeft + deltaRight);
+        if (vr - item.width - deltaLeft > 0) {
+          r = item.width + deltaLeft;
+        }
         break;
       }
       case PositionRef.scalar_width_right: {
         const vr = v as number;
-        r = vr - (deltaLeft + deltaRight);
+        r = vr;
+        if (vr - item.width - deltaRight > 0) {
+          r = item.width + deltaRight;
+        }
+        break;
+      }
+      case PositionRef.position_height_top: {
+
+        break;
+      }
+      case PositionRef.position_height_bottom: {
+        
+        break;
+      }
+      case PositionRef.position_width_left: {
+        
+        break;
+      }
+      case PositionRef.position_width_right: {
+        
         break;
       }
       case PositionRef.rect_point_left_top: {

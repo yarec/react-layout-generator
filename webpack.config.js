@@ -10,6 +10,10 @@ module.exports = {
     path: path.join(__dirname, "examples/dist"),
     filename: "bundle.js"
   },
+  devtool: "source-map",
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"],
+  },
   module: {
     rules: [{
         test: /\.(js|jsx)$/,
