@@ -2,36 +2,50 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
 import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
+import ListLayout from '../../src/generators/list';
 // import { OriginX, OriginY } from '../../src/types';
 import Deck from './Deck';
+// import Examples from './Examples'
 
 // const card2C = require('./assets/cards/2C.jpg');
 
 interface ExampleProps {
+  name: string;
+
+}
+class Example extends React.PureComponent<ExampleProps> {
+  render = () => {
+    return (<button style={{ width: '120' }}>{this.props.name}</button>)
+  }
+}
+
+interface ExampleLayoutProps {
 
 }
 
-interface ExampleState {
+interface ExampleLayoutState {
 
 }
 
-class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
+class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutState> {
 
   g: LayoutGenerator;
   d: LayoutGenerator;
+  m: LayoutGenerator;
 
-  constructor(props: ExampleProps) {
+  constructor(props: ExampleLayoutProps) {
     super(props);
 
     this.g = DesktopLayout('rlg.desktop.example');
     this.d = DiagramLayout('rlg.diagram.example');
+    this.m = ListLayout('rlg.list.example');
 
     const p = this.g.params();
 
     // Set variables to 0 to hide
     p.set('headerHeight', 24);
     p.set('footerHeight', 0);
-    p.set('fullWidthHeaders', 1)
+    p.set('fullWidthHeaders', 0)
     p.set('leftSideWidth', 200);
     p.set('rightSideWidth', 0)
   }
@@ -50,7 +64,23 @@ class ExampleLayout extends React.Component<ExampleProps, ExampleState> {
         g={this.g}
       >
         <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          <span >LeftSide</span>
+          <ReactLayout
+            name={'reactLayout.list.example'}
+            g={this.m}
+          >
+            <div data-layout={{ name: 'title' }} >
+              <span>Examples</span>
+            </div>
+
+            <Example name={'Desktop Layout'} data-layout={{ name: 'desktopLayout' }} >
+              <span>Desktop Layout</span>
+            </Example>
+
+            <Example name={'Card Layout'} data-layout={{ name: 'cardLayout' }} >
+              <span>Card Layout</span>
+            </Example>
+
+          </ReactLayout>
         </div>
 
         <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >

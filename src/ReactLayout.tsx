@@ -88,7 +88,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createPositionedElement = (child: React.ReactElement<any>, name: string, position: IPosition) => {
 
     let b = this.derivedLayout.lookup(name);
-    if (!b && position && this.derivedLayout.create) {
+    if (!b && this.derivedLayout.create) {
       b = this.derivedLayout.create(name, position);
       // console.log('createPositionedElement', b, position);
     }
@@ -152,6 +152,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
 
   createElement = (child: React.ReactElement<any>) => {
     const p: Object = child.props['data-layout'];
+    
     if (p && p['name']) {
       return this.createPositionedElement(child, p['name'], p['position']);
     } else {

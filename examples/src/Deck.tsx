@@ -46,8 +46,9 @@ export default class Deck {
         data-layout={{
           name: this.deck[index],
           position: {
-            // origin: { x: OriginX.Q1, y: OriginY.Q1 },
+            // In percents
             location: { x: 25, y: 25 },
+            // In pixels
             size: { x: 100, y: 150 }
           }
         }} >
@@ -66,7 +67,7 @@ export default class Deck {
   }
 
   render = () => {
-    console.log('Deck render')
+    // console.log('Deck render')
     return (
       <>
         {...this.createElements()}

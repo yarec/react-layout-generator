@@ -80,6 +80,8 @@ export class Rect implements IRect {
   }
 }
 
+export type Position = IRect | IPosition;
+
 export interface IPosition {
   location: IPoint; // in percent
   size: IPoint; // in absolute

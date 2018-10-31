@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { positionToRect, rectToPosition, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
+import { ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
 import { IPoint, IPosition, IRect, width, height } from './types';
+import {positionToRect, rectToPosition} from './utils';
 
 // import { IRect } from 'lib/src/types';
 
@@ -130,14 +131,14 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       case PositionRef.position: {
         // IPosition location is center as percent and size is in pixels
         const vr = v as IPosition;
-        console.log('pin position init', vr)
+        // console.log('pin position init', vr)
         const boundaryWidth = width(this.props.boundary);
         const boundaryHeight = height(this.props.boundary);
 
 
 
         const a = positionToRect(vr, boundaryWidth, boundaryHeight);
-        console.log('pin position rect', a)
+        // console.log('pin position rect', a)
         let left = a.left
         let top = a.top;
         let right = a.right;
@@ -160,7 +161,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
           top = bottom - height(item);
         }
         r = rectToPosition({ top: top, left: left, bottom: bottom, right: right }, boundaryWidth, boundaryHeight);
-        console.log('pin position: ', r);
+        // console.log('pin position: ', r);
         break;
       }
       case PositionRef.scalar_height_top: {
@@ -430,9 +431,9 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     }
 
     const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
+    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
     const r = this.extend(v, this.props.edit.positionRef);
-    console.log('moveUpdate extend', r);
+    // console.log('moveUpdate extend', r);
     // if (r.left >= this.props.boundary.left &&
     //   r.right <= this.props.boundary.right &&
     //   r.top >= this.props.boundary.top &&
@@ -444,7 +445,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     const uv = this.pin(v, this.props.edit.positionRef, r);
     this.props.params.set(this.props.edit.variable, uv, this.props.layout);
     this.props.onUpdate();
-    console.log('moveUpdate pin: ', uv);
+    // console.log('moveUpdate pin: ', uv);
     //}
   }
 
@@ -453,8 +454,8 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       event.preventDefault();
       this.addEventListeners();
       this.initUpdate(event.clientX, event.clientY);
-      console.log('onMouseDown', event.clientX, event.clientY);
-      console.log('onMouseDown', this.props )
+      // console.log('onMouseDown', event.clientX, event.clientY);
+      // console.log('onMouseDown', this.props )
     }
   }
 

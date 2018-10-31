@@ -1,7 +1,5 @@
 import { height, IRect, translate, width, IPoint, IPosition } from './types';
-// import { string } from 'prop-types';
-// import { number } from 'prop-types';
-// import { reduceRight } from 'async';
+import {positionToRect, rectToPosition} from './utils';
 
 type FValue = (p: Params) => number | IRect | IPoint | IPosition;
 export type Value = number | IRect | IPoint | IPosition | FValue;
@@ -147,7 +145,7 @@ export interface ILayoutGenerator {
   next: () => ILayout | undefined;
   lookup: (name: string) => ILayout | undefined;
   layouts: () => Map<string, ILayout> | undefined;
-  create?: (name: string, position: IPosition) => ILayout | undefined;
+  create?: (name: string, position: IPosition | IRect) => ILayout | undefined;
   api: () => API | undefined;
 }
 
@@ -213,7 +211,7 @@ export class ResizeLayout implements ILayoutGenerator {
 }
 
 export type IInit = (params: Params, layouts?: Map<string, ILayout>) => Map<string, ILayout>;
-export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition) => ILayout;
+export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition | IRect) => ILayout;
 
 export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _name: string;
@@ -269,7 +267,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return undefined;
   }
 
-  create = (name: string, position: IPosition) => {
+  create = (name: string, position: IPosition | IRect) => {
     if (this._create) {
       return this._create(name, this._params, this._layouts, position);
     }
@@ -609,7 +607,7 @@ export function DesktopLayout(name: string) {
 // returns the value to set in Params
 export function rectUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number): Value {
   const vr = v as IRect;
-  console.log('rectUpdate ', deltaX, deltaY, v)
+  // console.log('rectUpdate ', deltaX, deltaY, v)
   return {
     top: vr.top + deltaY,
     left: vr.left + deltaX,
@@ -669,7 +667,7 @@ export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, 
   return {
     location: vr.location,
     size: {
-      x: vr.size.x + deltaX,
+      x: vr.size.x - deltaX,
       y: vr.size.y
     }
   }
@@ -687,32 +685,7 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
   }
 }
 
-export function positionToRect(position: IPosition, width: number, height: number): IRect {
-  const top = position.location.y * height / 100 - (position.size.y / 2);
-  const left = position.location.x * width / 100 - (position.size.x / 2);
-  // console.log('computePosition')
-  return {
-    top: top,
-    left: left,
-    bottom: top + position.size.y,
-    right: left + position.size.x
-  }
-}
 
-export function rectToPosition(rect: IRect, width: number, height: number): IPosition {
-  const xc = rect.left + (rect.right - rect.left) / 2;
-  const yc = rect.top + (rect.bottom - rect.top) / 2;
-  return {
-    location: {
-      x: xc / width * 100,
-      y: yc / height * 100
-    },
-    size: {
-      x: rect.right - rect.left,
-      y: rect.bottom - rect.top
-    }
-  }
-}
 
 export function DiagramLayout(name: string) {
   const params = new Params([
