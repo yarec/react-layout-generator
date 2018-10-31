@@ -259,7 +259,6 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 edit={item}
                 layout={layout}
                 boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height }}
-                quadTree={this.quadTree}
                 params={this.derivedLayout.params()}
                 rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
             }
@@ -280,7 +279,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   frameEnd = () => {
-    // console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
+    console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
     return null;
   }
 

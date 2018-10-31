@@ -651,16 +651,16 @@ export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, delta
 
   const vr = v as IPosition;
 
-  const x = vr.location.x * width / 100 + deltaX;
-  const y = vr.location.y * height / 100 + deltaY;
+  let rect = positionToRect(vr, width, height)
 
-  return {
-    location: {
-      x: x / width * 100,
-      y: y / height * 100
-    },
-    size: vr.size
-  }
+  rect.left += deltaX;
+  rect.top += deltaY;
+  rect.right += deltaX;
+  rect.bottom += deltaY;
+
+  const p = rectToPosition(rect, width, height )
+
+  return p;
 }
 
 export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
@@ -688,8 +688,8 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
 }
 
 export function positionToRect(position: IPosition, width: number, height: number): IRect {
-  const top = position.location.y * height / 100 - (position.size.x / 2);
-  const left = position.location.x * width / 100 - (position.size.y / 2);
+  const top = position.location.y * height / 100 - (position.size.y / 2);
+  const left = position.location.x * width / 100 - (position.size.x / 2);
   // console.log('computePosition')
   return {
     top: top,

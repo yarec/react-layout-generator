@@ -71,6 +71,15 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
 
   initUpdate(x: number, y: number) {
     this.origin = { x, y };
+    // does not seem to help
+    // switch (this.props.edit.positionRef) {
+    //   case PositionRef.position: {
+    //     this.origin = {
+    //       x: x + width(this.props.layout.location) / 2,
+    //       y: y + height(this.props.layout.location) / 2,
+    //     }
+    //   }
+    // }
     this.value = this.props.params.get(this.props.edit.variable);
   }
 
@@ -121,18 +130,20 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       case PositionRef.position: {
         // IPosition location is center as percent and size is in pixels
         const vr = v as IPosition;
-        // console.log('pin position init', vr)
+        console.log('pin position init', vr)
         const boundaryWidth = width(this.props.boundary);
         const boundaryHeight = height(this.props.boundary);
 
+
+
         const a = positionToRect(vr, boundaryWidth, boundaryHeight);
-        // console.log('pin position rect', a)
+        console.log('pin position rect', a)
         let left = a.left
         let top = a.top;
         let right = a.right;
         let bottom = a.bottom;
 
-        if (left < this.props.boundary.left) {
+        if (left < this.props.boundary.left ) {
           left = this.props.boundary.left;
           right = left + width(item);
         }
@@ -148,8 +159,8 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
           bottom = this.props.boundary.bottom;
           top = bottom - height(item);
         }
-        r = rectToPosition({top: top, left: left, bottom: bottom, right: right}, boundaryWidth, boundaryHeight);
-        // console.log('pin position: ', r);
+        r = rectToPosition({ top: top, left: left, bottom: bottom, right: right }, boundaryWidth, boundaryHeight);
+        console.log('pin position: ', r);
         break;
       }
       case PositionRef.scalar_height_top: {
@@ -181,20 +192,40 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         }
         break;
       }
+      case PositionRef.rect_height_top: {
+        console.log('TODO pin PositionRef.rect_height_top');
+        break;
+      }
+      case PositionRef.rect_height_bottom: {
+        console.log('TODO pin PositionRef.rect_height_bottom');
+        break;
+      }
+      case PositionRef.rect_width_left: {
+        console.log('TODO pin PositionRef.rect_width_left');
+        break;
+      }
+      case PositionRef.rect_width_right: {
+        console.log('TODO pin PositionRef.rect_width_left');
+        break;
+      }
       case PositionRef.position_height_top: {
         // IPosition location is center as percent and size is in pixels
+        console.log('TODO pin PositionRef.position_height_top');
         break;
       }
       case PositionRef.position_height_bottom: {
         // IPosition location is center as percent and size is in pixels  
+        console.log('TODO pin PositionRef.position_height_bottom');
         break;
       }
       case PositionRef.position_width_left: {
         // IPosition location is center as percent and size is in pixels  
+        console.log('TODO pin PositionRef.position_width_left');
         break;
       }
       case PositionRef.position_width_right: {
         // IPosition location is center as percent and size is in pixels  
+        console.log('TODO pin PositionRef.position_width_right');
         break;
       }
       case PositionRef.rect_point_left_top: {
@@ -291,7 +322,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     return r;
   }
 
-  extent(v: Value, ref: PositionRef): IRect {
+  extend(v: Value, ref: PositionRef): IRect {
     let left = this.props.layout.location.left;
     let top = this.props.layout.location.top;
     let right = this.props.layout.location.right;
@@ -308,7 +339,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       case PositionRef.position: {
         // IPosition location is center as percent and size is in pixels
         const vr = v as IPosition;
-        const r = positionToRect(vr, this.props.rlgDrag.width, this.props.rlgDrag.height);
+        const r = positionToRect(vr, width(this.props.boundary), height(this.props.boundary));
         left = r.left;
         top = r.top;
         right = r.right;
@@ -331,6 +362,38 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         right += (v as number);
         break;
       }
+      case PositionRef.rect_height_top: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.rect_height_bottom: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.rect_width_left: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.rect_width_right: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.position_height_top: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.position_height_bottom: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.position_width_left: {
+        right += (v as number);
+        break;
+      }
+      case PositionRef.position_width_right: {
+        right += (v as number);
+        break;
+      }
       case PositionRef.rect_point_left_top:
       case PositionRef.rect_point_right_top:
       case PositionRef.rect_point_left_bottom:
@@ -347,9 +410,6 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         break;
       }
     }
-
-    // const h = bottom - top;
-    // const w = right - left;
 
     return {
       left: left,
@@ -370,21 +430,22 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     }
 
     const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
-    const r = this.extent(v, this.props.edit.positionRef);
-    console.log('moveUpdate', r);
-    if (r.left >= this.props.boundary.left &&
-      r.right <= this.props.boundary.right &&
-      r.top >= this.props.boundary.top &&
-      r.bottom <= this.props.boundary.bottom
-    ) {
-      this.props.params.set(this.props.edit.variable, v, this.props.layout);
-      this.props.onUpdate();
-    } else {
-      const uv = this.pin(v, this.props.edit.positionRef, r);
-      this.props.params.set(this.props.edit.variable, uv, this.props.layout);
-      console.log('moveUpdate pin: ', uv);
-    }
+    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
+    const r = this.extend(v, this.props.edit.positionRef);
+    console.log('moveUpdate extend', r);
+    // if (r.left >= this.props.boundary.left &&
+    //   r.right <= this.props.boundary.right &&
+    //   r.top >= this.props.boundary.top &&
+    //   r.bottom <= this.props.boundary.bottom
+    // ) {
+    //   this.props.params.set(this.props.edit.variable, v, this.props.layout);
+    //   this.props.onUpdate();
+    // } else {
+    const uv = this.pin(v, this.props.edit.positionRef, r);
+    this.props.params.set(this.props.edit.variable, uv, this.props.layout);
+    this.props.onUpdate();
+    console.log('moveUpdate pin: ', uv);
+    //}
   }
 
   onMouseDown = (event: React.MouseEvent) => {
@@ -393,6 +454,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       this.addEventListeners();
       this.initUpdate(event.clientX, event.clientY);
       console.log('onMouseDown', event.clientX, event.clientY);
+      console.log('onMouseDown', this.props )
     }
   }
 
