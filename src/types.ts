@@ -80,9 +80,43 @@ export class Rect implements IRect {
   }
 }
 
-export type Position = IRect | IPosition;
+export enum IAlign {
+  topLeft = 1,
+  topCenter,
+  topRight,
+  rightTop,
+  rightCenter,
+  rightBottom,
+  bottomRight,
+  bottomCenter,
+  bottomLeft,
+  leftBottom,
+  leftCenter,
+  leftTop
+}
+
+export enum IUnit {
+  pixel = 1,
+  percent
+}
+
+export enum IOrigin {
+  leftTop = 1,
+  center
+}
 
 export interface IPosition {
+  units: { 
+    origin: IOrigin, 
+    location: IUnit, 
+    size: IUnit 
+  }
+  align?: {
+    key: string, 
+    offset: IPoint, 
+    source: IAlign, 
+    self: IAlign
+  } 
   location: IPoint; // in percent
   size: IPoint; // in absolute
 }

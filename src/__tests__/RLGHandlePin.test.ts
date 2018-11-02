@@ -1,7 +1,7 @@
 import RLGHandle, { RLGHandleProps } from '../RLGHandle';
 // import { IBounds } from '../RLGQuadTree';
 import { Params, PositionRef, scalarWidthUpdate } from '../LayoutGenerator';
-import { IRect } from '../types';
+import { IRect, IOrigin, IUnit } from '../types';
 
 const height = 500;
 const width = 500;
@@ -83,35 +83,51 @@ it('returns pinned value for PositionRef.rect #5', () => {
 
 it('returns pinned value for PositionRef.position #1', () => {
   const h = new RLGHandle(props);
-  expect(h.pin({ location: { x: 20, y: -2 }, size: { x: 100, y: 100 } }, // top: 100, left: -10, bottom: 200, right: 90}, 
+  expect(h.pin({
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+    location: { x: 20, y: -2 },
+    size: { x: 100, y: 100 }
+  }, // top: 100, left: -10, bottom: 200, right: 90}, 
     PositionRef.position, item)).toEqual({
       location: { x: 20, y: 10 }, size: { x: 100, y: 100 }
     });
 });
 it('returns pinned value for PositionRef.position #2', () => {
   const h = new RLGHandle(props);
-  expect(h.pin({ location: { x: -2, y: -2 }, size: { x: 100, y: 100 } },
+  expect(h.pin({
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+    location: { x: -2, y: -2 }, size: { x: 100, y: 100 }
+  },
     PositionRef.position, item)).toEqual({
       location: { x: 10, y: 10 }, size: { x: 100, y: 100 }
     });
 });
 it('returns pinned value for PositionRef.position #3', () => {
   const h = new RLGHandle(props);
-  expect(h.pin({ location: { x: 102, y: -2 }, size: { x: 100, y: 100 } },
+  expect(h.pin({
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+    location: { x: 102, y: -2 }, size: { x: 100, y: 100 }
+  },
     PositionRef.position, item)).toEqual({
       location: { x: 90, y: 10 }, size: { x: 100, y: 100 }
     });
 });
 it('returns pinned value for PositionRef.position #4', () => {
   const h = new RLGHandle(props);
-  expect(h.pin({ location: { x: 50, y: 102 }, size: { x: 100, y: 100 } },
+  expect(h.pin({
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+    location: { x: 50, y: 102 }, size: { x: 100, y: 100 }
+  },
     PositionRef.position, item)).toEqual({
       location: { x: 50, y: 90 }, size: { x: 100, y: 100 }
     });
 });
 it('returns pinned value for PositionRef.position #5', () => {
   const h = new RLGHandle(props);
-  expect(h.pin({ location: { x: 102, y: 102 }, size: { x: 100, y: 100 } },
+  expect(h.pin({
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+    location: { x: 102, y: 102 }, size: { x: 100, y: 100 }
+  },
     PositionRef.position, item)).toEqual({
       location: { x: 90, y: 90 }, size: { x: 100, y: 100 }
     });

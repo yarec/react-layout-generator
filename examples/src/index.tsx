@@ -13,7 +13,7 @@ interface ExampleProps {
   name: string;
 
 }
-class Example extends React.PureComponent<ExampleProps> {
+export class Example extends React.PureComponent<ExampleProps> {
   render = () => {
     return (<button style={{ width: '120' }}>{this.props.name}</button>)
   }

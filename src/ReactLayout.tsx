@@ -58,7 +58,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onResize = (width: number, height: number) => {
-    // console.log('onResize', width, height);
+    console.log('onResize', width, height);
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
@@ -74,9 +74,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     const w = p.set('width', this.state.width);
     const h = p.set('height', this.state.height);
     if (w || h) {
-      const layouts = this.derivedLayout.layouts();
-      if (layouts) {
-        layouts.forEach((layout) => {
+      const _layouts = this.derivedLayout.layouts();
+      if (_layouts) {
+        _layouts.layouts.forEach((layout) => {
           p.touch(layout);
         });
       }
@@ -259,7 +259,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 onUpdate={this.onUpdate}
                 edit={item}
                 layout={layout}
-                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height }}
+                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height}}
                 params={this.derivedLayout.params()}
                 rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
             }

@@ -1,5 +1,5 @@
-import { height, IRect, translate, width, IPoint, IPosition } from './types';
-import {positionToRect, rectToPosition} from './utils';
+import { height, IRect, translate, width, IPoint, IPosition, IOrigin, IUnit } from './types';
+import { positionToRect, rectToPosition } from './utils';
 
 type FValue = (p: Params) => number | IRect | IPoint | IPosition;
 export type Value = number | IRect | IPoint | IPosition | FValue;
@@ -65,6 +65,56 @@ export class Params {
       return true;
     }
     return false;
+  }
+}
+
+export class Layouts {
+  private _layouts: Map<string, ILayout>;
+  changeCount: number;
+  width: number;
+  height: number;
+
+  constructor(layouts: Array<[string, ILayout]>) {
+    this._layouts = new Map(layouts);
+  }
+
+  update() {
+    this.width = 0;
+    this.height = 0;
+
+    this._layouts.forEach((layout) => {
+      if (this.width < layout.location.right) {
+        this.width = layout.location.right
+      }
+      if (this.height < layout.location.bottom) {
+        this.height = layout.location.bottom
+      }
+    });
+    this.changeCount = 0;
+  }
+
+  values() {
+    return this._layouts.values();
+  }
+
+  get layouts() {
+    return this._layouts;
+  }
+  get size() {
+    return this._layouts.size;
+  }
+
+  changed(): boolean {
+    return this.changeCount != 0;
+  }
+
+  get(key: string) {
+    return this._layouts.get(key);
+  }
+
+  set(key: string, v: ILayout) {
+    this._layouts.set(key, v);
+    this.changeCount = 0;
   }
 }
 
@@ -144,8 +194,8 @@ export interface ILayoutGenerator {
   reset: () => void;
   next: () => ILayout | undefined;
   lookup: (name: string) => ILayout | undefined;
-  layouts: () => Map<string, ILayout> | undefined;
-  create?: (name: string, position: IPosition | IRect) => ILayout | undefined;
+  layouts: () => Layouts | undefined;
+  create?: (name: string, position: IPosition) => ILayout | undefined;
   api: () => API | undefined;
 }
 
@@ -210,8 +260,8 @@ export class ResizeLayout implements ILayoutGenerator {
   // };
 }
 
-export type IInit = (params: Params, layouts?: Map<string, ILayout>) => Map<string, ILayout>;
-export type ICreate = (name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition | IRect) => ILayout;
+export type IInit = (params: Params, layouts?: Layouts) => Layouts;
+export type ICreate = (name: string, params: Params, layouts: Layouts, position: IPosition) => ILayout;
 
 export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _name: string;
@@ -219,7 +269,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _api: API | undefined;
   private _init: IInit;
   private _create: ICreate | undefined;
-  private _layouts: Map<string, ILayout>;
+  private _layouts: Layouts;
   private _layoutsIterator: IterableIterator<ILayout> | undefined;
   currentLayout: ILayout | undefined;
 
@@ -229,7 +279,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     this._name = name;
     this._init = init;
     this._create = create;
-    this._layouts = new Map(); // init(params);
+    this._layouts = new Layouts([]); // init(params);
     this._layoutsIterator = this._layouts.values();
     this.state = this.init;
     this._params = params;
@@ -267,7 +317,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return undefined;
   }
 
-  create = (name: string, position: IPosition | IRect) => {
+  create = (name: string, position: IPosition) => {
     if (this._create) {
       return this._create(name, this._params, this._layouts, position);
     }
@@ -282,7 +332,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     }
     this.state = this.init;
     this._layoutsIterator = this._layouts.values();
-    this._layouts.forEach((item: ILayout) => {
+    this._layouts.layouts.forEach((item: ILayout) => {
       if (item.g) {
         item.g.reset();
       }
@@ -446,7 +496,7 @@ export function DesktopLayout(name: string) {
     ['footerHeight', footerHeight]
   ])
 
-  function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout> {
+  function init(params: Params, layouts?: Layouts): Layouts {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
     const fullWidthHeaders = params.get('fullWidthHeaders') as number;
@@ -591,7 +641,7 @@ export function DesktopLayout(name: string) {
       }
     }();
 
-    return new Map([
+    return new Layouts([
       [leftSide.name, leftSide],
       [rightSide.name, rightSide],
       [header.name, header],
@@ -656,7 +706,7 @@ export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, delta
   rect.right += deltaX;
   rect.bottom += deltaY;
 
-  const p = rectToPosition(rect, width, height )
+  const p = rectToPosition(rect, width, height, vr.units)
 
   return p;
 }
@@ -665,6 +715,7 @@ export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, 
 
   const vr = v as IPosition;
   return {
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
     location: vr.location,
     size: {
       x: vr.size.x - deltaX,
@@ -677,6 +728,7 @@ export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number,
 
   const vr = v as IPosition;
   return {
+    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
     location: vr.location,
     size: {
       x: vr.size.x,
@@ -692,15 +744,14 @@ export function DiagramLayout(name: string) {
     ['width', 0],
     ['height', 0]
   ])
-   
-  function init(params: Params, layouts?: Map<string, ILayout>)  {
+
+  function init(params: Params, layouts?: Layouts): Layouts {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
     let updates: Array<ILayout> = params.updates();
 
     if (!layouts) {
-      const l: Map<string, ILayout> = new Map();
-      return l;
+      return new Layouts([]);
     }
     else if (updates && layouts) {
       updates.forEach((layout) => {
@@ -715,7 +766,7 @@ export function DiagramLayout(name: string) {
     return layouts;
   }
 
-  function create(name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition): ILayout {
+  function create(name: string, params: Params, layouts: Layouts, position: IPosition): ILayout {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
 
@@ -774,7 +825,7 @@ export function mobileDashboard(name: 'mobile.layout') {
     ['rows', rows],
   ]);
 
-  function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout> {
+  function init(params: Params, layouts?: Layouts): Layouts {
     const width = params.get('width') as number;
     const cols = params.get('cols') as number;
     const rows = params.get('rows') as number;
@@ -810,7 +861,7 @@ export function mobileDashboard(name: 'mobile.layout') {
       }
     }();
 
-    return new Map([
+    return new Layouts([
       [header.name, header],
       [grid.name, grid]
     ]);

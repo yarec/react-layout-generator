@@ -1,14 +1,13 @@
-import BasicLayoutGenerator, {positionToRect, rectToPosition, Params, ILayout} from '../LayoutGenerator';
+import BasicLayoutGenerator, {Params, Layouts} from '../LayoutGenerator';
 
 const params = new Params([
   ['width', 0],
   ['height', 0]
 ])
 
-function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout>  {
+function init(params: Params, layouts?: Layouts): Layouts  {
   if (!layouts) {
-    const l: Map<string, ILayout> = new Map();
-    return l;
+    return new Layouts([]);
   }
   return layouts;
 }
@@ -18,16 +17,5 @@ it('returns undefined with no layouts', () => {
   expect(g.next()).toBe(undefined);
 });
 
-it('rectToPosition is the inverse of positionToRect', () => {
-  const r = {
-    left: 100,
-    top: 100,
-    right: 200,
-    bottom: 200
-  }
-  const p = rectToPosition(r, 500, 500);
-  const ir = positionToRect(p, 500, 500);
-  expect(ir).toEqual(r);
-});
 
 

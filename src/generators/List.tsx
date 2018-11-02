@@ -1,5 +1,5 @@
-import BasicLayoutGenerator, { Params, ILayout } from '../LayoutGenerator';
-import { IRect, IPosition } from '../types';
+import BasicLayoutGenerator, { Params, ILayout, Layouts } from '../LayoutGenerator';
+import { IRect, IPosition, IUnit, IOrigin } from '../types';
 import {positionToRect} from '../utils';
 
 export default function ListLayout(name: string) {
@@ -14,31 +14,79 @@ export default function ListLayout(name: string) {
     ['itemHeight', itemHeight]
   ])
 
-  function init(params: Params, layouts?: Map<string, ILayout>): Map<string, ILayout> {
+  function init(params: Params, layouts?: Layouts): Layouts {
     const width = params.get('width') as number;
+    const height = params.get('height') as number;
+    let updates: Array<ILayout> = params.updates();
 
-    const title = function (): ILayout {
-      let location: IRect = {
-        left: 0,
-        top: 0,
-        right: width,
-        bottom: titleHeight
-      }
+    if (!layouts) {
+      const title = function (): ILayout {
+        let location: IRect = {
+          left: 0,
+          top: 0,
+          right: width,
+          bottom: titleHeight
+        }
+  
+        return {
+          name: 'title',
+          location: location
+        }
+      }();
+  
+      params.set('LastItemVerticalOffset', titleHeight);
+      console.log('init LastItemVerticalOffset',titleHeight)
+      return new Layouts([
+        [title.name, title]
+      ])
+    }
+    else if (updates && layouts) {
+      updates.forEach((layout) => {
+        let p = params.get(layout.name) as IPosition;
+        if (p) {
+          // console.log('init ' + layout.name + ' params', p)
+          layout.location = positionToRect(p, width, height);
+          layouts.set(layout.name, layout);
+        }
+      });
+    }
+    return layouts;
 
-      return {
-        name: 'title',
-        location: location
-      }
-    }();
-
-    params.set('LastItemVerticalOffset', titleHeight);
-
-    return new Map([
-      [title.name, title]
-    ])
+    // if (!updates) {
+    //   const title = function (): ILayout {
+    //     let location: IRect = {
+    //       left: 0,
+    //       top: 0,
+    //       right: width,
+    //       bottom: titleHeight
+    //     }
+  
+    //     return {
+    //       name: 'title',
+    //       location: location
+    //     }
+    //   }();
+  
+    //   params.set('LastItemVerticalOffset', titleHeight);
+    //   console.log('init LastItemVerticalOffset',titleHeight)
+    //   return new Map([
+    //     [title.name, title]
+    //   ])
+    // }
+    // else if (layouts) {
+    //   updates.forEach((layout) => {
+    //     let p = params.get(layout.name) as IPosition;
+    //     if (p) {
+    //       console.log('init ' + layout.name + ' params', p)
+    //       layout.location = positionToRect(p, width, height);
+    //       layouts.set(layout.name, layout);
+    //     }
+    //   });
+    // }
+    // return layouts;
   }
 
-  function create(name: string, params: Params, layouts: Map<string, ILayout>, position: IPosition): ILayout {
+  function create(name: string, params: Params, layouts: Layouts, position: IPosition): ILayout {
     const width = params.get('width') as number;
     const height = params.get('height') as number;
     const itemHeight = params.get('itemHeight') as number;
@@ -47,6 +95,7 @@ export default function ListLayout(name: string) {
 
     if (!position) {
       position = {
+        units: {origin: IOrigin.leftTop, location: IUnit.pixel, size: IUnit.pixel},
         location: {
           x: 0,
           y: LastItemVerticalOffset
