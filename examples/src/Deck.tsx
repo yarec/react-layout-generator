@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IOrigin, IUnit } from '../../src/types';
+import { IUnit } from '../../src/Position';
 
 export default class Deck {
 
@@ -46,7 +46,7 @@ export default class Deck {
         data-layout={{
           name: this.deck[index],
           position: {
-            units: {origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel},
+            units: {origin: {x: 50, y: 50}, location: IUnit.percent, size: IUnit.pixel},
             location: { x: 25, y: 25 },
             
             size: { x: 100, y: 150 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import RLGHandle from './RLGHandle'
 import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef } from './LayoutGenerator';
-import { IPosition } from './types';
+import { IPosition } from './Position';
 import RLGQuadTree from './RLGQuadTree';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
@@ -71,9 +71,11 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.key = 0;
     this.editOverlay = [];
     const p = this.derivedLayout.params();
+
+    const v = p.set('viewport', {x: this.state.width, y: this.state.height});
     const w = p.set('width', this.state.width);
     const h = p.set('height', this.state.height);
-    if (w || h) {
+    if (v || w || h ) {
       const _layouts = this.derivedLayout.layouts();
       if (_layouts) {
         _layouts.layouts.forEach((layout) => {
@@ -81,16 +83,21 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         });
       }
     }
+    
     this.derivedLayout.reset();
     this.quadTree = new RLGQuadTree(0, 0, this.state.width, this.state.height);
   }
 
-  createPositionedElement = (child: React.ReactElement<any>, name: string, position: IPosition) => {
+  createPositionedElement = (child: React.ReactElement<any>, index: number, name: string, position: IPosition) => {
+
+    if (name === 'desktopLayout') {
+      console.log(name)
+    }
 
     let b = this.derivedLayout.lookup(name);
     if (!b && this.derivedLayout.create) {
-      b = this.derivedLayout.create(name, position);
-      // console.log('createPositionedElement', b, position);
+      b = this.derivedLayout.create(index, name, this.derivedLayout, position);
+      // console.log('createPositionedElement', index, b, position);
     }
 
     if (b) {
@@ -150,11 +157,11 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     return null;
   }
 
-  createElement = (child: React.ReactElement<any>) => {
+  createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
     
     if (p && p['name']) {
-      return this.createPositionedElement(child, p['name'], p['position']);
+      return this.createPositionedElement(child, index, p['name'], p['position']);
     } else {
 
     }
@@ -289,9 +296,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       // Only show content if width and height are not 0
       return (
         <>
-          {React.Children.map(this.props.children, child =>
+          {React.Children.map(this.props.children, (child, i) =>
             // tslint:disable-next-line:no-any
-            this.createElement(child as React.ReactElement<any>)
+            this.createElement(child as React.ReactElement<any>, i)
           )}
           {this.createEditHandles()}
         </>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
-import { IPoint, IPosition, IRect, width, height } from './types';
-import {positionToRect, rectToPosition} from './utils';
+import { IPoint, IRect, width, height } from './types';
+import Position from './Position';
 
 // import { IRect } from 'lib/src/types';
 
@@ -120,13 +120,13 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       }
       case PositionRef.position: {
         // IPosition location is center as percent and size is in pixels
-        const vr = v as IPosition;
+        const vr = v as Position;
         // console.log('pin position init', vr)
-        const boundaryWidth = width(this.props.boundary);
-        const boundaryHeight = height(this.props.boundary);
+        //const boundaryWidth = width(this.props.boundary);
+        //const boundaryHeight = height(this.props.boundary);
 
-        const a = positionToRect(vr, boundaryWidth, boundaryHeight);
-        // console.log('pin position rect', a)
+        const a = vr.rect(); // positionToRect(vr, boundaryWidth, boundaryHeight);
+        // console.log('pin position start rect', a);
         let left = a.left
         let top = a.top;
         let right = a.right;
@@ -148,9 +148,12 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
           bottom = this.props.boundary.bottom;
           top = bottom - height(item);
         }
-        r = rectToPosition({ top: top, left: left, bottom: bottom, right: right }, boundaryWidth, boundaryHeight, vr.units);
-        // console.log('pin position: ', { top: top, left: left, bottom: bottom, right: right });
-        console.log('pin boundary diff: (bottom, right)',  bottom - this.props.boundary.bottom, right - this.props.boundary.right);
+        r = vr;
+
+        // console.log('pin position end rect', {left: left, top: top, right: right, bottom: bottom})
+        
+        //console.log('pin position: ', { top: top, left: left, bottom: bottom, right: right });
+        //console.log('pin boundary diff: (bottom, right)',  bottom - this.props.boundary.bottom, right - this.props.boundary.right);
         break;
       }
       case PositionRef.scalar_height_top: {
@@ -260,26 +263,30 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       }
       case PositionRef.position_point_left_top: {
         // IPosition location is center as percent and size is in pixels
-        const vr = v as IPosition;
-        const boundaryWidth = width(this.props.boundary);
-        const boundaryHeight = height(this.props.boundary);
-        const rect = positionToRect(vr, boundaryWidth, boundaryHeight);
-        rect.left += deltaLeft;
-        rect.right += deltaLeft;
-        rect.top += deltaTop;
-        rect.bottom += deltaTop;
-        r = {
-          units: vr.units,
-          location: {
-            // In percent
-            x: vr.location.x - (deltaLeft + deltaRight),
-            y: vr.location.y - (deltaTop + deltaBottom),
-          },
-          size: {
-            x: vr.size.x,
-            y: vr.size.y
-          }
-        }
+        const vr = v as Position;
+        //const boundaryWidth = width(this.props.boundary);
+        //const boundaryHeight = height(this.props.boundary);
+        const rect = vr.rect(); // positionToRect(vr, boundaryWidth, boundaryHeight);
+
+        vr.update({x: rect.left + deltaLeft, y: rect.right + deltaLeft}, {x: width(rect),y: height(rect)});
+
+        r = vr;
+        // rect.left += deltaLeft;
+        // rect.right += deltaLeft;
+        // rect.top += deltaTop;
+        // rect.bottom += deltaTop;
+        // r = {
+        //   units: vr.units,
+        //   location: {
+        //     // In percent
+        //     x: vr.location.x - (deltaLeft + deltaRight),
+        //     y: vr.location.y - (deltaTop + deltaBottom),
+        //   },
+        //   size: {
+        //     x: vr.size.x,
+        //     y: vr.size.y
+        //   }
+        // }
         break;
       }
       case PositionRef.rect_point_right_top: {
@@ -336,8 +343,8 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       }
       case PositionRef.position: {
         // IPosition location is center as percent and size is in pixels
-        const vr = v as IPosition;
-        const r = positionToRect(vr, width(this.props.boundary), height(this.props.boundary));
+        const vr = v as Position;
+        const r = vr.rect(); //positionToRect(vr, width(this.props.boundary), height(this.props.boundary));
         left = r.left;
         top = r.top;
         right = r.right;
@@ -428,7 +435,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     }
 
     const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
+    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
     const r = this.extend(v, this.props.edit.positionRef);
     // console.log('moveUpdate extend', r);
     // if (r.left >= this.props.boundary.left &&

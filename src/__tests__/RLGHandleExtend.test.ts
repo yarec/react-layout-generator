@@ -1,7 +1,6 @@
 import RLGHandle, { RLGHandleProps } from '../RLGHandle';
-// import { IBounds } from '../RLGQuadTree';
 import { Params, PositionRef, scalarWidthUpdate } from '../LayoutGenerator';
-// import { IRect } from '../types';
+import { Rect } from 'src/types';
 
 const height = 500;
 const width = 500;
@@ -27,12 +26,12 @@ const props: RLGHandleProps = {
   layout: {
     name: 'leftSide',
     editSize: [{ positionRef: PositionRef.scalar_width_right, variable: 'item', update: scalarWidthUpdate }],
-    location: {
+    location: new Rect({
       left: 100,
       top: 100,
       right: 200,
       bottom: 200
-    }
+    })
   },
   boundary: { left: 0, top: 0, right: 500, bottom: 500 },
   onUpdate: () => { }

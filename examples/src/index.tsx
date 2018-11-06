@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
 import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
-import ListLayout from '../../src/generators/list';
+import ListLayout from '../../src/generators/List';
 // import { OriginX, OriginY } from '../../src/types';
 import Deck from './Deck';
 // import Examples from './Examples'
@@ -72,13 +72,13 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
               <span>Examples</span>
             </div>
 
-            <Example name={'Desktop Layout'} data-layout={{ name: 'desktopLayout' }} >
+            <div /* name={'Desktop Layout'} */ data-layout={{ name: 'desktopLayout' }} >
               <span>Desktop Layout</span>
-            </Example>
+            </div>
 
-            <Example name={'Card Layout'} data-layout={{ name: 'cardLayout' }} >
+            <div /* name={'Card Layout'} */ data-layout={{ name: 'cardLayout' }} >
               <span>Card Layout</span>
-            </Example>
+            </div>
 
           </ReactLayout>
         </div>

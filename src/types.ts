@@ -34,92 +34,146 @@ export function height(r: IRect) {
 }
 
 export class Rect implements IRect {
-  top: number = 0;
-  left: number = 0;
-  bottom: number = 0;
-  right: number = 0;
+  private _top: number = 0;
+  private _left: number = 0;
+  private _bottom: number = 0;
+  private _right: number = 0;
 
-  constructor(rect: IRect/* {top: number, left: number, bottom: number, right: number} */) {
-    this.top = rect.top;
-    this.left = rect.left;
-    this.bottom = rect.bottom;
-    this.right = rect.right;
+  private _width: number = 0;
+  private _height: number = 0;
+  private _halfWidth: number = 0;
+  private _halfHeight: number = 0;
+
+  constructor(rect: IRect) {
+    this.update(rect);
   }
 
-  width() {
-    return this.right - this.left;
+  update(rect: IRect) {
+    this._top = rect.top;
+    this._left = rect.left;
+    this._bottom = rect.bottom;
+    this._right = rect.right;
+
+    this._width = this._right - this._left;
+    this._height = this._bottom - this._top;
+    this._halfWidth =  this._width / 2;
+    this._halfHeight = this._height / 2;
   }
 
-  height() {
-    return this.bottom - this.top;
+  get top() {
+    return this._top;
+  }
+  
+  get left() {
+    return this._left;
+  }
+
+  get bottom() {
+    return this._bottom;
+  }
+
+  get right() {
+    return this._right;
+  }
+
+  get width() {
+    return this._width;
+  }
+
+  get height() {
+    return this._height;
+  }
+
+  get halfWidth() {
+    return this._halfWidth;
+  }
+
+  get halfHeight() {
+    return this._halfHeight;
+  }
+
+  get location() {
+    return {x: this._left, y: this._top};
+  }
+
+  get size() {
+    return {x: this._width, y: this._height};
+  }
+
+  get leftTop() {
+    return {x: this._left, y: this._top};
+  }
+
+  set size(s: IPoint) {
+
   }
 
   translate(point: IPoint): IRect {
     return {
-      top: this.top + point.y,
-      left: this.left + point.x,
-      bottom: this.bottom + point.y,
-      right: this.right + point.x
+      top: this._top + point.y,
+      left: this._left + point.x,
+      bottom: this._bottom + point.y,
+      right: this._right + point.x
     };
   }
 
   add(rect: IRect): IRect {
     return {
-      top: this.top + rect.top,
-      left: this.left + rect.left,
-      bottom: this.bottom + rect.bottom,
-      right: this.right + rect.right
+      top: this._top + rect.top,
+      left: this._left + rect.left,
+      bottom: this._bottom + rect.bottom,
+      right: this._right + rect.right
     };
   }
 
   intersect(r: Rect): boolean {
-    return !(r.left > this.right
-      || r.right < this.left
-      || r.top > this.bottom
-      || r.bottom < this.top);
+    return !(r._left > this._right
+      || r._right < this._left
+      || r._top > this._bottom
+      || r._bottom < this._top);
   }
 }
 
-export enum IAlign {
-  topLeft = 1,
-  topCenter,
-  topRight,
-  rightTop,
-  rightCenter,
-  rightBottom,
-  bottomRight,
-  bottomCenter,
-  bottomLeft,
-  leftBottom,
-  leftCenter,
-  leftTop
-}
+// export enum IAlign {
+//   topLeft = 1,
+//   topCenter,
+//   topRight,
+//   rightTop,
+//   rightCenter,
+//   rightBottom,
+//   bottomRight,
+//   bottomCenter,
+//   bottomLeft,
+//   leftBottom,
+//   leftCenter,
+//   leftTop
+// }
 
-export enum IUnit {
-  pixel = 1,
-  percent
-}
+// // export enum IUnit {
+// //   pixel = 1,
+// //   percent
+// // }
 
-export enum IOrigin {
-  leftTop = 1,
-  center
-}
+// // export enum IOrigin {
+// //   leftTop = 1,
+// //   center
+// // }
 
-export interface IPosition {
-  units: { 
-    origin: IOrigin, 
-    location: IUnit, 
-    size: IUnit 
-  }
-  align?: {
-    key: string, 
-    offset: IPoint, 
-    source: IAlign, 
-    self: IAlign
-  } 
-  location: IPoint; // in percent
-  size: IPoint; // in absolute
-}
+// export interface IPosition {
+//   units: { 
+//     origin: IOrigin, 
+//     location: IUnit, 
+//     size: IUnit 
+//   }
+//   align?: {
+//     key: string, 
+//     offset: IPoint, 
+//     source: IAlign, 
+//     self: IAlign
+//   } 
+//   location: IPoint; 
+//   size: IPoint; 
+// }
 
 export interface IPoint {
   x: number;

@@ -1,6 +1,7 @@
-import BasicLayoutGenerator, { Params, ILayout, Layouts } from '../LayoutGenerator';
-import { IRect, IPosition, IUnit, IOrigin } from '../types';
-import {positionToRect} from '../utils';
+import BasicLayoutGenerator, { Params, ILayout, Layouts, ILayoutGenerator, } from '../LayoutGenerator';
+import { Point, Rect } from '../types';
+import Position, {IPosition, IUnit} from '../Position'
+// import { height } from 'lib/src/types';
 
 export default function ListLayout(name: string) {
 
@@ -15,22 +16,22 @@ export default function ListLayout(name: string) {
   ])
 
   function init(params: Params, layouts?: Layouts): Layouts {
-    const width = params.get('width') as number;
-    const height = params.get('height') as number;
+    const viewport = params.get('viewport') as Point;
+   
     let updates: Array<ILayout> = params.updates();
 
     if (!layouts) {
       const title = function (): ILayout {
-        let location: IRect = {
+        let location = new Rect ({
           left: 0,
           top: 0,
-          right: width,
+          right: viewport.x,
           bottom: titleHeight
-        }
+        })
   
         return {
-          name: 'title',
-          location: location
+        name: 'title',
+        location: location
         }
       }();
   
@@ -42,85 +43,61 @@ export default function ListLayout(name: string) {
     }
     else if (updates && layouts) {
       updates.forEach((layout) => {
-        let p = params.get(layout.name) as IPosition;
+        let p = params.get(layout.name) as Position;
         if (p) {
           // console.log('init ' + layout.name + ' params', p)
-          layout.location = positionToRect(p, width, height);
+          layout.location = new Rect(p.rect()); 
           layouts.set(layout.name, layout);
         }
       });
     }
     return layouts;
-
-    // if (!updates) {
-    //   const title = function (): ILayout {
-    //     let location: IRect = {
-    //       left: 0,
-    //       top: 0,
-    //       right: width,
-    //       bottom: titleHeight
-    //     }
-  
-    //     return {
-    //       name: 'title',
-    //       location: location
-    //     }
-    //   }();
-  
-    //   params.set('LastItemVerticalOffset', titleHeight);
-    //   console.log('init LastItemVerticalOffset',titleHeight)
-    //   return new Map([
-    //     [title.name, title]
-    //   ])
-    // }
-    // else if (layouts) {
-    //   updates.forEach((layout) => {
-    //     let p = params.get(layout.name) as IPosition;
-    //     if (p) {
-    //       console.log('init ' + layout.name + ' params', p)
-    //       layout.location = positionToRect(p, width, height);
-    //       layouts.set(layout.name, layout);
-    //     }
-    //   });
-    // }
-    // return layouts;
   }
 
-  function create(name: string, params: Params, layouts: Layouts, position: IPosition): ILayout {
-    const width = params.get('width') as number;
-    const height = params.get('height') as number;
+  function create(index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout {
+    const viewport = params.get('viewport') as Point;
+    // const height = params.get('height') as number;
     const itemHeight = params.get('itemHeight') as number;
+
+    let p: Position;
+    if (!position) {
+      p = new Position({
+        units: {
+          origin: {x: 0, y: 0},
+          location: IUnit.pixel,
+          size: IUnit.pixel
+        },
+        align: {
+          key: index-1,
+          offset: {x: 0, y: 0},
+          source: {x: 0, y: 100},
+          self: {x: 0, y: 0}
+        },
+        location: {x: 0, y: 0},
+        size: {x: viewport.x, y: itemHeight}
+      }, g)
+    } else {
+      p = new Position(position, g);
+    }
 
     const LastItemVerticalOffset = params.get('LastItemVerticalOffset') as number;
 
-    if (!position) {
-      position = {
-        units: {origin: IOrigin.leftTop, location: IUnit.pixel, size: IUnit.pixel},
-        location: {
-          x: 0,
-          y: LastItemVerticalOffset
-        },
-        size: {
-          x: width,
-          y: itemHeight
-        }
-      }
-    }
+    // p.update({x: 0, y: LastItemVerticalOffset}, {x: , y: height(});
 
-    console.log('create', position)
+    console.log('create', p.rect())
 
     // Update offset for next item
-    params.set('LastItemVerticalOffset', position.location.y + position.size.y);
+    params.set('LastItemVerticalOffset', LastItemVerticalOffset + p.fromSize().y); 
 
     const box: ILayout = {
       name: name,
-      location: positionToRect(position, width, height)
+      location: new Rect(p.rect())
     }
 
     // Insert layout
-    layouts.set(box.name, box);
+    g.layouts()!.set(box.name, box);
     // Update params
-    params.set(name, position);
+    params.set(name, p);
 
     // return layout
     return box;

@@ -1,8 +1,8 @@
-import { height, IRect, translate, width, IPoint, IPosition, IOrigin, IUnit } from './types';
-import { positionToRect, rectToPosition } from './utils';
+import { height, IRect, Rect, width, IPoint} from './types';
+import Position, {IPosition} from './Position';
 
-type FValue = (p: Params) => number | IRect | IPoint | IPosition;
-export type Value = number | IRect | IPoint | IPosition | FValue;
+type FValue = (p: Params) => number | IRect | IPoint | Position;
+export type Value = number | IRect | IPoint | Position | FValue;
 
 export class Params {
   params: Map<string, Value>;
@@ -53,7 +53,7 @@ export class Params {
     this._changed.push(layout);
   }
 
-  set(key: string, v: Value, layout?: ILayout) {
+  set(key: string, v: Value, layout?: ILayout): boolean {
     const r = this.params.get(key);
     if (r != v) {
       // console.log('Param.set ', key, v)
@@ -70,18 +70,24 @@ export class Params {
 
 export class Layouts {
   private _layouts: Map<string, ILayout>;
+  private _byIndex: Array<ILayout>;
   changeCount: number;
   width: number;
   height: number;
 
   constructor(layouts: Array<[string, ILayout]>) {
+    this._byIndex = new Array();
     this._layouts = new Map(layouts);
+    this._layouts.forEach((value) => {
+      this._byIndex.push(value);
+    })
   }
 
   update() {
     this.width = 0;
     this.height = 0;
 
+    // Get actual width and height
     this._layouts.forEach((layout) => {
       if (this.width < layout.location.right) {
         this.width = layout.location.right
@@ -90,6 +96,7 @@ export class Layouts {
         this.height = layout.location.bottom
       }
     });
+
     this.changeCount = 0;
   }
 
@@ -108,12 +115,21 @@ export class Layouts {
     return this.changeCount != 0;
   }
 
+  find(i: number) {
+    return this._byIndex[i];
+  }
+
   get(key: string) {
     return this._layouts.get(key);
   }
 
   set(key: string, v: ILayout) {
+    const s = this._layouts.size;
     this._layouts.set(key, v);
+    if (s < this._layouts.size) {
+      // Add to byIndex array
+      this._byIndex.push(v);
+    }
     this.changeCount = 0;
   }
 }
@@ -174,7 +190,7 @@ export interface IEdit {
 
 export interface ILayout {
   name: string;
-  location: IRect; // relative to origin
+  location: Rect; 
   editSize?: Array<IEdit>;
   // editVisibility?: boolean;
   // style?: React.CSSProperties;
@@ -195,7 +211,7 @@ export interface ILayoutGenerator {
   next: () => ILayout | undefined;
   lookup: (name: string) => ILayout | undefined;
   layouts: () => Layouts | undefined;
-  create?: (name: string, position: IPosition) => ILayout | undefined;
+  create?: (index: number, name: string, g: ILayoutGenerator, position: IPosition) => ILayout | undefined;
   api: () => API | undefined;
 }
 
@@ -229,17 +245,17 @@ export class ResizeLayout implements ILayoutGenerator {
   }
 
   protected transform = (b: ILayout | undefined) => {
-    if (b) {
-      b.location.top += this.origin.y;
-      b.location.left += this.origin.x;
-      b.location.bottom += this.origin.y;
-      b.location.right += this.origin.x;
+    // if (b) {
+    //   b.location.y += this.origin.y;
+    //   b.location.x += this.origin.x;
+    //   b.location.bottom += this.origin.y;
+    //   b.location.right += this.origin.x;
 
-      b.location.top *= this.scale.y;
-      b.location.left *= this.scale.x;
-      b.location.bottom *= this.scale.y;
-      b.location.right *= this.scale.x;
-    }
+    //   b.location.top *= this.scale.y;
+    //   b.location.left *= this.scale.x;
+    //   b.location.bottom *= this.scale.y;
+    //   b.location.right *= this.scale.x;
+    // }
     return b;
   }
 
@@ -261,7 +277,7 @@ export class ResizeLayout implements ILayoutGenerator {
 }
 
 export type IInit = (params: Params, layouts?: Layouts) => Layouts;
-export type ICreate = (name: string, params: Params, layouts: Layouts, position: IPosition) => ILayout;
+export type ICreate = (index: number, name: string, g: ILayoutGenerator, position: IPosition) => ILayout;
 
 export default class BasicLayoutGenerator implements ILayoutGenerator {
   private _name: string;
@@ -303,8 +319,7 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
   }
 
   lookup = (name: string): ILayout | undefined => {
-    const parts = name.split('/');
-    let r = this._layouts.get(parts[0]);
+    let r = this._layouts.get(name);
     if (r) {
       if (r.g) {
         let n = r.g.lookup(name);
@@ -317,9 +332,9 @@ export default class BasicLayoutGenerator implements ILayoutGenerator {
     return undefined;
   }
 
-  create = (name: string, position: IPosition) => {
+  create = (index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout | undefined => {
     if (this._create) {
-      return this._create(name, this._params, this._layouts, position);
+      return this._create(index, name, g, position);
     }
     return undefined;
   }
@@ -413,7 +428,7 @@ export class GridGenerator implements ILayoutGenerator {
     this.rows = rows;
     this.block = {
       name: name,
-      location: { left: 0, top: 0, right: blockSize.x, bottom: blockSize.y }
+      location: new Rect({ left: 0, top: 0, right: blockSize.x, bottom: blockSize.y })
     }
     this.colCounter = 0;
     this.rowCounter = 0;
@@ -452,12 +467,13 @@ export class GridGenerator implements ILayoutGenerator {
   nextTile = (): ILayout | undefined => {
     let r: ILayout | undefined = undefined;
     if (this.block) {
+      const l = this.block.location.translate({
+        x: this.block.location.left + this.colCounter * width(this.block.location),
+        y: this.block.location.top + this.rowCounter * height(this.block.location)
+      });
       r = {
         name: `${this.block.name}/${this.rowCounter},${this.colCounter}`,
-        location: translate(this.block.location, {
-          x: this.block.location.left + this.colCounter * width(this.block.location),
-          y: this.block.location.top + this.rowCounter * height(this.block.location)
-        })
+        location: new Rect(l)
       }
 
       if (this.colCounter < (this.cols - 1)) {
@@ -539,7 +555,7 @@ export function DesktopLayout(name: string) {
       return {
         name: 'leftSide',
         editSize: [{ positionRef: PositionRef.scalar_width_right, variable: 'leftSideWidth', update: scalarWidthUpdate }],
-        location: location
+        location: new Rect(location)
       }
     }();
 
@@ -565,7 +581,7 @@ export function DesktopLayout(name: string) {
       return {
         name: 'rightSide',
         editSize: [{ positionRef: PositionRef.scalar_width_left, variable: 'rightSideWidth', update: scalarWidthUpdate }],
-        location: location
+        location: new Rect(location)
       }
     }();
 
@@ -589,7 +605,7 @@ export function DesktopLayout(name: string) {
       // console.log('header', location);
       return {
         name: 'header',
-        location: location
+        location: new Rect(location)
       }
     }();
 
@@ -613,7 +629,7 @@ export function DesktopLayout(name: string) {
       // console.log('content', location);
       return {
         name: 'content',
-        location: location
+        location: new Rect(location)
       }
     }();
 
@@ -637,7 +653,7 @@ export function DesktopLayout(name: string) {
       //console.log('footer', location);
       return {
         name: 'footer',
-        location: location
+        location: new Rect(location)
       }
     }();
 
@@ -694,47 +710,55 @@ export function scalarWidthUpdate(v: Value, ref: PositionRef, deltaX: number, de
 }
 
 export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
-  const width = params.get('width') as number;
-  const height = params.get('height') as number;
+  const vr = v as Position;
 
-  const vr = v as IPosition;
+  // let rect = vr.rect(); // positionToRect(vr, width, height)
 
-  let rect = positionToRect(vr, width, height)
+  // rect.left += deltaX;
+  // rect.top += deltaY;
+  // rect.right += deltaX;
+  // rect.bottom += deltaY;
 
-  rect.left += deltaX;
-  rect.top += deltaY;
-  rect.right += deltaX;
-  rect.bottom += deltaY;
+  // vr.update(rect); // rectToPosition(rect, width, height, vr.units)
 
-  const p = rectToPosition(rect, width, height, vr.units)
-
-  return p;
+  return vr;
 }
 
 export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
 
-  const vr = v as IPosition;
-  return {
-    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
-    location: vr.location,
-    size: {
-      x: vr.size.x - deltaX,
-      y: vr.size.y
-    }
-  }
+  const vr = v as Position;
+
+  // switch (ref) {
+  //   case 
+  //   default: {
+  //     console.error('positionWidthUpdate unexpected PositionRef', ref);
+  //   }
+  // }
+
+  // return {
+  //   units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+  //   location: vr.location,
+  //   size: {
+  //     x: vr.size.x - deltaX,
+  //     y: vr.size.y
+  //   }
+  // }
+  return vr;
 }
 
 export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
 
-  const vr = v as IPosition;
-  return {
-    units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
-    location: vr.location,
-    size: {
-      x: vr.size.x,
-      y: vr.size.y + deltaY
-    }
-  }
+  const vr = v as Position;
+  // return {
+  //   units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
+  //   location: vr.location,
+  //   size: {
+  //     x: vr.size.x,
+  //     y: vr.size.y + deltaY
+  //   }
+  // }
+
+  return vr;
 }
 
 
@@ -746,8 +770,8 @@ export function DiagramLayout(name: string) {
   ])
 
   function init(params: Params, layouts?: Layouts): Layouts {
-    const width = params.get('width') as number;
-    const height = params.get('height') as number;
+    // const width = params.get('width') as number;
+    // const height = params.get('height') as number;
     let updates: Array<ILayout> = params.updates();
 
     if (!layouts) {
@@ -755,10 +779,10 @@ export function DiagramLayout(name: string) {
     }
     else if (updates && layouts) {
       updates.forEach((layout) => {
-        let p = params.get(layout.name) as IPosition;
+        let p = params.get(layout.name) as Position;
         if (p) {
           // console.log('init ' + layout.name + ' params', p)
-          layout.location = positionToRect(p, width, height);
+          // layout.location = positionToRect(p, width, height);
           layouts.set(layout.name, layout);
         }
       });
@@ -766,21 +790,26 @@ export function DiagramLayout(name: string) {
     return layouts;
   }
 
-  function create(name: string, params: Params, layouts: Layouts, position: IPosition): ILayout {
-    const width = params.get('width') as number;
-    const height = params.get('height') as number;
+  function create(index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout {
+    // const width = params.get('width') as number;
+    // const height = params.get('height') as number;
 
-    const box = {
+    const p = new Position(position, g)
+
+    const box: ILayout = {
       name: name,
       editSize: [
         { positionRef: PositionRef.position, variable: name, update: positionUpdate },
         { positionRef: PositionRef.position_width_right, variable: name, update: positionWidthUpdate },
         { positionRef: PositionRef.position_height_bottom, variable: name, update: positionHeightUpdate }
       ],
-      location: positionToRect(position, width, height)
+      location: new Rect(p.rect())
     }
-    layouts.set(box.name, box);
-    params.set(name, position);
+    const layouts = g.layouts();
+    if (layouts) {
+      layouts.set(box.name, box);
+    }
+    params.set(name, p);
     return box;
   }
 
@@ -811,61 +840,61 @@ export function fitLayout(
   return new ResizeLayout('resize.' + g.name(), g, origin, { x: scale, y: scale });
 }
 
-export function mobileDashboard(name: 'mobile.layout') {
-  const width = 0;
-  const height = 0;
-  const headerWidth = 1.5;
-  const cols = 2;
-  const rows = 3;
+// export function mobileDashboard(name: 'mobile.layout') {
+//   const width = 0;
+//   const height = 0;
+//   const headerWidth = 1.5;
+//   const cols = 2;
+//   const rows = 3;
 
-  const params = new Params([
-    ['width', width],
-    ['height', height],
-    ['cols', cols],
-    ['rows', rows],
-  ]);
+//   const params = new Params([
+//     ['width', width],
+//     ['height', height],
+//     ['cols', cols],
+//     ['rows', rows],
+//   ]);
 
-  function init(params: Params, layouts?: Layouts): Layouts {
-    const width = params.get('width') as number;
-    const cols = params.get('cols') as number;
-    const rows = params.get('rows') as number;
+//   function init(params: Params, layouts?: Layouts): Layouts {
+//     const width = params.get('width') as number;
+//     const cols = params.get('cols') as number;
+//     const rows = params.get('rows') as number;
 
-    const blockSize: IPoint = {
-      x: width / cols,
-      y: width / cols
-    };
-    const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerWidth / 2);
+//     const blockSize: IPoint = {
+//       x: width / cols,
+//       y: width / cols
+//     };
+//     const xCenter = ((cols * blockSize.x) / 2) - (blockSize.x * headerWidth / 2);
 
-    const header = function (): ILayout {
-      return {
-        name: 'mobileHeader',
-        location: {
-          left: xCenter,
-          top: 0,
-          right: blockSize.x * headerWidth,
-          bottom: blockSize.y
-        }
-      }
-    }();
+//     const header = function (): ILayout {
+//       return {
+//         name: 'mobileHeader',
+//         location: {
+//           left: xCenter,
+//           top: 0,
+//           right: blockSize.x * headerWidth,
+//           bottom: blockSize.y
+//         }
+//       }
+//     }();
 
-    const grid = function (): ILayout {
-      return {
-        name: 'mobileGrid',
-        location: {
-          left: 0,
-          top: blockSize.y,
-          right: blockSize.x,
-          bottom: blockSize.y
-        },
-        g: new GridGenerator('Mobile', cols, rows, blockSize)
-      }
-    }();
+//     const grid = function (): ILayout {
+//       return {
+//         name: 'mobileGrid',
+//         location: {
+//           left: 0,
+//           top: blockSize.y,
+//           right: blockSize.x,
+//           bottom: blockSize.y
+//         },
+//         g: new GridGenerator('Mobile', cols, rows, blockSize)
+//       }
+//     }();
 
-    return new Layouts([
-      [header.name, header],
-      [grid.name, grid]
-    ]);
-  }
+//     return new Layouts([
+//       [header.name, header],
+//       [grid.name, grid]
+//     ]);
+//   }
 
-  return new BasicLayoutGenerator(name, init, params);
-}
+//   return new BasicLayoutGenerator(name, init, params);
+// }
