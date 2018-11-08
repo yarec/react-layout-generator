@@ -84,7 +84,7 @@ export default function ListLayout(name: string) {
 
     // p.update({x: 0, y: LastItemVerticalOffset}, {x: , y: height(});
 
-    console.log('create', p.rect())
+    // console.log('create', p.rect())
 
     // Update offset for next item
     params.set('LastItemVerticalOffset', LastItemVerticalOffset + p.fromSize().y); 

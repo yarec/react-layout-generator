@@ -15,7 +15,11 @@ interface ExampleProps {
 }
 export class Example extends React.PureComponent<ExampleProps> {
   render = () => {
-    return (<button style={{ width: '120' }}>{this.props.name}</button>)
+    return (
+      <div>
+        <button style={{ width: '120' }}>{this.props.name}</button>
+      </div>
+    )
   }
 }
 
@@ -33,6 +37,8 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
   d: LayoutGenerator;
   m: LayoutGenerator;
 
+  content: LayoutGenerator;
+
   constructor(props: ExampleLayoutProps) {
     super(props);
 
@@ -48,6 +54,14 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
     p.set('fullWidthHeaders', 0)
     p.set('leftSideWidth', 200);
     p.set('rightSideWidth', 0)
+  }
+
+  deskTop = (event: any) => {
+    alert('ok')
+  }
+
+  deckOfCards = (event: any) => {
+    alert('ok')
   }
 
   elements = () => {
@@ -69,16 +83,24 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
             g={this.m}
           >
             <div data-layout={{ name: 'title' }} >
-              <span>Examples</span>
+              <b >Examples</b>
             </div>
 
-            <div /* name={'Desktop Layout'} */ data-layout={{ name: 'desktopLayout' }} >
-              <span>Desktop Layout</span>
+            <div data-layout={{ name: 'desktopLayout' }} >
+              <span onClick={this.deskTop}>Desktop</span>
             </div>
 
             <div /* name={'Card Layout'} */ data-layout={{ name: 'cardLayout' }} >
-              <span>Card Layout</span>
+              <span onClick={this.deckOfCards}>Card Layout</span>
             </div>
+
+            {/*             
+            <div data-layout={{ name: 'svgLayout' }} >
+              <svg width='200' height='24'>
+                <rect width='150' height='10'/>
+              </svg>
+            </div> 
+            */}
 
           </ReactLayout>
         </div>

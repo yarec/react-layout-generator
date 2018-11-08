@@ -129,8 +129,8 @@ export default class Position {
   private inverseScale = (p: IPoint): IPoint => {
     const size = this._g.params().get('viewport') as IPoint;
     return {
-      x: p.x / size.x,
-      y: p.y / size.y
+      x: (p.x / size.x),
+      y: (p.y / size.y)
     }
   }
 
@@ -206,7 +206,6 @@ private fromOrigin = (p: IPoint, s: IPoint): IPoint => {
         const l = this._g.layouts();
         if (l) {
           ref = l.find(this._align.key as number);
-          console.log()
         }
         // ref = this._g.find(this._align.key as number);
       }
@@ -278,6 +277,7 @@ private fromOrigin = (p: IPoint, s: IPoint): IPoint => {
 
   update = (location: IPoint, size: IPoint) => {
     // Takes in world coordinates 
+    // console.log(`Position update x: ${location.x} y: ${location.y}`)
     let p = this.toOrigin(location, size);
 
     if (this._units.location === IUnit.percent) {

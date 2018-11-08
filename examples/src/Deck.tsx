@@ -46,7 +46,7 @@ export default class Deck {
         data-layout={{
           name: this.deck[index],
           position: {
-            units: {origin: {x: 50, y: 50}, location: IUnit.percent, size: IUnit.pixel},
+            units: {origin: {x: 0, y: 0}, location: IUnit.pixel, size: IUnit.pixel},
             location: { x: 25, y: 25 },
             
             size: { x: 100, y: 150 }

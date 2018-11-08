@@ -72,10 +72,10 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.editOverlay = [];
     const p = this.derivedLayout.params();
 
-    const v = p.set('viewport', {x: this.state.width, y: this.state.height});
+    const v = p.set('viewport', { x: this.state.width, y: this.state.height });
     const w = p.set('width', this.state.width);
     const h = p.set('height', this.state.height);
-    if (v || w || h ) {
+    if (v || w || h) {
       const _layouts = this.derivedLayout.layouts();
       if (_layouts) {
         _layouts.layouts.forEach((layout) => {
@@ -83,16 +83,12 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         });
       }
     }
-    
+
     this.derivedLayout.reset();
     this.quadTree = new RLGQuadTree(0, 0, this.state.width, this.state.height);
   }
 
   createPositionedElement = (child: React.ReactElement<any>, index: number, name: string, position: IPosition) => {
-
-    if (name === 'desktopLayout') {
-      console.log(name)
-    }
 
     let b = this.derivedLayout.lookup(name);
     if (!b && this.derivedLayout.create) {
@@ -112,54 +108,62 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         if (this.editLayout && b.editSize) {
           this.editOverlay.push(b)
         }
-        let props = { style: style };
-        return React.cloneElement(child, props, child.props.children);
+        // let props = style: ...this.props.style
+        //   ...child.props.style ...style };
+
+        return React.cloneElement(child, {
+          style: {
+            ...this.props.style,
+            ...child.props.style,
+            ...style
+          }
+        }, child.props.children);
       }
     }
 
     return null;
   }
 
-  createListElement = (child: React.ReactElement<any>) => {
-    // TODO: Not called - still needed?
-    let item: ILayout | undefined = this.derivedLayout.next();
-    if (item) {
-      const style = tileStyle(
-        child.props['style'],
-        item.location.left,
-        item.location.top,
-        (item.location.right - item.location.left),
-        (item.location.bottom - item.location.top)
-      );
-      // console.log('CreateElements style', style);
-      return (
-        <div
-          style={style}
-          key={item.name + '-' + child.key}
-        >
-          {/* Design Layout */}
-          <div style={{
-            height: '100%',
-            width: '100%',
-            border: '1px solid red',
-            //padding: '10px',
-            //margin: '10px',
-            backgroundColor: 'grey',
-            color: 'white'
-          }}>
-            {item.name + '-' + child.key}
-          </div>
-          {/* Child with modification Infinity mapped to this.height this.width - padding*/}
-        </div>
-      );
-    }
+  // createListElement = (child: React.ReactElement<any>) => {
+  //   // TODO: Not called - still needed?
+  //   let item: ILayout | undefined = this.derivedLayout.next();
+  //   if (item) {
+  //     const style = tileStyle(
+  //       child.props['style'],
+  //       item.location.left,
+  //       item.location.top,
+  //       (item.location.right - item.location.left),
+  //       (item.location.bottom - item.location.top)
+  //     );
+  //     // console.log('CreateElements style', style);
+  //     return (
+  //       <div
+  //         style={style}
+  //         key={item.name + '-' + child.key}
+  //       >
+  //         {/* Design Layout */}
+  //         <div style={{
+  //           height: '100%',
+  //           width: '100%',
+  //           border: '1px solid red',
+  //           //padding: '10px',
+  //           //margin: '10px',
+  //           backgroundColor: 'grey',
+  //           color: 'white'
+  //         }}>
+  //           {item.name + '-' + child.key}
+  //         </div>
+  //         {/* Child with modification Infinity mapped to this.height this.width - padding*/}
+  //       </div>
+  //     );
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
-    
+
     if (p && p['name']) {
       return this.createPositionedElement(child, index, p['name'], p['position']);
     } else {
@@ -266,7 +270,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
                 onUpdate={this.onUpdate}
                 edit={item}
                 layout={layout}
-                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height}}
+                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height }}
                 params={this.derivedLayout.params()}
                 rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
             }
@@ -317,7 +321,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       <div style={{ height: '100%' }}>
         {this.content()}
         <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
-        {this.frameEnd()}
+        {/* {this.frameEnd()} */}
       </div>
     )
   }

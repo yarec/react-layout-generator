@@ -1,8 +1,9 @@
 import { height, IRect, Rect, width, IPoint} from './types';
 import Position, {IPosition} from './Position';
+import {isEqual} from 'underscore';
 
-type FValue = (p: Params) => number | IRect | IPoint | Position;
-export type Value = number | IRect | IPoint | Position | FValue;
+// type FValue = (p: Params) => number | IRect | IPoint | Position;
+export type Value = number | IRect | IPoint | Position; // | FValue;
 
 export class Params {
   params: Map<string, Value>;
@@ -55,11 +56,15 @@ export class Params {
 
   set(key: string, v: Value, layout?: ILayout): boolean {
     const r = this.params.get(key);
-    if (r != v) {
-      // console.log('Param.set ', key, v)
-      if (layout) {
-        this._changed.push(layout)
-      }
+
+    // Always push layout 
+    if (layout) {
+      this._changed.push(layout)
+    }
+
+    // Only set if changed
+    if (!isEqual(r, v)) {
+      console.log('Param.set ', key);
       this.changeCount += 1;
       this.params.set(key, v);
       return true;
@@ -712,14 +717,16 @@ export function scalarWidthUpdate(v: Value, ref: PositionRef, deltaX: number, de
 export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
   const vr = v as Position;
 
-  // let rect = vr.rect(); // positionToRect(vr, width, height)
+  let rect = vr.rect(); 
 
-  // rect.left += deltaX;
-  // rect.top += deltaY;
-  // rect.right += deltaX;
-  // rect.bottom += deltaY;
+  rect.left += deltaX;
+  rect.top += deltaY;
+  rect.right += deltaX;
+  rect.bottom += deltaY;
 
-  // vr.update(rect); // rectToPosition(rect, width, height, vr.units)
+  // console.log(`positionUpdate value - left: ${rect.left}, top: ${rect.top}`)
+
+  vr.update({x: rect.left, y: rect.top}, {x: rect.right - rect.left, y: rect.bottom - rect.top}); 
 
   return vr;
 }
@@ -727,6 +734,7 @@ export function positionUpdate(v: Value, ref: PositionRef, deltaX: number, delta
 export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
 
   const vr = v as Position;
+  console.log('TODO positionWidthUpdate');
 
   // switch (ref) {
   //   case 
@@ -749,6 +757,9 @@ export function positionWidthUpdate(v: Value, ref: PositionRef, deltaX: number, 
 export function positionHeightUpdate(v: Value, ref: PositionRef, deltaX: number, deltaY: number, params: Params): Value {
 
   const vr = v as Position;
+
+  console.log('TODO positionHeightUpdate');
+
   // return {
   //   units: { origin: IOrigin.center, location: IUnit.percent, size: IUnit.pixel },
   //   location: vr.location,
@@ -770,19 +781,19 @@ export function DiagramLayout(name: string) {
   ])
 
   function init(params: Params, layouts?: Layouts): Layouts {
-    // const width = params.get('width') as number;
-    // const height = params.get('height') as number;
     let updates: Array<ILayout> = params.updates();
 
     if (!layouts) {
       return new Layouts([]);
     }
     else if (updates && layouts) {
+      // update Layout for each update
       updates.forEach((layout) => {
         let p = params.get(layout.name) as Position;
         if (p) {
-          // console.log('init ' + layout.name + ' params', p)
-          // layout.location = positionToRect(p, width, height);
+          const rect = p.rect();
+          console.log(`init ${layout.name} left: ${rect.left} top: ${rect.top}`)
+          layout.location = new Rect(rect);
           layouts.set(layout.name, layout);
         }
       });
@@ -793,6 +804,10 @@ export function DiagramLayout(name: string) {
   function create(index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout {
     // const width = params.get('width') as number;
     // const height = params.get('height') as number;
+
+    if (!position) {
+      console.error('TODO default position')
+    }
 
     const p = new Position(position, g)
 

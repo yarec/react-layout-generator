@@ -233,3 +233,20 @@ it('update #2', () => {
   expect(ref.rect()).toEqual({left: 250, top: 250, right: 300, bottom: 300});
 });
 
+it('update #3', () => {
+  const ref = new Position({
+    units: {
+      origin: { x: 0, y: 0 },
+      location: IUnit.percent,
+      size: IUnit.pixel
+    },
+    location: { x: 250, y: 250 },
+    size: { x: 100, y: 50 }
+  }, g);
+
+  ref.update({x: 250, y: 250}, {x: 50, y: 50});
+
+  expect(ref.rect()).toEqual({left: 250, top: 250, right: 300, bottom: 300});
+});
+
+

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
 import { IPoint, IRect, width, height } from './types';
 import Position from './Position';
+import { isEqual } from 'underscore';
 
 // import { IRect } from 'lib/src/types';
 
@@ -72,7 +73,9 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
 
   initUpdate(x: number, y: number) {
     this.origin = { x, y };
-    this.value = this.props.params.get(this.props.edit.variable);
+    const v = this.props.params.get(this.props.edit.variable);
+    this.value = JSON.parse(JSON.stringify(v));
+    // Object.assign({}, this.props.params.get(this.props.edit.variable));
   }
 
   pin(v: Value, ref: PositionRef, item: IRect): Value {
@@ -126,13 +129,13 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         //const boundaryHeight = height(this.props.boundary);
 
         const a = vr.rect(); // positionToRect(vr, boundaryWidth, boundaryHeight);
-        // console.log('pin position start rect', a);
+        // console.log(`pin position end rect start: ${a.left}, top: ${a.top}`)
         let left = a.left
         let top = a.top;
         let right = a.right;
         let bottom = a.bottom;
 
-        if (left < this.props.boundary.left ) {
+        if (left < this.props.boundary.left) {
           left = this.props.boundary.left;
           right = left + width(item);
         }
@@ -150,10 +153,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         }
         r = vr;
 
-        // console.log('pin position end rect', {left: left, top: top, right: right, bottom: bottom})
-        
-        //console.log('pin position: ', { top: top, left: left, bottom: bottom, right: right });
-        //console.log('pin boundary diff: (bottom, right)',  bottom - this.props.boundary.bottom, right - this.props.boundary.right);
+        // console.log(`pin position end rect left: ${left}, top: ${top}`)
         break;
       }
       case PositionRef.scalar_height_top: {
@@ -268,7 +268,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         //const boundaryHeight = height(this.props.boundary);
         const rect = vr.rect(); // positionToRect(vr, boundaryWidth, boundaryHeight);
 
-        vr.update({x: rect.left + deltaLeft, y: rect.right + deltaLeft}, {x: width(rect),y: height(rect)});
+        vr.update({ x: rect.left + deltaLeft, y: rect.right + deltaLeft }, { x: width(rect), y: height(rect) });
 
         r = vr;
         // rect.left += deltaLeft;
@@ -327,6 +327,7 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
     return r;
   }
 
+  // Get the position of a value
   extend(v: Value, ref: PositionRef): IRect {
     let left = this.props.layout.location.left;
     let top = this.props.layout.location.top;
@@ -342,9 +343,8 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
         break;
       }
       case PositionRef.position: {
-        // IPosition location is center as percent and size is in pixels
         const vr = v as Position;
-        const r = vr.rect(); //positionToRect(vr, width(this.props.boundary), height(this.props.boundary));
+        const r = vr.rect();
         left = r.left;
         top = r.top;
         right = r.right;
@@ -434,23 +434,41 @@ export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandle
       value = Object.assign({}, this.value);
     }
 
-    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    console.log('this.props.edit.variable ' + this.props.edit.variable, v);
-    const r = this.extend(v, this.props.edit.positionRef);
-    // console.log('moveUpdate extend', r);
-    // if (r.left >= this.props.boundary.left &&
-    //   r.right <= this.props.boundary.right &&
-    //   r.top >= this.props.boundary.top &&
-    //   r.bottom <= this.props.boundary.bottom
-    // ) {
-    //   this.props.params.set(this.props.edit.variable, v, this.props.layout);
-    //   this.props.onUpdate();
-    // } else {
-    const uv = this.pin(v, this.props.edit.positionRef, r);
-    this.props.params.set(this.props.edit.variable, uv, this.props.layout);
-    this.props.onUpdate();
-    // console.log('moveUpdate pin: ', uv);
-    //}
+    const deltaX = x - this.origin.x;
+    const deltaY = y - this.origin.y;
+
+    // Debug only
+    let s: IPoint = {x: 0, y: 0};
+    if ((value as Position).fromLocation) {
+      s = (value as Position).fromLocation();
+      console.log(`\nmoveUpdate ${this.props.edit.variable} start left: ${s.x}, top: ${s.y}`);
+    }
+
+
+    if (deltaX || deltaY) {
+      const v = this.props.edit.update(value, this.props.edit.positionRef, deltaX, deltaY, this.props.params);
+      console.log(`moveUpdate: x: ${x} y: ${y} deltaX: ${deltaX}, deltaY: ${deltaY}`);
+      const r = this.extend(v, this.props.edit.positionRef);
+      console.log(`moveUpdate diff ${deltaX - (r.left - s.x)}, ${deltaY - (r.top - s.y)}`)
+      const uv = this.pin(v, this.props.edit.positionRef, r);
+      
+      if (!isEqual(r, (uv as Position).rect())) {
+        console.log('failure', r, uv)
+      }
+
+      console.log(`moveUpdate: x: ${x} y: ${y} deltaX: ${deltaX}, deltaY: ${deltaY}`);
+
+      this.props.params.set(this.props.edit.variable, uv, this.props.layout);
+      this.props.onUpdate();
+
+      // Debug only
+      if ((uv as Position).fromLocation) {
+        const p = (uv as Position).fromLocation();
+        console.log(`moveUpdate end left: ${p.x}, top: ${p.y}`);
+      }
+      
+      //}
+    }
   }
 
   onMouseDown = (event: React.MouseEvent) => {
