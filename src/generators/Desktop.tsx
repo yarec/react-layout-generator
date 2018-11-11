@@ -1,3 +1,8 @@
+import {IRect} from '../types';
+import Params from '../components/Params';
+import Layout from '../components/Layout';
+import Layouts from '../components/Layouts';
+
 export function DesktopLayout(name: string) {
 
   const fullWidthHeaders = 0;
@@ -25,40 +30,34 @@ export function DesktopLayout(name: string) {
     const headerHeight = params.get('headerHeight') as number;
     const footerHeight = params.get('footerHeight') as number;
 
-    // console.log( 'get Rect top', params.get('rect', 'top'));
-    // console.log( 'get Rect xxx', params.get('rect', 'xxx'));
-    // console.log( 'get Rect', params.get('rect'));
-    // console.log( 'get Rect 2', params.get('rect') + 1);
-
     if (width < 800) {
       leftSideWidth = 0;
       rightSideWidth = 0;
     }
 
-
     // console.log('rightSideWidth', rightSideWidth)
 
-    const leftSide = function (): ILayout {
+    const leftSide = function (): Layout {
       let location: IRect;
       if (fullWidthHeaders) {
         location = {
-          left: 0,
-          top: headerHeight,
-          right: leftSideWidth,
-          bottom: height - footerHeight
+          x: 0,
+          y: headerHeight,
+          width: leftSideWidth,
+          height: height - footerHeight - headerHeight
         }
       } else {
         location = {
-          left: 0,
-          top: 0,
-          right: leftSideWidth,
-          bottom: height
+          x: 0,
+          y: 0,
+          width: leftSideWidth,
+          height: height
         }
       }
       //  console.log('leftSide', location);
       return {
         name: 'leftSide',
-        editSize: [{ positionRef: PositionRef.scalar_width_right, variable: 'leftSideWidth', update: scalarWidthUpdate }],
+        edit: [{ positionRef: PositionRef.scalar_width_right, variable: 'leftSideWidth', update: scalarWidthUpdate }],
         location: new Rect(location)
       }
     }();

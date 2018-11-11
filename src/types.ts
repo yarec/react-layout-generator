@@ -1,43 +1,43 @@
 
 
 export interface IRect {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export function translate(r: IRect, p: IPoint): IRect {
   return {
-    top: r.top + p.y,
-    left: r.left + p.x,
-    bottom: r.bottom + p.y,
-    right: r.right + p.x
+    y: r.y + p.y,
+    x: r.x + p.x,
+    width: r.width,
+    height: r.height
   };
 }
 
 export function scale(r: IRect, p: IPoint): IRect {
   return {
-    top: r.top * p.y,
-    left: r.left * p.x,
-    bottom: r.bottom * p.y,
-    right: r.right * p.x
+    y: r.y * p.y,
+    x: r.x * p.x,
+    height: r.height * p.y,
+    width: r.width * p.x
   };
 }
 
 export function width(r: IRect) {
-  return r.right - r.left;
+  return r.width;
 }
 
 export function height(r: IRect) {
-  return r.bottom - r.top;
+  return r.height;
 }
 
 export class Rect implements IRect {
-  private _top: number = 0;
-  private _left: number = 0;
-  private _bottom: number = 0;
-  private _right: number = 0;
+  y: number = 0;
+  x: number = 0;
+  width: number = 0;
+  height: number = 0;
 
   private _width: number = 0;
   private _height: number = 0;
@@ -49,39 +49,26 @@ export class Rect implements IRect {
   }
 
   update(rect: IRect) {
-    this._top = rect.top;
-    this._left = rect.left;
-    this._bottom = rect.bottom;
-    this._right = rect.right;
-
-    this._width = this._right - this._left;
-    this._height = this._bottom - this._top;
-    this._halfWidth =  this._width / 2;
-    this._halfHeight = this._height / 2;
+    this.y = rect.y;
+    this.x = rect.x;
+    this.height = rect.height;
+    this.width = rect.width;
   }
 
   get top() {
-    return this._top;
+    return this.y;
   }
   
   get left() {
-    return this._left;
+    return this.x;
   }
 
   get bottom() {
-    return this._bottom;
+    return this.y + this.height;
   }
 
   get right() {
-    return this._right;
-  }
-
-  get width() {
-    return this._width;
-  }
-
-  get height() {
-    return this._height;
+    return this.x + this.width;
   }
 
   get halfWidth() {
@@ -93,7 +80,7 @@ export class Rect implements IRect {
   }
 
   get location() {
-    return {x: this._left, y: this._top};
+    return {x: this.x, y: this.y};
   }
 
   get size() {
@@ -101,7 +88,7 @@ export class Rect implements IRect {
   }
 
   get leftTop() {
-    return {x: this._left, y: this._top};
+    return {x: this.x, y: this.y};
   }
 
   set size(s: IPoint) {
@@ -110,74 +97,38 @@ export class Rect implements IRect {
 
   translate(point: IPoint): IRect {
     return {
-      top: this._top + point.y,
-      left: this._left + point.x,
-      bottom: this._bottom + point.y,
-      right: this._right + point.x
+      y: this.y + point.y,
+      x: this.x + point.x,
+      height: this.height,
+      width: this.width
     };
   }
 
   add(rect: IRect): IRect {
     return {
-      top: this._top + rect.top,
-      left: this._left + rect.left,
-      bottom: this._bottom + rect.bottom,
-      right: this._right + rect.right
+      y: this.y + rect.y,
+      x: this.x + rect.x,
+      height: this.height + rect.height,
+      width: this.width + rect.width
     };
   }
 
-  intersect(r: Rect): boolean {
-    return !(r._left > this._right
-      || r._right < this._left
-      || r._top > this._bottom
-      || r._bottom < this._top);
-  }
+  // intersect(r: Rect): boolean {
+  //   return !(r.x > this._right
+  //     || r._right < this.x
+  //     || r.y > this._bottom
+  //     || r._bottom < this.y);
+  // }
 }
-
-// export enum IAlign {
-//   topLeft = 1,
-//   topCenter,
-//   topRight,
-//   rightTop,
-//   rightCenter,
-//   rightBottom,
-//   bottomRight,
-//   bottomCenter,
-//   bottomLeft,
-//   leftBottom,
-//   leftCenter,
-//   leftTop
-// }
-
-// // export enum IUnit {
-// //   pixel = 1,
-// //   percent
-// // }
-
-// // export enum IOrigin {
-// //   leftTop = 1,
-// //   center
-// // }
-
-// export interface IPosition {
-//   units: { 
-//     origin: IOrigin, 
-//     location: IUnit, 
-//     size: IUnit 
-//   }
-//   align?: {
-//     key: string, 
-//     offset: IPoint, 
-//     source: IAlign, 
-//     self: IAlign
-//   } 
-//   location: IPoint; 
-//   size: IPoint; 
-// }
 
 export interface IPoint {
   x: number;
   y: number;
+}
+
+export interface ISize {
+  width: number;
+  height: number;
 }
 
 export class Point implements IPoint {

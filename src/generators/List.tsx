@@ -1,7 +1,9 @@
-import BasicLayoutGenerator, { Params, ILayout, Layouts, ILayoutGenerator, } from '../LayoutGenerator';
+import Generator, { IGenerator, } from '../generators/Generator';
 import { Point, Rect } from '../types';
-import Position, {IPosition, IUnit} from '../Position'
-// import { height } from 'lib/src/types';
+import Position, {IPosition, IUnit} from '../components/Position';
+import Params from '../components/Params';
+import Layouts from '../components/Layouts';
+import Layout from '../components/Layout';
 
 export default function ListLayout(name: string) {
 
@@ -18,15 +20,15 @@ export default function ListLayout(name: string) {
   function init(params: Params, layouts?: Layouts): Layouts {
     const viewport = params.get('viewport') as Point;
    
-    let updates: Array<ILayout> = params.updates();
+    let updates: Array<Layout> = params.updates();
 
     if (!layouts) {
-      const title = function (): ILayout {
+      const title = function (): Layout {
         let location = new Rect ({
-          left: 0,
-          top: 0,
-          right: viewport.x,
-          bottom: titleHeight
+          x: 0,
+          y: 0,
+          width: viewport.x,
+          height: titleHeight
         })
   
         return {
@@ -54,7 +56,7 @@ export default function ListLayout(name: string) {
     return layouts;
   }
 
-  function create(index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout {
+  function create(index: number, name: string, g: IGenerator, position: IPosition): ILayout {
     const viewport = params.get('viewport') as Point;
     // const height = params.get('height') as number;
     const itemHeight = params.get('itemHeight') as number;
@@ -89,7 +91,7 @@ export default function ListLayout(name: string) {
     // Update offset for next item
     params.set('LastItemVerticalOffset', LastItemVerticalOffset + p.fromSize().y); 
 
-    const box: ILayout = {
+    const box: Layout = {
       name: name,
       location: new Rect(p.rect())
     }
@@ -103,5 +105,5 @@ export default function ListLayout(name: string) {
     return box;
   }
 
-  return new BasicLayoutGenerator(name, init, params, create);
+  return new Generator(name, init, params, create);
 }

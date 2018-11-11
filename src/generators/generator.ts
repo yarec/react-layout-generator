@@ -1,38 +1,39 @@
-import Params from './Params';
-import {ILayout} from './Layout';
+import Params from '../components/Params';
+import Layouts from '../components/Layouts';
+import Layout, { IPosition } from '../components/Layout'
+
+export type IInit = (g: IGenerator) => void;
+export type ICreate = (index: number, name: string, g: IGenerator, position: IPosition) => Layout;
 
 export interface IGenerator {
   name: () => string;
   params: () => Params;
-  reset: () => void;
-  next: () => ILayout | undefined;
-  lookup: (name: string) => ILayout | undefined;
   layouts: () => Layouts | undefined;
-  create?: (index: number, name: string, g: IGenerator, position: IPosition) => ILayout | undefined;
-  api: () => API | undefined;
+  reset: () => void;
+  next: () => Layout | undefined;
+  lookup: (name: string) => Layout | undefined;
+  create?: (index: number, name: string, g: IGenerator, position: IPosition) => Layout | undefined;
 }
 
-export default class BasicLayoutGenerator implements IGenerator {
+export default class Generator implements IGenerator {
   private _name: string;
   private _params: Params;
-  private _api: API | undefined;
+  private _layouts: Layouts;
+  private _layoutsIterator: IterableIterator<Layout> | undefined;
   private _init: IInit;
   private _create: ICreate | undefined;
-  private _layouts: Layouts;
-  private _layoutsIterator: IterableIterator<ILayout> | undefined;
-  currentLayout: ILayout | undefined;
+  currentLayout: Layout | undefined;
 
-  state: () => ILayout | undefined;
+  state: () => Layout | undefined;
 
-  constructor(name: string, init: IInit, params: Params, create?: ICreate, api?: API) {
+  constructor(name: string, init: IInit, params: Params, create?: ICreate) {
     this._name = name;
     this._init = init;
     this._create = create;
-    this._layouts = new Layouts([]); // init(params);
+    this._layouts = new Layouts([]); 
     this._layoutsIterator = this._layouts.values();
-    this.state = this.init;
+    this.state = this.start;
     this._params = params;
-    this._api = api;
   }
 
   name = () => {
@@ -47,25 +48,21 @@ export default class BasicLayoutGenerator implements IGenerator {
     return this._layouts;
   }
 
-  api = () => {
-    return this._api;
-  }
-
-  lookup = (name: string): ILayout | undefined => {
+  lookup = (name: string): Layout | undefined => {
     let r = this._layouts.get(name);
     if (r) {
-      if (r.g) {
-        let n = r.g.lookup(name);
-        if (n) {
-          return Object.assign({}, n);
-        }
-      }
+      // if (r.g) {
+      //   let n = r.g.lookup(name);
+      //   if (n) {
+      //     return Object.assign({}, n);
+      //   }
+      // }
       return Object.assign({}, r);
     }
     return undefined;
   }
 
-  create = (index: number, name: string, g: ILayoutGenerator, position: IPosition): ILayout | undefined => {
+  create = (index: number, name: string, g: IGenerator, position: IPosition): Layout | undefined => {
     if (this._create) {
       return this._create(index, name, g, position);
     }
@@ -74,67 +71,62 @@ export default class BasicLayoutGenerator implements IGenerator {
 
   reset = () => {
     // const changed: Array<ILayout> = this._params.changed();
-    if (this._params.changed() || this._layouts.size === 0) {
+    if (this._params.changed()) {
       // console.log('reset update layouts')
-      this._layouts = this._init(this._params, this._layouts); // unless external
+      this._init(this); 
     }
-    this.state = this.init;
+    this.state = this.start;
     this._layoutsIterator = this._layouts.values();
-    this._layouts.layouts.forEach((item: ILayout) => {
-      if (item.g) {
-        item.g.reset();
-      }
-    })
+    // this._layouts.layouts.forEach((item: Layout) => {
+    //   if (item.g) {
+    //     item.g.reset();
+    //   }
+    // })
   }
 
-  init = (): ILayout | undefined => {
+  start = (): Layout | undefined => {
     return this.nextBlock();
   }
 
-  private nextBlock = (): ILayout | undefined => {
+  private nextBlock = (): Layout | undefined => {
     this.currentLayout = this._layoutsIterator!.next().value;
     if (this.currentLayout) {
-      if (this.currentLayout.g) {
-        this.state = this.nestedBlock;
-        return this.nestedBlock();
-      } else {
+      // if (this.currentLayout.g) {
+      //   this.state = this.nestedBlock;
+      //   return this.nestedBlock();
+      // } else {
         this.state = this.nextTile;
         return this.nextTile();
-      }
+      // }
 
     } else {
-      this.state = this.init;
+      this.state = this.start;
       return undefined;
     }
   }
 
-  private nestedBlock = (): ILayout | undefined => {
-    let b: ILayout | undefined = undefined;
-    if (this.currentLayout && this.currentLayout.g) {
-      b = this.currentLayout.g.next();
-    }
-    if (b === undefined) {
-      this.state = this.nextBlock;
-      return this.nextBlock();
-    }
-    return b;
-  }
+  // private nestedBlock = (): Layout | undefined => {
+  //   let b: Layout | undefined = undefined;
+  //   if (this.currentLayout && this.currentLayout.g) {
+  //     b = this.currentLayout.g.next();
+  //   }
+  //   if (b === undefined) {
+  //     this.state = this.nextBlock;
+  //     return this.nextBlock();
+  //   }
+  //   return b;
+  // }
 
-  private nextTile = (): ILayout | undefined => {
-    let b: ILayout | undefined = undefined;
-    if (this.currentLayout) {
-      const r = this.currentLayout.location;
-      b = {
-        name: this.currentLayout.name,
-        location: r
-      }
+  private nextTile = (): Layout | undefined => {
+    let b: Layout | undefined = this.currentLayout;
+    if (b) {
       this.state = this.nextBlock;
     }
 
     return b;
   }
 
-  next = (): ILayout | undefined => {
+  next = (): Layout | undefined => {
     return this.state();
   }
 }

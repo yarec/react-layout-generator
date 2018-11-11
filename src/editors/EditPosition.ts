@@ -1,72 +1,6 @@
-import { IPoint, IRect } from './types';
-import { ILayoutGenerator } from './LayoutGenerator';
+import {IEditor} from './Editor';
 
-// export enum IAlign {
-//   topLeft = 1,
-//   topCenter,
-//   topRight,
-//   rightTop,
-//   rightCenter,
-//   rightBottom,
-//   bottomRight,
-//   bottomCenter,
-//   bottomLeft,
-//   leftBottom,
-//   leftCenter,
-//   leftTop
-// }
-
-// export enum IAlignAxis {
-//   start = 1,
-//   firstQuarter,
-//   center,
-//   thirdQuarter,
-//   end
-// }
-
-/**
- * Defines the handle location of a rect in percent
- */
-export interface IAlign {
-  x: number;
-  y: number;
-}
-
-/**
- * Defines the units of location and size
- */
-export enum IUnit {
-  pixel = 1,
-  percent
-}
-
-export interface IOrigin {
-  x: number;
-  y: number;
-}
-
-export interface IPosition {
-  units: {
-    origin: IOrigin,
-    location: IUnit,
-    size: IUnit
-  }
-  align?: {
-    key: string | number,
-    offset: IPoint,
-    source: IAlign,
-    self: IAlign
-  }
-  location: IPoint;
-  size: IPoint;
-}
-
-/**
- * Defines the location of a rectangle using
- * specified origin and units. Supports edit handles
- * defined by IAlign (.eg left center, right bottom)
- */
-export default class Position {
+export default class EditPosition implements IEditor{
   private _units: {
     origin: IOrigin,
     location: IUnit,
@@ -84,9 +18,9 @@ export default class Position {
   // private _rect: Rect;
 
   // private _params: Params;
-  private _g: ILayoutGenerator;
+  private _g: IGenerator;
 
-  constructor(p: IPosition, g: ILayoutGenerator) {
+  constructor(p: JSON, g: IGenerator) {
     this._units = p.units;
     this._align = p.align;
     this._location = p.location;
@@ -223,73 +157,3 @@ private fromOrigin = (p: IPoint, s: IPoint): IPoint => {
     }
     return this.fromOrigin(this._location, this.fromSize());
   }
-
-  // /**
-  //  * Inverse of fromLocation
-  //  */
-  // setLocation = (r: IRect) => {
-  //   // v is in pixels with origin (0,0) - v is leftTop
-  //   // 1) compute origin
-  //   let vc = this.toOrigin(v;
-
-
-  //   this._location = v;
-  //   if (this._units.location === IUnit.percent) {
-  //     this._location = this.inverseScale(v);
-  //   }
-
-  // }
-
-  /** 
-   * Converts size to pixels
-   */
-  fromSize = () => {
-    if (this._units.size === IUnit.percent) {
-      return this.scale(this._size);
-    }
-    return this._size;
-  }
-
-  // /** 
-  //  * Inverse of fromSize
-  //  */
-  // setSize = (v: IPoint) => {
-  //   this._size = v;
-  //   if (this._units.size === IUnit.percent) {
-  //     this._size = this.inverseScale(v);
-  //   }
-  // }
-
-  /**
-   * computes the rect given the position
-   */
-  rect = (): IRect => {
-    let leftTop = this.fromLocation();
-    let size = this.fromSize();
-
-    return {
-      top: leftTop.y,
-      left: leftTop.x,
-      bottom: leftTop.y + size.y,
-      right:  leftTop.x + size.x
-    }
-  }
-
-  update = (location: IPoint, size: IPoint) => {
-    // Takes in world coordinates 
-    // console.log(`Position update x: ${location.x} y: ${location.y}`)
-    let p = this.toOrigin(location, size);
-
-    if (this._units.location === IUnit.percent) {
-      this._location = this.inverseScale(p);
-    } else {
-      this._location = p;
-    }
-
-    if (this._units.size === IUnit.percent) {
-      this._size = this.inverseScale(size);
-    } else {
-      this._size = size;
-    }
-  }
-}

@@ -1,10 +1,12 @@
-import {Layouts, ILayout} from '../LayoutGenerator';
+import Layout from '../components/Layout';
+import Layouts from '../components/Layouts';
 import { Rect } from '../types';
 
 it('Layouts index returns the correct key value #1', () => {
-  const t: ILayout = {
+  
+  const t: Layout = new Layout('test', p, g) {
     name: 'a',
-    location: new Rect({left: 0, top: 0, right: 0, bottom: 0})
+    location: new Rect({x: 0, y: 0, width: 0, height: 0})
   }
   const l = new Layouts([['a', t]])
   expect(l.find(0)).toBe(t);

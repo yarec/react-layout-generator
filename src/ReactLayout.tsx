@@ -1,8 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import RLGHandle from './RLGHandle'
-import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef } from './LayoutGenerator';
-import { IPosition } from './Position';
+import { IGenerator } from './generators/Generator';
 import RLGQuadTree from './RLGQuadTree';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
@@ -24,7 +23,7 @@ export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   editLayout?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
-  g: LayoutGenerator;
+  g: IGenerator;
 }
 
 export interface ReactLayoutState {
@@ -34,7 +33,7 @@ export interface ReactLayoutState {
 }
 
 export default class ReactLayout extends React.Component<ReactLayoutProps, ReactLayoutState> {
-  derivedLayout: ILayoutGenerator;
+  derivedLayout: IGenerator;
   key: number;
   editLayout: boolean = false;
   editOverlay: Array<ILayout> = [];
@@ -124,42 +123,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     return null;
   }
 
-  // createListElement = (child: React.ReactElement<any>) => {
-  //   // TODO: Not called - still needed?
-  //   let item: ILayout | undefined = this.derivedLayout.next();
-  //   if (item) {
-  //     const style = tileStyle(
-  //       child.props['style'],
-  //       item.location.left,
-  //       item.location.top,
-  //       (item.location.right - item.location.left),
-  //       (item.location.bottom - item.location.top)
-  //     );
-  //     // console.log('CreateElements style', style);
-  //     return (
-  //       <div
-  //         style={style}
-  //         key={item.name + '-' + child.key}
-  //       >
-  //         {/* Design Layout */}
-  //         <div style={{
-  //           height: '100%',
-  //           width: '100%',
-  //           border: '1px solid red',
-  //           //padding: '10px',
-  //           //margin: '10px',
-  //           backgroundColor: 'grey',
-  //           color: 'white'
-  //         }}>
-  //           {item.name + '-' + child.key}
-  //         </div>
-  //         {/* Child with modification Infinity mapped to this.height this.width - padding*/}
-  //       </div>
-  //     );
-  //   }
-
-  //   return null;
-  // }
+  
 
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];

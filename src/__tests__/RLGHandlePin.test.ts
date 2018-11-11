@@ -1,8 +1,8 @@
 import RLGHandle, { RLGHandleProps } from '../RLGHandle';
-// import { IBounds } from '../RLGQuadTree';
-import BasicLayoutGenerator, { Params, PositionRef, scalarWidthUpdate, Layouts } from '../LayoutGenerator';
+import Generator from '../generators/Generator';
 import { IRect, Rect } from '../types';
-import Position, {IUnit} from 'src/Position';
+import Params from '../components/Params';
+import Layouts from '../components/Layouts';
 
 const height = 500;
 const width = 500;
@@ -84,7 +84,7 @@ it('returns pinned value for PositionRef.rect #5', () => {
 
 it('returns pinned value for PositionRef.position #1', () => {
   const h = new RLGHandle(props);
-  const g = new BasicLayoutGenerator('', init, params);
+  const g = new Generator('', init, params);
   const p = new Position({
     units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
     location: { x: 20, y: -2 },
@@ -101,7 +101,7 @@ it('returns pinned value for PositionRef.position #1', () => {
 });
 it('returns pinned value for PositionRef.position #2', () => {
   const h = new RLGHandle(props);
-  const g = new BasicLayoutGenerator('', init, params);
+  const g = new Generator('', init, params);
   const p = new Position({
     units: { origin: { x: 50, y: 50 }, location: IUnit.pixel, size: IUnit.pixel },
     location: { x: -2, y: -2 },

@@ -1,5 +1,5 @@
 import RLGHandle, { RLGHandleProps } from '../RLGHandle';
-import { Params, PositionRef, scalarWidthUpdate } from '../LayoutGenerator';
+import Params from '../components/Params';
 import { Rect } from 'src/types';
 
 const height = 500;
@@ -27,13 +27,13 @@ const props: RLGHandleProps = {
     name: 'leftSide',
     editSize: [{ positionRef: PositionRef.scalar_width_right, variable: 'item', update: scalarWidthUpdate }],
     location: new Rect({
-      left: 100,
-      top: 100,
-      right: 200,
-      bottom: 200
+      x: 100,
+      y: 100,
+      width: 200,
+      height: 200
     })
   },
-  boundary: { left: 0, top: 0, right: 500, bottom: 500 },
+  boundary: { x: 0, y: 0, width: 500, height: 500 },
   onUpdate: () => { }
 }
 
@@ -41,6 +41,6 @@ it('returns extend value for PositionRef.rect #1', () => {
   const h = new RLGHandle(props);
   expect(h.extend({ top: 100, left: -10, bottom: 200, right: 90 },
     PositionRef.rect)).toEqual({
-      top: 100, left: -10, bottom: 200, right: 90
+      x: 100, y: -10, height: 100, width: 100
     });
 });
