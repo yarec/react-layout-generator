@@ -1,12 +1,12 @@
 import IGenerator from '../generators/Generator';
 import { IEditor, IUndo } from './Editor';
+import Layout from 'src/components/Layout';
 
 export class EditRightWidth implements IEditor {
-  g: IGenerator;
-  p: Position;
-  width: number;
+  _layout: Layout;
 
-  constructor(p: Position, g: IGenerator) {
+  constructor(layout: Layout) {
+    this._layout = layout.clone();
   }
 
   push = (): IUndo => {
@@ -19,6 +19,7 @@ export class EditRightWidth implements IEditor {
   redo = () => {
 
   }
+  
   undo = () => {
 
   }

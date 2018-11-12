@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import RLGHandle from './RLGHandle'
 import { IGenerator } from './generators/Generator';
-import RLGQuadTree from './RLGQuadTree';
+import Layout, { IPosition, IEdit, PositionRef } from './components/Layout';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
 
@@ -36,9 +36,8 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   derivedLayout: IGenerator;
   key: number;
   editLayout: boolean = false;
-  editOverlay: Array<ILayout> = [];
+  editOverlay: Array<Layout> = [];
   startRendering: number;
-  quadTree: RLGQuadTree;
 
   constructor(props: ReactLayoutProps) {
     super(props);
@@ -78,13 +77,12 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       const _layouts = this.derivedLayout.layouts();
       if (_layouts) {
         _layouts.layouts.forEach((layout) => {
-          p.touch(layout);
+          layout.touch();
         });
       }
     }
 
     this.derivedLayout.reset();
-    this.quadTree = new RLGQuadTree(0, 0, this.state.width, this.state.height);
   }
 
   createPositionedElement = (child: React.ReactElement<any>, index: number, name: string, position: IPosition) => {
@@ -96,15 +94,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     }
 
     if (b) {
-      if ((b.location.right - b.location.left) && (b.location.bottom - b.location.top)) {
+      const rect = b.rect();
+      if ((rect.width) && (rect.height)) {
         const style = tileStyle(child.props['style'],
-          b.location.left,
-          b.location.top,
-          (b.location.right - b.location.left),
-          (b.location.bottom - b.location.top)
+          rect.x,
+          rect.y,
+          rect.width,
+          rect.height
         );
 
-        if (this.editLayout && b.editSize) {
+        if (this.editLayout && b.edit) {
           this.editOverlay.push(b)
         }
         // let props = style: ...this.props.style
@@ -116,14 +115,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
             ...child.props.style,
             ...style
           }
-        }, child.props.children);
+        },
+
+          child.props.children);
       }
     }
 
     return null;
   }
 
-  
+
 
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
@@ -140,103 +141,70 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createEditHandles = () => {
     let jsx: Array<any> = [];
     if (this.props.editLayout) {
-      this.editOverlay.map((layout: ILayout) => {
-        if (layout.editSize) {
-          layout.editSize.map((item: IEdit) => {
+      this.editOverlay.map((layout: Layout) => {
+        if (layout.edit) {
+          layout.edit.map((item: IEdit) => {
             let cursor = 'default';
-            let left = 0;
-            let top = 0;
-            let width = 0;
-            let height = 0;
-            switch (item.positionRef) {
-              case PositionRef.rect: {
-                cursor = 'move';
-                left = layout.location.left;
-                top = layout.location.top;
-                width = layout.location.right - layout.location.left;
-                height = layout.location.bottom - layout.location.top;
-                break;
-              }
+            let r = layout.rect();
+            switch (item.part) {
               case PositionRef.position: {
                 cursor = 'move';
-                left = layout.location.left;
-                top = layout.location.top;
-                width = layout.location.right - layout.location.left;
-                height = layout.location.bottom - layout.location.top;
                 break;
               }
-              case PositionRef.scalar_height_top: {
-                break;
-              }
-              case PositionRef.scalar_height_bottom: {
-                break;
-              }
-              case PositionRef.scalar_width_left: {
+              case PositionRef.left: {
                 cursor = 'w-resize';
-                left = layout.location.left;
-                top = layout.location.top;
-                width = 4;
-                height = layout.location.bottom - layout.location.top;
+                r.location = { x: r.x - 2, y: r.y };
+                r.size = { width: 4, height: r.height };
                 break;
               }
-              case PositionRef.scalar_width_right: {
+              case PositionRef.right: {
                 cursor = 'w-resize';
-                left = layout.location.right;
-                top = layout.location.top;
-                width = 4;
-                height = layout.location.bottom - layout.location.top;
+                r.location = { x: r.x + r.width - 2, y: r.y };
+                r.size = { width: 4, height: r.height };
                 break;
               }
-              case PositionRef.position_height_top: {
+              case PositionRef.top: {
+                r.location = { x: r.x, y: r.y - 2 };
+                r.size = { width: r.width, height: 4 };
                 cursor = 'n-resize';
                 break;
               }
-              case PositionRef.position_height_bottom: {
+              case PositionRef.bottom: {
                 cursor = 'w-resize';
+                r.location = { x: r.x, y: r.y + r.height - 2 };
+                r.size = { width: r.width, height: 4 };
                 break;
               }
-              case PositionRef.position_width_left: {
-                cursor = 'w-resize';
-                break;
-              }
-              case PositionRef.position_width_right: {
-                cursor = 'w-resize';
-                left = layout.location.right;
-                top = layout.location.top;
-                width = 4;
-                height = layout.location.bottom - layout.location.top;
-                break;
-              }
-              case PositionRef.rect_point_left_top: {
+              case PositionRef.leftTop: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.rect_point_right_top: {
+              case PositionRef.rightTop: {
                 cursor: 'ne-resize';
                 break;
               }
-              case PositionRef.rect_point_left_bottom: {
+              case PositionRef.leftBottom: {
                 cursor: 'nw-resize';
                 break;
               }
-              case PositionRef.rect_point_right_bottom: {
+              case PositionRef.rightBottom: {
                 cursor: 'ne-resize';
                 break;
               }
               default: {
-                console.error(`Invalid PositionRef ${item.positionRef}`);
+                console.error(`Invalid PositionRef ${item.part}`);
                 break;
               }
             }
-            if (width && height) {
+            if (r.width && r.height) {
               jsx.push(<RLGHandle
                 key={layout.name + cursor}
                 onUpdate={this.onUpdate}
                 edit={item}
                 layout={layout}
-                boundary={{ top: 0, left: 0, right: this.state.width, bottom: this.state.height }}
+                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
                 params={this.derivedLayout.params()}
-                rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
+                rlgDrag={{ cursor: cursor, x: r.x, y: r.y, width: r.width, height: r.height }} />)
             }
           });
         }

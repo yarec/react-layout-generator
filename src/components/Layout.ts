@@ -1,5 +1,6 @@
 import { IGenerator } from '../generators/Generator';
-import { IPoint, ISize } from '../types';
+import { IPoint, ISize, Rect } from '../types';
+import { clone } from '../utils';
 
 export interface IAlign {
   x: number;
@@ -19,18 +20,21 @@ export interface IOrigin {
   y: number;
 }
 
-export enum IEdit {
-  location = 1,
-  left,
+export enum PositionRef {
+  position = 1,
   top,
-  right,
   bottom,
-  size,
-  all
-}
+  left,
+  right,
+  leftTop,
+  rightTop,
+  leftBottom,
+  rightBottom
+};
 
-export interface Edit {
-  part: IEdit,
+
+export interface IEdit {
+  part: PositionRef,
   variable?: string
 }
 
@@ -59,12 +63,15 @@ export interface IPosition {
 export default class Layout {
   private _name: string;
   private _position: IPosition;
-
+  private _changed: boolean;
+  private _cached: Rect;
   private _g: IGenerator;
 
   constructor(name: string, p: IPosition, g: IGenerator) {
     this._name = name;
     this._position = p;
+    this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 });
+    this._changed = true;
     this._g = g;
 
     // Convert percents to decimal
@@ -181,8 +188,17 @@ export default class Layout {
     }
   }
 
-  get name () {
+  clone = (): Layout => {
+    const p = clone(this._position);
+    return new Layout(this._name, p, this._g);
+  }
+
+  get name() {
     return this._name;
+  }
+
+  get edit() {
+    return this._position.edit;
   }
 
   /**
@@ -227,10 +243,15 @@ export default class Layout {
   }
 
   rect = () => {
-    return {
-      ...this.fromLocation(),
-      ...this.fromSize()
+    if (this._changed) {
+      this._changed = false;
+      this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
     }
+    return {...this._cached.location, ...this._cached.size};
+  }
+
+  touch = () => {
+    this._changed = true;
   }
 
   update = (location: IPoint, size: ISize) => {
@@ -249,5 +270,7 @@ export default class Layout {
     } else {
       this._position.size = size;
     }
+
+    this._changed = true;
   }
 }

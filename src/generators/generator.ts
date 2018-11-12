@@ -2,13 +2,13 @@ import Params from '../components/Params';
 import Layouts from '../components/Layouts';
 import Layout, { IPosition } from '../components/Layout'
 
-export type IInit = (g: IGenerator) => void;
+export type IInit = (g: IGenerator) => Layouts;
 export type ICreate = (index: number, name: string, g: IGenerator, position: IPosition) => Layout;
 
 export interface IGenerator {
   name: () => string;
   params: () => Params;
-  layouts: () => Layouts | undefined;
+  layouts: () => Layouts;
   reset: () => void;
   next: () => Layout | undefined;
   lookup: (name: string) => Layout | undefined;
@@ -30,7 +30,7 @@ export default class Generator implements IGenerator {
     this._name = name;
     this._init = init;
     this._create = create;
-    this._layouts = new Layouts([]); 
+    this._layouts = new Layouts([]);
     this._layoutsIterator = this._layouts.values();
     this.state = this.start;
     this._params = params;
@@ -40,11 +40,11 @@ export default class Generator implements IGenerator {
     return this._name;
   }
 
-  params = () => {
+  params = (): Params => {
     return this._params;
   }
 
-  layouts = () => {
+  layouts = (): Layouts => {
     return this._layouts;
   }
 
@@ -70,11 +70,9 @@ export default class Generator implements IGenerator {
   }
 
   reset = () => {
-    // const changed: Array<ILayout> = this._params.changed();
-    if (this._params.changed()) {
-      // console.log('reset update layouts')
-      this._init(this); 
-    }
+
+    // console.log('reset update layouts')
+    this._layouts = this._init(this);
     this.state = this.start;
     this._layoutsIterator = this._layouts.values();
     // this._layouts.layouts.forEach((item: Layout) => {
@@ -95,8 +93,8 @@ export default class Generator implements IGenerator {
       //   this.state = this.nestedBlock;
       //   return this.nestedBlock();
       // } else {
-        this.state = this.nextTile;
-        return this.nextTile();
+      this.state = this.nextTile;
+      return this.nextTile();
       // }
 
     } else {

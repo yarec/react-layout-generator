@@ -6,6 +6,7 @@ const params = new Params([
 ])
 
 function init(g: Generator)  {
+  return g.layouts();
 }
 
 it('returns undefined with no layouts', () => {

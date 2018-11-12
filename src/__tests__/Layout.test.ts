@@ -7,6 +7,7 @@ const params = new Params([
 ])
 
 function init(g: IGenerator) {
+  return g.layouts();
 }
 
 function create(index: number, name: string, g: IGenerator, position: IPosition) {
@@ -92,7 +93,7 @@ it('size #1', () => {
     size: { width: 100, height: 10 }
   };
   const l = new Layout('test', p, g);
-  expect(l.fromSize()).toEqual({ width: 100, y: 10 });
+  expect(l.fromSize()).toEqual({ width: 100, height: 10 });
 });
 
 it('size #2', () => {
@@ -190,7 +191,7 @@ it('rect #4', () => {
     size: { width: 10, height: 5 }
   };
   const l = new Layout('test', p, g);
-  expect(l.rect()).toEqual({ x: 450, y: 475, width: 10, height: 5 });
+  expect(l.rect()).toEqual({ x: 450, y: 475, width: 100, height: 50 });
 });
 
 it('update #1', () => {
@@ -206,7 +207,7 @@ it('update #1', () => {
   const l = new Layout('test', p, g);
   l.update({ x: 450, y: 475 }, { width: 100, height: 50 });
 
-  expect(l.rect()).toEqual({ x: 450, y: 475, width: 50, height: 50  });
+  expect(l.rect()).toEqual({ x: 450, y: 475, width: 100, height: 50  });
 });
 
 it('update #2', () => {

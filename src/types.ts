@@ -39,8 +39,6 @@ export class Rect implements IRect {
   width: number = 0;
   height: number = 0;
 
-  private _width: number = 0;
-  private _height: number = 0;
   private _halfWidth: number = 0;
   private _halfHeight: number = 0;
 
@@ -49,10 +47,20 @@ export class Rect implements IRect {
   }
 
   update(rect: IRect) {
-    this.y = rect.y;
-    this.x = rect.x;
-    this.height = rect.height;
-    this.width = rect.width;
+    this.setLocation({x: rect.x, y: rect.y});
+    this.setSize({width: rect.width, height: rect.height});
+  }
+
+  setLocation(p: IPoint) {
+    this.x = p.x;
+    this.y = p.y;
+  }
+
+  setSize(s: ISize) {
+    this.width = s.width;
+    this.height = s.height;
+    this._halfWidth = s.width / 2;
+    this._halfHeight = s.height / 2;
   }
 
   get top() {
@@ -79,20 +87,24 @@ export class Rect implements IRect {
     return this._halfHeight;
   }
 
-  get location() {
+  get location(): IPoint {
     return {x: this.x, y: this.y};
   }
 
-  get size() {
-    return {x: this._width, y: this._height};
+  get size(): ISize {
+    return {width: this.width, height: this.height};
   }
 
-  get leftTop() {
+  get leftTop(): IPoint {
     return {x: this.x, y: this.y};
   }
 
-  set size(s: IPoint) {
+  set location(p: IPoint) {
+    this.setLocation(p);
+  }
 
+  set size(s: ISize) {
+    this.setSize(s);
   }
 
   translate(point: IPoint): IRect {

@@ -1,11 +1,8 @@
 import * as React from 'react';
-
-import { ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
+import Params  from './components/Params';
+import Layout, {IPosition, IEdit} from './components/Layout';
 import { IPoint, IRect, width, height } from './types';
-import Position from './Position';
 import { isEqual } from 'underscore';
-
-// import { IRect } from 'lib/src/types';
 
 interface editStyleProps {
   cursor: string;
@@ -37,7 +34,7 @@ export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
   rlgDrag: editStyleProps;
   params: Params;
   edit: IEdit;
-  layout: ILayout;
+  layout: Layout;
   boundary: IRect;
   onUpdate: () => void
 }
@@ -47,9 +44,6 @@ interface RLGHandleState {
 }
 
 export default class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
-
-  value: Value | undefined;
-  origin: IPoint;
 
   constructor(props: RLGHandleProps) {
     super(props);

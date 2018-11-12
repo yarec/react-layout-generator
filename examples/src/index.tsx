@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
-import LayoutGenerator, { DesktopLayout, DiagramLayout } from '../../src/LayoutGenerator';
-import ListLayout from '../../src/generators/List';
+import {IGenerator} from '../../src/generators/Generator';
+import RLGDesktop from '../../src/generators/RLGDesktop';
+import RLGDynamic from '../../src/generators/RLGDynamic';
+import RLGList from '../../src/generators/RLGList';
 // import { OriginX, OriginY } from '../../src/types';
 import Deck from './Deck';
 // import Examples from './Examples'
@@ -33,18 +35,16 @@ interface ExampleLayoutState {
 
 class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutState> {
 
-  g: LayoutGenerator;
-  d: LayoutGenerator;
-  m: LayoutGenerator;
-
-  content: LayoutGenerator;
+  g: IGenerator;
+  d: IGenerator;
+  m: IGenerator;
 
   constructor(props: ExampleLayoutProps) {
     super(props);
 
-    this.g = DesktopLayout('rlg.desktop.example');
-    this.d = DiagramLayout('rlg.diagram.example');
-    this.m = ListLayout('rlg.list.example');
+    this.g = RLGDesktop('rlg.desktop.example');
+    this.d = RLGDynamic('rlg.diagram.example');
+    this.m = RLGList('rlg.list.example');
 
     const p = this.g.params();
 

@@ -1,11 +1,10 @@
 import Generator, { IGenerator, } from '../generators/Generator';
 import { Point, Rect } from '../types';
-import Position, {IPosition, IUnit} from '../components/Position';
 import Params from '../components/Params';
 import Layouts from '../components/Layouts';
 import Layout from '../components/Layout';
 
-export default function ListLayout(name: string) {
+export default function RLGList(name: string) {
 
   const titleHeight = 34;
   const itemHeight = 24;
