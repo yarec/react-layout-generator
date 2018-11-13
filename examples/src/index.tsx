@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import ReactLayout from '../../src/ReactLayout';
-import {IGenerator} from '../../src/generators/Generator';
+import { IGenerator } from '../../src/generators/Generator';
+import { IUnit } from '../../src/components/Layout';
 import RLGDesktop from '../../src/generators/RLGDesktop';
 import RLGDynamic from '../../src/generators/RLGDynamic';
 import RLGList from '../../src/generators/RLGList';
-// import { OriginX, OriginY } from '../../src/types';
 import Deck from './Deck';
-// import Examples from './Examples'
-
-// const card2C = require('./assets/cards/2C.jpg');
 
 interface ExampleProps {
   name: string;
@@ -82,7 +79,14 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
             name={'reactLayout.list.example'}
             g={this.m}
           >
-            <div data-layout={{ name: 'title' }} >
+            <div data-layout={{
+              name: 'title',
+              position: {
+                units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+                location: { x: 25, y: 25 },
+                size: { x: 100, y: 150 }
+              }
+            }} >
               <b >Examples</b>
             </div>
 

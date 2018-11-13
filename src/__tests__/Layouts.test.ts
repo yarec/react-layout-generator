@@ -8,6 +8,7 @@ const params = new Params([
 ])
 
 function init(g: IGenerator) {
+  return g.layouts();
 }
 
 function create(index: number, name: string, g: IGenerator, position: IPosition) {

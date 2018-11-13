@@ -1,8 +1,9 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-import RLGHandle from './RLGHandle'
 import { IGenerator } from './generators/Generator';
 import Layout, { IPosition, IEdit, PositionRef } from './components/Layout';
+// import EditPosition from './editors/EditPosition';
+import { Rect } from './types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
 
@@ -71,12 +72,10 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     const p = this.derivedLayout.params();
 
     const v = p.set('viewport', { x: this.state.width, y: this.state.height });
-    const w = p.set('width', this.state.width);
-    const h = p.set('height', this.state.height);
-    if (v || w || h) {
-      const _layouts = this.derivedLayout.layouts();
-      if (_layouts) {
-        _layouts.layouts.forEach((layout) => {
+    if (v) {
+      const layouts = this.derivedLayout.layouts();
+      if (layouts) {
+        layouts.layouts.forEach((layout) => {
           layout.touch();
         });
       }
@@ -90,7 +89,6 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     let b = this.derivedLayout.lookup(name);
     if (!b && this.derivedLayout.create) {
       b = this.derivedLayout.create(index, name, this.derivedLayout, position);
-      // console.log('createPositionedElement', index, b, position);
     }
 
     if (b) {
@@ -143,12 +141,14 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     if (this.props.editLayout) {
       this.editOverlay.map((layout: Layout) => {
         if (layout.edit) {
+          let editor: any;
           layout.edit.map((item: IEdit) => {
             let cursor = 'default';
-            let r = layout.rect();
+            let r = new Rect(layout.rect());
             switch (item.part) {
               case PositionRef.position: {
                 cursor = 'move';
+                // editor = EditPosition;
                 break;
               }
               case PositionRef.left: {
@@ -197,14 +197,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
               }
             }
             if (r.width && r.height) {
-              jsx.push(<RLGHandle
-                key={layout.name + cursor}
-                onUpdate={this.onUpdate}
-                edit={item}
-                layout={layout}
-                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
-                params={this.derivedLayout.params()}
-                rlgDrag={{ cursor: cursor, x: r.x, y: r.y, width: r.width, height: r.height }} />)
+              if (editor) {
+                const e = React.createElement(editor, {
+                  key: layout.name + cursor,
+                  edit: item,
+                  layout: layout,
+                  boundary: { x: 0, y: 0, width: this.state.width, height: this.state.height }
+                });
+                jsx.push(e);
+                // rlgDrag={{ cursor: cursor, x: r.x, y: r.y, width: r.width, height: r.height }} />)
+              }
             }
           });
         }

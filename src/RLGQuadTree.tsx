@@ -70,14 +70,14 @@ export class Bounds implements IBounds {
   bottom: number;
 
   constructor(v: IRect) {
-    this.x = v.left;
-    this.y = v.right;
-    this.width = v.right - v.left;
-    this.height = v.bottom - v.top;
+    this.x = v.x;
+    this.y = v.y;
+    this.width = v.width;
+    this.height = v.height;
     this.subWidth = this.width / 2;
     this.subHeight = this.height / 2;
-    this.right = v.right;
-    this.bottom = v.bottom;
+    this.right = v.x + v.width;
+    this.bottom = v.y + v.height;
   }
 }
 

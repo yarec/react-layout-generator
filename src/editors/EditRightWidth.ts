@@ -1,4 +1,3 @@
-import IGenerator from '../generators/Generator';
 import { IEditor, IUndo } from './Editor';
 import Layout from 'src/components/Layout';
 

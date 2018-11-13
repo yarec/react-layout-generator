@@ -32,7 +32,6 @@ export enum PositionRef {
   rightBottom
 };
 
-
 export interface IEdit {
   part: PositionRef,
   variable?: string
@@ -201,6 +200,10 @@ export default class Layout {
     return this._position.edit;
   }
 
+  get generator() {
+    return this._g;
+  }
+
   /**
    * Converts location to pixels
    */
@@ -254,6 +257,9 @@ export default class Layout {
     this._changed = true;
   }
 
+  /**
+   * Change the layout state
+   */
   update = (location: IPoint, size: ISize) => {
     // Takes in world coordinates 
     // console.log(`Position update x: ${location.x} y: ${location.y}`)

@@ -13,8 +13,7 @@ export default function RLGDesktop(name: string) {
   const footerHeight = 24;
 
   const params = new Params([
-    ['width', 0],
-    ['height', 0],
+    ['viewport', {width: 0, height: 0}],
     ['fullWidthHeaders', fullWidthHeaders],
     ['leftSideWidth', leftSideWidth],
     ['rightSideWidth', rightSideWidth],
@@ -23,20 +22,17 @@ export default function RLGDesktop(name: string) {
   ])
 
   function init(g: IGenerator) {
-    const width = params.get('width') as number;
-    const height = params.get('height') as number;
+    const viewport = params.get('viewport') as ISize;
     const fullWidthHeaders = params.get('fullWidthHeaders') as number;
     let leftSideWidth = params.get('leftSideWidth') as number;
     let rightSideWidth = params.get('rightSideWidth') as number;
     const headerHeight = params.get('headerHeight') as number;
     const footerHeight = params.get('footerHeight') as number;
 
-    if (width < 800) {
+    if (viewport.width < 800) {
       leftSideWidth = 0;
       rightSideWidth = 0;
     }
-
-    // console.log('rightSideWidth', rightSideWidth)
 
     const leftSide = function (): Layout {
       let location: IPoint;
@@ -48,7 +44,7 @@ export default function RLGDesktop(name: string) {
         }
         size = {
           width: leftSideWidth,
-          height: height - footerHeight - headerHeight
+          height: viewport.height - footerHeight - headerHeight
         }
       } else {
         location = {
@@ -57,7 +53,7 @@ export default function RLGDesktop(name: string) {
         }
         size = {
           width: leftSideWidth,
-          height: height
+          height: viewport.height
         }
       }
       
@@ -80,21 +76,21 @@ export default function RLGDesktop(name: string) {
 
       if (fullWidthHeaders) {
         location = {
-          x: width - rightSideWidth,
+          x: viewport.width - rightSideWidth,
           y: headerHeight
         }
         size = {
-          width: width,
-          height: height - footerHeight - headerHeight
+          width: viewport.width,
+          height: viewport.height - footerHeight - headerHeight
         }
       } else {
         location = {
-          x: width - rightSideWidth,
+          x: viewport.width - rightSideWidth,
           y: 0
         }
         size = {
           width: rightSideWidth,
-          height: height
+          height: viewport.height
         }
       }
 
@@ -121,7 +117,7 @@ export default function RLGDesktop(name: string) {
           y: 0
         }
         size = {
-          width: width,
+          width: viewport.width,
           height: headerHeight
         }
       } else {
@@ -130,7 +126,7 @@ export default function RLGDesktop(name: string) {
           y: 0
         }
         size = {
-          width: width - leftSideWidth - rightSideWidth,
+          width: viewport.width - leftSideWidth - rightSideWidth,
           height: headerHeight
         }
       }
@@ -157,8 +153,8 @@ export default function RLGDesktop(name: string) {
           y: headerHeight
         }
         size = {
-          width: width - rightSideWidth,
-          height: height - headerHeight - footerHeight
+          width: viewport.width - rightSideWidth,
+          height: viewport.height - headerHeight - footerHeight
         }
       } else {
         location = {
@@ -166,8 +162,8 @@ export default function RLGDesktop(name: string) {
           y: headerHeight
         }
         size = {
-          width: width - rightSideWidth - leftSideWidth,
-          height: height - footerHeight - headerHeight
+          width: viewport.width - rightSideWidth - leftSideWidth,
+          height: viewport.height - footerHeight - headerHeight
         }
       }
       const p = {
@@ -189,19 +185,19 @@ export default function RLGDesktop(name: string) {
       if (fullWidthHeaders) {
         location = {
           x: 0,
-          y: height - footerHeight
+          y: viewport.height - footerHeight
         }
         size ={
-          width: width,
+          width: viewport.width,
           height: footerHeight
         }
       } else {
         location = {
           x: leftSideWidth,
-          y: height - footerHeight
+          y: viewport.height - footerHeight
         }
         size = {
-          width: width - leftSideWidth - rightSideWidth,
+          width: viewport.width - leftSideWidth - rightSideWidth,
           height: footerHeight
         }
       }

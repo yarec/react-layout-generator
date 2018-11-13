@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IUnit, IEdit, IPart } from '../../src/components/Layout';
+import { IUnit, PositionRef } from '../../src/components/Layout';
 
 export default class Deck {
 
@@ -48,7 +48,7 @@ export default class Deck {
           position: {
             units: {origin: {x: 0, y: 0}, location: IUnit.pixel, size: IUnit.pixel},
             location: { x: 25, y: 25 },
-            edit: [{part: IPart.location}],
+            edit: [{part: PositionRef.position}],
             size: { x: 100, y: 150 }
           }
         }} >

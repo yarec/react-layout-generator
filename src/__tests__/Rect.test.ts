@@ -26,12 +26,6 @@ it('set size updates correctly', () => {
   expect(r.size).toEqual({ width: 1, height: 0 });
 });
 
-it('set size updates half size correctly', () => {
-  const r = new Rect({ x: 0, y: 0, width: 0, height: 0 });
-  r.size = {width: 2, height: 0};
-  expect(r.halfWidth).toEqual(1);
-});
-
 
 
 
