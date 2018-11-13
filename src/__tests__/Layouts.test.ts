@@ -60,3 +60,27 @@ it('Layouts index returns the correct key value #2', () => {
 
   expect(l.find(1)).toBe(t2);
 });
+
+it('Layouts index returns the correct key value #3', () => {
+  const p = {
+    units: {
+      origin: { x: 0, y: 0 },
+      location: IUnit.pixel,
+      size: IUnit.pixel
+    },
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 }
+  }
+  const t1: Layout = new Layout('t1', p, g);
+  const t2: Layout = new Layout('t2', p, g);
+
+  const l = new Layouts([]);
+  l.set('t1', t1)
+
+  l.set('t2', t2);
+
+  expect(l.find(1)).toBe(t2);
+});
+
+
+

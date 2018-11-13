@@ -1,11 +1,11 @@
 import Generator, { IGenerator } from './Generator';
 import Layouts from '../components/Layouts';
-import Layout, {IPosition} from '../components/Layout';
+import Layout, { IPosition } from '../components/Layout';
 import Params from '../components/Params';
 
 export default function RLGDiagram(name: string) {
   const params = new Params([
-    ['viewport', {width: 0, height: 0}]
+    ['viewport', { width: 0, height: 0 }]
   ])
 
   function init(g: IGenerator): Layouts {
@@ -27,12 +27,10 @@ export default function RLGDiagram(name: string) {
       console.error('TODO default position')
     }
 
-    const box = new Layout('test', position, g);
-    
-    const layouts = g.layouts();
-    if (layouts) {
-      layouts.set(name, box);
-    }
+    const box = new Layout(name, position, g);
+
+    g.layouts().set(name, box);
+
     return box;
   }
 

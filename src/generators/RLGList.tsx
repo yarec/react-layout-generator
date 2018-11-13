@@ -15,8 +15,11 @@ export default function RLGList(name: string) {
     ['itemHeight', itemHeight]
   ])
 
+  console.log('RLGList')
+
   function init(g: IGenerator): Layouts {
     
+    console.log('RLGList init')
     const params = g.params();
     const layouts = g.layouts();
 
@@ -36,6 +39,8 @@ export default function RLGList(name: string) {
     const titleHeight = params.get('titleHeight') as number;
     const itemHeight = params.get('itemHeight') as number;
 
+    console.log(`RLGList.create ${name}`)
+
     let p = position;
     if (!p) {
       p = {
@@ -50,12 +55,16 @@ export default function RLGList(name: string) {
           source: {x: 0, y: 100},
           self: {x: 0, y: 0}
         },
-        location: {x: 0, y: 0},
+        location: {x: 5, y: 0},
         size: {width: viewport.width, height: index === 0? titleHeight : itemHeight}
       }
     }
 
-    return new Layout(name, p, g);
+    const l = new Layout(name, p, g);
+
+    g.layouts().set(name, l);
+
+    return l;
   }
 
   return new Generator(name, init, params, create);

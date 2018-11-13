@@ -29,7 +29,7 @@ export default function RLGDesktop(name: string) {
     const headerHeight = params.get('headerHeight') as number;
     const footerHeight = params.get('footerHeight') as number;
 
-    if (viewport.width < 800) {
+    if (viewport.width < 600) {
       leftSideWidth = 0;
       rightSideWidth = 0;
     }
@@ -67,7 +67,7 @@ export default function RLGDesktop(name: string) {
         size: size
       }
 
-      return new Layout('leftSize', p, g);
+      return new Layout('leftSide', p, g);
     }();
 
     const rightSide = function (): Layout {
@@ -215,6 +215,7 @@ export default function RLGDesktop(name: string) {
       return new Layout('footer', p, g);
     }();
 
+    // Return new instance of Layouts
     return new Layouts([
       [leftSide.name, leftSide],
       [rightSide.name, rightSide],

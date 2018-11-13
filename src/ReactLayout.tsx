@@ -57,7 +57,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onResize = (width: number, height: number) => {
-    console.log('onResize', width, height);
+    console.log('onResize', this.props.name, width, height);
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
@@ -71,7 +71,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.editOverlay = [];
     const p = this.derivedLayout.params();
 
-    const v = p.set('viewport', { x: this.state.width, y: this.state.height });
+    const v = p.set('viewport', { width: this.state.width, height: this.state.height });
     if (v) {
       const layouts = this.derivedLayout.layouts();
       if (layouts) {
@@ -230,6 +230,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   content = () => {
+    console.log(`create content ${this.props.name} ${this.state.width} ${this.state.height}`)
     if (this.state.width && this.state.height) {
       // Only show content if width and height are not 0
       return (

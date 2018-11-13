@@ -42,6 +42,8 @@ export default class Layouts {
   }
 
   find(i: number) {
+    //console.log(Object.keys(this._layouts))
+    //const key = Object.keys(this._layouts)[i];
     return this._byIndex[i];
   }
 
@@ -50,12 +52,12 @@ export default class Layouts {
   }
 
   set(key: string, v: Layout) {
-    const s = this._layouts.size;
-    if (this._layouts.set(key, v)) {
-      if (s < this._layouts.size) {
-        // Add to byIndex array
-        this._byIndex.push(v);
-      }
+    // const s = this._layouts.size;
+    this._layouts.set(key, v);
+    
+    if (this._layouts.size > this._byIndex.length) {
+      // Add to byIndex array
+      this._byIndex.push(v);
     }
   }
 }

@@ -250,7 +250,7 @@ export default class Layout {
       this._changed = false;
       this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
     }
-    return {...this._cached.location, ...this._cached.size};
+    return {...this._cached};
   }
 
   touch = () => {

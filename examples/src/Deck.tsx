@@ -49,7 +49,7 @@ export default class Deck {
             units: {origin: {x: 0, y: 0}, location: IUnit.pixel, size: IUnit.pixel},
             location: { x: 25, y: 25 },
             edit: [{part: PositionRef.position}],
-            size: { x: 100, y: 150 }
+            size: { width: 100, height: 150 }
           }
         }} >
         <img width={100} height={150} src={e} />
