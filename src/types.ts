@@ -1,5 +1,7 @@
 
 
+export type Opaque<K, T> = T & { __TYPE__: K };
+
 export interface IRect {
   x: number;
   y: number;

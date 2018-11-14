@@ -34,7 +34,7 @@ export default class Params {
     } 
     
     if (!r) {
-      console.log('Param.set ', key);
+      // console.log('Param.set ', key);
       this.changeCount += 1;
       this.params.set(key, v);
       return true;

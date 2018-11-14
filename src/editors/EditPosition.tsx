@@ -2,10 +2,37 @@ import * as React from 'react';
 import { EditorProps, IEditor, IUndo } from './Editor';
 import Layout from 'src/components/Layout';
 import { IPoint } from 'src/types';
+import { Rect } from 'lib/src/types';
 
-export default class EditPosition extends React.Component<EditorProps, {}>  implements IEditor {
+interface editHandleProps {
+  cursor: string;
+  handle: Rect;
+}
+
+function editStyle(props: editHandleProps): React.CSSProperties {
+  //  console.log('editStyle', props.x, props.y, props.width, props.height);
+
+  // console.log(style);
+  return {
+    boxSizing: 'border-box' as 'border-box',
+    transformOrigin: 0,
+    transform: `translate(${props.handle.left}px, ${props.handle.top}px)`,
+    width: `${props.handle.width}px`,
+    height: `${props.handle.height}px`,
+    position: 'absolute' as 'absolute',
+    cursor: props.cursor,
+    background: 'rgba(0, 0, 0, 0.0)',
+    zIndex: 1000,
+    borderWidth: '4px'
+  }
+}
+
+export default class EditPosition extends React.Component<EditorProps, {}> implements IEditor {
   _layout: Layout;
   _origin: IPoint;
+
+  _cursor: string;
+  _handle: Rect;
 
   constructor(props: EditorProps) {
     super(props);
@@ -25,10 +52,10 @@ export default class EditPosition extends React.Component<EditorProps, {}>  impl
     if (deltaX || deltaY) {
 
       const r = this._layout.rect();
-     
+
       r.x += deltaX;
       r.y += deltaY;
-      
+
       // 2 Pin
 
 
@@ -36,7 +63,7 @@ export default class EditPosition extends React.Component<EditorProps, {}>  impl
       const l = this._layout.name;
       const layout = this._layout.generator.layouts().get(l);
 
-      layout!.update({x: r.x, y: r.y}, {width: r.width, height: r.height});
+      layout!.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
     }
   }
 
@@ -97,7 +124,12 @@ export default class EditPosition extends React.Component<EditorProps, {}>  impl
   }
 
   render = () => {
-    return null;
+    return (
+      <div
+        style={editStyle({cursor: this._cursor, handle: this._handle})}
+        onMouseDown={this.onMouseDown}
+      />
+    );
   }
 
 }

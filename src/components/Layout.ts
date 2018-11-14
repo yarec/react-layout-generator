@@ -32,6 +32,23 @@ export enum PositionRef {
   rightBottom
 };
 
+export function move(rect: Rect) {
+  /**
+   * returns the edit handle the user is interacting with
+   */
+  return rect;
+}
+
+export function update(rect: Rect) {
+  /**
+   * updates the Position and/or dependent params
+   * 
+   * Editor gets the updated values from Layout
+   */
+}
+
+
+
 export interface IEdit {
   part: PositionRef,
   variable?: string

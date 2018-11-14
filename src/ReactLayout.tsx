@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import { IGenerator } from './generators/Generator';
 import Layout, { IPosition, IEdit, PositionRef } from './components/Layout';
-// import EditPosition from './editors/EditPosition';
+import EditPosition from './editors/EditPosition';
 import { Rect } from './types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
@@ -127,6 +127,8 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
 
+    child.type
+
     if (p && p['name']) {
       return this.createPositionedElement(child, index, p['name'], p['position']);
     } else {
@@ -148,7 +150,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
             switch (item.part) {
               case PositionRef.position: {
                 cursor = 'move';
-                // editor = EditPosition;
+                editor = EditPosition;
                 break;
               }
               case PositionRef.left: {
@@ -235,10 +237,10 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       // Only show content if width and height are not 0
       return (
         <>
-          {React.Children.map(this.props.children, (child, i) =>
+          {React.Children.map(this.props.children, (child, i) => {
             // tslint:disable-next-line:no-any
             this.createElement(child as React.ReactElement<any>, i)
-          )}
+          })}
           {this.createEditHandles()}
         </>
       )

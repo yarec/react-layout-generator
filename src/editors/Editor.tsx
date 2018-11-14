@@ -10,13 +10,10 @@ export interface IEditor {
   undo: () => void;
 }
 
-export interface EditorProps {
+export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
   key: string;
   layout: Layout;
   boundary: IRect;
   edit: IEdit;
-}
-
-export function createEditor(props: EditorProps) {
-
+  cursor: string;
 }
