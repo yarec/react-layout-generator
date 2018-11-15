@@ -9,31 +9,31 @@ export interface IRect {
   height: number;
 }
 
-export function translate(r: IRect, p: IPoint): IRect {
-  return {
-    y: r.y + p.y,
-    x: r.x + p.x,
-    width: r.width,
-    height: r.height
-  };
-}
+// export function translate(r: IRect, p: IPoint): IRect {
+//   return {
+//     y: r.y + p.y,
+//     x: r.x + p.x,
+//     width: r.width,
+//     height: r.height
+//   };
+// }
 
-export function scale(r: IRect, p: IPoint): IRect {
-  return {
-    y: r.y * p.y,
-    x: r.x * p.x,
-    height: r.height * p.y,
-    width: r.width * p.x
-  };
-}
+// export function scale(r: IRect, p: IPoint): IRect {
+//   return {
+//     y: r.y * p.y,
+//     x: r.x * p.x,
+//     height: r.height * p.y,
+//     width: r.width * p.x
+//   };
+// }
 
-export function width(r: IRect) {
-  return r.width;
-}
+// export function width(r: IRect) {
+//   return r.width;
+// }
 
-export function height(r: IRect) {
-  return r.height;
-}
+// export function height(r: IRect) {
+//   return r.height;
+// }
 
 export class Rect implements IRect {
   y: number = 0;

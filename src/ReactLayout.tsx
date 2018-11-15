@@ -1,13 +1,10 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import { IGenerator } from './generators/Generator';
-import Layout, { IPosition, IEdit, PositionRef } from './components/Layout';
+import Layout, { IPosition, IEdit } from './components/Layout';
 import EditPosition from './editors/EditPosition';
-import { Rect } from './types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
-
-  // console.log(style);
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
@@ -101,21 +98,18 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
           rect.height
         );
 
+        console.log('style', style)
+
         if (this.editLayout && b.edit) {
           this.editOverlay.push(b)
         }
         // let props = style: ...this.props.style
         //   ...child.props.style ...style };
 
-        return React.cloneElement(child, {
-          style: {
-            ...this.props.style,
-            ...child.props.style,
-            ...style
-          }
-        },
+        //const c = React.cloneElement(child, {style: {...this.props.style, ...child.props.style, ...style}}, child.props.children);
 
-          child.props.children);
+        return <div style={{...this.props.style, ...child.props.style, ...style}}>{child.props.children}</div> ;
+        //return c;
       }
     }
 
@@ -127,8 +121,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
 
-    child.type
-
+    console.log('createElement', child.type, child.props)
     if (p && p['name']) {
       return this.createPositionedElement(child, index, p['name'], p['position']);
     } else {
@@ -143,76 +136,19 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     if (this.props.editLayout) {
       this.editOverlay.map((layout: Layout) => {
         if (layout.edit) {
-          let editor: any;
           layout.edit.map((item: IEdit) => {
-            let cursor = 'default';
-            let r = new Rect(layout.rect());
-            switch (item.part) {
-              case PositionRef.position: {
-                cursor = 'move';
-                editor = EditPosition;
-                break;
-              }
-              case PositionRef.left: {
-                cursor = 'w-resize';
-                r.location = { x: r.x - 2, y: r.y };
-                r.size = { width: 4, height: r.height };
-                break;
-              }
-              case PositionRef.right: {
-                cursor = 'w-resize';
-                r.location = { x: r.x + r.width - 2, y: r.y };
-                r.size = { width: 4, height: r.height };
-                break;
-              }
-              case PositionRef.top: {
-                r.location = { x: r.x, y: r.y - 2 };
-                r.size = { width: r.width, height: 4 };
-                cursor = 'n-resize';
-                break;
-              }
-              case PositionRef.bottom: {
-                cursor = 'w-resize';
-                r.location = { x: r.x, y: r.y + r.height - 2 };
-                r.size = { width: r.width, height: 4 };
-                break;
-              }
-              case PositionRef.leftTop: {
-                cursor: 'nw-resize';
-                break;
-              }
-              case PositionRef.rightTop: {
-                cursor: 'ne-resize';
-                break;
-              }
-              case PositionRef.leftBottom: {
-                cursor: 'nw-resize';
-                break;
-              }
-              case PositionRef.rightBottom: {
-                cursor: 'ne-resize';
-                break;
-              }
-              default: {
-                console.error(`Invalid PositionRef ${item.part}`);
-                break;
-              }
-            }
+            let r = layout.rect();
             if (r.width && r.height) {
-              if (editor) {
-                const e = React.createElement(editor, {
-                  key: layout.name + cursor,
-                  edit: item,
-                  layout: layout,
-                  boundary: { x: 0, y: 0, width: this.state.width, height: this.state.height }
-                });
-                jsx.push(e);
-                // rlgDrag={{ cursor: cursor, x: r.x, y: r.y, width: r.width, height: r.height }} />)
-              }
+              jsx.push(<EditPosition
+                key={layout.name + item.cursor}
+                edit={item}
+                layout={layout}
+                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
+              />);
             }
           });
         }
-      })
+      });
     }
     return jsx;
   }
@@ -238,8 +174,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
       return (
         <>
           {React.Children.map(this.props.children, (child, i) => {
+            console.log('createElement', i)
             // tslint:disable-next-line:no-any
-            this.createElement(child as React.ReactElement<any>, i)
+            return this.createElement(child as React.ReactElement<any>, i)
           })}
           {this.createEditHandles()}
         </>
@@ -255,11 +192,11 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
 
     return (
       /* style height of 100% necessary for correct height  */
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%' }} >
         {this.content()}
         <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
-        {/* {this.frameEnd()} */}
-      </div>
+        {this.frameEnd()}
+      </div >
     )
   }
 }

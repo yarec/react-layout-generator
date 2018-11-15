@@ -1,7 +1,7 @@
 import {IPoint, IRect, ISize } from '../types';
 import {isEqual} from 'underscore';
 
-type ParamValue = number | IPoint | ISize | IRect;
+export type ParamValue = number | IPoint | ISize | IRect;
 
 export default class Params {
   params: Map<string, ParamValue>;

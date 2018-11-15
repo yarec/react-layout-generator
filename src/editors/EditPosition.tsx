@@ -3,16 +3,12 @@ import { EditorProps, IEditor, IUndo } from './Editor';
 import Layout from 'src/components/Layout';
 import { IPoint } from 'src/types';
 import { Rect } from 'lib/src/types';
-
 interface editHandleProps {
   cursor: string;
   handle: Rect;
 }
 
 function editStyle(props: editHandleProps): React.CSSProperties {
-  //  console.log('editStyle', props.x, props.y, props.width, props.height);
-
-  // console.log(style);
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
@@ -28,42 +24,42 @@ function editStyle(props: editHandleProps): React.CSSProperties {
 }
 
 export default class EditPosition extends React.Component<EditorProps, {}> implements IEditor {
-  _layout: Layout;
-  _origin: IPoint;
+  _clonedLayout: Layout;
+  _startOrigin: IPoint;
 
   _cursor: string;
   _handle: Rect;
 
   constructor(props: EditorProps) {
     super(props);
-    this._layout = this.props.layout.clone();
-    this._origin = { x: 0, y: 0 };
+    this._clonedLayout = this.props.layout.clone();
+    this._startOrigin = { x: 0, y: 0 };
+
   }
 
   initUpdate(x: number, y: number) {
-    this._origin = { x: x, y: y };
+    this._startOrigin = { x: x, y: y };
   }
 
   moveUpdate(x: number, y: number) {
 
-    const deltaX = x - this._origin.x;
-    const deltaY = y - this._origin.y;
+    const deltaX = x - this._startOrigin.x;
+    const deltaY = y - this._startOrigin.y;
 
     if (deltaX || deltaY) {
 
-      const r = this._layout.rect();
+      const r = this._clonedLayout.rect();
 
-      r.x += deltaX;
-      r.y += deltaY;
+      const ur = this.props.edit.extendElement!(r, deltaX, deltaY);
 
       // 2 Pin
-
+      
 
       // 3 Make live
-      const l = this._layout.name;
-      const layout = this._layout.generator.layouts().get(l);
+      const l = this._clonedLayout.name;
+      const layout = this._clonedLayout.generator.layouts().get(l);
 
-      layout!.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+      layout!.update({ x: ur.x, y: ur.y }, { width: ur.width, height: ur.height });
     }
   }
 

@@ -68,29 +68,31 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
   render() {
 
     return (
-      <ReactLayout
-        name={'reactLayout.desktop.example'}
-        editLayout={true}
-        g={this.g}
-      >
-        <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          <ReactLayout
-            name={'reactLayout.list.example'}
-            g={this.m}
-          >
-            <div data-layout={{ name: 'title' }} >
-              <b >Examples</b>
-            </div>
+      <>
 
-            <div data-layout={{ name: 'desktopLayout' }} >
-              <span onClick={this.deskTop}>Desktop</span>
-            </div>
+        <ReactLayout
+          name={'reactLayout.desktop.example'}
+          editLayout={false}
+          g={this.g}
+        >
+          <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+            <ReactLayout
+              name={'reactLayout.list.example'}
+              g={this.m}
+            >
+              <div data-layout={{ name: 'title' }} >
+                <b >Examples</b>
+              </div>
 
-            <div /* name={'Card Layout'} */ data-layout={{ name: 'cardLayout' }} >
-              <span onClick={this.deckOfCards}>Card Layout</span>
-            </div>
+              <div data-layout={{ name: 'desktopLayout' }} >
+                <span onClick={this.deskTop}>Desktop</span>
+              </div>
 
-            {/*             
+              <div /* name={'Card Layout'} */ data-layout={{ name: 'cardLayout' }} >
+                <span onClick={this.deckOfCards}>Card Layout</span>
+              </div>
+
+              {/*             
             <div data-layout={{ name: 'svgLayout' }} >
               <svg width='200' height='24'>
                 <rect width='150' height='10'/>
@@ -98,24 +100,24 @@ class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutSta
             </div> 
             */}
 
-          </ReactLayout>
-        </div>
+            </ReactLayout>
+          </div>
 
-        <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          <span>Header</span>
-        </div>
+          <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
+            <span>Header</span>
+          </div>
 
-        <div data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)' }}>
-          <ReactLayout
-            name={'reactLayout.content'}
-            editLayout={true}
-            g={this.d}
-          >
-            {this.elements()}
-          </ReactLayout>
-        </div>
-
-      </ReactLayout>
+          <div data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)' }}>
+            <ReactLayout
+              name={'reactLayout.content'}
+              editLayout={true}
+              g={this.d}
+            >
+              {this.elements()}
+            </ReactLayout>
+          </div>
+        </ReactLayout>
+      </>
     );
   }
 }

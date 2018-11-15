@@ -1,8 +1,15 @@
-import {IPoint, ISize} from '../types';
+import { IPoint, ISize, IRect } from '../types';
 import Params from '../components/Params';
-import Generator, {IGenerator} from '../generators/Generator';
-import Layout, {IUnit} from '../components/Layout';
+import Generator, { IGenerator } from '../generators/Generator';
+import Layout, { IUnit, PositionRef, IEdit, IPosition } from '../components/Layout';
 import Layouts from '../components/Layouts';
+
+function updateParamWidth(updated: IRect, edit: IEdit) {
+  return {
+    name: edit.variable!,
+    value: updated.width
+  }
+}
 
 export default function RLGDesktop(name: string) {
 
@@ -13,7 +20,7 @@ export default function RLGDesktop(name: string) {
   const footerHeight = 24;
 
   const params = new Params([
-    ['viewport', {width: 0, height: 0}],
+    ['viewport', { width: 0, height: 0 }],
     ['fullWidthHeaders', fullWidthHeaders],
     ['leftSideWidth', leftSideWidth],
     ['rightSideWidth', rightSideWidth],
@@ -56,13 +63,16 @@ export default function RLGDesktop(name: string) {
           height: viewport.height
         }
       }
-      
-      const p = {
+
+      const p: IPosition = {
         units: {
           origin: { x: 0, y: 0 },
           location: IUnit.pixel,
           size: IUnit.pixel
         },
+        edit: [
+          { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
+        ],
         location: location,
         size: size
       }
@@ -140,12 +150,12 @@ export default function RLGDesktop(name: string) {
         location: location,
         size: size
       }
-      
+
       return new Layout('header', p, g);
     }();
 
     const content = function (): Layout {
-       let location: IPoint;
+      let location: IPoint;
       let size: ISize;
       if (fullWidthHeaders) {
         location = {
@@ -175,7 +185,7 @@ export default function RLGDesktop(name: string) {
         location: location,
         size: size
       }
-      
+
       return new Layout('content', p, g);
     }();
 
@@ -187,7 +197,7 @@ export default function RLGDesktop(name: string) {
           x: 0,
           y: viewport.height - footerHeight
         }
-        size ={
+        size = {
           width: viewport.width,
           height: footerHeight
         }
@@ -211,7 +221,7 @@ export default function RLGDesktop(name: string) {
         location: location,
         size: size
       }
-      
+
       return new Layout('footer', p, g);
     }();
 

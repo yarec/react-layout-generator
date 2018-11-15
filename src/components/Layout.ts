@@ -1,6 +1,10 @@
 import { IGenerator } from '../generators/Generator';
 import { IPoint, ISize, Rect } from '../types';
+import { cursor } from '../editors/cursor';
 import { clone } from '../utils';
+import getEditHandle, { EditHandle } from '../editors/editHandle'
+import getExtendElement, {ExtendElement} from '../editors/extendElement';
+import {UpdateParam} from '../editors/updateParam';
 
 export interface IAlign {
   x: number;
@@ -47,11 +51,13 @@ export function update(rect: Rect) {
    */
 }
 
-
-
 export interface IEdit {
-  part: PositionRef,
-  variable?: string
+  ref: PositionRef;
+  variable?: string;
+  cursor?: string;
+  editHandle?: EditHandle;
+  extendElement?: ExtendElement;
+  updateParam?: UpdateParam;
 }
 
 export interface IPosition {
@@ -112,6 +118,20 @@ export default class Layout {
       this._position.align.source.y *= .01;
       this._position.align.self.x *= .01;
       this._position.align.self.y *= .01;
+    }
+
+    if (this._position.edit) {
+      this._position.edit.forEach((edit) => {
+        if (!edit.cursor) {
+          edit.cursor = cursor(edit);
+        }
+        if (!edit.editHandle) {
+          edit.editHandle = getEditHandle(edit);
+        }
+        if (!edit.extendElement) {
+          edit.extendElement = getExtendElement(edit)
+        }
+      })
     }
   }
 
@@ -267,7 +287,7 @@ export default class Layout {
       this._changed = false;
       this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
     }
-    return {...this._cached};
+    return { ...this._cached };
   }
 
   touch = () => {
