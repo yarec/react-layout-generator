@@ -54,7 +54,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onResize = (width: number, height: number) => {
-    console.log('onResize', this.props.name, width, height);
+    // console.log('onResize', this.props.name, width, height);
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
@@ -98,25 +98,37 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
           rect.height
         );
 
-        console.log('style', style)
+        // console.log('style', style)
 
+        let children: Array<any> = [];
+        // React.Children.map(this.props.children, (child, i) => {
+        //   children.push(child);
+        // });
         if (this.editLayout && b.edit) {
-          this.editOverlay.push(b)
+          b.edit.forEach((item) => {
+            children.push(
+              <EditPosition key={''}
+                edit={item}
+                layout={b!}
+                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
+                onUpdate={this.onUpdate} />
+            );
+          })
         }
         // let props = style: ...this.props.style
         //   ...child.props.style ...style };
 
-        //const c = React.cloneElement(child, {style: {...this.props.style, ...child.props.style, ...style}}, child.props.children);
+        return React.cloneElement(child,
+          { key: b.name, style: { ...this.props.style, ...child.props.style, ...style } },
+          child.props.children);
 
-        return <div style={{...this.props.style, ...child.props.style, ...style}}>{child.props.children}</div> ;
+        // return <div key={b.name} style={{...this.props.style, ...child.props.style, ...style}}>{child.props.children}</div> ;
         //return c;
       }
     }
 
     return null;
   }
-
-
 
   createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
@@ -139,11 +151,13 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
           layout.edit.map((item: IEdit) => {
             let r = layout.rect();
             if (r.width && r.height) {
+              console.log(`EditPosition ${layout.name + item.cursor}`)
               jsx.push(<EditPosition
                 key={layout.name + item.cursor}
                 edit={item}
                 layout={layout}
                 boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
+                onUpdate={this.onUpdate}
               />);
             }
           });
@@ -168,17 +182,15 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   content = () => {
-    console.log(`create content ${this.props.name} ${this.state.width} ${this.state.height}`)
+    // Only show content if width and height are not 0
     if (this.state.width && this.state.height) {
-      // Only show content if width and height are not 0
       return (
         <>
           {React.Children.map(this.props.children, (child, i) => {
-            console.log('createElement', i)
             // tslint:disable-next-line:no-any
             return this.createElement(child as React.ReactElement<any>, i)
           })}
-          {this.createEditHandles()}
+          {/*this.createEditHandles()*/}
         </>
       )
     }

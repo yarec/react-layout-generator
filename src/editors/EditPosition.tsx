@@ -1,18 +1,19 @@
 import * as React from 'react';
 import { EditorProps, IEditor, IUndo } from './Editor';
 import Layout from 'src/components/Layout';
-import { IPoint } from 'src/types';
-import { Rect } from 'lib/src/types';
+import { IPoint, IRect } from 'src/types';
+
+
 interface editHandleProps {
   cursor: string;
-  handle: Rect;
+  handle: IRect;
 }
 
 function editStyle(props: editHandleProps): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
-    transform: `translate(${props.handle.left}px, ${props.handle.top}px)`,
+    transform: `translate(${props.handle.x}px, ${props.handle.y}px)`,
     width: `${props.handle.width}px`,
     height: `${props.handle.height}px`,
     position: 'absolute' as 'absolute',
@@ -27,14 +28,13 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
   _clonedLayout: Layout;
   _startOrigin: IPoint;
 
-  _cursor: string;
-  _handle: Rect;
+  _handle: IRect;
 
   constructor(props: EditorProps) {
     super(props);
     this._clonedLayout = this.props.layout.clone();
     this._startOrigin = { x: 0, y: 0 };
-
+    this._handle = props.layout.rect();
   }
 
   initUpdate(x: number, y: number) {
@@ -48,18 +48,25 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
 
     if (deltaX || deltaY) {
 
-      const r = this._clonedLayout.rect();
+      console.log(`moveUpdate ${deltaX} ${deltaY}`)
 
-      const ur = this.props.edit.extendElement!(r, deltaX, deltaY);
+      // 1 Extend
+      const r: IRect = this._clonedLayout.rect();
+      let ur: IRect = this.props.edit.extendElement!(r, deltaX, deltaY);
 
       // 2 Pin
       
 
       // 3 Make live
-      const l = this._clonedLayout.name;
-      const layout = this._clonedLayout.generator.layouts().get(l);
+      const name = this._clonedLayout.name;
+      const layout = this._clonedLayout.generator.layouts().get(name);
 
       layout!.update({ x: ur.x, y: ur.y }, { width: ur.width, height: ur.height });
+
+      // 4 Update handle
+      this._handle = this.props.edit.updateHandle!(ur);
+
+      this.props.onUpdate();
     }
   }
 
@@ -103,7 +110,6 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     if (event) {
       event.preventDefault();
       this.moveUpdate(event.clientX, event.clientY);
-      // console.log('onMouseMove', event.clientX, event.clientY);
     }
   }
 
@@ -111,7 +117,6 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     if (event) {
       event.preventDefault();
       this.removeEventListeners();
-      // console.log('onMouseUp', event.clientX, event.clientY);
     }
   }
 
@@ -122,7 +127,7 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
   render = () => {
     return (
       <div
-        style={editStyle({cursor: this._cursor, handle: this._handle})}
+        style={editStyle({cursor: this.props.edit.cursor!, handle: this._handle})}
         onMouseDown={this.onMouseDown}
       />
     );

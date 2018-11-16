@@ -4,7 +4,7 @@ export type ExtendElement = (rect: IRect, deltaX: number, deltaY: number) => IRe
 
 export default function getExtendElement(edit: IEdit): ExtendElement {
   let extendElement: ExtendElement = (r: IRect, deltaX: number, deltaY: number) => { 
-    return { x: r.x, y: r.y, width: r.width, height: r.height } 
+    return { x: r.x + deltaX, y: r.y + deltaY, width: r.width, height: r.height } 
   };
 
   switch (edit.ref) {
@@ -13,55 +13,55 @@ export default function getExtendElement(edit: IEdit): ExtendElement {
       break;
     }
     case PositionRef.left: {
-      extendElement = (r: Rect) => {
-        return { x: r.x - 2, y: r.y, width: 4, height: r.height };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return { x: r.x - deltaX, y: r.y, width: r.width + deltaX, height: r.height };
       }
       break;
     }
     case PositionRef.right: {
-      extendElement = (r: Rect) => {
-        return { x: r.x + r.width - 2, y: r.y, width: 4, height: r.height };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return { x: r.x, y: r.y, width: r.width + deltaX, height: r.height };
       }
       break;
     }
     case PositionRef.top: {
-      extendElement = (r: Rect) => {
-        return {x: r.x, y: r.y - 2, width: r.width, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x, y: r.y - deltaY, width: r.width, height: r.height + deltaY };
       }
       break;
     }
     case PositionRef.bottom: {
-      extendElement = (r: Rect) => {
-        return {x: r.x, y: r.y + r.height - 2, width: r.width, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x, y: r.y, width: r.width, height: r.height + deltaY };
       }
       break;
     }
     case PositionRef.leftTop: {
-      extendElement = (r: Rect) => {
-        return {x: r.x - 2, y: r.y - 2, width: 4, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x - deltaX, y: r.y - deltaY, width: r.width + deltaX, height: r.height + deltaY };
       }
       break;
     }
     case PositionRef.rightTop: {
-      extendElement = (r: Rect) => {
-        return {x: r.x + r.width - 2, y: r.y - 2, width: 4, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x, y: r.y - deltaY, width: r.width + deltaX, height: r.height + deltaY };
       }
       break;
     }
     case PositionRef.leftBottom: {
-      extendElement = (r: Rect) => {
-        return {x: r.x - 2, y: r.y + r.height - 2, width: 4, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x - deltaX, y: r.y, width: r.width + deltaX, height: r.height + deltaY };
       }
       break;
     }
     case PositionRef.rightBottom: {
-      extendElement = (r: Rect) => {
-        return {x: r.x + r.width - 2, y: r.y + r.height - 2, width: 4, height: 4 };
+      extendElement = (r: Rect, deltaX: number, deltaY: number) => {
+        return {x: r.x, y: r.y - deltaY, width: r.width + deltaX, height: r.height + deltaY };
       }
       break;
     }
     default: {
-      console.error(`Invalid PositionRef ${edit.ref}`);
+      console.error(`Invalid PositionRef in ExtendElement ${edit.ref}`);
       break;
     }
   }

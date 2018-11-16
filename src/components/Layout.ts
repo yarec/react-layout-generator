@@ -2,7 +2,7 @@ import { IGenerator } from '../generators/Generator';
 import { IPoint, ISize, Rect } from '../types';
 import { cursor } from '../editors/cursor';
 import { clone } from '../utils';
-import getEditHandle, { EditHandle } from '../editors/editHandle'
+import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import getExtendElement, {ExtendElement} from '../editors/extendElement';
 import {UpdateParam} from '../editors/updateParam';
 
@@ -55,7 +55,7 @@ export interface IEdit {
   ref: PositionRef;
   variable?: string;
   cursor?: string;
-  editHandle?: EditHandle;
+  updateHandle?: UpdateHandle;
   extendElement?: ExtendElement;
   updateParam?: UpdateParam;
 }
@@ -90,6 +90,7 @@ export default class Layout {
   private _g: IGenerator;
 
   constructor(name: string, p: IPosition, g: IGenerator) {
+    console.log(`initilaize Layout ${name}`)
     this._name = name;
     this._position = p;
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 });
@@ -125,8 +126,8 @@ export default class Layout {
         if (!edit.cursor) {
           edit.cursor = cursor(edit);
         }
-        if (!edit.editHandle) {
-          edit.editHandle = getEditHandle(edit);
+        if (!edit.updateHandle) {
+          edit.updateHandle = getUpdateHandle(edit);
         }
         if (!edit.extendElement) {
           edit.extendElement = getExtendElement(edit)

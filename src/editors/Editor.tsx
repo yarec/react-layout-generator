@@ -15,4 +15,5 @@ export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
   layout: Layout;
   boundary: IRect;
   edit: IEdit;
+  onUpdate: ()=>void;
 }

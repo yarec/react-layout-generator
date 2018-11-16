@@ -40,7 +40,7 @@ export function cursor(edit: IEdit) {
       break;
     }
     default: {
-      console.error(`Invalid PositionRef ${edit.ref}`);
+      console.error(`Invalid PositionRef in cursor ${edit.ref}`);
       break;
     }
   }

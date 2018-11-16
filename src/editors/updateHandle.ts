@@ -1,9 +1,9 @@
 import { IEdit, PositionRef } from '../components/Layout';
-import { Rect, IRect } from '../types'
-export type EditHandle = (rect: Rect) => IRect
+import { IRect } from '../types'
+export type UpdateHandle = (rect: IRect) => IRect
 
-export default function getEditHandle(edit: IEdit): EditHandle {
-  let handle: EditHandle = (r: Rect) => { 
+export default function getUpdateHandle(edit: IEdit): UpdateHandle {
+  let handle: UpdateHandle = (r: IRect) => { 
     return { x: r.x, y: r.y, width: r.width, height: r.height } 
   };
 
@@ -13,55 +13,55 @@ export default function getEditHandle(edit: IEdit): EditHandle {
       break;
     }
     case PositionRef.left: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return { x: r.x - 2, y: r.y, width: 4, height: r.height };
       }
       break;
     }
     case PositionRef.right: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return { x: r.x + r.width - 2, y: r.y, width: 4, height: r.height };
       }
       break;
     }
     case PositionRef.top: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x, y: r.y - 2, width: r.width, height: 4 };
       }
       break;
     }
     case PositionRef.bottom: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x, y: r.y + r.height - 2, width: r.width, height: 4 };
       }
       break;
     }
     case PositionRef.leftTop: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x - 2, y: r.y - 2, width: 4, height: 4 };
       }
       break;
     }
     case PositionRef.rightTop: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x + r.width - 2, y: r.y - 2, width: 4, height: 4 };
       }
       break;
     }
     case PositionRef.leftBottom: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x - 2, y: r.y + r.height - 2, width: 4, height: 4 };
       }
       break;
     }
     case PositionRef.rightBottom: {
-      handle = (r: Rect) => {
+      handle = (r: IRect) => {
         return {x: r.x + r.width - 2, y: r.y + r.height - 2, width: 4, height: 4 };
       }
       break;
     }
     default: {
-      console.error(`Invalid PositionRef ${edit.ref}`);
+      console.error(`Invalid PositionRef in UpdateHandle ${edit.ref}`);
       break;
     }
   }
