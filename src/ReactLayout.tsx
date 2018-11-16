@@ -361,7 +361,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   frameEnd = () => {
-    // console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
+    console.log('frameTime: ', (Date.now() - this.startRendering) + ' ms');
     return null;
   }
 
