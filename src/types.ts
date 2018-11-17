@@ -1,122 +1,148 @@
-// export interface Layout {
-//   viewport: {
-//     w: number;
-//     h: number;
-//   };
-//   x: number;
-//   y: number;
-//   w: number;
-//   h: number;
-//   static: boolean;
-//   active: boolean;
-// }
+
+
+export type Opaque<K, T> = T & { __TYPE__: K };
 
 export interface IRect {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
-export function translate(r: IRect, p: IPoint): IRect {
-  return {
-    top: r.top + p.y,
-    left: r.left + p.x,
-    bottom: r.bottom + p.y,
-    right: r.right + p.x
-  };  
-}
+// export function translate(r: IRect, p: IPoint): IRect {
+//   return {
+//     y: r.y + p.y,
+//     x: r.x + p.x,
+//     width: r.width,
+//     height: r.height
+//   };
+// }
 
-export function scale(r: IRect, p: IPoint): IRect {
-  return {
-    top: r.top * p.y,
-    left: r.left * p.x,
-    bottom: r.bottom * p.y,
-    right: r.right * p.x
-  };  
-}
+// export function scale(r: IRect, p: IPoint): IRect {
+//   return {
+//     y: r.y * p.y,
+//     x: r.x * p.x,
+//     height: r.height * p.y,
+//     width: r.width * p.x
+//   };
+// }
 
-export function width(r: IRect) {
-  return r.right - r.left;
-}
+// export function width(r: IRect) {
+//   return r.width;
+// }
 
-export function height(r: IRect) {
-  return r.bottom - r.top;
-}
+// export function height(r: IRect) {
+//   return r.height;
+// }
 
 export class Rect implements IRect {
-  top: number = 0;
-  left: number = 0;
-  bottom: number = 0;
-  right: number = 0;
+  y: number = 0;
+  x: number = 0;
+  width: number = 0;
+  height: number = 0;
 
-  constructor(rect: IRect/* {top: number, left: number, bottom: number, right: number} */) {
-    this.top = rect.top;
-    this.left = rect.left;
-    this.bottom = rect.bottom;
-    this.right = rect.right;
+  // private _halfWidth: number = 0;
+  // private _halfHeight: number = 0;
+
+  constructor(rect: IRect) {
+    this.update(rect);
   }
 
-  width() {
-    return this.right - this.left;
+  update(rect: IRect) {
+    this.setLocation({x: rect.x, y: rect.y});
+    this.setSize({width: rect.width, height: rect.height});
   }
 
-  height() {
-    return this.bottom - this.top;
+  setLocation(p: IPoint) {
+    this.x = p.x;
+    this.y = p.y;
+  }
+
+  setSize(s: ISize) {
+    this.width = s.width;
+    this.height = s.height;
+    // this._halfWidth = s.width / 2;
+    // this._halfHeight = s.height / 2;
+  }
+
+  get top() {
+    return this.y;
+  }
+  
+  get left() {
+    return this.x;
+  }
+
+  get bottom() {
+    return this.y + this.height;
+  }
+
+  get right() {
+    return this.x + this.width;
+  }
+
+  // get halfWidth() {
+  //   return this._halfWidth;
+  // }
+
+  // get halfHeight() {
+  //   return this._halfHeight;
+  // }
+
+  get location(): IPoint {
+    return {x: this.x, y: this.y};
+  }
+
+  get size(): ISize {
+    return {width: this.width, height: this.height};
+  }
+
+  get leftTop(): IPoint {
+    return {x: this.x, y: this.y};
+  }
+
+  set location(p: IPoint) {
+    this.setLocation(p);
+  }
+
+  set size(s: ISize) {
+    this.setSize(s);
   }
 
   translate(point: IPoint): IRect {
     return {
-      top: this.top + point.y,
-      left: this.left + point.x,
-      bottom: this.bottom + point.y,
-      right: this.right + point.x
+      y: this.y + point.y,
+      x: this.x + point.x,
+      height: this.height,
+      width: this.width
     };
   }
 
   add(rect: IRect): IRect {
     return {
-      top: this.top + rect.top,
-      left: this.left + rect.left,
-      bottom: this.bottom + rect.bottom,
-      right: this.right + rect.right
+      y: this.y + rect.y,
+      x: this.x + rect.x,
+      height: this.height + rect.height,
+      width: this.width + rect.width
     };
   }
-}
 
-export enum OriginX {
-  None = 1,
-  Left,
-  Q1,
-  Center,
-  Q3,
-  Right
-}
-
-export enum OriginY {
-  None = 1,
-  Top,
-  Q1,
-  Center,
-  Q3,
-  Bottom
-}
-
-export interface Origin {
-  x: OriginX;
-  y: OriginY;
-}
-
-export interface IPosition {
-  origin: Origin;  
-  position: IPoint;
-  size: IPoint;
-  def?: IPoint;
+  // intersect(r: Rect): boolean {
+  //   return !(r.x > this._right
+  //     || r._right < this.x
+  //     || r.y > this._bottom
+  //     || r._bottom < this.y);
+  // }
 }
 
 export interface IPoint {
   x: number;
   y: number;
+}
+
+export interface ISize {
+  width: number;
+  height: number;
 }
 
 export class Point implements IPoint {

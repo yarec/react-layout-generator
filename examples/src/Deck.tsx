@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { OriginX, OriginY } from '../../src/types';
+import { IUnit, PositionRef } from '../../src/components/Layout';
 
 export default class Deck {
 
@@ -39,15 +39,17 @@ export default class Deck {
 
   createElement = (index: number) => {
     let e = require(`./assets/cards/${this.deck[index]}.jpg`);
+
     return (
       <div
         key={this.deck[index]}
         data-layout={{
           name: this.deck[index],
           position: {
-            origin: { x: OriginX.Q1, y: OriginY.Q1 },
-            position: { x: -50, y: -75 },
-            size: { x: 100, y: 150 }
+            units: {origin: {x: 0, y: 0}, location: IUnit.pixel, size: IUnit.pixel},
+            location: { x: 25, y: 25 },
+            edit: [{ref: PositionRef.position}],
+            size: { width: 100, height: 150 }
           }
         }} >
         <img width={100} height={150} src={e} />
@@ -65,7 +67,7 @@ export default class Deck {
   }
 
   render = () => {
-    console.log('Deck render')
+    // console.log('Deck render')
     return (
       <>
         {...this.createElements()}

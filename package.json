@@ -4,7 +4,7 @@
   "description": "In development. Not ready to use.",
   "main": "index.tsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "deploy": "gh-pages -d examples/dist",
@@ -22,10 +22,14 @@
   },
   "devDependencies": {
     "@types/async": "^2.0.50",
+    "@types/d3-quadtree": "^1.0.6",
+    "@types/enzyme": "^3.1.14",
     "@types/inline-style-prefixer": "^5.0.0",
+    "@types/jest": "^23.3.8",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "@types/react-resize-detector": "^3.1.0",
+    "@types/underscore": "^1.8.9",
     "async": "^2.6.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-cli": "^6.26.0",
@@ -34,19 +38,39 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
+    "d3-quadtree": "^1.0.5",
+    "enzyme": "^3.7.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.4.0",
+    "inline-style-prefixer": "^5.0.1",
+    "jest": "^23.6.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-resize-detector": "^3.1.2",
+    "react-test-renderer": "^16.6.0",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
+    "ts-jest": "^23.10.4",
     "typescript": "^3.0.3",
+    "underscore": "^1.9.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
   },
-  "dependencies": {
-    "inline-style-prefixer": "^5.0.1"
+  "dependencies": {},
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "./node_modules/ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
   }
 }

@@ -1,13 +1,10 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-
-import LayoutGenerator, { ILayoutGenerator, ILayout, IEdit, PositionRef, Params, Value } from './LayoutGenerator';
-import { IPoint, IPosition } from './types';
-// import { string } from 'prop-types';
+import { IGenerator } from './generators/Generator';
+import Layout, { IPosition, IEdit } from './components/Layout';
+import EditPosition from './editors/EditPosition';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
-
-  // console.log(style);
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
@@ -19,136 +16,12 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
   };
 }
 
-interface editStyleProps {
-  cursor: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-function editStyle(props: editStyleProps): React.CSSProperties {
-  //  console.log('editStyle', props.x, props.y, props.width, props.height);
-
-  // console.log(style);
-  return {
-    boxSizing: 'border-box' as 'border-box',
-    transformOrigin: 0,
-    transform: `translate(${props.x}px, ${props.y}px)`,
-    width: `${props.width}px`,
-    height: `${props.height}px`,
-    position: 'absolute' as 'absolute',
-    cursor: props.cursor,
-    background: 'rgba(0, 0, 0, 0.0)',
-    zIndex: 1000,
-    borderWidth: '4px'
-  }
-}
-
-export interface RLGHandleProps extends React.HTMLProps<HTMLDivElement> {
-  rlgDrag: editStyleProps;
-  params: Params;
-  edit: IEdit;
-  layout: ILayout;
-  onUpdate: () => void
-}
-
-interface RLGHandleState {
-
-}
-
-export class RLGHandle extends React.Component<RLGHandleProps, RLGHandleState> {
-
-  value: Value | undefined;
-  origin: IPoint;
-
-  constructor(props: RLGHandleProps) {
-    super(props);
-    this.state = {
-
-    }
-    // console.log('RLGHandleProps', this.props);
-  }
-
-  addEventListeners() {
-    document.addEventListener('mouseup', this.onHtmlMouseUp);
-    document.addEventListener('mousemove', this.onHtmlMouseMove);
-    document.addEventListener('touchmove', this.onHtmlTouchMove);
-  }
-
-  removeEventListeners() {
-    document.removeEventListener('mouseup', this.onHtmlMouseUp);
-    document.removeEventListener('mousemove', this.onHtmlMouseMove);
-    document.removeEventListener('touchmove', this.onHtmlTouchMove);
-  }
-
-  initUpdate(x: number, y: number) {
-    this.origin = { x, y };
-    this.value = this.props.params.get(this.props.edit.variable);
-  }
-
-  moveUpdate(x: number, y: number) {
-
-    let value;
-    if (typeof this.value === 'number') {
-      value = this.value;
-    } else {
-      // Clone value
-      value = Object.assign({}, this.value);
-    }
-
-    const v = this.props.edit.update(value, this.props.edit.positionRef, (x - this.origin.x), (y - this.origin.y), this.props.params);
-    // console.log('this.props.edit.variable ' + this.props.edit.variable, v);
-    this.props.params.set(this.props.edit.variable, v);
-
-    this.props.onUpdate();
-  }
-
-  onMouseDown = (event: React.MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.addEventListeners();
-      this.initUpdate(event.clientX, event.clientY);
-      // console.log('onMouseDown', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlMouseMove = (event: MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.moveUpdate(event.clientX, event.clientY);
-      // console.log('onMouseMove', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlMouseUp = (event: MouseEvent) => {
-    if (event) {
-      event.preventDefault();
-      this.removeEventListeners();
-      // console.log('onMouseUp', event.clientX, event.clientY);
-    }
-  }
-
-  onHtmlTouchMove = (event: TouchEvent) => {
-    // TODO implement support for touch
-  }
-
-  render = () => {
-    // console.log('RLGHandleProps', this.props.rlgDrag);
-    return (
-      <div style={editStyle(this.props.rlgDrag)}
-        onMouseDown={this.onMouseDown}
-      />
-    );
-  }
-}
-
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   name: string;
   editLayout?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
-  g: LayoutGenerator;
+  g: IGenerator;
 }
 
 export interface ReactLayoutState {
@@ -158,10 +31,10 @@ export interface ReactLayoutState {
 }
 
 export default class ReactLayout extends React.Component<ReactLayoutProps, ReactLayoutState> {
-  derivedLayout: ILayoutGenerator;
+  derivedLayout: IGenerator;
   key: number;
   editLayout: boolean = false;
-  editOverlay: Array<ILayout> = [];
+  editOverlay: Array<Layout> = [];
   startRendering: number;
 
   constructor(props: ReactLayoutProps) {
@@ -181,10 +54,12 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   onResize = (width: number, height: number) => {
-    // console.log('onResize', width, height);
+    // console.log('onResize', this.props.name, width, height);
     if (this.state.width != width || this.state.height != height) {
 
       this.setState({ width: width, height: height });
+      this.initLayout();
+
     }
   }
 
@@ -192,80 +67,79 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.key = 0;
     this.editOverlay = [];
     const p = this.derivedLayout.params();
-    p.set('width', this.state.width);
-    p.set('height', this.state.height);
+
+    const v = p.set('viewport', { width: this.state.width, height: this.state.height });
+    if (v) {
+      const layouts = this.derivedLayout.layouts();
+      if (layouts) {
+        layouts.layouts.forEach((layout) => {
+          layout.touch();
+        });
+      }
+    }
+
     this.derivedLayout.reset();
   }
 
-  createPositionedElement = (child: React.ReactElement<any>, name: string, position: IPosition) => {
+  createPositionedElement = (child: React.ReactElement<any>, index: number, name: string, position: IPosition) => {
 
     let b = this.derivedLayout.lookup(name);
-    if (!b && position && this.derivedLayout.create) {
-      b = this.derivedLayout.create(name, position);
-      // console.log('createPositionedElement', b, position);
+    if (!b && this.derivedLayout.create) {
+      b = this.derivedLayout.create(index, name, this.derivedLayout, position);
     }
 
     if (b) {
-      if ((b.location.right - b.location.left) && (b.location.bottom - b.location.top)) {
+      const rect = b.rect();
+      if ((rect.width) && (rect.height)) {
         const style = tileStyle(child.props['style'],
-          b.location.left,
-          b.location.top,
-          (b.location.right - b.location.left),
-          (b.location.bottom - b.location.top)
+          rect.x,
+          rect.y,
+          rect.width,
+          rect.height
         );
 
-        if (this.editLayout && b.editSize) {
-          this.editOverlay.push(b)
+        // console.log('style', style)
+
+        let editors: Array<any> = [];
+        if (this.editLayout && b.edit) {
+          // this.editOverlay.push(b);
+          let i = 0;
+          b.edit.forEach((item) => {
+            editors.push(
+              <EditPosition
+                key={`edit${i}`}
+                edit={item}
+                layout={b!}
+                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
+                onUpdate={this.onUpdate} />
+            );
+          })
         }
-        let props = { style: style };
-        return React.cloneElement(child, props, child.props.children);
+
+        return (
+          <>
+            {React.cloneElement(child,
+              { key: b.name, style: { ...this.props.style, ...child.props.style, ...style } },
+              child.props.children
+            )}
+            {editors}
+
+          </>)
+
+        // return <div key={b.name} style={{...this.props.style, ...child.props.style, ...style}}>{child.props.children}</div> ;
+        //return c;
       }
     }
 
     return null;
   }
 
-  createListElement = (child: React.ReactElement<any>) => {
-    // TODO: Not called - still needed?
-    let item: ILayout | undefined = this.derivedLayout.next();
-    if (item) {
-      const style = tileStyle(
-        child.props['style'],
-        item.location.left,
-        item.location.top,
-        (item.location.right - item.location.left),
-        (item.location.bottom - item.location.top)
-      );
-      // console.log('CreateElements style', style);
-      return (
-        <div
-          style={style}
-          key={item.name + '-' + child.key}
-        >
-          {/* Design Layout */}
-          <div style={{
-            height: '100%',
-            width: '100%',
-            border: '1px solid red',
-            //padding: '10px',
-            //margin: '10px',
-            backgroundColor: 'grey',
-            color: 'white'
-          }}>
-            {item.name + '-' + child.key}
-          </div>
-          {/* Child with modification Infinity mapped to this.height this.width - padding*/}
-        </div>
-      );
-    }
-
-    return null;
-  }
-
-  createElement = (child: React.ReactElement<any>) => {
+  createElement = (child: React.ReactElement<any>, index: number) => {
     const p: Object = child.props['data-layout'];
+
+    ///console.log('createElement', child.type, child.props)
     if (p && p['name']) {
-      return this.createPositionedElement(child, p['name'], p['position']);
+      return this.createPositionedElement(child, index, p['name'], p['position']);
     } else {
 
     }
@@ -276,83 +150,33 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   createEditHandles = () => {
     let jsx: Array<any> = [];
     if (this.props.editLayout) {
-      this.editOverlay.map((layout: ILayout) => {
-        if (layout.editSize) {
-          layout.editSize.map((item: IEdit) => {
-            let cursor = 'default';
-            let left = 0;
-            let top = 0;
-            let width = 0;
-            let height = 0;
-            switch (item.positionRef) {
-              case PositionRef.rect: {
-                cursor = 'move';
-                left = layout.location.left;
-                top = layout.location.top;
-                width = layout.location.right - layout.location.left;
-                height = layout.location.bottom - layout.location.top;
-                break;
-              }
-              case PositionRef.height_top: {
-                break;
-              }
-              case PositionRef.height_bottom: {
-                break;
-              }
-              case PositionRef.width_left: {
-                cursor = 'col-resize';
-                left = layout.location.left;
-                top = layout.location.top;
-                width = 4;
-                height = layout.location.bottom - layout.location.top;
-                break;
-              }
-              case PositionRef.width_right: {
-                cursor = 'col-resize';
-                left = layout.location.right;
-                top = layout.location.top;
-                width = 4;
-                height = layout.location.bottom - layout.location.top;
-                break;
-              }
-              case PositionRef.point_left_top: {
-                cursor: 'nw-resize';
-                break;
-              }
-              case PositionRef.point_right_top: {
-                cursor: 'ne-resize';
-                break;
-              }
-              case PositionRef.point_left_bottom: {
-                cursor: 'nw-resize';
-                break;
-              }
-              case PositionRef.point_right_bottom: {
-                cursor: 'ne-resize';
-                break;
-              }
-              default: {
-                break;
-              }
-            }
-            if (width && height) {
-              jsx.push(<RLGHandle
-                key={layout.name + cursor}
-                onUpdate={this.onUpdate}
+      this.editOverlay.map((layout: Layout) => {
+        if (layout.edit) {
+          layout.edit.map((item: IEdit) => {
+            let r = layout.rect();
+            if (r.width && r.height) {
+              console.log(`EditPosition ${layout.name + item.cursor}`)
+              jsx.push(<EditPosition
+                key={layout.name + item.cursor}
                 edit={item}
                 layout={layout}
-                params={this.derivedLayout.params()}
-                rlgDrag={{ cursor: cursor, x: left, y: top, width: width, height: height }} />)
+                boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
+                onUpdate={this.onUpdate}
+              />);
             }
           });
         }
-      })
+      });
     }
     return jsx;
   }
 
-  onUpdate = () => {
-    this.setState({ update: 1 });
+  onUpdate = (reset: boolean = false) => {
+    if (reset) {
+      this.setState({ update: 0 });
+    } else {
+      this.setState({ update: this.state.update + 1 });
+    }
   }
 
   frameStart = () => {
@@ -366,15 +190,16 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   content = () => {
+    // Only show content if width and height are not 0
     if (this.state.width && this.state.height) {
-      // Only show content if width and height are not 0
       return (
         <>
-          {React.Children.map(this.props.children, child =>
+          {React.Children.map(this.props.children, (child, i) => {
+
             // tslint:disable-next-line:no-any
-            this.createElement(child as React.ReactElement<any>)
-          )}
-          {this.createEditHandles()}
+            return this.createElement(child as React.ReactElement<any>, i)
+          })}
+          {/* this.createEditHandles() */}
         </>
       )
     }
@@ -386,13 +211,19 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.frameStart();
     this.initLayout();
 
+    // this.state.update can be used for debug tracing
+    // during or after editing
+    // if (this.state.update === 0) {
+    //   console.log('render');
+    // }
+
     return (
-      /* style height of 100% necessary for correct height  */
-      <div style={{ height: '100%' }}>
+      /* style height of 100% necessary for ReactResizeDetector to work  */
+      <div style={{ height: '100%' }} >
         {this.content()}
         <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
         {this.frameEnd()}
-      </div>
+      </div >
     )
   }
 }

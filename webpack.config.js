@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, "examples/src/index.html"),
+  favicon: './examples/src/favicon.ico',
   filename: "./index.html"
 });
 module.exports = {
@@ -9,6 +10,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, "examples/dist"),
     filename: "bundle.js"
+  },
+  devtool: "source-map",
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"],
   },
   module: {
     rules: [{
