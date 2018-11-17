@@ -55,7 +55,21 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
       let ur: IRect = this.props.edit.extendElement!(r, deltaX, deltaY);
 
       // 2 Pin
-      
+      if (ur.x < this.props.boundary.x) {
+        ur.x = this.props.boundary.x;
+      }
+
+      if ((ur.x + ur.width) > (this.props.boundary.x + this.props.boundary.width)) {
+        ur.x = this.props.boundary.x + this.props.boundary.width - ur.width;
+      }
+
+      if (ur.y < this.props.boundary.y ) {
+        ur.y = this.props.boundary.y;
+      }
+
+      if ((ur.y + ur.height) > (this.props.boundary.y + this.props.boundary.height)) {
+        ur.y = this.props.boundary.y + this.props.boundary.height - ur.height;
+      }
 
       // 3 Make live
       const name = this._clonedLayout.name;
@@ -117,10 +131,11 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     if (event) {
       event.preventDefault();
       this.removeEventListeners();
-     
+
       const layout = this._clonedLayout.generator.lookup(this._clonedLayout.name)!;
       const r = layout.rect()
       layout.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+      this._clonedLayout = layout.clone();
 
       this.props.onUpdate(true);
     }
@@ -133,7 +148,7 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
   render = () => {
     return (
       <div
-        style={editStyle({cursor: this.props.edit.cursor!, handle: this._handle})}
+        style={editStyle({ cursor: this.props.edit.cursor!, handle: this._handle })}
         onMouseDown={this.onMouseDown}
       />
     );
