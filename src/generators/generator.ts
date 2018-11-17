@@ -49,17 +49,7 @@ export default class Generator implements IGenerator {
   }
 
   lookup = (name: string): Layout | undefined => {
-    let r = this._layouts.get(name);
-    if (r) {
-      // if (r.g) {
-      //   let n = r.g.lookup(name);
-      //   if (n) {
-      //     return Object.assign({}, n);
-      //   }
-      // }
-      return Object.assign({}, r);
-    }
-    return undefined;
+    return this._layouts.get(name);
   }
 
   create = (index: number, name: string, g: IGenerator, position: IPosition): Layout | undefined => {

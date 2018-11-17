@@ -48,7 +48,7 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
 
     if (deltaX || deltaY) {
 
-      console.log(`moveUpdate ${deltaX} ${deltaY}`)
+      // console.log(`moveUpdate ${deltaX} ${deltaY}`)
 
       // 1 Extend
       const r: IRect = this._clonedLayout.rect();
@@ -117,6 +117,12 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     if (event) {
       event.preventDefault();
       this.removeEventListeners();
+     
+      const layout = this._clonedLayout.generator.lookup(this._clonedLayout.name)!;
+      const r = layout.rect()
+      layout.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+
+      this.props.onUpdate(true);
     }
   }
 

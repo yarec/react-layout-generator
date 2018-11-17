@@ -90,7 +90,7 @@ export default class Layout {
   private _g: IGenerator;
 
   constructor(name: string, p: IPosition, g: IGenerator) {
-    console.log(`initilaize Layout ${name}`)
+    // console.log(`initilaize Layout ${name}`)
     this._name = name;
     this._position = p;
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 });
