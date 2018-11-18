@@ -77,7 +77,7 @@ The Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It 
 
 *See RLGDesktop, RLGDynamic and RLGList for examples.*
 
-A generator is just a function that returns an instance of Generator. The function must define the generators Param and contain an init function. Here is a simple do nothing generator:
+A generator is just a function that returns an instance of Generator. The function must define the generators Param, contain an init function and an optional create function. Here is a simple do nothing generator:
 
 ```javascript
 function DoNothing(name: string) {

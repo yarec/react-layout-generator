@@ -46,9 +46,9 @@ export default class Deck {
         data-layout={{
           name: this.deck[index],
           position: {
-            units: {origin: {x: 0, y: 0}, location: IUnit.pixel, size: IUnit.pixel},
+            units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
             location: { x: 25, y: 25 },
-            edit: [{ref: PositionRef.position}],
+            edit: [{ ref: PositionRef.position }],
             size: { width: 100, height: 150 }
           }
         }} >
@@ -61,8 +61,25 @@ export default class Deck {
     let index = 0;
     let a = new Array<any>();
     this.deck.forEach((card) => {
-      a.push( this.createElement(index++));
+      a.push(this.createElement(index++));
     })
+
+    let e = require(`./assets/cards/back.jpg`);
+    const back =
+      <div
+        key={'back'}
+        data-layout={{
+          name: 'back',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+            location: { x: 25, y: 25 },
+            edit: [{ ref: PositionRef.position }],
+            size: { width: 100, height: 150 }
+          }
+        }} >
+        <img width={100} height={150} src={e} />
+      </div >
+    a.push(back);
     return a;
   }
 
