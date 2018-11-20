@@ -22,6 +22,10 @@ For the time being clone or fork the project to evaluate.
 * Documentation
 * More tests
 
+### Bugs
+
+* Fix flickering when making the browser window smaller for elements in RLGColumns. This appears to be due to an update issue causing the computed element size to include the scroll bar since the initial layout is being used with the newer smaller element.
+
 ## Features
 
 * Lightweight - uses only a few other lightweight React components

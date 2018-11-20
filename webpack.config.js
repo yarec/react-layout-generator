@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TSLintPlugin = require('tslint-webpack-plugin');
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, "examples/src/index.html"),
   favicon: './examples/src/favicon.ico',
@@ -44,7 +45,12 @@ module.exports = {
       }
     ]
   },
-  plugins: [htmlWebpackPlugin],
+  plugins: [
+    htmlWebpackPlugin,
+    new TSLintPlugin({
+      files: ['./src/**/*.tsx?']
+    })
+  ],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"]
   },
