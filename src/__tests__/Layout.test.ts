@@ -1,6 +1,6 @@
-import Layout, { IPosition, IUnit } from '../components/Layout';
+import Layout, { IUnit } from '../components/Layout';
 import Params from '../components/Params';
-import Generator, { IGenerator } from '../generators/Generator';
+import Generator, { IGenerator, ICreate } from '../generators/Generator';
 
 const params = new Params([
   ['viewport', { width: 1000, height: 1000 }]
@@ -10,13 +10,13 @@ function init(g: IGenerator) {
   return g.layouts();
 }
 
-function create(index: number, name: string, g: IGenerator, position: IPosition) {
-  const layout = new Layout('test', position, g)
+function create(args: ICreate) {
+  const layout = new Layout('test', args.position, args.g)
 
-  const layouts = g.layouts();
+  const layouts = args.g.layouts();
   
   if (layouts) {
-    layouts.set(name, layout);
+    layouts.set(args.name, layout);
   }
 
   return layout;

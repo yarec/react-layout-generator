@@ -3,6 +3,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import { IGenerator } from './generators/Generator';
 import Layout, { IPosition, IEdit } from './components/Layout';
 import EditPosition from './editors/EditPosition';
+// import { ISize } from './types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
   return {
@@ -12,12 +13,16 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
     width: `${width}px`,
     height: `${height}px`,
     position: 'absolute' as 'absolute',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
     ...style
   };
 }
 
+export var gInProgress: number = 0;
+
 export interface ReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
-  name: string;
+  name?: string;
   editLayout?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
@@ -53,13 +58,26 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.derivedLayout = this.props.g;
   }
 
+  componentDidMount = () => {
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.onResize(window.innerWidth, window.innerHeight);
+  }
+
   onResize = (width: number, height: number) => {
-    // console.log('onResize', this.props.name, width, height);
+    if (this.props.name === 'navbar') {
+      console.log('onResize', this.props.name, width, height);
+    }
+
     if (this.state.width != width || this.state.height != height) {
-
       this.setState({ width: width, height: height });
-      this.initLayout();
-
+      //this.initLayout();
     }
   }
 
@@ -72,8 +90,9 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     if (v) {
       const layouts = this.derivedLayout.layouts();
       if (layouts) {
-        layouts.layouts.forEach((layout) => {
+        layouts.map.forEach((layout) => {
           layout.touch();
+          layout.rect();
         });
       }
     }
@@ -81,12 +100,35 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     this.derivedLayout.reset();
   }
 
-  createPositionedElement = (child: React.ReactElement<any>, index: number, name: string, position: IPosition) => {
+  createPositionedElement = (
+    child: React.ReactElement<any>,
+    index: number,
+    count: number,
+    name: string,
+    position: IPosition
+  ) => {
 
     let b = this.derivedLayout.lookup(name);
     if (!b && this.derivedLayout.create) {
-      b = this.derivedLayout.create(index, name, this.derivedLayout, position);
+      b = this.derivedLayout.create({
+        index: index,
+        count: count,
+        name: name,
+        g: this.derivedLayout,
+        position: position
+      });
     }
+  }
+
+  updatePositionedElement = (
+    child: React.ReactElement<any>,
+    index: number,
+    count: number,
+    name: string,
+    position: IPosition
+  ) => {
+
+    let b = this.derivedLayout.lookup(name);
 
     if (b) {
       const rect = b.rect();
@@ -98,7 +140,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
           rect.height
         );
 
-        // console.log('style', style)
+        console.log(name, style)
 
         let editors: Array<any> = [];
         if (this.editLayout && b.edit) {
@@ -116,14 +158,14 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
           })
         }
 
+        gInProgress -= 1;
         return (
           <>
             {React.cloneElement(child,
-              { key: b.name, style: { ...this.props.style, ...child.props.style, ...style } },
+              { key: b.name, extent: { width: rect.width, height: rect.height }, style: { ...this.props.style, ...child.props.style, ...style } },
               child.props.children
             )}
             {editors}
-
           </>)
 
         // return <div key={b.name} style={{...this.props.style, ...child.props.style, ...style}}>{child.props.children}</div> ;
@@ -134,12 +176,25 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     return null;
   }
 
-  createElement = (child: React.ReactElement<any>, index: number) => {
+  createElement = (child: React.ReactElement<any>, index: number, count: number) => {
     const p: Object = child.props['data-layout'];
 
-    ///console.log('createElement', child.type, child.props)
+    // console.log('createElement', child.type, child.props)
     if (p && p['name']) {
-      return this.createPositionedElement(child, index, p['name'], p['position']);
+      return this.createPositionedElement(child, index, count, p['name'], p['position']);
+    } else {
+
+    }
+
+    return null;
+  }
+
+  updateElement = (child: React.ReactElement<any>, index: number, count: number) => {
+    const p: Object = child.props['data-layout'];
+
+    // console.log('createElement', child.type, child.props)
+    if (p && p['name']) {
+      return this.updatePositionedElement(child, index, count, p['name'], p['position']);
     } else {
 
     }
@@ -190,14 +245,22 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
   }
 
   content = () => {
+
     // Only show content if width and height are not 0
     if (this.state.width && this.state.height) {
+      let count = React.Children.count(this.props.children);
+      gInProgress += count;
       return (
         <>
           {React.Children.map(this.props.children, (child, i) => {
-
             // tslint:disable-next-line:no-any
-            return this.createElement(child as React.ReactElement<any>, i)
+            return this.createElement(child as React.ReactElement<any>, i, count);
+
+          })}
+          {React.Children.map(this.props.children, (child, i) => {
+            // tslint:disable-next-line:no-any
+            return this.updateElement(child as React.ReactElement<any>, i, count);
+
           })}
           {/* this.createEditHandles() */}
         </>
@@ -216,7 +279,7 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
     // if (this.state.update === 0) {
     //   console.log('render');
     // }
-
+    // 
     return (
       /* style height of 100% necessary for ReactResizeDetector to work  */
       <div style={{ height: '100%' }} >
@@ -225,5 +288,25 @@ export default class ReactLayout extends React.Component<ReactLayoutProps, React
         {this.frameEnd()}
       </div >
     )
+  }
+}
+
+interface ReportSizeProps {
+  resize: (width: number, height: number) => void;
+}
+
+
+export class ReportSize extends React.Component<ReportSizeProps> {
+  refCallback = (element: any) => {
+    if (element) {
+      //element.getBoundingClientRect()/
+      this.props.resize(element.offsetWidth, element.offsetHeight);
+    }
+  };
+
+  render() {
+    return (
+      <div ref={this.refCallback} style={{ border: "1px solid red", width: '100%', height: '100%' }} />
+    );
   }
 }

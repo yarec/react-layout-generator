@@ -1,8 +1,8 @@
-import Generator, { IGenerator, } from '../generators/Generator';
+import Generator, { IGenerator, ICreate} from '../generators/Generator';
 import { ISize } from '../types';
 import Params from '../components/Params';
 import Layouts from '../components/Layouts';
-import Layout, {IPosition, IUnit} from '../components/Layout';
+import Layout, {IUnit} from '../components/Layout';
 
 export default function RLGList(name: string) {
 
@@ -22,7 +22,7 @@ export default function RLGList(name: string) {
 
     if (params.changed()) {
       // update Layout for each update
-      layouts.layouts.forEach((layout) => {
+      layouts.map.forEach((layout) => {
         layout.touch();
       });
     }
@@ -30,13 +30,13 @@ export default function RLGList(name: string) {
     return layouts;
   }
 
-  function create(index: number, name: string, g: IGenerator, position: IPosition): Layout {
-    const params = g.params();
+  function create(args: ICreate): Layout {
+    const params = args.g.params();
     const viewport = params.get('viewport') as ISize;
     const titleHeight = params.get('titleHeight') as number;
     const itemHeight = params.get('itemHeight') as number;
 
-    let p = position;
+    let p = args.position;
     if (!p) {
       p = {
         units: {
@@ -45,19 +45,19 @@ export default function RLGList(name: string) {
           size: IUnit.pixel
         },
         align: {
-          key: index-1,
+          key: args.index-1,
           offset: {x: 0, y: 0},
           source: {x: 0, y: 100},
           self: {x: 0, y: 0}
         },
         location: {x: 5, y: 0},
-        size: {width: viewport.width, height: index === 0? titleHeight : itemHeight}
+        size: {width: viewport.width, height: args.index === 0? titleHeight : itemHeight}
       }
     }
 
-    const l = new Layout(name, p, g);
+    const l = new Layout(name, p, args.g);
 
-    g.layouts().set(name, l);
+    args.g.layouts().set(name, l);
 
     return l;
   }

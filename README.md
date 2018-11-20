@@ -43,7 +43,7 @@ For the time being clone or fork the project to evaluate.
 
 *See examples/src/index.tsx.*
 
-The Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting left side panel, header, right side panel, content, and footer. All the parts are configurable in size and optional except for the content. It also can be configured to use full header and footer if desired.
+The Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
 
 ```html
 <ReactLayout
@@ -51,6 +51,10 @@ The Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It 
   editLayout={false}
   g={new RLGDesktop()}
 >
+  <div data-layout={{ name: 'title' }} >
+    <span>Title</span>
+  </div>
+
   <div data-layout={{ name: 'leftSide' }} >
     <span>Left side content</span>
   </div>

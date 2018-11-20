@@ -33,7 +33,7 @@ export default class Layouts {
     return this._layouts.values();
   }
 
-  get layouts() {
+  get map() {
     return this._layouts;
   }
 

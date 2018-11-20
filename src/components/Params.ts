@@ -18,6 +18,10 @@ export default class Params {
     return changed != 0;
   }
 
+  touch() {
+    this.changeCount += 1;
+  }
+
   get(key: string): ParamValue | undefined {
     return this.params.get(key);
   }

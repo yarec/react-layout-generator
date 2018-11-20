@@ -60,6 +60,10 @@ export interface IEdit {
   updateParam?: UpdateParam;
 }
 
+export interface IHandlers {
+  onMouseDown?: () => void;
+}
+
 export interface IPosition {
   units: {
     origin: IOrigin,
@@ -73,6 +77,7 @@ export interface IPosition {
     self: IAlign
   },
   edit?: Array<IEdit>;
+  handlers?: IHandlers; 
   location: IPoint;
   size: ISize;
 }
@@ -283,8 +288,8 @@ export default class Layout {
     return this._position.size;
   }
 
-  rect = () => {
-    if (this._changed) {
+  rect = (force?: boolean) => {
+    if (this._changed || force) {
       this._changed = false;
       this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
     }

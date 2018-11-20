@@ -1,9 +1,9 @@
-import Generator, { IGenerator } from './Generator';
+import Generator, { IGenerator, ICreate } from './Generator';
 import Layouts from '../components/Layouts';
-import Layout, { IPosition } from '../components/Layout';
+import Layout from '../components/Layout';
 import Params from '../components/Params';
 
-export default function RLGDiagram(name: string) {
+export default function RLGDynamic(name: string): IGenerator {
   const params = new Params([
     ['viewport', { width: 0, height: 0 }]
   ])
@@ -14,22 +14,22 @@ export default function RLGDiagram(name: string) {
 
     if (params.changed()) {
       // update Layout for each update
-      layouts.layouts.forEach((layout) => {
+      layouts.map.forEach((layout) => {
         layout.touch();
       });
     }
     return layouts;
   }
 
-  function create(index: number, name: string, g: IGenerator, position: IPosition): Layout {
+  function create(args: ICreate): Layout {
 
-    if (!position) {
+    if (!args.position) {
       console.error('TODO default position')
     }
 
-    const box = new Layout(name, position, g);
+    const box = new Layout(name, args.position, args.g);
 
-    g.layouts().set(name, box);
+    args.g.layouts().set(name, box);
 
     return box;
   }

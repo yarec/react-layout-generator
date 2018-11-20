@@ -1,127 +1,82 @@
 import * as React from 'react';
 import { render } from 'react-dom';
+
 import ReactLayout from '../../src/ReactLayout';
+
+
+import DeskTop from './DeskTop/index';
+import CardDeck from './CardDeck';
+import Solitaire from './Solitaire';
 import { IGenerator } from '../../src/generators/Generator';
+import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';
-import RLGDynamic from '../../src/generators/RLGDynamic';
-import RLGList from '../../src/generators/RLGList';
-import Deck from './Deck';
 
-interface ExampleProps {
-  name: string;
-
-}
-export class Example extends React.PureComponent<ExampleProps> {
-  render = () => {
-    return (
-      <div>
-        <button style={{ width: '120' }}>{this.props.name}</button>
-      </div>
-    )
-  }
-}
-
-interface ExampleLayoutProps {
-
-}
-
-interface ExampleLayoutState {
-
-}
-
-class ExampleLayout extends React.Component<ExampleLayoutProps, ExampleLayoutState> {
+export class Examples extends React.Component<{}, { app: any }> {
 
   g: IGenerator;
-  d: IGenerator;
-  m: IGenerator;
+  n: IGenerator;
 
-  constructor(props: ExampleLayoutProps) {
+  constructor(props: any) {
     super(props);
+    this.state = { app: undefined }
 
-    this.g = RLGDesktop('rlg.desktop.example');
-    this.d = RLGDynamic('rlg.diagram.example');
-    this.m = RLGList('rlg.list.example');
-
+    this.g = RLGDesktop('');
     const p = this.g.params();
 
-    // Set variables to 0 to hide
+    // Set variables to 0 to hide section
+    p.set('titleHeight', 80);
     p.set('headerHeight', 24);
     p.set('footerHeight', 0);
-    p.set('fullWidthHeaders', 0)
-    p.set('leftSideWidth', 200);
-    p.set('rightSideWidth', 0)
+    p.set('leftSideWidth', 0);
+    p.set('rightSideWidth', 0);
+
+    // Show full width header and footer
+    p.set('fullWidthHeaders', 1);
+
+    this.n = RLGColumns('navbar');
+    // const pn = this.n.params();
+    // pn.set('')
+
   }
 
-  deskTop = (event: any) => {
-    alert('ok')
-  }
+  navbar = () => {
+    // return null;
 
-  deckOfCards = (event: any) => {
-    alert('ok')
-  }
-
-  elements = () => {
-    const deck = new Deck();
-    return deck.createElements();
+    return (
+      <ReactLayout name='navbar' g={this.n}>
+        <div data-layout={{ name: '1' }} onClick={() => { this.setState({ app: DeskTop }) }} >
+          <span>DeskTop</span>
+        </div>
+        <div data-layout={{ name: '2' }} onClick={() => { this.setState({ app: CardDeck }) }}>
+          <span>CardDeck</span>
+        </div>
+        <div data-layout={{ name: '3' }} onClick={() => { this.setState({ app: Solitaire }) }}>
+          <span>Solitaire</span>
+        </div>
+      </ReactLayout>
+    );
   }
 
   render() {
+    if (!this.state.app) {
 
-    return (
-      <>
-
-        <ReactLayout
-          name={'reactLayout.desktop.example'}
-          editLayout={false}
-          g={this.g}
-        >
-          <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-            <ReactLayout
-              name={'reactLayout.list.example'}
-              g={this.m}
-            >
-              <div data-layout={{ name: 'title' }} >
-                <b >Examples</b>
-              </div>
-
-              <div data-layout={{ name: 'desktopLayout' }} >
-                <span onClick={this.deskTop}>Desktop</span>
-              </div>
-
-              <div /* name={'Card Layout'} */ data-layout={{ name: 'cardLayout' }} >
-                <span onClick={this.deckOfCards}>Card Layout</span>
-              </div>
-
-              {/*             
-            <div data-layout={{ name: 'svgLayout' }} >
-              <svg width='200' height='24'>
-                <rect width='150' height='10'/>
-              </svg>
-            </div> 
-            */}
-
-            </ReactLayout>
+      return (
+        <ReactLayout name='desktop' g={this.g}>
+          <div data-layout={{ name: 'title' }} >
+            <h1>React Layout Generator Examples</h1>
           </div>
-
-          <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-            <span>Header</span>
+          <div data-layout={{ name: 'header' }}>
+            {this.navbar()}
           </div>
-
-          <div data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)' }}>
-            <ReactLayout
-              name={'reactLayout.content'}
-              editLayout={true}
-              g={this.d}
-            >
-              {this.elements()}
-            </ReactLayout>
+          <div data-layout={{name: 'content'}}>
+          <h1>Content</h1>
           </div>
-        </ReactLayout>
-      </>
-    );
+        </ReactLayout >
+      );
+    }
+    return <this.state.app />
   }
 }
 
-render(<ExampleLayout />, document.getElementById("root"));
-
+render(<Examples />, document.getElementById("root"));
 

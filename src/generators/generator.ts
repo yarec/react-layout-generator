@@ -3,7 +3,15 @@ import Layouts from '../components/Layouts';
 import Layout, { IPosition } from '../components/Layout'
 
 export type IInit = (g: IGenerator) => Layouts;
-export type ICreate = (index: number, name: string, g: IGenerator, position: IPosition) => Layout;
+export type ICreate = {
+  index: number,
+  count: number,
+  name: string,
+  g: IGenerator,
+  position: IPosition
+};
+
+export type Create = (args: ICreate) => Layout | undefined;
 
 export interface IGenerator {
   name: () => string;
@@ -12,7 +20,7 @@ export interface IGenerator {
   reset: () => void;
   next: () => Layout | undefined;
   lookup: (name: string) => Layout | undefined;
-  create?: (index: number, name: string, g: IGenerator, position: IPosition) => Layout | undefined;
+  create?: Create;
 }
 
 export default class Generator implements IGenerator {
@@ -21,12 +29,12 @@ export default class Generator implements IGenerator {
   private _layouts: Layouts;
   private _layoutsIterator: IterableIterator<Layout> | undefined;
   private _init: IInit;
-  private _create: ICreate | undefined;
+  private _create: Create | undefined;
   currentLayout: Layout | undefined;
 
   state: () => Layout | undefined;
 
-  constructor(name: string, init: IInit, params: Params, create?: ICreate) {
+  constructor(name: string, init: IInit, params: Params, create?: Create) {
     this._name = name;
     this._init = init;
     this._create = create;
@@ -52,9 +60,9 @@ export default class Generator implements IGenerator {
     return this._layouts.get(name);
   }
 
-  create = (index: number, name: string, g: IGenerator, position: IPosition): Layout | undefined => {
+  create = (args: ICreate): Layout | undefined => {
     if (this._create) {
-      return this._create(index, name, g, position);
+      return this._create(args);
     }
     return undefined;
   }

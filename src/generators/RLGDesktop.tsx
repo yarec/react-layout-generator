@@ -11,9 +11,17 @@ function updateParamWidth(updated: IRect, edit: IEdit) {
   }
 }
 
+function updateParamHeight(updated: IRect, edit: IEdit) {
+  return {
+    name: edit.variable!,
+    value: updated.height
+  }
+}
+
 export default function RLGDesktop(name: string) {
 
   const fullWidthHeaders = 0;
+  const titleHeight = 50;
   const leftSideWidth = 200;
   const rightSideWidth = 0;
   const headerHeight = 24;
@@ -22,6 +30,7 @@ export default function RLGDesktop(name: string) {
   const params = new Params([
     ['viewport', { width: 0, height: 0 }],
     ['fullWidthHeaders', fullWidthHeaders],
+    ['titleHeight', titleHeight],
     ['leftSideWidth', leftSideWidth],
     ['rightSideWidth', rightSideWidth],
     ['headerHeight', headerHeight],
@@ -31,6 +40,7 @@ export default function RLGDesktop(name: string) {
   function init(g: IGenerator) {
     const viewport = params.get('viewport') as ISize;
     const fullWidthHeaders = params.get('fullWidthHeaders') as number;
+    const titleHeight = params.get('titleHeight') as number;
     let leftSideWidth = params.get('leftSideWidth') as number;
     let rightSideWidth = params.get('rightSideWidth') as number;
     const headerHeight = params.get('headerHeight') as number;
@@ -41,17 +51,45 @@ export default function RLGDesktop(name: string) {
       rightSideWidth = 0;
     }
 
+    const title = function (): Layout {
+      let location: IPoint;
+      let size: ISize;
+      location = {
+        x: 0,
+        y: 0
+      }
+      size = {
+        width: viewport.width,
+        height: titleHeight
+      }
+
+      const p: IPosition = {
+        units: {
+          origin: { x: 0, y: 0 },
+          location: IUnit.pixel,
+          size: IUnit.pixel
+        },
+        edit: [
+          { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
+        ],
+        location: location,
+        size: size
+      }
+
+      return new Layout('title', p, g);
+    }();
+
     const leftSide = function (): Layout {
       let location: IPoint;
       let size: ISize;
       if (fullWidthHeaders) {
         location = {
           x: 0,
-          y: headerHeight
+          y: titleHeight + headerHeight
         }
         size = {
           width: leftSideWidth,
-          height: viewport.height - footerHeight - headerHeight
+          height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       } else {
         location = {
@@ -60,7 +98,7 @@ export default function RLGDesktop(name: string) {
         }
         size = {
           width: leftSideWidth,
-          height: viewport.height
+          height: viewport.height - titleHeight
         }
       }
 
@@ -87,11 +125,11 @@ export default function RLGDesktop(name: string) {
       if (fullWidthHeaders) {
         location = {
           x: viewport.width - rightSideWidth,
-          y: headerHeight
+          y: titleHeight + headerHeight 
         }
         size = {
           width: viewport.width,
-          height: viewport.height - footerHeight - headerHeight
+          height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       } else {
         location = {
@@ -100,7 +138,7 @@ export default function RLGDesktop(name: string) {
         }
         size = {
           width: rightSideWidth,
-          height: viewport.height
+          height: viewport.height - titleHeight
         }
       }
 
@@ -124,7 +162,7 @@ export default function RLGDesktop(name: string) {
       if (fullWidthHeaders) {
         location = {
           x: 0,
-          y: 0
+          y: titleHeight
         }
         size = {
           width: viewport.width,
@@ -133,7 +171,7 @@ export default function RLGDesktop(name: string) {
       } else {
         location = {
           x: leftSideWidth,
-          y: 0
+          y: titleHeight
         }
         size = {
           width: viewport.width - leftSideWidth - rightSideWidth,
@@ -160,11 +198,11 @@ export default function RLGDesktop(name: string) {
       if (fullWidthHeaders) {
         location = {
           x: leftSideWidth,
-          y: headerHeight
+          y: titleHeight + headerHeight 
         }
         size = {
           width: viewport.width - rightSideWidth,
-          height: viewport.height - headerHeight - footerHeight
+          height: viewport.height - titleHeight - headerHeight - footerHeight
         }
       } else {
         location = {
@@ -173,7 +211,7 @@ export default function RLGDesktop(name: string) {
         }
         size = {
           width: viewport.width - rightSideWidth - leftSideWidth,
-          height: viewport.height - footerHeight - headerHeight
+          height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       }
       const p = {
@@ -227,6 +265,7 @@ export default function RLGDesktop(name: string) {
 
     // Return new instance of Layouts
     return new Layouts([
+      [title.name, title],
       [leftSide.name, leftSide],
       [rightSide.name, rightSide],
       [header.name, header],

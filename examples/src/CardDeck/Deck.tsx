@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IUnit, PositionRef } from '../../src/components/Layout';
+import { IUnit, PositionRef } from '../../../src/components/Layout';
 
 export default class Deck {
 
@@ -38,7 +38,7 @@ export default class Deck {
   }
 
   createElement = (index: number) => {
-    let e = require(`./assets/cards/${this.deck[index]}.jpg`);
+    let e = require(`../assets/cards/${this.deck[index]}.jpg`);
 
     return (
       <div
@@ -64,7 +64,7 @@ export default class Deck {
       a.push(this.createElement(index++));
     })
 
-    let e = require(`./assets/cards/back.jpg`);
+    let e = require(`../assets/cards/back.jpg`);
     const back =
       <div
         key={'back'}
