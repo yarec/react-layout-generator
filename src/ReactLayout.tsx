@@ -38,7 +38,7 @@ export interface IReactLayoutState {
 export default class ReactLayout extends React.Component<IReactLayoutProps, IReactLayoutState> {
   private _g: IGenerator;
   private _editLayout: boolean = false;
-  private _startRendering: number;
+  // private _startRendering: number;
 
   constructor(props: IReactLayoutProps) {
     super(props);
@@ -89,7 +89,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
   private onResize = (width: number, height: number) => {
     if (this.props.name === 'navbar') {
-      console.log('onResize', this.props.name, width, height);
+      // console.log('onResize', this.props.name, width, height);
     }
 
     if (this.state.width !== width || this.state.height !== height) {
@@ -153,7 +153,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
           rect.height
         );
 
-        console.log(name, style)
+        // console.log(name, style)
 
         const editors: JSX.Element[] = [];
         if (this._editLayout && b.edit) {
@@ -224,12 +224,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   }
 
   private frameStart = () => {
-    this._startRendering = Date.now();
+    // this._startRendering = Date.now();
     return null;
   }
 
   private frameEnd = () => {
-    console.log('frameTime: ', (Date.now() - this._startRendering) + ' ms');
+    // console.log('frameTime: ', (Date.now() - this._startRendering) + ' ms');
     return null;
   }
 

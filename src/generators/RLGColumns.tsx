@@ -16,7 +16,6 @@ export default function RLGColumns(name: string) {
   ])
 
   function init(g: IGenerator): Layouts {
-    // console.log(`centerColumns: init `)
     const params = g.params();
     const layouts = g.layouts();
 
@@ -26,7 +25,6 @@ export default function RLGColumns(name: string) {
       
       // update Layout for each update
       if (align === 0) {
-        console.log(`centerColumns init ${layouts.size}`)
         centerColumns(layouts, params);
 
         // layouts.map.forEach((layout) => {
@@ -44,7 +42,6 @@ export default function RLGColumns(name: string) {
   function centerColumns(layouts: Layouts, params: Params) {
 
     const viewport = params.get('viewport') as ISize;
-    console.log(`centerColumns viewport ${viewport.width}`)
 
     // compute width of all columns
     let totalWidth = 0
@@ -54,7 +51,6 @@ export default function RLGColumns(name: string) {
 
     // compute beginning offset
     const offset0 = (viewport.width / 2 - totalWidth / 2) ;
-    console.log(`centerColumns offset ${offset0} width: ${totalWidth}`)
 
     // update
     let currentWidths = 0;
@@ -62,7 +58,6 @@ export default function RLGColumns(name: string) {
       const rect = layout.rect();
       layout.update({ x: offset0 + currentWidths, y: 0 }, { width: rect.width, height: viewport.height });
       currentWidths += rect.width;
-      console.log(`centerColumns ${layout.name} x: ${layout.rect().x}`)
     });
   }
 
@@ -97,7 +92,6 @@ export default function RLGColumns(name: string) {
     // if ((args.index + 1) === args.count) {
       
       if (align === 0) {
-        console.log(`centerColumns: create`)
         centerColumns(layouts, params);
       }
     // }
