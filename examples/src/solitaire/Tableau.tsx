@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { ReactLayoutProps } from '../../../src/ReactLayout';
 
-import TableauStack from './TableauStack';
+import { IReactLayoutProps } from '../../../src/ReactLayout';
 import Stock from './Stock';
+import TableauStack from './TableauStack';
 
-interface TableauProps extends ReactLayoutProps {
+interface ITableauProps extends IReactLayoutProps {
   connect: (i: Tableau) => void;
 }
 
-export default class Tableau extends React.Component<TableauProps> {
+export default class Tableau extends React.Component<ITableauProps> {
 
-  _tableauStack: Array<TableauStack> = [];
+  private _tableauStack: TableauStack[] = [];
 
-  constructor(props: TableauProps) {
+  constructor(props: ITableauProps) {
     super(props);
   }
 
-  connect = (i: TableauStack) => {
+  public connect = (i: TableauStack) => {
     this._tableauStack.push(i);
   }
 
-  populate(stock: Stock) {
+  public populate(stock: Stock) {
     this._tableauStack.forEach((stack) => {
       stack.populate(stock);
     })
   }
 
-  render = () => {
+  public render = () => {
     return (
       <>
         <TableauStack stack={1} g={this.props.g} connect={this.connect} />

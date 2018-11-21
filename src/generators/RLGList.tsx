@@ -1,18 +1,18 @@
-import Generator, { IGenerator, ICreate} from '../generators/Generator';
-import { ISize } from '../types';
-import Params from '../components/Params';
-import Layouts from '../components/Layouts';
 import Layout, {IUnit} from '../components/Layout';
+import Layouts from '../components/Layouts';
+import Params from '../components/Params';
+import Generator, {ICreate, IGenerator} from '../generators/Generator';
+import { ISize } from '../types';
 
 export default function RLGList(name: string) {
 
-  const titleHeight = 34;
-  const itemHeight = 24;
+  const _titleHeight = 34;
+  const _itemHeight = 24;
 
-  const params = new Params([
+  const _params = new Params([
     ['viewport', {width: 0, height: 0}],
-    ['titleHeight', titleHeight],
-    ['itemHeight', itemHeight]
+    ['titleHeight', _titleHeight],
+    ['itemHeight', _itemHeight]
   ])
 
   function init(g: IGenerator): Layouts {
@@ -62,5 +62,5 @@ export default function RLGList(name: string) {
     return l;
   }
 
-  return new Generator(name, init, params, create);
+  return new Generator(name, init, _params, create);
 }

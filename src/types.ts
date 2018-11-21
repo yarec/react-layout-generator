@@ -36,10 +36,10 @@ export interface IRect {
 // }
 
 export class Rect implements IRect {
-  y: number = 0;
-  x: number = 0;
-  width: number = 0;
-  height: number = 0;
+  public y: number = 0;
+  public x: number = 0;
+  public width: number = 0;
+  public height: number = 0;
 
   // private _halfWidth: number = 0;
   // private _halfHeight: number = 0;
@@ -48,17 +48,33 @@ export class Rect implements IRect {
     this.update(rect);
   }
 
-  update(rect: IRect) {
+  public update(rect: IRect) {
     this.setLocation({x: rect.x, y: rect.y});
     this.setSize({width: rect.width, height: rect.height});
   }
 
-  setLocation(p: IPoint) {
+  public setLocation(p: IPoint) {
     this.x = p.x;
     this.y = p.y;
   }
 
-  setSize(s: ISize) {
+  set location(p: IPoint) {
+    this.setLocation(p);
+  }
+
+  get location(): IPoint {
+    return {x: this.x, y: this.y};
+  }
+
+  get size(): ISize {
+    return {width: this.width, height: this.height};
+  }
+
+  set size(s: ISize) {
+    this.setSize(s);
+  }
+
+  public setSize(s: ISize) {
     this.width = s.width;
     this.height = s.height;
     // this._halfWidth = s.width / 2;
@@ -89,27 +105,12 @@ export class Rect implements IRect {
   //   return this._halfHeight;
   // }
 
-  get location(): IPoint {
-    return {x: this.x, y: this.y};
-  }
-
-  get size(): ISize {
-    return {width: this.width, height: this.height};
-  }
-
   get leftTop(): IPoint {
     return {x: this.x, y: this.y};
   }
 
-  set location(p: IPoint) {
-    this.setLocation(p);
-  }
 
-  set size(s: ISize) {
-    this.setSize(s);
-  }
-
-  translate(point: IPoint): IRect {
+  public translate(point: IPoint): IRect {
     return {
       y: this.y + point.y,
       x: this.x + point.x,
@@ -118,7 +119,7 @@ export class Rect implements IRect {
     };
   }
 
-  add(rect: IRect): IRect {
+  public add(rect: IRect): IRect {
     return {
       y: this.y + rect.y,
       x: this.x + rect.x,
@@ -145,11 +146,12 @@ export interface ISize {
   height: number;
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class Point implements IPoint {
-  x: number = 0;
-  y: number = 0;
+  public x: number = 0;
+  public y: number = 0;
 
-  isEmpty = () => {
+  public isEmpty = () => {
     return this.x === 0 && this.y === 0;
   }
 }

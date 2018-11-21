@@ -4,47 +4,47 @@
  */
 
 /**
-* @author       Richard Davey <rich@photonstorm.com>
-* @copyright    2014 Photon Storm Ltd.
-* @license      {@link https://github.com/photonstorm/phaser/blob/master/license.txt|MIT License}
-*/
+ * @author       Richard Davey <rich@photonstorm.com>
+ * @copyright    2014 Photon Storm Ltd.
+ * @license      {@link https://github.com/photonstorm/phaser/blob/master/license.txt|MIT License}
+ */
 
 /**
-* Javascript QuadTree 
-* @version 1.0
-* @author Timo Hausmann
-*
-* @version 1.2, September 4th 2013
-* @author Richard Davey
-* The original code was a conversion of the Java code posted to GameDevTuts. However I've tweaked
-* it massively to add node indexing, removed lots of temp. var creation and significantly
-* increased performance as a result.
-*
-* Original version at https://github.com/timohausmann/quadtree-js/
-*/
+ * Javascript QuadTree 
+ * @version 1.0
+ * @author Timo Hausmann
+ *
+ * @version 1.2, September 4th 2013
+ * @author Richard Davey
+ * The original code was a conversion of the Java code posted to GameDevTuts. However I've tweaked
+ * it massively to add node indexing, removed lots of temp. var creation and significantly
+ * increased performance as a result.
+ *
+ * Original version at https://github.com/timohausmann/quadtree-js/
+ */
 
 /**
-* @copyright © 2012 Timo Hausmann
-*
-* Permission is hereby granted, free of charge, to any person obtaining
-* a copy of this software and associated documentation files (the
-* "Software"), to deal in the Software without restriction, including
-* without limitation the rights to use, copy, modify, merge, publish,
-* distribute, sublicense, and/or sell copies of the Software, and to
-* permit persons to whom the Software is furnished to do so, subject to
-* the following conditions:
-*
-* The above copyright notice and this permission notice shall be
-* included in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-* LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-* OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-* WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ * @copyright © 2012 Timo Hausmann
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 import { IRect } from './types';
 
@@ -60,14 +60,14 @@ export interface IBounds {
 }
 
 export class Bounds implements IBounds {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  subWidth: number;
-  subHeight: number;
-  right: number;
-  bottom: number;
+  public x: number;
+  public y: number;
+  public width: number;
+  public height: number;
+  public subWidth: number;
+  public subHeight: number;
+  public right: number;
+  public bottom: number;
 
   constructor(v: IRect) {
     this.x = v.x;
@@ -87,30 +87,39 @@ export interface IShadowRoot {
 }
 
 /**
-* QuadTree Constructor
-* 
-* @class Phaser.QuadTree
-* @classdesc A QuadTree implementation. The original code was a conversion of the Java code posted to GameDevTuts. 
-* However I've tweaked it massively to add node indexing, removed lots of temp. var creation and significantly increased performance as a result. 
-* Original version at https://github.com/timohausmann/quadtree-js/
-* @constructor
-* @param {number} x - The top left coordinate of the quadtree.
-* @param {number} y - The top left coordinate of the quadtree.
-* @param {number} width - The width of the quadtree in pixels.
-* @param {number} height - The height of the quadtree in pixels.
-* @param {number} [maxObjects=10] - The maximum number of objects per node.
-* @param {number} [maxLevels=4] - The maximum number of levels to iterate to.
-* @param {number} [level=0] - Which level is this?
-*/
-export default class RLGQuadTree {
-  maxObjects: number;
-  maxLevels: number;
-  level: number;
-  bounds: IBounds;
-  objects: Array<IShadowRoot>;
-  nodes: Array<RLGQuadTree>;
+ * QuadTree Constructor
+ * 
+ * @class Phaser.QuadTree
+ * @classdesc A QuadTree implementation. The original code was a conversion of the Java code posted to GameDevTuts. 
+ * However I've tweaked it massively to add node indexing, removed lots of temp. var creation and significantly increased performance as a result. 
+ * Original version at https://github.com/timohausmann/quadtree-js/
+ * @constructor
+ * @param {number} x - The top left coordinate of the quadtree.
+ * @param {number} y - The top left coordinate of the quadtree.
+ * @param {number} width - The width of the quadtree in pixels.
+ * @param {number} height - The height of the quadtree in pixels.
+ * @param {number} [maxObjects=10] - The maximum number of objects per node.
+ * @param {number} [maxLevels=4] - The maximum number of levels to iterate to.
+ * @param {number} [level=0] - Which level is this?
+ */
 
-  constructor(x: number, y: number, width: number, height: number, maxObjects?: number, maxLevels?: number, level?: number) {
+// tslint:disable-next-line:max-classes-per-file
+export default class RLGQuadTree {
+  public maxObjects: number;
+  public maxLevels: number;
+  public level: number;
+  public bounds: IBounds;
+  public objects: IShadowRoot[];
+  public nodes: RLGQuadTree[];
+
+  constructor(
+    x: number, 
+    y: number, 
+    width: number, 
+    height: number, 
+    maxObjects?: number, 
+    maxLevels?: number, 
+    level?: number) {
 
     this.maxObjects = maxObjects || 10;
     this.maxLevels = maxLevels || 4;
@@ -119,8 +128,8 @@ export default class RLGQuadTree {
     this.bounds = {
       x: Math.round(x),
       y: Math.round(y),
-      width: width,
-      height: height,
+      width,
+      height,
       subWidth: Math.floor(width / 2),
       subHeight: Math.floor(height / 2),
       right: Math.round(x) + Math.floor(width),
@@ -139,7 +148,7 @@ export default class RLGQuadTree {
   * @method Phaser.QuadTree#populate
   * @param {Phaser.Group} group - The Group to add to the quadtree.
   */
-  populate = (group: Array<IShadowRoot>) => {
+  public populate = (group: IShadowRoot[]) => {
 
     group.forEach((item: IShadowRoot) => this.insert(item));
 
@@ -164,7 +173,7 @@ export default class RLGQuadTree {
   * 
   * @method Phaser.QuadTree#split
   */
-  split = () => {
+  public split = () => {
 
     this.level++;
 
@@ -188,10 +197,10 @@ export default class RLGQuadTree {
   * @method Phaser.QuadTree#insert
   * @param {Phaser.Physics.Arcade.Body|object} body - The Body object to insert into the quadtree.
   */
-  insert = (shadowRoot: IShadowRoot) => {
+  public insert = (shadowRoot: IShadowRoot) => {
 
-    var i = 0;
-    var index;
+    let i = 0;
+    let index;
 
     //  if we have subnodes ...
     if (this.nodes[0] != null) {
@@ -234,10 +243,10 @@ export default class RLGQuadTree {
   * @param {Phaser.Rectangle|object} rect - The bounds in which to check.
   * @return {number} index - Index of the subnode (0-3), or -1 if rect cannot completely fit within a subnode and is part of the parent node.
   */
-  getIndex = (rect: IBounds) => {
+  public getIndex = (rect: IBounds) => {
 
     //  default is that rect doesn't fit, i.e. it straddles the internal quadrants
-    var index = -1;
+    let index = -1;
 
     if (rect.x < this.bounds.right && rect.right < this.bounds.right) {
       if ((rect.y < this.bounds.bottom && rect.bottom < this.bounds.bottom)) {
@@ -272,9 +281,9 @@ export default class RLGQuadTree {
   * @param {Phaser.Sprite} sprite - The sprite to check against.
   * @return {array} - Array with all detected objects.
   */
-  retrieve = (coreShadow: IShadowRoot) => {
+  public retrieve = (coreShadow: IShadowRoot) => {
 
-    var returnObjects = this.objects;
+    let returnObjects = this.objects;
 
     coreShadow.quadTreeIndex = this.getIndex(coreShadow.bounds);
 
@@ -303,11 +312,11 @@ export default class RLGQuadTree {
   * Clear the quadtree.
   * @method Phaser.QuadTree#clear
   */
-  clear = () => {
+  public clear = () => {
 
     this.objects = [];
 
-    for (var i = 0, len = this.nodes.length; i < len; i++) {
+    for (let i = 0, len = this.nodes.length; i < len; i++) {
       if (this.nodes[i]) {
         this.nodes[i].clear();
         delete this.nodes[i];

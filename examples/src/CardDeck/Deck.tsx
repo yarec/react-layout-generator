@@ -1,9 +1,10 @@
 import * as React from 'react';
+
 import { IUnit, PositionRef } from '../../../src/components/Layout';
 
 export default class Deck {
 
-  deck: Array<string>;
+  private deck: string[];
 
   constructor() {
     this.deck = [];
@@ -11,22 +12,27 @@ export default class Deck {
     this.shuffle();
   }
 
-  reset() {
+  public reset() {
     this.deck = [];
 
     const suits = ['H', 'S', 'C', 'D'];
     const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
-    for (let suit in suits) {
-      for (let value in values) {
-        this.deck.push(`${values[value]}${suits[suit]}`);
+    for (const suit in suits) {
+      if (suit) {
+        for (const value in values) {
+          if (value) {
+            this.deck.push(`${values[value]}${suits[suit]}`);
+          }
+        }
       }
     }
   }
 
-  shuffle = () => {
+  public shuffle = () => {
     const { deck } = this;
-    let m = deck.length, i;
+    let i;
+    let m = deck.length;
 
     while (m) {
       i = Math.floor(Math.random() * m--);
@@ -37,8 +43,8 @@ export default class Deck {
     return this;
   }
 
-  createElement = (index: number) => {
-    let e = require(`../assets/cards/${this.deck[index]}.jpg`);
+  public createElement = (index: number) => {
+    const e = require(`../assets/cards/${this.deck[index]}.jpg`);
 
     return (
       <div
@@ -57,14 +63,14 @@ export default class Deck {
     )
   }
 
-  createElements = (): Array<any> => {
+  public createElements = (): any[] => {
     let index = 0;
-    let a = new Array<any>();
+    const a: JSX.Element[] = [];
     this.deck.forEach((card) => {
       a.push(this.createElement(index++));
     })
 
-    let e = require(`../assets/cards/back.jpg`);
+    const e = require(`../assets/cards/back.jpg`);
     const back =
       <div
         key={'back'}
@@ -83,7 +89,7 @@ export default class Deck {
     return a;
   }
 
-  render = () => {
+  public render = () => {
     // console.log('Deck render')
     return (
       <>

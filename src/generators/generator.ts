@@ -1,15 +1,15 @@
-import Params from '../components/Params';
-import Layouts from '../components/Layouts';
 import Layout, { IPosition } from '../components/Layout'
+import Layouts from '../components/Layouts';
+import Params from '../components/Params';
 
 export type IInit = (g: IGenerator) => Layouts;
-export type ICreate = {
+export interface ICreate {
   index: number,
   count: number,
   name: string,
   g: IGenerator,
   position: IPosition
-};
+}
 
 export type Create = (args: ICreate) => Layout | undefined;
 
@@ -24,15 +24,15 @@ export interface IGenerator {
 }
 
 export default class Generator implements IGenerator {
+  public currentLayout: Layout | undefined;
+
+  public state: () => Layout | undefined;
   private _name: string;
   private _params: Params;
   private _layouts: Layouts;
   private _layoutsIterator: IterableIterator<Layout> | undefined;
   private _init: IInit;
   private _create: Create | undefined;
-  currentLayout: Layout | undefined;
-
-  state: () => Layout | undefined;
 
   constructor(name: string, init: IInit, params: Params, create?: Create) {
     this._name = name;
@@ -44,30 +44,30 @@ export default class Generator implements IGenerator {
     this._params = params;
   }
 
-  name = () => {
+  public name = () => {
     return this._name;
   }
 
-  params = (): Params => {
+  public params = (): Params => {
     return this._params;
   }
 
-  layouts = (): Layouts => {
+  public layouts = (): Layouts => {
     return this._layouts;
   }
 
-  lookup = (name: string): Layout | undefined => {
+  public lookup = (name: string): Layout | undefined => {
     return this._layouts.get(name);
   }
 
-  create = (args: ICreate): Layout | undefined => {
+  public create = (args: ICreate): Layout | undefined => {
     if (this._create) {
       return this._create(args);
     }
     return undefined;
   }
 
-  reset = () => {
+  public reset = () => {
 
     // console.log('reset update layouts')
     this._layouts = this._init(this);
@@ -80,8 +80,12 @@ export default class Generator implements IGenerator {
     // })
   }
 
-  start = (): Layout | undefined => {
+  public start = (): Layout | undefined => {
     return this.nextBlock();
+  }
+
+  public next = (): Layout | undefined => {
+    return this.state();
   }
 
   private nextBlock = (): Layout | undefined => {
@@ -114,15 +118,11 @@ export default class Generator implements IGenerator {
   // }
 
   private nextTile = (): Layout | undefined => {
-    let b: Layout | undefined = this.currentLayout;
+    const b: Layout | undefined = this.currentLayout;
     if (b) {
       this.state = this.nextBlock;
     }
 
     return b;
-  }
-
-  next = (): Layout | undefined => {
-    return this.state();
   }
 }

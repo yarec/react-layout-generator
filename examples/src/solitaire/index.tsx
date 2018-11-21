@@ -1,13 +1,14 @@
 import * as React from 'react';
-import ReactLayout from '../../../src/ReactLayout';
+
+import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
-import { IUnit } from '../../../src/components/Layout'
+import ReactLayout from '../../../src/ReactLayout';
 
-import Stock from './Stock';
-import Waste from './Waste';
 import Foundation from './Foundation';
+import Stock from './Stock';
 import Tableau from './Tableau';
+import Waste from './Waste';
 
 // import { cardWidth, cardHeight, cardHorizontalOffset, wastePosition } from './config';
 
@@ -18,52 +19,52 @@ import Tableau from './Tableau';
  * child which is called in their componentDidMount method.
  */
 
- /**
-  * Names of layouts are based on position not on the card names.
-  */
+/**
+ * Names of layouts are based on position not on the card names.
+ */
 
-interface SolitaireProps {
+interface ISolitaireProps {
   name?: string;
 }
 
-export default class Solitaire extends React.PureComponent<SolitaireProps> {
+export default class Solitaire extends React.PureComponent<ISolitaireProps> {
 
-  g: IGenerator;
+  private _g: IGenerator;
 
-  stock: Stock;
-  waste: Waste;
-  foundation: Array<Foundation> = [];
-  tableau: Array<Tableau> = [];
+  private _stock: Stock;
+  private _waste: Waste;
+  private _foundation: Foundation[] = [];
+  private _tableau: Tableau[] = [];
 
-  constructor(props: SolitaireProps) {
+  constructor(props: ISolitaireProps) {
     super(props);
-    this.g = RLGDynamic('rlg.solitaire.example');
+    this._g = RLGDynamic('rlg.solitaire.example');
   }
 
-  _stock = (stock: Stock) => {
-    this.stock = stock;
+  public setStock(stock: Stock) {
+    this._stock = stock;
   }
 
-  _waste = (waste: Waste) => {
-    this.waste = waste;
+  public setWaste(waste: Waste) {
+    this._waste = waste;
   }
 
-  _tableau = (tableau: Tableau) => {
-    this.tableau.push(tableau);
+  public setTableau(tableau: Tableau) {
+    this._tableau.push(tableau);
   }
 
-  _foundation = (foundation: Foundation) => {
-    this.foundation.push(foundation);
+  public setFoundation(foundation: Foundation) {
+    this._foundation.push(foundation);
   }
 
   /**
    * Moves the top cards to the tableau after each shuffle.
    */
-  shuffleAndPopulate = () => {
-    if (this.stock && this.tableau) {
-      this.stock.shuffle();
-      this.tableau.map((tableau) => {
-        tableau.populate(this.stock);
+  public shuffleAndPopulate = () => {
+    if (this._stock && this._tableau) {
+      this._stock.shuffle();
+      this._tableau.map((tableau) => {
+        tableau.populate(this._stock);
       });
     }
   }
@@ -72,18 +73,18 @@ export default class Solitaire extends React.PureComponent<SolitaireProps> {
    * Moves the top (3) cards to the waste pushing any
    * existing cards to the stock.
    */
-  populateWaste = () => {
-    if (this.stock && this.waste) {
-      this.waste.populate(this.stock);
+  public populateWaste = () => {
+    if (this._stock && this._waste) {
+      this._waste.populate(this._stock);
     }
   }
 
-  render() {
+  public render() {
 
     return (
       <>
         <ReactLayout
-          g={this.g}
+          g={this._g}
         >
           <Stock data-layout={{
             name: 'stock',
@@ -92,7 +93,9 @@ export default class Solitaire extends React.PureComponent<SolitaireProps> {
               location: { x: 25, y: 25 },
               size: { width: 100, height: 150 }
             }
-          }} connect={this._stock} />
+          }}
+            connect={this.setStock}
+          />
 
           <Waste data-layout={{
             name: 'waste',
@@ -101,7 +104,9 @@ export default class Solitaire extends React.PureComponent<SolitaireProps> {
               location: { x: 250, y: 25 },
               size: { width: 100, height: 150 }
             }
-          }} connect={this._waste} />
+          }}
+            connect={this.setWaste}
+          />
 
           <Foundation data-layout={{
             name: 'foundation',
@@ -111,8 +116,8 @@ export default class Solitaire extends React.PureComponent<SolitaireProps> {
               size: { width: 100, height: 150 }
             }
           }}
-            connect={this._foundation}
-            g={this.g}
+            connect={this.setFoundation}
+            g={this._g}
           />
 
           <Tableau data-layout={{
@@ -123,8 +128,8 @@ export default class Solitaire extends React.PureComponent<SolitaireProps> {
               size: { width: 100, height: 150 }
             }
           }}
-            connect={this._tableau}
-            g={this.g}
+            connect={this.setTableau}
+            g={this._g}
           />
 
         </ReactLayout>

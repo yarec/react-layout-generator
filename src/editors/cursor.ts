@@ -1,42 +1,42 @@
-import { PositionRef, IEdit } from '../components/Layout';
+import { IEdit, PositionRef } from '../components/Layout';
 
 export function cursor(edit: IEdit) {
-  let cursor: string = 'default';
+  let c: string = 'default';
   switch (edit.ref) {
     case PositionRef.position: {
-      cursor = 'move';
+      c = 'move';
       break;
     }
     case PositionRef.left: {
-      cursor = 'w-resize';
+      c = 'w-resize';
       break;
     }
     case PositionRef.right: {
-      cursor = 'w-resize';
+      c = 'w-resize';
       break;
     }
     case PositionRef.top: {
-      cursor = 'n-resize';
+      c = 'n-resize';
       break;
     }
     case PositionRef.bottom: {
-      cursor = 'w-resize';
+      c = 'w-resize';
       break;
     }
     case PositionRef.leftTop: {
-      cursor: 'nw-resize';
+      c = 'nw-resize';
       break;
     }
     case PositionRef.rightTop: {
-      cursor: 'ne-resize';
+      c = 'ne-resize';
       break;
     }
     case PositionRef.leftBottom: {
-      cursor: 'nw-resize';
+      c = 'nw-resize';
       break;
     }
     case PositionRef.rightBottom: {
-      cursor: 'ne-resize';
+      c = 'ne-resize';
       break;
     }
     default: {
@@ -44,5 +44,5 @@ export function cursor(edit: IEdit) {
       break;
     }
   }
-  return cursor;
+  return c;
 }

@@ -1,8 +1,10 @@
-import { IPoint, ISize, IRect } from '../types';
-import Params from '../components/Params';
+import Layout, { IEdit, IPosition, IUnit, PositionRef } from '../components/Layout';
 import Generator, { IGenerator } from '../generators/Generator';
-import Layout, { IUnit, PositionRef, IEdit, IPosition } from '../components/Layout';
+import { IPoint, IRect, ISize } from '../types';
+
 import Layouts from '../components/Layouts';
+import Params from '../components/Params';
+
 
 function updateParamWidth(updated: IRect, edit: IEdit) {
   return {
@@ -20,24 +22,25 @@ function updateParamHeight(updated: IRect, edit: IEdit) {
 
 export default function RLGDesktop(name: string) {
 
-  const fullWidthHeaders = 0;
-  const titleHeight = 50;
-  const leftSideWidth = 200;
-  const rightSideWidth = 0;
-  const headerHeight = 24;
-  const footerHeight = 24;
+  const _fullWidthHeaders = 0;
+  const _titleHeight = 50;
+  const _leftSideWidth = 200;
+  const _rightSideWidth = 0;
+  const _headerHeight = 24;
+  const _footerHeight = 24;
 
-  const params = new Params([
+  const _params = new Params([
     ['viewport', { width: 0, height: 0 }],
-    ['fullWidthHeaders', fullWidthHeaders],
-    ['titleHeight', titleHeight],
-    ['leftSideWidth', leftSideWidth],
-    ['rightSideWidth', rightSideWidth],
-    ['headerHeight', headerHeight],
-    ['footerHeight', footerHeight]
+    ['fullWidthHeaders', _fullWidthHeaders],
+    ['titleHeight', _titleHeight],
+    ['leftSideWidth', _leftSideWidth],
+    ['rightSideWidth', _rightSideWidth],
+    ['headerHeight', _headerHeight],
+    ['footerHeight', _footerHeight]
   ])
 
   function init(g: IGenerator) {
+    const params = g.params();
     const viewport = params.get('viewport') as ISize;
     const fullWidthHeaders = params.get('fullWidthHeaders') as number;
     const titleHeight = params.get('titleHeight') as number;
@@ -51,7 +54,7 @@ export default function RLGDesktop(name: string) {
       rightSideWidth = 0;
     }
 
-    const title = function (): Layout {
+    const title = (): Layout => {
       let location: IPoint;
       let size: ISize;
       location = {
@@ -72,14 +75,14 @@ export default function RLGDesktop(name: string) {
         edit: [
           { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
         ],
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('title', p, g);
-    }();
+    };
 
-    const leftSide = function (): Layout {
+    const leftSide = (): Layout => {
       let location: IPoint;
       let size: ISize;
       if (fullWidthHeaders) {
@@ -111,21 +114,21 @@ export default function RLGDesktop(name: string) {
         edit: [
           { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
         ],
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('leftSide', p, g);
-    }();
+    };
 
-    const rightSide = function (): Layout {
+    const rightSide = (): Layout => {
       let location: IPoint;
       let size: ISize;
 
       if (fullWidthHeaders) {
         location = {
           x: viewport.width - rightSideWidth,
-          y: titleHeight + headerHeight 
+          y: titleHeight + headerHeight
         }
         size = {
           width: viewport.width,
@@ -148,14 +151,14 @@ export default function RLGDesktop(name: string) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('rightSide', p, g);
-    }();
+    };
 
-    const header = function (): Layout {
+    const header = (): Layout => {
       let location: IPoint;
       let size: ISize;
 
@@ -185,20 +188,20 @@ export default function RLGDesktop(name: string) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('header', p, g);
-    }();
+    };
 
-    const content = function (): Layout {
+    const content = (): Layout => {
       let location: IPoint;
       let size: ISize;
       if (fullWidthHeaders) {
         location = {
           x: leftSideWidth,
-          y: titleHeight + headerHeight 
+          y: titleHeight + headerHeight
         }
         size = {
           width: viewport.width - rightSideWidth,
@@ -220,14 +223,14 @@ export default function RLGDesktop(name: string) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('content', p, g);
-    }();
+    };
 
-    const footer = function (): Layout {
+    const footer = (): Layout => {
       let location: IPoint;
       let size: ISize;
       if (fullWidthHeaders) {
@@ -256,23 +259,23 @@ export default function RLGDesktop(name: string) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
-        location: location,
-        size: size
+        location,
+        size
       }
 
       return new Layout('footer', p, g);
-    }();
+    };
 
     // Return new instance of Layouts
     return new Layouts([
-      [title.name, title],
-      [leftSide.name, leftSide],
-      [rightSide.name, rightSide],
-      [header.name, header],
-      [content.name, content],
-      [footer.name, footer]
+      [title.name, title()],
+      [leftSide.name, leftSide()],
+      [rightSide.name, rightSide()],
+      [header.name, header()],
+      [content.name, content()],
+      [footer.name, footer()]
     ])
   }
 
-  return new Generator(name, init, params);
+  return new Generator(name, init, _params);
 }

@@ -1,32 +1,32 @@
-import {IPoint, IRect, ISize } from '../types';
 import {isEqual} from 'underscore';
+import {IPoint, IRect, ISize } from '../types';
 
 export type ParamValue = number | IPoint | ISize | IRect;
 
 export default class Params {
-  params: Map<string, ParamValue>;
-  changeCount: number;
+  public params: Map<string, ParamValue>;
+  public changeCount: number;
 
   constructor(values: Array<[string, ParamValue]>) {
     this.params = new Map(values);
     this.changeCount = 0;
   }
 
-  changed(): boolean {
+  public changed(): boolean {
     const changed = this.changeCount;
     this.changeCount = 0;
-    return changed != 0;
+    return changed !== 0;
   }
 
-  touch() {
+  public touch() {
     this.changeCount += 1;
   }
 
-  get(key: string): ParamValue | undefined {
+  public get(key: string): ParamValue | undefined {
     return this.params.get(key);
   }
 
-  set(key: string, v: ParamValue): boolean {
+  public set(key: string, v: ParamValue): boolean {
     const r: ParamValue | undefined = this.params.get(key);
 
     // Only set if changed

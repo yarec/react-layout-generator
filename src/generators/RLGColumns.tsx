@@ -1,14 +1,14 @@
-import Generator, { IGenerator, ICreate } from '../generators/Generator';
-import { ISize } from '../types';
-import Params from '../components/Params';
-import Layouts from '../components/Layouts';
 import Layout, { IUnit } from '../components/Layout';
+import Layouts from '../components/Layouts';
+import Params from '../components/Params';
+import Generator, { ICreate, IGenerator } from '../generators/Generator';
+import { ISize } from '../types';
 
 export default function RLGColumns(name: string) {
 
   const defaultItemWidth = 100;
 
-  const params = new Params([
+  const _params = new Params([
     ['viewport', { width: 0, height: 0 }],
     ['align', 0], // -1: left, 0: center, 1: right
     ['spread', 0], // 0: keep width, 1: fills width
@@ -22,7 +22,7 @@ export default function RLGColumns(name: string) {
 
     const align = params.get('align') as number;
 
-    //if (params.changed()) {
+    // if (params.changed()) {
       
       // update Layout for each update
       if (align === 0) {
@@ -33,7 +33,7 @@ export default function RLGColumns(name: string) {
         //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
         // });
       }
-    //}
+    // }
 
     return layouts;
   }
@@ -70,7 +70,7 @@ export default function RLGColumns(name: string) {
     // console.log(`centerColumns: create ${args.name}`)
     const params = args.g.params();
     const viewport = params.get('viewport') as ISize;
-    const defaultItemWidth = params.get('defaultItemWidth') as number;
+    const defaultWidth = params.get('defaultItemWidth') as number;
 
     const layouts = args.g.layouts();
 
@@ -83,7 +83,7 @@ export default function RLGColumns(name: string) {
           size: IUnit.pixel
         },
         location: { x: 0, y: 0 },
-        size: { width: defaultItemWidth, height: viewport.height }
+        size: { width: defaultWidth, height: viewport.height }
       }
     }
 
@@ -94,16 +94,16 @@ export default function RLGColumns(name: string) {
     const align = params.get('align') as number;
 
     
-    //if ((args.index + 1) === args.count) {
+    // if ((args.index + 1) === args.count) {
       
       if (align === 0) {
         console.log(`centerColumns: create`)
         centerColumns(layouts, params);
       }
-    //}
+    // }
 
     return l;
   }
 
-  return new Generator(name, init, params, create);
+  return new Generator(name, init, _params, create);
 }

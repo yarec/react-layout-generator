@@ -1,5 +1,5 @@
-import { PositionRef, IEdit } from '../components/Layout';
-import { Rect, IRect } from '../types'
+import { IEdit, PositionRef } from '../components/Layout';
+import { IRect, Rect } from '../types'
 export type ExtendElement = (rect: IRect, deltaX: number, deltaY: number) => IRect
 
 export default function getExtendElement(edit: IEdit): ExtendElement {

@@ -1,28 +1,24 @@
 import * as React from 'react';
-import { ReactLayoutProps } from '../../../src/ReactLayout';
 
+import { IReactLayoutProps } from '../../../src/ReactLayout';
 import FoundationStack from './FoundationStack';
 
-export interface FoundationProps {
+export interface IFoundationProps extends IReactLayoutProps {
   connect: (i: Foundation) => void;
 }
 
-export default class Foundation extends React.Component<ReactLayoutProps & FoundationProps> {
-  _foundationStacks: Array<FoundationStack> = [];
+export default class Foundation extends React.Component<IFoundationProps> {
+  private foundationStacks: FoundationStack[] = [];
 
-  constructor(props: ReactLayoutProps & FoundationProps) {
+  constructor(props: IFoundationProps) {
     super(props);
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     this.props.connect(this);
   }
 
-  connect = (i: FoundationStack) => {
-    this._foundationStacks.push(i);
-  }
-
-  render() {
+  public render() {
     return (
       <>
         <FoundationStack g={this.props.g} stack={1} connect={this.connect} />
@@ -32,4 +28,9 @@ export default class Foundation extends React.Component<ReactLayoutProps & Found
       </>
     )
   }
+
+  private connect = (i: FoundationStack) => {
+    this.foundationStacks.push(i);
+  }
+
 }

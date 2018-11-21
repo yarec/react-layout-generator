@@ -47,9 +47,9 @@ module.exports = {
   },
   plugins: [
     htmlWebpackPlugin,
-    new TSLintPlugin({
-      files: ['./src/**/*.tsx?']
-    })
+    // new TSLintPlugin({
+    //   files: ['./src/**/*.ts?']
+    // })
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"]

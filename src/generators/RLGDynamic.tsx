@@ -1,10 +1,10 @@
-import Generator, { IGenerator, ICreate } from './Generator';
-import Layouts from '../components/Layouts';
 import Layout from '../components/Layout';
+import Layouts from '../components/Layouts';
 import Params from '../components/Params';
+import Generator, { ICreate, IGenerator } from './Generator';
 
 export default function RLGDynamic(name: string): IGenerator {
-  const params = new Params([
+  const _params = new Params([
     ['viewport', { width: 0, height: 0 }]
   ])
 
@@ -34,5 +34,5 @@ export default function RLGDynamic(name: string): IGenerator {
     return box;
   }
 
-  return new Generator(name, init, params, create);
+  return new Generator(name, init, _params, create);
 }

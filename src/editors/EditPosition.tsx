@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { EditorProps, IEditor, IUndo } from './Editor';
 import Layout from 'src/components/Layout';
 import { IPoint, IRect } from 'src/types';
+import { IEditor, IEditorProps, IUndo } from './Editor';
 
 
-interface editHandleProps {
+interface IEditHandleProps {
   cursor: string;
   handle: IRect;
 }
 
-function editStyle(props: editHandleProps): React.CSSProperties {
+function editStyle(props: IEditHandleProps): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
     transformOrigin: 0,
@@ -24,24 +24,32 @@ function editStyle(props: editHandleProps): React.CSSProperties {
   }
 }
 
-export default class EditPosition extends React.Component<EditorProps, {}> implements IEditor {
-  _clonedLayout: Layout;
-  _startOrigin: IPoint;
+export default class EditPosition extends React.Component<IEditorProps, {}> implements IEditor {
+  public _clonedLayout: Layout;
+  public _startOrigin: IPoint;
 
-  _handle: IRect;
+  public _handle: IRect;
 
-  constructor(props: EditorProps) {
+  public redo: () => {
+
+  };
+
+  public undo: () => {
+
+  };
+
+  constructor(props: IEditorProps) {
     super(props);
     this._clonedLayout = this.props.layout.clone();
     this._startOrigin = { x: 0, y: 0 };
     this._handle = props.layout.rect();
   }
 
-  initUpdate(x: number, y: number) {
-    this._startOrigin = { x: x, y: y };
+  public initUpdate(x: number, y: number) {
+    this._startOrigin = { x, y };
   }
 
-  moveUpdate(x: number, y: number) {
+  public moveUpdate(x: number, y: number) {
 
     const deltaX = x - this._startOrigin.x;
     const deltaY = y - this._startOrigin.y;
@@ -52,7 +60,7 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
 
       // 1 Extend
       const r: IRect = this._clonedLayout.rect();
-      let ur: IRect = this.props.edit.extendElement!(r, deltaX, deltaY);
+      const ur: IRect = this.props.edit.extendElement!(r, deltaX, deltaY);
 
       // 2 Pin
       if (ur.x < this.props.boundary.x) {
@@ -84,19 +92,19 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     }
   }
 
-  addEventListeners = () => {
+  public addEventListeners = () => {
     document.addEventListener('mouseup', this.onHtmlMouseUp);
     document.addEventListener('mousemove', this.onHtmlMouseMove);
     document.addEventListener('touchmove', this.onHtmlTouchMove);
   }
 
-  removeEventListeners = () => {
+  public removeEventListeners = () => {
     document.removeEventListener('mouseup', this.onHtmlMouseUp);
     document.removeEventListener('mousemove', this.onHtmlMouseMove);
     document.removeEventListener('touchmove', this.onHtmlTouchMove);
   }
 
-  push = (): IUndo => {
+  public push = (): IUndo => {
 
     // this goes on the undo/redo stack
     // the editor is stores the state needed
@@ -104,15 +112,7 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     return { editor: this };
   };
 
-  redo: () => {
-
-  };
-
-  undo: () => {
-
-  };
-
-  onMouseDown = (event: React.MouseEvent) => {
+  public onMouseDown = (event: React.MouseEvent) => {
     if (event) {
       event.preventDefault();
       this.addEventListeners();
@@ -120,14 +120,14 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     }
   }
 
-  onHtmlMouseMove = (event: MouseEvent) => {
+  public onHtmlMouseMove = (event: MouseEvent) => {
     if (event) {
       event.preventDefault();
       this.moveUpdate(event.clientX, event.clientY);
     }
   }
 
-  onHtmlMouseUp = (event: MouseEvent) => {
+  public onHtmlMouseUp = (event: MouseEvent) => {
     if (event) {
       event.preventDefault();
       this.removeEventListeners();
@@ -141,11 +141,11 @@ export default class EditPosition extends React.Component<EditorProps, {}> imple
     }
   }
 
-  onHtmlTouchMove = (event: TouchEvent) => {
+  public onHtmlTouchMove = (event: TouchEvent) => {
     // TODO implement support for touch
   }
 
-  render = () => {
+  public render = () => {
     return (
       <div
         style={editStyle({ cursor: this.props.edit.cursor!, handle: this._handle })}

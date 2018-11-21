@@ -4,11 +4,12 @@ export function clone(aObject: any) {
     return aObject;
   }
 
-  var bObject, v, k;
-  bObject = Array.isArray(aObject) ? [] : {};
-  for (k in aObject) {
-    v = aObject[k];
-    bObject[k] = (typeof v === "object") ? clone(v) : v;
+  const bObject = Array.isArray(aObject) ? [] : {};
+  for (const k in aObject) {
+    if (k) {
+      const v = aObject[k];
+      bObject[k] = (typeof v === "object") ? clone(v) : v;
+    }
   }
   return bObject;
 }
