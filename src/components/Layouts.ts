@@ -2,7 +2,7 @@ import Layout from './Layout';
 
 export default class Layouts {
   private _layouts: Map<string, Layout>;
-  private _byIndex: Array<Layout>;
+  private _byIndex: Layout[];
   // width: number;
   // height: number;
 
@@ -29,7 +29,7 @@ export default class Layouts {
   //   });
   // }
 
-  values() {
+  public values() {
     return this._layouts.values();
   }
 
@@ -41,17 +41,17 @@ export default class Layouts {
     return this._layouts.size;
   }
 
-  find(i: number) {
-    //console.log(Object.keys(this._layouts))
-    //const key = Object.keys(this._layouts)[i];
+  public find(i: number) {
+    // console.log(Object.keys(this._layouts))
+    // const key = Object.keys(this._layouts)[i];
     return this._byIndex[i];
   }
 
-  get(key: string) {
+  public get(key: string) {
     return this._layouts.get(key);
   }
 
-  set(key: string, v: Layout) {
+  public set(key: string, v: Layout) {
     // const s = this._layouts.size;
     this._layouts.set(key, v);
     

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-import { IGenerator } from './generators/Generator';
 
 import { IPosition } from './components/Layout';
 import EditPosition from './editors/EditPosition';
+import { IGenerator } from './generators/Generator';
+import { ISize } from './types';
 
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
   return {
@@ -26,6 +27,7 @@ export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   editLayout?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
+  extent?: ISize;
   g: IGenerator;
 }
 
@@ -65,11 +67,13 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     //   console.log('render');
     // }
     // 
+
+    const resize = <ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
     return (
       /* style height of 100% necessary for ReactResizeDetector to work  */
       <div style={{ height: '100%' }} >
         {this.content()}
-        <ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
+        {this.props.extent ? null : resize}
         {this.frameEnd()}
       </div >
     )
@@ -88,9 +92,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   // }
 
   private onResize = (width: number, height: number) => {
-    if (this.props.name === 'navbar') {
-      // console.log('onResize', this.props.name, width, height);
-    }
+    console.log('onResize', this.props.name, width, height);
 
     if (this.state.width !== width || this.state.height !== height) {
       this.setState({ width, height });
@@ -180,7 +182,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
               child.props.children
             )}
             {editors}
-          </>)
+          </>
+        )
       }
     }
 

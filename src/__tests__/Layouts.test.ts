@@ -1,7 +1,7 @@
 import Layout, { IUnit } from '../components/Layout';
 import Layouts from '../components/Layouts';
-import Generator, { IGenerator, ICreate } from '../generators/Generator';
 import Params from '../components/Params';
+import Generator, { ICreate, IGenerator } from '../generators/Generator';
 
 const params = new Params([
   ['viewport', { width: 1000, height: 1000 }]

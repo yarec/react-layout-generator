@@ -2,14 +2,14 @@ import { Rect } from '../types';
 
 it('size value is a copy', () => {
   const r = new Rect({ x: 0, y: 0, width: 0, height: 0 });
-  let s = r.size;
+  const s = r.size;
   s.width = 1;
   expect(r.size).toEqual({ width: 0, height: 0 });
 });
 
 it('location value is a copy', () => {
   const r = new Rect({ x: 0, y: 0, width: 0, height: 0 });
-  let l = r.location;
+  const l = r.location;
   l.x = 1;
   expect(r.location).toEqual({ x: 0, y: 0 });
 });

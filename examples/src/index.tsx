@@ -1,24 +1,27 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import ReactLayout from '../../src/ReactLayout';
-
-
-import DeskTop from './DeskTop/index';
-import CardDeck from './CardDeck';
-import Solitaire from './Solitaire';
 import { IGenerator } from '../../src/generators/Generator';
 import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';
+import ReactLayout from '../../src/ReactLayout';
+// import CardDeck from './CardDeck';
+import DeskTop from './desktop/DeskTop';
+import ErrorBoundary from './ErrorBoundary';
+// import Solitaire from './Solitaire';
 
+import NavBar from './NavBar'
+
+// tslint:disable-next-line:max-classes-per-file
 export class Examples extends React.Component<{}, { app: any }> {
 
-  g: IGenerator;
-  n: IGenerator;
+  public g: IGenerator;
+  public g1: IGenerator;
+  public n: IGenerator;
 
   constructor(props: any) {
     super(props);
-    this.state = { app: undefined }
+    this.state = { app: null }
 
     this.g = RLGDesktop('');
     const p = this.g.params();
@@ -37,41 +40,43 @@ export class Examples extends React.Component<{}, { app: any }> {
     // const pn = this.n.params();
     // pn.set('')
 
+    this.g1 = RLGDesktop('');
+
   }
 
-  navbar = () => {
-    // return null;
-
-    return (
-      <ReactLayout name='navbar' g={this.n}>
-        <div data-layout={{ name: '1' }} onClick={() => { this.setState({ app: DeskTop }) }} >
-          <span>DeskTop</span>
-        </div>
-        <div data-layout={{ name: '2' }} onClick={() => { this.setState({ app: CardDeck }) }}>
-          <span>CardDeck</span>
-        </div>
-        <div data-layout={{ name: '3' }} onClick={() => { this.setState({ app: Solitaire }) }}>
-          <span>Solitaire</span>
-        </div>
-      </ReactLayout>
-    );
+  public selectDesktop = (event: React.MouseEvent<HTMLDivElement>) => {
+    this.setState({app: <DeskTop />});
   }
 
-  render() {
+  public selectCardDeck = (event: React.MouseEvent<HTMLDivElement>) => {
+    // this.setState({app: <CardDeck />});
+  }
+
+  public content = () => {
+    return this.state.app;
+  }
+
+  public render() {
     if (!this.state.app) {
 
       return (
-        <ReactLayout name='desktop' g={this.g}>
-          <div data-layout={{ name: 'title' }} >
-            <h1>React Layout Generator Examples</h1>
-          </div>
-          <div data-layout={{ name: 'header' }}>
-            {this.navbar()}
-          </div>
-          <div data-layout={{name: 'content'}}>
-          <h1>Content</h1>
-          </div>
-        </ReactLayout >
+        <ErrorBoundary>
+          <ReactLayout name='desktop' g={this.g}>
+            <div data-layout={{ name: 'title' }} >
+              <h1>React Layout Generator Examples</h1>
+            </div>
+            <div data-layout={{ name: 'header' }}>
+              <NavBar/>
+            </div>
+            <div data-layout={{ name: 'content' }}>
+              <ReactLayout
+                name={'reactLayout.desktop.example'}
+                editLayout={true}
+                g={this.g1}
+              />
+            </div>
+          </ReactLayout>
+        </ErrorBoundary>
       );
     }
     return <this.state.app />
