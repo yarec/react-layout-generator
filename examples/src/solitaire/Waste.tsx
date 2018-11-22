@@ -2,46 +2,48 @@ import * as React from 'react';
 import { IUnit } from '../../../src/components/Layout';
 import Stock from './Stock';
 
-import { cardWidth, cardHeight, cardHorizontalOffset, wastePosition } from './config';
+import { cardHeight, cardHorizontalOffset, cardWidth, wastePosition } from './config';
 
-export interface WasteProps {
+export interface IWasteProps {
   connect: (i: Waste) => void;
 }
 
-export default class Waste extends React.Component<WasteProps> {
+export default class Waste extends React.Component<IWasteProps> {
 
-  waste: Array<string> = [];
+  public waste: string[] = [];
 
-  constructor(props: WasteProps) {
+  constructor(props: IWasteProps) {
     super(props);
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     this.props.connect(this);
   }
 
-  populate = (stock: Stock) => {
-    this.waste.map((card) => {
-      stock.stock.unshift(card);
+  public populate = (stock: Stock) => {
+    this.waste.map((oldCard) => {
+      stock.stock.unshift(oldCard);
     })
 
-    let card;
-    if (card = stock.dealOne()) {
+    let card = stock.dealOne();
+    if (card) {
       this.waste.push(card)
     }
-    if (card = stock.dealOne()) {
+    card = stock.dealOne()
+    if (card) {
       this.waste.push(card)
     }
-    if (card = stock.dealOne()) {
+    card = stock.dealOne()
+    if (card) {
       this.waste.push(card)
     }
   }
 
-  path = (name: string) => {
+  public path = (name: string) => {
     return require(`../assets/cards/${name}.jpg`)
   }
 
-  createElement(index: number) {
+  public createElement(index: number) {
     if (index < this.waste.length) {
       const name = this.waste[index];
       const id = `waste${index + 1}`;
@@ -64,7 +66,7 @@ export default class Waste extends React.Component<WasteProps> {
     return null;
   }
 
-  render = () => {
+  public render = () => {
     return (
       <>
         {this.createElement(0)}

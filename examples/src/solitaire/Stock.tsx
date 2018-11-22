@@ -1,37 +1,44 @@
 import * as React from 'react';
-import {IUnit  } from '../../../src/components/Layout';
 
-interface StockProps {
+import { IUnit } from '../../../src/components/Layout';
+import { cardHeight, cardWidth, stockPosition } from './config';
+
+interface IStockProps {
   connect: (i: Stock) => void;
 }
 
-export default class Stock extends React.Component<StockProps> {
+export default class Stock extends React.Component<IStockProps> {
 
-  stock: Array<string>;
+  public stock: string[] = [];
 
-  constructor(props: StockProps) {
+  constructor(props: IStockProps) {
     super(props);
     this.stock = [];
     this.reset();
     this.shuffle();
   }
 
-  reset() {
+  public reset() {
     this.stock = [];
 
     const suits = ['H', 'S', 'C', 'D'];
     const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
-    for (let suit in suits) {
-      for (let value in values) {
-        this.stock.push(`${values[value]}${suits[suit]}`);
+    for (const suit in suits) {
+      if (suit) {
+        for (const value in values) {
+          if (value) {
+            this.stock.push(`${values[value]}${suits[suit]}`);
+          }
+        }
       }
     }
   }
 
-  shuffle = () => {
+  public shuffle = () => {
     const { stock } = this;
-    let m = stock.length, i;
+    let m = stock.length;
+    let i;
 
     while (m) {
       i = Math.floor(Math.random() * m--);
@@ -41,15 +48,15 @@ export default class Stock extends React.Component<StockProps> {
     return this;
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     this.props.connect(this);
   }
 
-  dealOne = () => {
+  public dealOne = () => {
     return this.stock.pop();
   }
 
-  render = () => {
+  public render = () => {
     const index = this.stock.length - 1;
     const e = require('../assets/cards/back.jpg')
     return (
@@ -59,8 +66,8 @@ export default class Stock extends React.Component<StockProps> {
           name: this.stock[index],
           position: {
             units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-            location: { x: 25, y: 25 },
-            size: { width: 100, height: 150 }
+            location: { x: stockPosition.x, y: stockPosition.y },
+            size: { width: cardWidth, height: cardHeight }
           }
         }} >
         <img width={100} height={150} src={e} />

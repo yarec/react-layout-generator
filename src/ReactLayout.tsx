@@ -175,11 +175,16 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         }
 
         gInProgress -= 1;
+        const e = child;
+        if (React.isValidElement(e)) {
+          console.log('React.isValidElement(e)', e.type);
+        }
+
         return (
           <>
-            {React.cloneElement(child,
-              { key: b.name, extent: { width: rect.width, height: rect.height }, style: { ...this.props.style, ...child.props.style, ...style } },
-              child.props.children
+            {React.cloneElement(e,
+              { key: b.name, extent: { width: rect.width, height: rect.height }, style: { ...this.props.style, ...e.props.style, ...style } },
+              e.props.children
             )}
             {editors}
           </>
@@ -245,13 +250,19 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
       return (
         <>
           {React.Children.map(this.props.children, (child, i) => {
-            // tslint:disable-next-line:no-any
-            return this.createElement(child as React.ReactElement<any>, i, count);
+            if (child) {
+              // tslint:disable-next-line:no-any
+              return this.createElement(child as React.ReactElement<any>, i, count);
+            }
+            return null;
 
           })}
           {React.Children.map(this.props.children, (child, i) => {
-            // tslint:disable-next-line:no-any
-            return this.updateElement(child as React.ReactElement<any>, i, count);
+            if (child) {
+              // tslint:disable-next-line:no-any
+              return this.updateElement(child as React.ReactElement<any>, i, count);
+            }
+            return null;
 
           })}
           {/* this.createEditHandles() */}

@@ -3,6 +3,8 @@ import * as React from 'react';
 import { IUnit } from '../../../src/components/Layout';
 import ReactLayout, { IReactLayoutProps } from '../../../src/ReactLayout';
 
+import { cardWidth, foundationPosition } from './config';
+
 import Stock from './Stock';
 
 export interface IFoundationStackProps extends IReactLayoutProps {
@@ -47,7 +49,6 @@ export default class FoundationStack extends React.Component<IFoundationStackPro
   private createElements() {
     const height = 7.5;
     const width = 5;
-    const visible = 2;
     return this.stack.map((name, i) => {
       return (
         <div
@@ -56,7 +57,7 @@ export default class FoundationStack extends React.Component<IFoundationStackPro
             name,
             position: {
               units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
-              location: { x: 20 + this.props.stack * width, y: 20 + i*visible },
+              location: { x: foundationPosition.x + this.props.stack * cardWidth, y: foundationPosition.y },
               size: { width, height }
             }
           }}
@@ -66,5 +67,4 @@ export default class FoundationStack extends React.Component<IFoundationStackPro
       );
     })
   }
-
 }

@@ -1,16 +1,24 @@
 import * as React from 'react';
 import { render } from 'react-dom';
+import styled from 'styled-components';
 
 import { IGenerator } from '../../src/generators/Generator';
 import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';
 import ReactLayout from '../../src/ReactLayout';
-// import CardDeck from './CardDeck';
+import CardDeck from './CardDeck';
 import DeskTop from './desktop/DeskTop';
 import ErrorBoundary from './ErrorBoundary';
-// import Solitaire from './Solitaire';
+import Solitaire from './solitaire/Solitaire';
 
-import NavBar from './NavBar'
+import NavBar from './components/NavBar'
+
+// tslint:disable-next-line:variable-name
+const Title = styled.h1`
+  font-family: Arial, Helvetica, sans-serif;
+  background: transparent;
+  color: white;
+`
 
 // tslint:disable-next-line:max-classes-per-file
 export class Examples extends React.Component<{}, { app: any }> {
@@ -28,7 +36,7 @@ export class Examples extends React.Component<{}, { app: any }> {
 
     // Set variables to 0 to hide section
     p.set('titleHeight', 80);
-    p.set('headerHeight', 24);
+    p.set('headerHeight', 40);
     p.set('footerHeight', 0);
     p.set('leftSideWidth', 0);
     p.set('rightSideWidth', 0);
@@ -44,42 +52,35 @@ export class Examples extends React.Component<{}, { app: any }> {
 
   }
 
-  public selectDesktop = (event: React.MouseEvent<HTMLDivElement>) => {
-    this.setState({app: <DeskTop />});
-  }
-
-  public selectCardDeck = (event: React.MouseEvent<HTMLDivElement>) => {
-    // this.setState({app: <CardDeck />});
-  }
-
-  public content = () => {
-    return this.state.app;
+  public select = (element: JSX.Element) => {
+    this.setState({ app: element });
   }
 
   public render() {
-    if (!this.state.app) {
+    return (
+      <ErrorBoundary>
+        <ReactLayout name='desktop' g={this.g}>
+          <div data-layout={{ name: 'title' }} style={{backgroundColor: 'black', textAlign: 'center'}}>
+            <Title>React Layout Generator Examples</Title>
+          </div>
+          <div data-layout={{ name: 'header' }} style={{backgroundColor: 'black'}}>
+            <NavBar elements={[
+              { component: <DeskTop />, name: 'DeskTop' },
+              { component: <CardDeck />, name: 'CardDeck' },
+              { component: <Solitaire />, name: 'Solitaire' }
+            ]}
+              callback={this.select}
+            />
+          </div>
 
-      return (
-        <ErrorBoundary>
-          <ReactLayout name='desktop' g={this.g}>
-            <div data-layout={{ name: 'title' }} >
-              <h1>React Layout Generator Examples</h1>
-            </div>
-            <div data-layout={{ name: 'header' }}>
-              <NavBar/>
-            </div>
-            <div data-layout={{ name: 'content' }}>
-              <ReactLayout
-                name={'reactLayout.desktop.example'}
-                editLayout={true}
-                g={this.g1}
-              />
-            </div>
-          </ReactLayout>
-        </ErrorBoundary>
-      );
-    }
-    return <this.state.app />
+          <div data-layout={{ name: 'content' }} style={{margin: 20}} >
+            {this.state.app}
+          </div>
+
+        </ReactLayout>
+      </ErrorBoundary>
+    );
+
   }
 }
 

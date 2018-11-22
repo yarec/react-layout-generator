@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { IUnit } from '../../../src/components/Layout';
 import ReactLayout, { IReactLayoutProps } from '../../../src/ReactLayout';
-
+import { cardWidth, tableauPosition } from './config';
 import Stock from './Stock';
 
 export interface ITableauStackProps extends IReactLayoutProps {
@@ -56,7 +56,7 @@ export default class TableauStack extends React.Component<ITableauStackProps> {
           name,
           position: {
             units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
-            location: { x: 20 + this.props.stack * width, y: 20 + i * visible },
+            location: { x: tableauPosition.x + this.props.stack * cardWidth, y: tableauPosition.y + i * visible },
             size: { width, height }
           }
         }}
