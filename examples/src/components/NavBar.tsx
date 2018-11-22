@@ -40,7 +40,6 @@ export default class NavBar extends React.Component<INavBar> {
         component: e.component,
         name: e.name,
         handler: (event: React.MouseEvent<HTMLButtonElement>) => {
-          console.log('this.props.callback');
           this.props.callback(e.component)
         }
       })

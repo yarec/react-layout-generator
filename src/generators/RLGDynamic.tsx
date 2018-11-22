@@ -27,11 +27,11 @@ export default function RLGDynamic(name: string): IGenerator {
       console.error('TODO default position')
     }
 
-    const box = new Layout(name, args.position, args.g);
+    const layout = new Layout(args.name, args.position, args.g);
 
-    args.g.layouts().set(name, box);
+    args.g.layouts().set(layout.name, layout);
 
-    return box;
+    return layout;
   }
 
   return new Generator(name, init, _params, create);

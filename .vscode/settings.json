@@ -1,6 +1,7 @@
 {
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
   "cSpell.words": [
+    "carddeck",
     "chet",
     "devtool",
     "inline",

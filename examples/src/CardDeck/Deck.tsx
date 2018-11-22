@@ -2,11 +2,16 @@ import * as React from 'react';
 
 import { IUnit, PositionRef } from '../../../src/components/Layout';
 
-export default class Deck {
+// tslint:disable-next-line:no-empty-interface
+interface IDeck {
+}
 
-  private deck: string[];
+export default class Deck extends React.Component<IDeck> {
 
-  constructor() {
+  private deck: string[] = [];
+
+  constructor(props: IDeck) {
+    super(props);
     this.deck = [];
     this.reset();
     this.shuffle();

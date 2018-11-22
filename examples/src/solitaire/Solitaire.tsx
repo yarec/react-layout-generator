@@ -26,7 +26,7 @@ export interface ISolitaireProps {
 
 export default class Solitaire extends React.Component<ISolitaireProps> {
 
-  private _g: IGenerator;
+  private _g: IGenerator = RLGDynamic('rlg.solitaire.example');
 
   private _stock: Stock;
   private _waste: Waste;
@@ -35,7 +35,6 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
 
   constructor(props: ISolitaireProps) {
     super(props);
-    this._g = RLGDynamic('rlg.solitaire.example');
   }
 
   public setStock(stock: Stock) {

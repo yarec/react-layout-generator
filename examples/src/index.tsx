@@ -6,12 +6,12 @@ import { IGenerator } from '../../src/generators/Generator';
 import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';
 import ReactLayout from '../../src/ReactLayout';
-import CardDeck from './CardDeck';
-import DeskTop from './desktop/DeskTop';
-import ErrorBoundary from './ErrorBoundary';
-import Solitaire from './solitaire/Solitaire';
-
+import CardDeck from './carddeck/CardDeck';
+import ErrorBoundary from './components/ErrorBoundary';
 import NavBar from './components/NavBar'
+import DeskTop from './desktop/DeskTop';
+import Intro from './intro/Intro';
+import Solitaire from './solitaire/Solitaire';
 
 // tslint:disable-next-line:variable-name
 const Title = styled.h1`
@@ -19,7 +19,6 @@ const Title = styled.h1`
   background: transparent;
   color: white;
 `
-
 // tslint:disable-next-line:max-classes-per-file
 export class Examples extends React.Component<{}, { app: any }> {
 
@@ -29,7 +28,7 @@ export class Examples extends React.Component<{}, { app: any }> {
 
   constructor(props: any) {
     super(props);
-    this.state = { app: null }
+    this.state = { app: <Intro /> }
 
     this.g = RLGDesktop('');
     const p = this.g.params();
@@ -59,12 +58,13 @@ export class Examples extends React.Component<{}, { app: any }> {
   public render() {
     return (
       <ErrorBoundary>
-        <ReactLayout name='desktop' g={this.g}>
+        <ReactLayout name='intro' g={this.g}>
           <div data-layout={{ name: 'title' }} style={{backgroundColor: 'black', textAlign: 'center'}}>
             <Title>React Layout Generator Examples</Title>
           </div>
           <div data-layout={{ name: 'header' }} style={{backgroundColor: 'black'}}>
             <NavBar elements={[
+              { component: <Intro />, name: 'Home' },
               { component: <DeskTop />, name: 'DeskTop' },
               { component: <CardDeck />, name: 'CardDeck' },
               { component: <Solitaire />, name: 'Solitaire' }
@@ -73,7 +73,7 @@ export class Examples extends React.Component<{}, { app: any }> {
             />
           </div>
 
-          <div data-layout={{ name: 'content' }} style={{margin: 20}} >
+          <div data-layout={{ name: 'content' }} >
             {this.state.app}
           </div>
 
