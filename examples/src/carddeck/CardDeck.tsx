@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { IUnit, PositionRef } from '../../../src/components/Layout';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
-import Deck from './Deck';
+import Deck from '../algos/Deck';
 
 const Description = styled.p`
   font-family: Arial, Helvetica, sans-serif;
@@ -22,7 +22,7 @@ interface ICardDeckState {
 
 export default class CardDeck extends React.Component<ICardDeckProps, ICardDeckState> {
 
-  private _g = RLGDynamic('rlg.CardDeck.example');
+  private _g = RLGDynamic('example.CardDeck');
   private _deck = new Deck();
 
   constructor(props: ICardDeckProps) {
@@ -33,7 +33,7 @@ export default class CardDeck extends React.Component<ICardDeckProps, ICardDeckS
   public render() {
     return (
       <ReactLayout
-        name={'reactLayout.cardDeck.example'}
+        name={'example.cardDeck'}
         editLayout={true}
         g={this._g}
       >

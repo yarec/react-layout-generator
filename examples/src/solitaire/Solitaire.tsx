@@ -30,8 +30,8 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
 
   private _stock: Stock;
   private _waste: Waste;
-  private _foundation: Foundation[] = [];
-  private _tableau: Tableau[] = [];
+  private _foundation: Foundation;
+  private _tableau: Tableau;
 
   constructor(props: ISolitaireProps) {
     super(props);
@@ -46,11 +46,11 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
   }
 
   public setTableau(tableau: Tableau) {
-    this._tableau.push(tableau);
+    this._tableau = tableau;
   }
 
   public setFoundation(foundation: Foundation) {
-    this._foundation.push(foundation);
+    this._foundation = foundation;
   }
 
   /**
@@ -59,9 +59,10 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
   public shuffleAndPopulate = () => {
     if (this._stock && this._tableau) {
       this._stock.shuffle();
-      this._tableau.map((tableau) => {
-        tableau.populate(this._stock);
-      });
+      this._foundation.clear();
+      this._waste.clear();
+      this._tableau.clear();
+      this._tableau.populate(this._stock);
     }
   }
 
@@ -78,23 +79,24 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
   public render() {
     return (
       <ReactLayout
-        name='Solitaire'
+        name='example.Solitaire'
         editLayout={false}
         g={this._g}
       >
-        <Stock
+        <div
           data-layout={{
             name: 'stock',
             position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
               location: { x: 25, y: 25 },
               size: { width: 100, height: 150 }
             }
           }}
-          connect={this.setStock}
-        />
+        >
+          <Stock connect={this.setStock} />
+        </div>
 
-        <Waste
+        <div
           data-layout={{
             name: 'waste',
             position: {
@@ -103,10 +105,11 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
               size: { width: 100, height: 150 }
             }
           }}
-          connect={this.setWaste}
-        />
+        >
+          <Waste connect={this.setWaste} />
+        </div>
 
-        <Foundation
+        <div
           data-layout={{
             name: 'foundation',
             position: {
@@ -115,21 +118,23 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
               size: { width: 100, height: 150 }
             }
           }}
-          connect={this.setFoundation}
-          g={this._g}
-        />
+        >
+          <Foundation connect={this.setFoundation} />
+        </div>
 
-        <Tableau data-layout={{
-          name: 'tableau',
-          position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-            location: { x: 250, y: 250 },
-            size: { width: 100, height: 150 }
-          }
-        }}
-          connect={this.setTableau}
-          g={this._g}
-        />
+        <div
+          data-layout={{
+            name: 'tableau',
+            position: {
+              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+              location: { x: 250, y: 250 },
+              size: { width: 100, height: 150 }
+            }
+          }}
+        >
+          <Tableau connect={this.setTableau} />
+        </div>
+        
       </ReactLayout>
     );
   }

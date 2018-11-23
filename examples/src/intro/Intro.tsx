@@ -33,11 +33,8 @@ export default class Intro extends React.Component {
           }
         }}
         >
-          <Title>
-            Code
-          </Title>
           <Description>
-            Fully typed written in typescript with strict linting. Small runtime only including a few other small libraries.
+            A typescript library with a small runtime (~50K).
           </Description>
         </div>
 

@@ -1,77 +1,81 @@
 import * as React from 'react';
 
-import { IUnit } from '../../../src/components/Layout';
+import { IUnit, PositionRef } from '../../../src/components/Layout';
+import RLGDynamic from '../../../src/generators/RLGDynamic';
+import ReactLayout from '../../../src/ReactLayout';
+import Deck from '../algos/Deck'
 import { cardHeight, cardWidth, stockPosition } from './config';
 
 interface IStockProps {
   connect: (i: Stock) => void;
 }
 
-export default class Stock extends React.Component<IStockProps> {
+interface IStockState {
+  update: number;
+}
 
-  public stock: string[] = [];
+export default class Stock extends React.Component<IStockProps, IStockState> {
+
+  private _g = RLGDynamic('example.solitaire.stock');
+  private _deck: Deck = new Deck();
 
   constructor(props: IStockProps) {
     super(props);
-    this.stock = [];
-    this.reset();
-    this.shuffle();
-  }
-
-  public reset() {
-    this.stock = [];
-
-    const suits = ['H', 'S', 'C', 'D'];
-    const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
-
-    for (const suit in suits) {
-      if (suit) {
-        for (const value in values) {
-          if (value) {
-            this.stock.push(`${values[value]}${suits[suit]}`);
-          }
-        }
-      }
+    this.state = {
+      update: 0
     }
-  }
-
-  public shuffle = () => {
-    const { stock } = this;
-    let m = stock.length;
-    let i;
-
-    while (m) {
-      i = Math.floor(Math.random() * m--);
-      [stock[m], stock[i]] = [stock[i], stock[m]];
-    }
-
-    return this;
+    this._deck.reset();
+    this._deck.shuffle();
   }
 
   public componentDidMount = () => {
     this.props.connect(this);
   }
 
+  public shuffle = () => {
+    this._deck.shuffle();
+    this._g.clear();
+    this.setState({ update: this.state.update + 1 });
+  }
+
   public dealOne = () => {
-    return this.stock.pop();
+    return this._deck.cards.pop();
   }
 
   public render = () => {
-    const index = this.stock.length - 1;
-    const e = require('../assets/cards/back.jpg')
+    return (
+      <ReactLayout
+        name={'example.solitaire.stock'}
+        editLayout={true}
+        g={this._g}
+      >
+        {this.createElements()}
+      </ReactLayout>
+    )
+  }
+
+  private createElement = (card: string) => {
+    const e = require(`../assets/cards/${card}.jpg`);
+
     return (
       <div
-        key={this.stock[index]}
+        key={card}
         data-layout={{
-          name: this.stock[index],
+          name: card,
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-            location: { x: stockPosition.x, y: stockPosition.y },
-            size: { width: cardWidth, height: cardHeight }
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100 }
           }
         }} >
-        <img width={100} height={150} src={e} />
+        <img width={'100%'} height={'100%'} src={e} />
       </div >
     )
+  }
+
+  private createElements = () => {
+    return this._deck.cards.map((card) => {
+      return this.createElement(card);
+    })
   }
 }

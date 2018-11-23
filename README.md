@@ -2,11 +2,11 @@
 
 *This document is a work in progress. In the meantime see the source code for details.*
 
-React Layout Generator (RLG) is a css in typescript (javascript) component for dynamic and responsive layout. It started with an experimental simple state machine that produced a sequence of blocks (think grid) and then was expanded to allow responsive and dynamic layout.
+React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It started with an experimental simple state machine that produced a sequence of blocks (think grid) and then was expanded to allow responsive and dynamic layout.
 
 This component was inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
-## Use
+## Install
 
 For the time being, you will need to clone or fork the project to evaluate.
 
@@ -26,6 +26,8 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ### Bugs
 
+* Use the extent prop in ReactLayout props rather than use 
+* Cleanup initialization of generators and viewport to potentially allow generators to be reused. See 1) ReactLayout initLayout which is called at the beginning of each render and 2) Generator which calls the user supplied init function during the initLayout call.
 * Fix flickering when making the browser window smaller for elements in RLGColumns. This appears to be due to an update issue causing the computed element size to include the scroll bar since the initial layout is being used with the newer smaller element.
 
 ## Features
@@ -44,10 +46,11 @@ For the time being, you will need to clone or fork the project to evaluate.
 * Organization charts
 * Diagrams
 * Editors
+* Games
 
 ## Use
 
-The basic use is to use ReactLayout as a parent element flowed by one or more elements with a data-layout property.
+The basic use is to use ReactLayout as a parent element followed by zero or more elements with a data-layout property.
 
 ```html
 <ReactLayout />
@@ -61,13 +64,13 @@ The basic use is to use ReactLayout as a parent element flowed by one or more el
 </ReactLayout>
 ```
 
-ReactLayout can contain instances of ReactLayout. And as usual with React children of ReactLayout can be programmatically generated.
+ReactLayout can contain instances of ReactLayout. And as usual with React, children of ReactLayout can be programmatically generated.
 
 ### Responsive Desktop Layout
 
 *See examples/src/index.tsx.*
 
-The Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
+A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
 
 ```html
 <ReactLayout
@@ -124,7 +127,7 @@ It is possible to use a React component in some cases, such as styled-component 
   }
 ```
 
-This is because RLG uses css internally and css only works on html. If you do use React component directly that does not do apply the style property to the root element of the component, it will not be displayed at the correct position.
+This is because RLG uses css internally and css only transforms html. If you do use React component directly that does not do apply the style property to the root element of the component, it will not be displayed at the correct position.
 
 ### Generator
 
@@ -159,7 +162,7 @@ function RLGEmpty(name: string) {
 
 This generator will not generate any elements even if it contains data-layout elements.
 
-To make it a useful dynamic generator just add a create function to the generator. Thats how the RLGDynamic generator is defined. It lets you define a layout manually and offers the best flexibility, but only limited responsiveness by using just the properties of the [position](#IPosition) interface.
+To make it a useful dynamic generator we just add a create function to the generator. That's how the RLGDynamic generator is defined. It lets you define a layout manually and offers the best flexibility, but only limited responsiveness by using just the properties of the [position](#IPosition) interface.
 
 ```javascript
 function RLGDynamic(name: string): IGenerator {
