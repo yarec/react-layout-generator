@@ -20,7 +20,7 @@ export default class Intro extends React.Component {
   public render() {
     return (
       <ReactLayout
-        name={'reactLayout.desktop.example'}
+        name={'reactLayout.intro.example'}
         editLayout={true}
         g={this._g}
       >

@@ -20,6 +20,7 @@ export interface IGenerator {
   reset: () => void;
   next: () => Layout | undefined;
   lookup: (name: string) => Layout | undefined;
+  clear: () => void;
   create?: Create;
 }
 
@@ -78,6 +79,12 @@ export default class Generator implements IGenerator {
     //     item.g.reset();
     //   }
     // })
+  }
+
+  public clear = () => {
+    this._layouts = new Layouts([]);
+    this.state = this.start;
+    this._layoutsIterator = this._layouts.values();
   }
 
   public start = (): Layout | undefined => {
