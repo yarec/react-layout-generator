@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { IPosition } from './components/Layout';
+import { IContext, IPosition } from './components/Layout';
 import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
@@ -121,7 +121,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     index: number,
     count: number,
     name: string,
-    position: IPosition
+    position: IPosition,
+    context: IContext
   ) => {
 
     let b = this._g.lookup(name);
@@ -141,7 +142,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     index: number,
     count: number,
     name: string,
-    position: IPosition
+    position: IPosition,
+    context: IContext
   ) => {
 
     const b = this._g.lookup(name);
@@ -176,19 +178,23 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
         gInProgress -= 1;
 
-        return (
-          <>
-            {React.cloneElement(child,
-              {
-                key: b.name,
-                extent: { width: rect.width, height: rect.height },
-                style: { ...this.props.style, ...child.props.style, ...style }
-              },
-              child.props.children
-            )}
-            {editors}
-          </>
-        )
+        if (b.context) {
+          console.log('TODO context')
+        } else {
+          return (
+            <>
+              {React.cloneElement(child,
+                {
+                  key: b.name,
+                  extent: { width: rect.width, height: rect.height },
+                  style: { ...this.props.style, ...child.props.style, ...style }
+                },
+                child.props.children
+              )}
+              {editors}
+            </>
+          )
+        }
       }
     }
 
@@ -200,7 +206,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     // console.log('createElement', child.type, child.props)
     if (p && p.name) {
-      return this.createPositionedElement(child, index, count, p.name, p.position);
+      return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
@@ -214,7 +220,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     // console.log('createElement', child.type, child.props)
     if (p && p.name) {
-      return this.updatePositionedElement(child, index, count, p.name, p.position);
+      return this.updatePositionedElement(child, index, count, p.name, p.position, p.context);
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
@@ -247,7 +253,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     if (this.state.width && this.state.height) {
       const count = React.Children.count(this.props.children);
       gInProgress += count;
-      
+
       // Phase I create if necessary
       React.Children.map(this.props.children, (child, i) => {
         if (child) {

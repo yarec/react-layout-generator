@@ -60,6 +60,12 @@ export interface IEdit {
   updateParam?: UpdateParam;
 }
 
+export interface IContext {
+  existing: (l: Layout) => Layout[];
+  drop?: (l: Layout, ref: any) => boolean;
+  add?:  (l: Layout, ref: any) => Layout[];
+}
+
 export interface IHandlers {
   onMouseDown?: () => void;
 }
@@ -76,6 +82,7 @@ export interface IPosition {
     source: IAlign,
     self: IAlign
   },
+  context?: IContext;
   edit?: IEdit[];
   handlers?: IHandlers; 
   location: IPoint;
@@ -100,6 +107,11 @@ export default class Layout {
   get generator() {
     return this._g;
   }
+
+  get context() {
+    return null;
+  }
+
   private _name: string;
   private _position: IPosition;
   private _changed: boolean;

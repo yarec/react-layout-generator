@@ -1,37 +1,17 @@
 import * as React from 'react';
 
-import { IUnit } from '../../../src/components/Layout';
-import { IGenerator } from '../../../src/generators/Generator';
-import ReactLayout, { IReactLayoutProps } from '../../../src/ReactLayout';
-import { cardWidth, tableauPosition } from './config';
 import Stock from './Stock';
 
-export interface ITableauStackProps extends IReactLayoutProps {
-  stack: number;
-  connect: (i: TableauStack) => void;
-}
-
-export default class TableauStack extends React.Component<ITableauStackProps> {
-
+export default class TableauStack {
   private _stack: string[] = [];
-  private _g: IGenerator;
-
-  constructor(props: ITableauStackProps) {
-    super(props);
-    this._g = this.props.g;
-  }
-
-  public componentDidMount = () => {
-    this.props.connect(this);
-  }
 
   public clear = () => {
-    this._g.clear();
+    this._stack = [];
   }
 
-  public populate(stock: Stock) {
+  public populate(stock: Stock, index: number) {
     this._stack = [];
-    for (let i = 1; i < this.props.stack; i++) {
+    for (let i = 1; i < index; i++) {
       const card = stock.pop();
       if (card) {
         this._stack.push(card);
@@ -39,38 +19,15 @@ export default class TableauStack extends React.Component<ITableauStackProps> {
     }
   }
 
-  public render() {
-    return (
-      <ReactLayout g={this.props.g} >
-        {this.createElements()}
-      </ReactLayout>
-    )
+  public cards() {
+    return this._stack.map((name, i) => {
+      return (
+        <img key={name} src={this.path(name)} />
+      );
+    })
   }
 
   private path = (name: string) => {
     return require(`../assets/cards/${name}.jpg`)
-  }
-
-  private createElements() {
-    const height = 7.5;
-    const width = 5;
-    const visible = 2;
-    return this._stack.map((name, i) => {
-      return (
-      <div
-        key={`${name}${i}`}
-        data-layout={{
-          name,
-          position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
-            location: { x: tableauPosition.x + this.props.stack * cardWidth, y: tableauPosition.y + i * visible },
-            size: { width, height }
-          }
-        }}
-      >
-        <img src={this.path(name)} />
-      </div >
-      );
-    })
   }
 }

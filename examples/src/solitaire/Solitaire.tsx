@@ -2,20 +2,13 @@ import * as React from 'react';
 
 import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
-import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
 
-import { foundationGenerator, stockGenerator, tableauGenerator, wasteGenerator } from './config';
-import Foundation from './Foundation';
+import FoundationStack from './FoundationStack';
+import solitaireGenerator from './solitaireGenerator';
 import Stock from './Stock';
-import Tableau from './Tableau';
+import TableauStack from './TableauStack';
 import Waste from './Waste';
-
-/**
- * This class and other solitaire components need to know the instance values
- * of its children. This is done by passing a callback connect function to each
- * child which is called in their componentDidMount method.
- */
 
 /**
  * Names of layouts are based on position not on the card names.
@@ -27,51 +20,33 @@ export interface ISolitaireProps {
 
 export default class Solitaire extends React.Component<ISolitaireProps> {
 
-  private _g: IGenerator = RLGDynamic('rlg.solitaire.example');
+  private _g: IGenerator = solitaireGenerator('example.solitaire');
 
   private _stock: Stock;
   private _waste: Waste;
-  private _foundation: Foundation;
-  private _tableau: Tableau;
+  private _foundation: FoundationStack[];
+  private _tableau: TableauStack[];
 
   constructor(props: ISolitaireProps) {
     super(props);
 
-    this.shuffle.bind(this);
-  }
-
-  public setStock = (stock: Stock) => {
-    this._stock = stock;
-  }
-
-  public setWaste = (waste: Waste) => {
-    this._waste = waste;
-  }
-
-  public setTableau = (tableau: Tableau) => {
-    this._tableau = tableau;
-  }
-
-  public setFoundation = (foundation: Foundation) => {
-    this._foundation = foundation;
+    this.newGame.bind(this);
   }
 
   /**
    * Moves the top cards to the tableau after each shuffle.
    */
-  public shuffle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (this._stock && this._tableau) {
-      this._stock.shuffle();
-      this._foundation.clear();
-      this._waste.clear();
-      this._tableau.clear();
-      this._tableau.populate(this._stock);
-    }
+  public newGame = (event: React.MouseEvent<HTMLButtonElement>) => {
+    this._stock.shuffle();
+    this._waste.clear();
+    this._foundation.forEach((foundation) => { foundation.clear() });
+    this._tableau.forEach((tableau) => { tableau.clear() });
+    this._tableau.forEach((tableau, i) => { tableau.populate(this._stock, i) });
   }
 
   /**
    * Moves the top (3) cards to the waste pushing any
-   * existing cards to the stock.
+   * existing cards to the stock when the stock is touched or clicked.
    */
   public populateWaste = () => {
     if (this._stock && this._waste) {
@@ -88,67 +63,117 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
       >
         <div
           data-layout={{
-            name: 'stock',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-              location: { x: 25, y: 25 },
-              size: { width: 100, height: 150 }
-            }
+            name: 'stock'
           }}
         >
-          <Stock connect={this.setStock} g={stockGenerator} />
+          {this._stock.cards()}
         </div>
 
         <div
           data-layout={{
-            name: 'waste',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-              location: { x: 250, y: 25 },
-              size: { width: 100, height: 150 }
-            }
+            name: 'waste'
           }}
         >
-          <Waste connect={this.setWaste} g={wasteGenerator} />
+          {this._waste.cards()}
         </div>
 
         <div
           data-layout={{
-            name: 'foundation',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-              location: { x: 250, y: 25 },
-              size: { width: 100, height: 150 }
-            }
+            name: 'foundation1'
           }}
         >
-          <Foundation connect={this.setFoundation} g={foundationGenerator} />
+          {this._foundation[0].cards()}
+        </div>
+        <div
+          data-layout={{
+            name: 'foundation2'
+          }}
+        >
+          {this._foundation[1].cards()}
+        </div>
+        <div
+          data-layout={{
+            name: 'foundation3'
+          }}
+        >
+          {this._foundation[2].cards()}
         </div>
 
         <div
           data-layout={{
-            name: 'tableau',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
-              location: { x: 250, y: 250 },
-              size: { width: 100, height: 150 }
-            }
+            name: 'foundation4'
           }}
         >
-          <Tableau connect={this.setTableau} g={tableauGenerator} />
+          {this._foundation[3].cards()}
         </div>
 
-                <button data-layout={{
-          name: 'shuffle',
+        <div
+          data-layout={{
+            name: 'tableau1'
+          }}
+        >
+          {this._tableau[0].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau2'
+          }}
+        >
+          {this._tableau[1].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau3'
+          }}
+        >
+          {this._tableau[2].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau4'
+          }}
+        >
+          {this._tableau[3].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau5'
+          }}
+        >
+          {this._tableau[4].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau6'
+          }}
+        >
+          {this._tableau[5].cards()}
+        </div>
+
+        <div
+          data-layout={{
+            name: 'tableau7'
+          }}
+        >
+          {this._tableau[6].cards()}
+        </div>
+
+        <button data-layout={{
+          name: 'New Game',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
             location: { x: 80, y: 80 },
-            size: { width: 100, height: 24 }
+            size: { width: 5, height: 2 }
           }
         }}
-          onClick={this.shuffle}
+          onClick={this.newGame}
         >
-          Shuffle
+          New Game
         </button>
 
       </ReactLayout>
