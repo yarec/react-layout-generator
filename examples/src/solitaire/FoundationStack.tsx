@@ -1,10 +1,9 @@
 import * as React from 'react';
 
 import { IUnit } from '../../../src/components/Layout';
+import { IGenerator } from '../../../src/generators/Generator';
 import ReactLayout, { IReactLayoutProps } from '../../../src/ReactLayout';
-
 import { cardWidth, foundationPosition } from './config';
-
 import Stock from './Stock';
 
 export interface IFoundationStackProps extends IReactLayoutProps {
@@ -15,19 +14,25 @@ export interface IFoundationStackProps extends IReactLayoutProps {
 export default class FoundationStack extends React.Component<IFoundationStackProps> {
 
   private stack: string[] = [];
+  private _g: IGenerator;
 
   constructor(props: IFoundationStackProps) {
     super(props);
+    this._g = this.props.g;
   }
 
   public componentDidMount = () => {
     this.props.connect(this);
   }
 
+  public clear = () => {
+    this._g.clear();
+  }
+
   public populate(stock: Stock) {
     this.stack = [];
     for (let i = 1; i < this.props.stack; i++) {
-      const card = stock.dealOne();
+      const card = stock.pop();
       if (card) {
         this.stack.push(card);
       }

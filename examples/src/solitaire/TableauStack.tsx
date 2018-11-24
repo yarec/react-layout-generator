@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { IUnit } from '../../../src/components/Layout';
+import { IGenerator } from '../../../src/generators/Generator';
 import ReactLayout, { IReactLayoutProps } from '../../../src/ReactLayout';
 import { cardWidth, tableauPosition } from './config';
 import Stock from './Stock';
@@ -13,19 +14,25 @@ export interface ITableauStackProps extends IReactLayoutProps {
 export default class TableauStack extends React.Component<ITableauStackProps> {
 
   private _stack: string[] = [];
+  private _g: IGenerator;
 
   constructor(props: ITableauStackProps) {
     super(props);
+    this._g = this.props.g;
   }
 
   public componentDidMount = () => {
     this.props.connect(this);
   }
 
+  public clear = () => {
+    this._g.clear();
+  }
+
   public populate(stock: Stock) {
     this._stack = [];
     for (let i = 1; i < this.props.stack; i++) {
-      const card = stock.dealOne();
+      const card = stock.pop();
       if (card) {
         this._stack.push(card);
       }

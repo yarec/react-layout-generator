@@ -1,19 +1,30 @@
 import * as React from 'react';
+
 import { IUnit } from '../../../src/components/Layout';
+import { IGenerator } from '../../../src/generators/Generator';
+import ReactLayout from '../../../src/ReactLayout'
 import Stock from './Stock';
 
-import { cardHeight, cardHorizontalOffset, cardWidth, wastePosition } from './config';
+import { 
+  cardHeight, 
+  cardHorizontalOffset, 
+  cardWidth, 
+  wasteGenerator, 
+  wastePosition } from './config';
 
 export interface IWasteProps {
   connect: (i: Waste) => void;
+  g: IGenerator;
 }
 
 export default class Waste extends React.Component<IWasteProps> {
 
-  public waste: string[] = [];
+  private waste: string[] = [];
+  private _g: IGenerator;
 
   constructor(props: IWasteProps) {
     super(props);
+    this._g = this.props.g;
   }
 
   public componentDidMount = () => {
@@ -22,18 +33,18 @@ export default class Waste extends React.Component<IWasteProps> {
 
   public populate = (stock: Stock) => {
     this.waste.map((oldCard) => {
-      stock.stock.unshift(oldCard);
+      stock.unshift(oldCard);
     })
 
-    let card = stock.dealOne();
+    let card = stock.pop();
     if (card) {
       this.waste.push(card)
     }
-    card = stock.dealOne()
+    card = stock.pop()
     if (card) {
       this.waste.push(card)
     }
-    card = stock.dealOne()
+    card = stock.pop()
     if (card) {
       this.waste.push(card)
     }
@@ -41,6 +52,10 @@ export default class Waste extends React.Component<IWasteProps> {
 
   public path = (name: string) => {
     return require(`../assets/cards/${name}.jpg`)
+  }
+
+  public clear = () => {
+    this._g.clear();
   }
 
   public createElement(index: number) {
@@ -68,11 +83,13 @@ export default class Waste extends React.Component<IWasteProps> {
 
   public render = () => {
     return (
-      <>
+      <ReactLayout 
+        g={wasteGenerator}
+      >
         {this.createElement(0)}
         {this.createElement(1)}
         {this.createElement(2)}
-      </>
+      </ReactLayout>
     )
   }
 }

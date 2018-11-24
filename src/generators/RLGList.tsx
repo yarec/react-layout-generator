@@ -4,7 +4,7 @@ import Params from '../components/Params';
 import Generator, {ICreate, IGenerator} from '../generators/Generator';
 import { ISize } from '../types';
 
-export default function RLGList(name: string) {
+export default function RLGList(name: string, parent?: IGenerator) {
 
   const _titleHeight = 34;
   const _itemHeight = 24;
@@ -62,5 +62,5 @@ export default function RLGList(name: string) {
     return l;
   }
 
-  return new Generator(name, init, _params, create);
+  return new Generator(name, init, _params, create, parent);
 }

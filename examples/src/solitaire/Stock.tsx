@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { IUnit, PositionRef } from '../../../src/components/Layout';
-import RLGDynamic from '../../../src/generators/RLGDynamic';
+import { IUnit } from '../../../src/components/Layout';
+import { IGenerator } from '../../../src/generators/Generator';
 import ReactLayout from '../../../src/ReactLayout';
-import Deck from '../algos/Deck'
-import { cardHeight, cardWidth, stockPosition } from './config';
+import Deck from '../algos/Deck';
 
 interface IStockProps {
   connect: (i: Stock) => void;
+  g: IGenerator;
 }
 
 interface IStockState {
@@ -16,11 +16,12 @@ interface IStockState {
 
 export default class Stock extends React.Component<IStockProps, IStockState> {
 
-  private _g = RLGDynamic('example.solitaire.stock');
+  private _g: IGenerator;
   private _deck: Deck = new Deck();
 
   constructor(props: IStockProps) {
     super(props);
+    this._g = this.props.g;
     this.state = {
       update: 0
     }
@@ -38,8 +39,12 @@ export default class Stock extends React.Component<IStockProps, IStockState> {
     this.setState({ update: this.state.update + 1 });
   }
 
-  public dealOne = () => {
+  public pop = () => {
     return this._deck.cards.pop();
+  }
+
+  public unshift = (card: string) => {
+    return this._deck.cards.unshift(card);
   }
 
   public render = () => {

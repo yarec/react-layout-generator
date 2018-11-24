@@ -6,8 +6,8 @@ import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
 
-const Title = styled.h2`
-`
+// const Title = styled.h2`
+// `
 
 const Description = styled.p`
   word-break: normal;

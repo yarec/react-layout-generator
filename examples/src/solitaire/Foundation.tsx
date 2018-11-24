@@ -1,17 +1,21 @@
 import * as React from 'react';
 
+import { IGenerator } from '../../../src/generators/Generator';
 import { IReactLayoutProps } from '../../../src/ReactLayout';
 import FoundationStack from './FoundationStack';
 
 export interface IFoundationProps extends IReactLayoutProps {
   connect: (i: Foundation) => void;
+  g: IGenerator;
 }
 
 export default class Foundation extends React.Component<IFoundationProps> {
-  private foundationStacks: FoundationStack[] = [];
+  private _foundationStacks: FoundationStack[] = [];
+  private _g: IGenerator;
 
   constructor(props: IFoundationProps) {
     super(props);
+    this._g = this.props.g;
   }
 
   public componentDidMount = () => {
@@ -19,6 +23,10 @@ export default class Foundation extends React.Component<IFoundationProps> {
   }
 
   public clear = () => {
+    this._g.clear();
+    this._foundationStacks.forEach((foundation) => {
+      foundation.clear();
+    });
   }
 
   public render() {
@@ -33,7 +41,7 @@ export default class Foundation extends React.Component<IFoundationProps> {
   }
 
   private connect = (i: FoundationStack) => {
-    this.foundationStacks.push(i);
+    this._foundationStacks.push(i);
   }
 
 }

@@ -22,6 +22,7 @@ export interface IGenerator {
   lookup: (name: string) => Layout | undefined;
   clear: () => void;
   create?: Create;
+  parent?: () => IGenerator | undefined;
 }
 
 export default class Generator implements IGenerator {
@@ -34,8 +35,9 @@ export default class Generator implements IGenerator {
   private _layoutsIterator: IterableIterator<Layout> | undefined;
   private _init: IInit;
   private _create: Create | undefined;
+  private _parent: IGenerator | undefined;
 
-  constructor(name: string, init: IInit, params: Params, create?: Create) {
+  constructor(name: string, init: IInit, params: Params, create?: Create, parent?: IGenerator) {
     this._name = name;
     this._init = init;
     this._create = create;
@@ -43,6 +45,7 @@ export default class Generator implements IGenerator {
     this._layoutsIterator = this._layouts.values();
     this.state = this.start;
     this._params = params;
+    this._parent = parent;
   }
 
   public name = () => {
@@ -67,6 +70,11 @@ export default class Generator implements IGenerator {
     }
     return undefined;
   }
+
+  public parent = (): IGenerator | undefined => {
+    return this._parent;
+  }
+
 
   public reset = () => {
 

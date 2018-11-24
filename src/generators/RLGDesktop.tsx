@@ -20,7 +20,7 @@ function updateParamHeight(updated: IRect, edit: IEdit) {
   }
 }
 
-export default function RLGDesktop(name: string) {
+export default function RLGDesktop(name: string, parent?: IGenerator) {
 
   const _fullWidthHeaders = 0;
   const _titleHeight = 50;
@@ -277,5 +277,5 @@ export default function RLGDesktop(name: string) {
     ])
   }
 
-  return new Generator(name, init, _params);
+  return new Generator(name, init, _params, undefined, parent);
 }

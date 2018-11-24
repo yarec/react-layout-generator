@@ -5,6 +5,7 @@ import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
 
+import { foundationGenerator, stockGenerator, tableauGenerator, wasteGenerator } from './config';
 import Foundation from './Foundation';
 import Stock from './Stock';
 import Tableau from './Tableau';
@@ -35,28 +36,30 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
 
   constructor(props: ISolitaireProps) {
     super(props);
+
+    this.shuffle.bind(this);
   }
 
-  public setStock(stock: Stock) {
+  public setStock = (stock: Stock) => {
     this._stock = stock;
   }
 
-  public setWaste(waste: Waste) {
+  public setWaste = (waste: Waste) => {
     this._waste = waste;
   }
 
-  public setTableau(tableau: Tableau) {
+  public setTableau = (tableau: Tableau) => {
     this._tableau = tableau;
   }
 
-  public setFoundation(foundation: Foundation) {
+  public setFoundation = (foundation: Foundation) => {
     this._foundation = foundation;
   }
 
   /**
    * Moves the top cards to the tableau after each shuffle.
    */
-  public shuffleAndPopulate = () => {
+  public shuffle = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (this._stock && this._tableau) {
       this._stock.shuffle();
       this._foundation.clear();
@@ -93,7 +96,7 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
             }
           }}
         >
-          <Stock connect={this.setStock} />
+          <Stock connect={this.setStock} g={stockGenerator} />
         </div>
 
         <div
@@ -106,7 +109,7 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
             }
           }}
         >
-          <Waste connect={this.setWaste} />
+          <Waste connect={this.setWaste} g={wasteGenerator} />
         </div>
 
         <div
@@ -119,7 +122,7 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
             }
           }}
         >
-          <Foundation connect={this.setFoundation} />
+          <Foundation connect={this.setFoundation} g={foundationGenerator} />
         </div>
 
         <div
@@ -132,9 +135,22 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
             }
           }}
         >
-          <Tableau connect={this.setTableau} />
+          <Tableau connect={this.setTableau} g={tableauGenerator} />
         </div>
-        
+
+                <button data-layout={{
+          name: 'shuffle',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            location: { x: 80, y: 80 },
+            size: { width: 100, height: 24 }
+          }
+        }}
+          onClick={this.shuffle}
+        >
+          Shuffle
+        </button>
+
       </ReactLayout>
     );
   }

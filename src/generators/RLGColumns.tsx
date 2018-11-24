@@ -4,7 +4,7 @@ import Params from '../components/Params';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
 import { ISize } from '../types';
 
-export default function RLGColumns(name: string) {
+export default function RLGColumns(name: string, parent?: IGenerator) {
 
   const defaultItemWidth = 100;
 
@@ -99,5 +99,5 @@ export default function RLGColumns(name: string) {
     return l;
   }
 
-  return new Generator(name, init, _params, create);
+  return new Generator(name, init, _params, create, parent);
 }
