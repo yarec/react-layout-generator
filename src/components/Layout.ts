@@ -3,8 +3,9 @@ import getExtendElement, {ExtendElement} from '../editors/extendElement';
 import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import {UpdateParam} from '../editors/updateParam';
 import { IGenerator } from '../generators/Generator';
-import { IPoint, ISize, Rect } from '../types';
+import { IPoint, IRect, ISize, Rect } from '../types';
 import { clone } from '../utils';
+import Params from './Params';
 
 export interface IAlign {
   x: number;
@@ -60,11 +61,10 @@ export interface IEdit {
   updateParam?: UpdateParam;
 }
 
-export interface IContext {
-  existing: (l: Layout) => Layout[];
-  drop?: (l: Layout, ref: any) => boolean;
-  add?:  (l: Layout, ref: any) => Layout[];
-}
+export type IPositionChildren = (
+  start: IRect, 
+  params: Params, 
+  index: number) => IRect | undefined;
 
 export interface IHandlers {
   onMouseDown?: () => void;
@@ -82,7 +82,7 @@ export interface IPosition {
     source: IAlign,
     self: IAlign
   },
-  context?: IContext;
+  positionChildren?: IPositionChildren;
   edit?: IEdit[];
   handlers?: IHandlers; 
   location: IPoint;
@@ -108,8 +108,8 @@ export default class Layout {
     return this._g;
   }
 
-  get context() {
-    return null;
+  get positionChildren() {
+    return this._positionChildren;
   }
 
   private _name: string;
@@ -117,14 +117,16 @@ export default class Layout {
   private _changed: boolean;
   private _cached: Rect;
   private _g: IGenerator;
+  private _positionChildren: IPositionChildren | undefined;
 
   constructor(name: string, p: IPosition, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name;
-    this._position = p;
+    this._position = clone(p);
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 });
     this._changed = true;
     this._g = g;
+    this._positionChildren = this._position.positionChildren;
 
     // Convert percents to decimal
     this._position.units.origin.x *= .01;
@@ -277,6 +279,13 @@ export default class Layout {
       height: (p.height / size.height)
     }
   }
+
+//   private scalePreserve = (width: number, height: number) => {
+//     const size = this._g.params().get('viewport') as ISize;
+//     const ratio = Math.min(size.width / width, size.height / height);
+
+//     return { width: width*ratio, height: height*ratio };
+//  }
 
   /**
    * Defines the origin of location in percent

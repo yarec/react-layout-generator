@@ -11,6 +11,7 @@ export default class Stock  {
   }
 
   public shuffle = () => {
+    this._deck.reset();
     this._deck.shuffle();
   }
 
@@ -29,7 +30,7 @@ export default class Stock  {
   private createElement = (card: string) => {
     const e = require(`../assets/cards/${card}.jpg`);
     return (
-        <img width={'100%'} height={'100%'} src={e} />
+        <img key={card} src={e} />
     )
   }
 

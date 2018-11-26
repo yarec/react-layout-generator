@@ -6,8 +6,8 @@ const params = new Params([
   ['viewport', { width: 1000, height: 1000 }]
 ])
 
-function init(g: IGenerator) {
-  return g.layouts();
+function init(_g: IGenerator) {
+  return _g.layouts();
 }
 
 function create(args: ICreate) {

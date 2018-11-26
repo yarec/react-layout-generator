@@ -18,30 +18,52 @@ export interface ISolitaireProps {
   name?: string;
 }
 
-export default class Solitaire extends React.Component<ISolitaireProps> {
+interface  ISolitaireState {
+  update: number;
+}
+
+export default class Solitaire extends React.Component<ISolitaireProps, ISolitaireState> {
 
   private _g: IGenerator = solitaireGenerator('example.solitaire');
 
   private _stock: Stock;
   private _waste: Waste;
-  private _foundation: FoundationStack[];
-  private _tableau: TableauStack[];
+  private _foundation: FoundationStack[] = [];
+  private _tableau: TableauStack[] = [];
 
   constructor(props: ISolitaireProps) {
     super(props);
 
+    this._stock = new Stock();
+    this._waste = new Waste();
+    for (let i = 0; i < 4; i++) {
+      this._foundation.push(new FoundationStack());
+    }
+    for (let i = 0; i < 7; i++) {
+      this._tableau.push(new TableauStack())
+    }
+
+    this.state = {update: 0};
+
     this.newGame.bind(this);
+
+    this.init();
+  }
+
+  public init() {
+    this._stock.shuffle();
+    this._waste.clear();
+    this._foundation.forEach((foundation) => { foundation.clear() });
+    this._tableau.forEach((tableau) => { tableau.clear() });
+    this._tableau.forEach((tableau, i) => { tableau.populate(this._stock, i) });
+    this.setState({update: this.state.update + 1});
   }
 
   /**
    * Moves the top cards to the tableau after each shuffle.
    */
   public newGame = (event: React.MouseEvent<HTMLButtonElement>) => {
-    this._stock.shuffle();
-    this._waste.clear();
-    this._foundation.forEach((foundation) => { foundation.clear() });
-    this._tableau.forEach((tableau) => { tableau.clear() });
-    this._tableau.forEach((tableau, i) => { tableau.populate(this._stock, i) });
+    this.init();
   }
 
   /**
@@ -62,6 +84,7 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
         g={this._g}
       >
         <div
+          key={'stock'}
           data-layout={{
             name: 'stock'
           }}
@@ -70,107 +93,29 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
         </div>
 
         <div
+          key={'waste'}
           data-layout={{
             name: 'waste'
           }}
+          style={{ backgroundColor: 'hsl(210,100%,80%)'}}
         >
           {this._waste.cards()}
         </div>
 
-        <div
-          data-layout={{
-            name: 'foundation1'
-          }}
-        >
-          {this._foundation[0].cards()}
-        </div>
-        <div
-          data-layout={{
-            name: 'foundation2'
-          }}
-        >
-          {this._foundation[1].cards()}
-        </div>
-        <div
-          data-layout={{
-            name: 'foundation3'
-          }}
-        >
-          {this._foundation[2].cards()}
-        </div>
+        {this.foundations()}
 
-        <div
-          data-layout={{
-            name: 'foundation4'
-          }}
-        >
-          {this._foundation[3].cards()}
-        </div>
+        {this.tableaus()}
 
-        <div
+        <button
+          key={'New Game'}
           data-layout={{
-            name: 'tableau1'
+            name: 'New Game',
+            position: {
+              units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+              location: { x: 80, y: 80 },
+              size: { width: 90, height: 24 }
+            }
           }}
-        >
-          {this._tableau[0].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau2'
-          }}
-        >
-          {this._tableau[1].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau3'
-          }}
-        >
-          {this._tableau[2].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau4'
-          }}
-        >
-          {this._tableau[3].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau5'
-          }}
-        >
-          {this._tableau[4].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau6'
-          }}
-        >
-          {this._tableau[5].cards()}
-        </div>
-
-        <div
-          data-layout={{
-            name: 'tableau7'
-          }}
-        >
-          {this._tableau[6].cards()}
-        </div>
-
-        <button data-layout={{
-          name: 'New Game',
-          position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
-            location: { x: 80, y: 80 },
-            size: { width: 5, height: 2 }
-          }
-        }}
           onClick={this.newGame}
         >
           New Game
@@ -178,6 +123,43 @@ export default class Solitaire extends React.Component<ISolitaireProps> {
 
       </ReactLayout>
     );
+  }
+
+  protected foundations = () => {
+    const jsx = [];
+    for (let i = 0; i < 4; i++) {
+      const name = `foundation${i + 1}`;
+      jsx.push(
+        <div
+          key={name}
+          data-layout={{
+            name
+          }}
+        >
+          {this._foundation[i].cards()}
+        </div>
+      );
+    }
+    return jsx;
+  }
+
+  protected tableaus = () => {
+    const jsx = [];
+    for (let i = 0; i < 7; i++) {
+      const name = `tableau${i + 1}`;
+      jsx.push(
+        <div
+          key={name}
+          data-layout={{
+            name
+          }}
+          style={{ backgroundColor: 'hsl(210,100%,80%)'}}
+        >
+          {this._tableau[i].cards()}
+        </div>
+      );
+    }
+    return jsx;
   }
 }
 

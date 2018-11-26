@@ -31,7 +31,7 @@ export default class Params {
 
     // Only set if changed
     if (r && !isEqual(v, r)) {
-      // console.log('Param.set ', key);
+      // console.log('Param.set ', key, v);
       this.changeCount += 1;
       this.params.set(key, v);
       return true;

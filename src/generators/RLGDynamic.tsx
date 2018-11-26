@@ -24,7 +24,7 @@ export default function RLGDynamic(name: string, parent?: IGenerator): IGenerato
   function create(args: ICreate): Layout {
 
     if (!args.position) {
-      console.error('TODO default position')
+      console.error(`TODO default position ${args.name}`)
     }
 
     const layout = new Layout(args.name, args.position, args.g);

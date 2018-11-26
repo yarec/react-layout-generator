@@ -11,7 +11,7 @@ export default class TableauStack {
 
   public populate(stock: Stock, index: number) {
     this._stack = [];
-    for (let i = 1; i < index; i++) {
+    for (let i = 0; i <= index; i++) {
       const card = stock.pop();
       if (card) {
         this._stack.push(card);
@@ -19,7 +19,7 @@ export default class TableauStack {
     }
   }
 
-  public cards() {
+  public cards = () => {
     return this._stack.map((name, i) => {
       return (
         <img key={name} src={this.path(name)} />

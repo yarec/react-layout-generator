@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { IContext, IPosition } from './components/Layout';
+import { IPosition, IPositionChildren } from './components/Layout';
 import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
@@ -92,7 +92,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   // }
 
   private onResize = (width: number, height: number) => {
-    console.log('onResize', this.props.name, width, height);
+    // console.log('onResize', this.props.name, width, height);
 
     if (this.state.width !== width || this.state.height !== height) {
       this.setState({ width, height });
@@ -122,7 +122,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     count: number,
     name: string,
     position: IPosition,
-    context: IContext
+    positionChildren: IPositionChildren
   ) => {
 
     let b = this._g.lookup(name);
@@ -143,7 +143,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     count: number,
     name: string,
     position: IPosition,
-    context: IContext
+    positionChildren: IPositionChildren
   ) => {
 
     const b = this._g.lookup(name);
@@ -178,8 +178,31 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
         gInProgress -= 1;
 
-        if (b.context) {
-          console.log('TODO context')
+        if (b && b.positionChildren) {
+          console.log('child', child.props)
+          return React.Children.map(child.props.children, (nestedChild, i) => {
+            const nestedRect = b.positionChildren!(rect, b.generator.params(), i);
+            if (nestedRect) {
+              const nestedStyle = tileStyle(nestedChild.props.style,
+                nestedRect.x,
+                nestedRect.y,
+                nestedRect.width,
+                nestedRect.height
+              );
+              console.log('nested child', nestedChild.type)
+              return (
+                React.cloneElement(nestedChild,
+                  {
+                    key: `${nestedChild.key}`,
+                    extent: { width: nestedRect.width, height: nestedRect.height },
+                    style: { ...this.props.style, ...nestedChild.props.style, ...nestedStyle }
+                  },
+                  nestedChild.props.children
+                )
+              );
+            }
+            return null;
+          });
         } else {
           return (
             <>
@@ -204,13 +227,13 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   private createElement = (child: JSX.Element, index: number, count: number) => {
     const p = child.props['data-layout'];
 
-    // console.log('createElement', child.type, child.props)
     if (p && p.name) {
       return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
     }
+
 
     return null;
   }
