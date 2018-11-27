@@ -1,7 +1,7 @@
 import { cursor } from '../editors/cursor';
-import getExtendElement, {ExtendElement} from '../editors/extendElement';
+import getExtendElement, { ExtendElement } from '../editors/extendElement';
 import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
-import {UpdateParam} from '../editors/updateParam';
+import { UpdateParam } from '../editors/updateParam';
 import { IGenerator } from '../generators/Generator';
 import { IPoint, IRect, ISize, Rect } from '../types';
 import { clone } from '../utils';
@@ -17,7 +17,10 @@ export interface IAlign {
  */
 export enum IUnit {
   pixel = 1,
-  percent
+  percent,
+  preserve,
+  preserveWidth,
+  preserveHeight
 }
 
 export interface IOrigin {
@@ -61,9 +64,9 @@ export interface IEdit {
   updateParam?: UpdateParam;
 }
 
-export type IPositionChildren = (
-  start: IRect, 
-  params: Params, 
+export type PositionChildren = (
+  layout: Layout,
+  params: Params,
   index: number) => IRect | undefined;
 
 export interface IHandlers {
@@ -82,9 +85,9 @@ export interface IPosition {
     source: IAlign,
     self: IAlign
   },
-  positionChildren?: IPositionChildren;
+  positionChildren?: PositionChildren;
   edit?: IEdit[];
-  handlers?: IHandlers; 
+  handlers?: IHandlers;
   location: IPoint;
   size: ISize;
 }
@@ -104,6 +107,10 @@ export default class Layout {
     return this._position.edit;
   }
 
+  get units() {
+    return this._position.units;
+  }
+
   get generator() {
     return this._g;
   }
@@ -117,7 +124,7 @@ export default class Layout {
   private _changed: boolean;
   private _cached: Rect;
   private _g: IGenerator;
-  private _positionChildren: IPositionChildren | undefined;
+  private _positionChildren: PositionChildren | undefined;
 
   constructor(name: string, p: IPosition, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
@@ -133,13 +140,19 @@ export default class Layout {
     this._position.units.origin.y *= .01;
 
     // Convert percents to decimal
-    if (this._position.units.location === IUnit.percent) {
+    if (this._position.units.location === IUnit.percent ||
+      this._position.units.location === IUnit.preserve ||
+      this._position.units.location === IUnit.preserveWidth ||
+      this._position.units.location === IUnit.preserveHeight) {
       this._position.location.x *= .01;
       this._position.location.y *= .01;
     }
 
     // Convert percents to decimal
-    if (this._position.units.size === IUnit.percent) {
+    if (this._position.units.size === IUnit.percent ||
+      this._position.units.size === IUnit.preserve ||
+      this._position.units.size === IUnit.preserveWidth ||
+      this._position.units.size === IUnit.preserveHeight) {
       this._position.size.width *= .01;
       this._position.size.height *= .01;
     }
@@ -196,21 +209,19 @@ export default class Layout {
       }
     }
 
-    if (this._position.units.location === IUnit.percent) {
-      const p = this.scale(this._position.location);
-      return this.fromOrigin(p, this.fromSize());
+    const point = this.scale(this._position.location, this._position.units.location) as IPoint;
+    if (point.x === undefined) {
+      console.log('fromLocation ', point.x);
     }
-    return this.fromOrigin(this._position.location, this.fromSize());
+    return this.fromOrigin(point, this.fromSize());
   }
 
   /** 
    * Converts size to pixels
    */
   public fromSize = () => {
-    if (this._position.units.size === IUnit.percent) {
-      return this.scaleSize(this._position.size);
-    }
-    return this._position.size;
+    // console.log('size ' + this._position.size.width)
+    return this.scale(this._position.size, this._position.units.size) as ISize;
   }
 
   public rect = (force?: boolean) => {
@@ -232,60 +243,200 @@ export default class Layout {
     // Takes in world coordinates 
     // console.log(`Position update x: ${location.x} y: ${location.y}`)
     const p = this.toOrigin(location, size);
-
-    if (this._position.units.location === IUnit.percent) {
-      this._position.location = this.inverseScale(p);
-    } else {
-      this._position.location = p;
-    }
-
-    if (this._position.units.size === IUnit.percent) {
-      this._position.size = this.inverseScaleSize(size);
-    } else {
-      this._position.size = size;
-    }
-
+    this._position.location = this.inverseScale(p, this._position.units.location) as IPoint;
+    this._position.size = this.inverseScale(size, this._position.units.size) as ISize;
     this._changed = true;
   }
 
-  private scale = (p: IPoint): IPoint => {
-    const size = this._g.params().get('viewport') as ISize;
-    return {
-      x: p.x * size.width,
-      y: p.y * size.height
+  /**
+   * Take percent and convert to real world
+   */
+  public scale = (input: IPoint | ISize, unit: IUnit): IPoint | ISize => {
+
+    switch (unit) {
+
+      case IUnit.percent: {
+        const size = this._g.params().get('viewport') as ISize;
+        if ('x' in input) {
+          const p = input as IPoint;
+          return {
+            x: p.x * size.width,
+            y: p.y * size.height
+          }
+        } else {
+          const s = input as ISize;
+          return {
+            width: s.width * size.width,
+            height: s.height * size.height
+          }
+        }
+        break;
+      }
+      case IUnit.preserve: {
+        const size = this._g.params().get('viewport') as ISize;
+
+        const minWidth = (size.width < size.height) ? size.width : size.height;
+
+        if ('x' in input) {
+          const p = input as IPoint;
+          return {
+            x: p.x * minWidth,
+            y: p.y * minWidth
+          }
+        } else {
+          const s = input as ISize;
+          return {
+            width: s.width * minWidth,
+            height: s.height * minWidth
+          }
+        }
+        break;
+      }
+      case IUnit.preserveWidth: {
+        const size = this._g.params().get('viewport') as ISize;
+
+        const factor = size.width;
+
+        if ('x' in input) {
+          const p = input as IPoint;
+          return {
+            x: p.x * factor,
+            y: p.y * factor
+          }
+        } else {
+          const s = input as ISize;
+          return {
+            width: s.width * factor,
+            height: s.height * factor
+          }
+        }
+        break;
+      }
+      case IUnit.preserveHeight: {
+        const size = this._g.params().get('viewport') as ISize;
+
+        const factor = size.height;
+
+        if ('x' in input) {
+          const p = input as IPoint;
+          return {
+            x: p.x * factor,
+            y: p.y * factor
+          }
+        } else {
+          const s = input as ISize;
+          return {
+            width: s.width * factor,
+            height: s.height * factor
+          }
+        }
+        break;
+      }
     }
+    // default no translation needed
+    return input;
   }
 
-  private inverseScale = (p: IPoint): IPoint => {
-    const size = this._g.params().get('viewport') as ISize;
-    return {
-      x: (p.x / size.width),
-      y: (p.y / size.height)
+
+  /**
+   * Take pixels and convert to percent
+   */
+  private inverseScale = (input: IPoint | ISize, unit: IUnit): IPoint | ISize => {
+    switch (unit) {
+      case IUnit.percent: {
+        const size = this._g.params().get('viewport') as ISize;
+        if (size.width && size.height) {
+          if ('x' in input) {
+            const p = input as IPoint;
+            return {
+              x: p.x / size.width,
+              y: p.y / size.height
+            }
+          } else {
+            const s = input as ISize;
+            return {
+              width: s.width / size.width,
+              height: s.height / size.height
+            }
+          }
+        }
+        break;
+      }
+      case IUnit.preserve: {
+        const size = this._g.params().get('viewport') as ISize;
+
+        const minWidth = (size.width < size.height) ? size.width : size.height;
+        if (minWidth) {
+          if ('x' in input) {
+            const p = input as IPoint;
+            return {
+              x: p.x / minWidth,
+              y: p.y / minWidth
+            }
+          } else {
+            const s = input as ISize;
+            return {
+              width: s.width / minWidth,
+              height: s.height / minWidth
+            }
+          }
+        }
+        break;
+      }
+      case IUnit.preserveWidth: {
+        const size = this._g.params().get('viewport') as ISize;
+        const factor = size.width;
+        if (factor) {
+          if ('x' in input) {
+            const p = input as IPoint;
+            return {
+              x: p.x / factor,
+              y: p.y / factor
+            }
+          } else {
+            const s = input as ISize;
+            return {
+              width: s.width / factor,
+              height: s.height / factor
+            }
+          }
+        }
+        break;
+      }
+      case IUnit.preserveHeight: {
+        const size = this._g.params().get('viewport') as ISize;
+        const factor = size.height;
+        if (factor) {
+          if ('x' in input) {
+            const p = input as IPoint;
+            return {
+              x: p.x / factor,
+              y: p.y / factor
+            }
+          } else {
+            const s = input as ISize;
+            return {
+              width: s.width / factor,
+              height: s.height / factor
+            }
+          }
+        }
+        break;
+      }
     }
+
+    // default
+    return input;
   }
 
-  private scaleSize = (p: ISize): ISize => {
-    const size = this._g.params().get('viewport') as ISize;
-    return {
-      width: p.width * size.width,
-      height: p.height * size.height
-    }
-  }
 
-  private inverseScaleSize = (p: ISize): ISize => {
-    const size = this._g.params().get('viewport') as ISize;
-    return {
-      width: (p.width / size.width),
-      height: (p.height / size.height)
-    }
-  }
 
-//   private scalePreserve = (width: number, height: number) => {
-//     const size = this._g.params().get('viewport') as ISize;
-//     const ratio = Math.min(size.width / width, size.height / height);
+  //   private scalePreserve = (width: number, height: number) => {
+  //     const size = this._g.params().get('viewport') as ISize;
+  //     const ratio = Math.min(size.width / width, size.height / height);
 
-//     return { width: width*ratio, height: height*ratio };
-//  }
+  //     return { width: width*ratio, height: height*ratio };
+  //  }
 
   /**
    * Defines the origin of location in percent

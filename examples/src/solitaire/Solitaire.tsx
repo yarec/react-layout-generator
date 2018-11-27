@@ -18,7 +18,7 @@ export interface ISolitaireProps {
   name?: string;
 }
 
-interface  ISolitaireState {
+interface ISolitaireState {
   update: number;
 }
 
@@ -43,10 +43,12 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
       this._tableau.push(new TableauStack())
     }
 
-    this.state = {update: 0};
+    this.state = { update: 0 };
 
     this.newGame.bind(this);
+  }
 
+  public componentDidMount() {
     this.init();
   }
 
@@ -56,7 +58,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
     this._foundation.forEach((foundation) => { foundation.clear() });
     this._tableau.forEach((tableau) => { tableau.clear() });
     this._tableau.forEach((tableau, i) => { tableau.populate(this._stock, i) });
-    this.setState({update: this.state.update + 1});
+    this.setState({ update: this.state.update + 1 });
   }
 
   /**
@@ -83,6 +85,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
         editLayout={false}
         g={this._g}
       >
+        {this.grid()}
         <div
           key={'stock'}
           data-layout={{
@@ -97,7 +100,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name: 'waste'
           }}
-          style={{ backgroundColor: 'hsl(210,100%,80%)'}}
+          style={{ backgroundColor: 'hsl(210,100%,80%)' }}
         >
           {this._waste.cards()}
         </div>
@@ -111,8 +114,8 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name: 'New Game',
             position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
-              location: { x: 80, y: 80 },
+              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+              location: { x: 82, y: 90 },
               size: { width: 90, height: 24 }
             }
           }}
@@ -153,12 +156,38 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name
           }}
-          style={{ backgroundColor: 'hsl(210,100%,80%)'}}
+          style={{ backgroundColor: 'hsl(210,100%,80%)' }}
         >
           {this._tableau[i].cards()}
         </div>
       );
     }
+    return jsx;
+  }
+
+  protected grid = () => {
+    const jsx = [];
+    
+    for (let i = 0; i < 100; i++) {
+      if (i % 2 === 0) {
+        const name = `gridV${i + 1}`;
+        jsx.push(
+          <div
+            key={name}
+            data-layout={{
+              name,
+              position: {
+                units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
+                location: { x: i, y: 0 },
+                size: { width: 1, height: 100 }
+              }
+            }}
+            style={{ backgroundColor: 'hsl(210,100%,80%)' }}
+          />
+        );
+      }
+    }
+    
     return jsx;
   }
 }

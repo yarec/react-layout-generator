@@ -13,9 +13,7 @@ export default class DeskTop extends React.Component<IDeskTopProps> {
 
   constructor(props: IDeskTopProps) {
     super(props);
-
-    console.log('Desktop props', props)
-
+    
     const p = this.g.params();
 
     // Set variables to 0 to hide section

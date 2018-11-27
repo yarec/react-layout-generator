@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { IPosition, IPositionChildren } from './components/Layout';
+import { IPosition, PositionChildren } from './components/Layout';
 import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
@@ -122,7 +122,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     count: number,
     name: string,
     position: IPosition,
-    positionChildren: IPositionChildren
+    positionChildren: PositionChildren
   ) => {
 
     let b = this._g.lookup(name);
@@ -143,7 +143,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     count: number,
     name: string,
     position: IPosition,
-    positionChildren: IPositionChildren
+    positionChildren: PositionChildren
   ) => {
 
     const b = this._g.lookup(name);
@@ -179,9 +179,9 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         gInProgress -= 1;
 
         if (b && b.positionChildren) {
-          console.log('child', child.props)
+          // console.log('child', child.props)
           return React.Children.map(child.props.children, (nestedChild, i) => {
-            const nestedRect = b.positionChildren!(rect, b.generator.params(), i);
+            const nestedRect = b.positionChildren!(b, b.generator.params(), i);
             if (nestedRect) {
               const nestedStyle = tileStyle(nestedChild.props.style,
                 nestedRect.x,
@@ -189,7 +189,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                 nestedRect.width,
                 nestedRect.height
               );
-              console.log('nested child', nestedChild.type)
+              
               return (
                 React.cloneElement(nestedChild,
                   {
@@ -204,6 +204,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             return null;
           });
         } else {
+          // console.log(`nested child ${name}`, { ...this.props.style, ...child.props.style, ...style })
           return (
             <>
               {React.cloneElement(child,

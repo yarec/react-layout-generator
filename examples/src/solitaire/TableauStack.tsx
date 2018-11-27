@@ -22,7 +22,7 @@ export default class TableauStack {
   public cards = () => {
     return this._stack.map((name, i) => {
       return (
-        <img key={name} src={this.path(name)} />
+        <img key={name} draggable={true} src={this.path(name)} />
       );
     })
   }

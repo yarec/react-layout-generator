@@ -10,6 +10,7 @@ import CardDeck from './carddeck/CardDeck';
 import ErrorBoundary from './components/ErrorBoundary';
 import NavBar from './components/NavBar'
 import DeskTop from './desktop/DeskTop';
+import Grid from './grid/Grid';
 import Intro from './intro/Intro';
 import Solitaire from './solitaire/Solitaire';
 
@@ -67,7 +68,8 @@ export class Examples extends React.Component<{}, { app: any }> {
               { component: <Intro />, name: 'Home' },
               { component: <DeskTop />, name: 'DeskTop' },
               { component: <CardDeck />, name: 'CardDeck' },
-              { component: <Solitaire />, name: 'Solitaire' }
+              { component: <Solitaire />, name: 'Solitaire' },
+              { component: <Grid />, name: 'Grid' }
             ]}
               callback={this.select}
             />

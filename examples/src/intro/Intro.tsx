@@ -38,6 +38,20 @@ export default class Intro extends React.Component {
           </Description>
         </div>
 
+        <div data-layout={{
+          name: 'introFeature',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            location: { x: 30, y: 30 },
+            size: { width: 250, height: 350 }
+          }
+        }}
+        >
+          <Description>
+            This demo and all components are built is with react-layout-generator and styled-components.
+          </Description>
+        </div>
+
       </ReactLayout>
     );
   }
