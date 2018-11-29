@@ -12,6 +12,7 @@ import ReactLayout from '../../../src/ReactLayout';
 const Description = styled.p`
   word-break: normal;
   white-space: normal;
+  text-align: center;
 `
 
 export default class Intro extends React.Component {
@@ -48,7 +49,7 @@ export default class Intro extends React.Component {
         }}
         >
           <Description>
-            This demo and all components are built is with react-layout-generator and styled-components.
+            These examples are all layed out using only react-layout-generator.
           </Description>
         </div>
 

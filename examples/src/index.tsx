@@ -2,6 +2,8 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
 
+import 'highlight.js/styles/vs';
+
 import { IGenerator } from '../../src/generators/Generator';
 import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';

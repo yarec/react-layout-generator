@@ -34,13 +34,13 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
   constructor(props: ISolitaireProps) {
     super(props);
 
-    this._stock = new Stock();
-    this._waste = new Waste();
+    this._stock = new Stock(this.update);
+    this._waste = new Waste(this.update);
     for (let i = 0; i < 4; i++) {
-      this._foundation.push(new FoundationStack());
+      this._foundation.push(new FoundationStack(this.update));
     }
     for (let i = 0; i < 7; i++) {
-      this._tableau.push(new TableauStack())
+      this._tableau.push(new TableauStack(this.update))
     }
 
     this.state = { update: 0 };
@@ -50,6 +50,10 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
 
   public componentDidMount() {
     this.init();
+  }
+
+  public update = () => {
+    this.setState({ update: this.state.update + 1 });
   }
 
   public init() {
@@ -72,9 +76,10 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
    * Moves the top (3) cards to the waste pushing any
    * existing cards to the stock when the stock is touched or clicked.
    */
-  public populateWaste = () => {
+  public onPopulateWaste = (event: React.MouseEvent<HTMLDivElement>) => {
     if (this._stock && this._waste) {
       this._waste.populate(this._stock);
+      this.setState({ update: this.state.update + 1 });
     }
   }
 
@@ -86,11 +91,13 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
         g={this._g}
       >
         {this.grid()}
+
         <div
-          key={'stock'}
+          key='stock'
           data-layout={{
             name: 'stock'
           }}
+          onClick={this.onPopulateWaste}
         >
           {this._stock.cards()}
         </div>
@@ -100,7 +107,6 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name: 'waste'
           }}
-          style={{ backgroundColor: 'hsl(210,100%,80%)' }}
         >
           {this._waste.cards()}
         </div>
@@ -115,7 +121,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
             name: 'New Game',
             position: {
               units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 82, y: 90 },
+              location: { x: 102, y: 90 },
               size: { width: 90, height: 24 }
             }
           }}
@@ -156,7 +162,6 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name
           }}
-          style={{ backgroundColor: 'hsl(210,100%,80%)' }}
         >
           {this._tableau[i].cards()}
         </div>

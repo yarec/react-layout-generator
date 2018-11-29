@@ -6,6 +6,7 @@ import { IPoint, ISize } from '../../../src/types'
 
 export default function solitaireGenerator(name: string, parent?: IGenerator) {
 
+
   const _cardSize = { width: 10, height: 16 }
   const _cardSpacing = { x: .02, y: .027 };
   const _foundationStackSpacing = 2;
@@ -13,8 +14,8 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
 
   const _stockLocation = { x: 2, y: 10 };
   const _wasteLocation = { x: 14, y: 10 };
-  const _foundationLocation = { x: 48, y: 10 };
-  const _tableauLocation = { x: 14, y: 40 };
+  const _foundationLocation = { x: 50, y: 10 };
+  const _tableauLocation = { x: 14, y: 35 };
 
   const _params = new Params([
     ['viewport', { width: 0, height: 0 }],
@@ -74,7 +75,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
       const p: IPosition = {
         units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
         location: { x: tableauLocation.x + offset, y: tableauLocation.y },
-        size: cardSize,
+        size: { width: cardSize.width, height: cardSize.height + 13 * tableauStackSpacing },
         positionChildren: positionTableauChildren
       }
 
@@ -85,7 +86,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     const waste: IPosition = {
       units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
       location: { x: wasteLocation.x, y: wasteLocation.y },
-      size: cardSize,
+      size: { width: cardSize.width  + 3 * tableauStackSpacing, height: cardSize.height },
       positionChildren: positionWasteChildren
     }
 
@@ -109,27 +110,45 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
   }
 
   function positionStockChildren(layout: Layout, params: Params, index: number) {
-    return layout.rect();
+    // Relative to layout - position at (0, 0)
+    const r = layout.rect();
+    return {
+      x: 0,
+      y: 0,
+      width: r.width,
+      height: r.height
+    }
   }
   
   function positionFoundationChildren(layout: Layout, params: Params, index: number) {
-    return layout.rect();
+    // Relative to layout - position at (0, 0)
+    const r = layout.rect();
+    return {
+      x: 0,
+      y: 0,
+      width: r.width,
+      height: r.height
+    }
   }
   
   function positionTableauChildren(layout: Layout, params: Params, index: number) {
-    // const viewport = params.get('viewport');
-    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location);
-    const start = layout.rect();
-    // console.log(`positionTableauChildren viewport: ${(viewport as ISize).width}, ${start.x}, ${start.width}, ${(cardSpacing as IPoint).x}`);
-    return { x: start.x, y: start.y + ((cardSpacing as IPoint).y * index),
-      width: start.width, height: start.height };
+    // Relative to layout - position at (0, cardSpacing.y * index)
+    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location) as IPoint;
+    const cardSize = params.get('cardSize') as ISize;
+    const scaledCardSize = layout.scale({width: cardSize.width / 100, height: cardSize.height / 100 }, layout.units.size) as ISize;
+    
+    return { x: 0, y: cardSpacing.y * index,
+      width: scaledCardSize.width, height: scaledCardSize.height };
   }
   
   function positionWasteChildren(layout: Layout, params: Params, index: number) {
-    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location);
-    const start = layout.rect();
-    return { x: start.x + ((cardSpacing as IPoint).x * index), y: start.y,
-      width: start.width, height: start.height };
+    // Relative to layout - position at (cardSpacing.x * index, 0)
+    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location) as IPoint;
+    const cardSize = params.get('cardSize') as ISize;
+    const scaledCardSize = layout.scale({width: cardSize.width / 100, height: cardSize.height / 100 }, layout.units.size) as ISize;
+
+    return { x: cardSpacing.x * index, y: 0,
+      width: scaledCardSize.width, height: scaledCardSize.height };
   }
 
   return new Generator(name, init, _params, create, parent);

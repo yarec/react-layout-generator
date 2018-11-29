@@ -1,39 +1,18 @@
-import * as React from 'react';
+import Stack from './Stack'
 
 export default class FoundationStack {
 
-  private stack: string[] = [];
+  private _stack: Stack;
+
+  constructor(update: ()=>void) {
+    this._stack = new Stack(true, true, update);
+  }
 
   public clear = () => {
-    this.stack = [];
+    this._stack.clear();
   }
 
   public cards() {
-    if (this.stack.length) {
-      return this.stack.map((name, i) => {
-        return (
-          <img key={name} src={this.path(name)} />
-        );
-      })
-    }
-    return (<div 
-      key='empty' 
-      style={{ borderWidth: 3, borderColor: 'black', borderRadius: 10, backgroundColor: '#FBF8EF' }} 
-      onDragOver={this.onDragOver}
-      />)
+    return this._stack.cards();
   }
-
-  public drop(card: string) {
-    this.stack.push(card)
-  }
-
-  public onDragOver(e: React.DragEvent) {
-    console.log('onDragOver');
-  }
-
-  private path = (name: string) => {
-    return require(`../assets/cards/${name}.jpg`)
-  }
-
-
 }

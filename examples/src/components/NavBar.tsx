@@ -16,11 +16,9 @@ export const Button = styled.button`
 
 export const SelectedButton = styled.button`
   font-size: 1rem;
-  background: '#ccc';
-  border-style: solid;
-  border-width: 2px;
-  border-color: red;
-  color: white;
+  background: 'white';
+  border: none;
+  color: black;
 `
 
 interface IElement {
@@ -57,7 +55,6 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
         component: e.component,
         name: e.name,
         handler: (event: React.MouseEvent<HTMLButtonElement>) => {
-          console.log(e.name);
           this.setState({ selected: e.name });
           this.props.callback(e.component)
         }
@@ -82,11 +79,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             key={e.name}
             data-layout={{ name: e.name }}
             onClick={e.handler}
-            style={{
-              fontSize: '1rem',
-              background: '#ccc',
-              border: 'none',
-              color: 'white'}}
+            
           >
             {e.name}
           </SelectedButton>
@@ -94,19 +87,14 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
       }
       else {
         return (
-          <button
+          <Button
             key={e.name}
             data-layout={{ name: e.name }}
             onClick={e.handler}
-            style={{
-              fontSize: '1rem',
-              background: 'transparent',
-              border: 'none',
-              color: 'white'
-            }}
+            
           >
             {e.name}
-          </button>
+          </Button>
         )
       }
     });

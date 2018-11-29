@@ -160,7 +160,7 @@ function RLGEmpty(name: string) {
 }
 ```
 
-This generator will not generate any elements even if it contains data-layout elements.
+RLGEmpty will not generate any elements even if it contains data-layout elements.
 
 To make it a useful dynamic generator we just add a create function to the generator. That's how the RLGDynamic generator is defined. It lets you define a layout manually and offers the best flexibility, but only limited responsiveness by using just the properties of the [position](#IPosition) interface.
 
@@ -200,6 +200,10 @@ function RLGDynamic(name: string): IGenerator {
 }
 ```
 
+### Scaling
+
+RLG offers multiple builtin options for scaling. 
+
 ## API
 
 ### ReactLayout component
@@ -210,7 +214,7 @@ This is the only component that a user needs. It is the manager for each RLG gro
 
 ### Layout component
 
-This is an internal component
+This is an internal component. It is accessible when building a generator function.
 
 ### IPosition interface
 

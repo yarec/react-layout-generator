@@ -1,55 +1,42 @@
-import * as React from 'react';
-
+import Stack from './Stack';
 import Stock from './Stock';
 
 export default class Waste {
 
-  private waste: string[] = [];
+  private _waste: Stack;
+
+  constructor(update: ()=>void) {
+    this._waste = new Stack(true, true, update);
+  }
 
   public populate = (stock: Stock) => {
-    this.waste.map((oldCard) => {
+    let oldCard = this._waste.pop();
+    while(oldCard) {
       stock.unshift(oldCard);
-    })
+      oldCard = this._waste.pop();
+    }
 
-    this.waste = [];
-    
+    this._waste.clear();
+
     let card = stock.pop();
     if (card) {
-      this.waste.push(card)
+      this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
-      this.waste.push(card)
+      this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
-      this.waste.push(card)
+      this._waste.push(card)
     }
   }
 
-
   public clear = () => {
-    this.waste = [];
+    this._waste.clear();
   }
 
   public cards = () => {
-    return this.createElements();
+    return this._waste.cards();
   }
-
-  private createElement = (card: string) => {
-    return (
-      <img key={card} src={this.path(name)} />
-    )
-  }
-
-  private createElements = () => {
-    return this.waste.map((card) => {
-      return this.createElement(card);
-    })
-  }
-
-  private path = (name: string) => {
-    return require(`../assets/cards/${name}.jpg`)
-  }
-
 }

@@ -1,14 +1,30 @@
 import * as React from 'react';
 
+// import Highlight from 'react-highlight';
+
 import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
 
-export default class Grid extends React.Component {
+export default class Grid extends React.Component<{}, { unit: IUnit }> {
 
   private _g: IGenerator = RLGDynamic('example.grid');
-  private _g2: IGenerator = RLGDynamic('example.layout');
+
+  constructor(props: {}) {
+    super(props);
+    this.state = { unit: IUnit.preserve }
+  }
+
+  public setPercent = (event: React.MouseEvent<HTMLButtonElement>) => {
+    this.setState({ unit: IUnit.percent })
+    this._g.clear();
+  }
+
+  public setPreserve = (event: React.MouseEvent<HTMLButtonElement>) => {
+    this.setState({ unit: IUnit.preserve })
+    this._g.clear();
+  }
 
   public render() {
     return (
@@ -17,66 +33,99 @@ export default class Grid extends React.Component {
         editLayout={false}
         g={this._g}
       >
-        <div
+        {this.grid(this.state.unit)}
+
+        <button
+          key={'Percent'}
           data-layout={{
-            name: 'grid',
+            name: 'Percent',
             position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.preserve },
-              location: { x: 5, y: 5 },
-              size: { width: 75, height: 90 }
+              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+              location: { x: 10, y: 10 },
+              size: { width: 90, height: 24 }
             }
           }}
+          onClick={this.setPercent}
         >
-          <ReactLayout
-            name='example.Grid'
-            editLayout={false}
-            g={this._g2}
-          >
-            {this.grid()}
-          </ReactLayout>
-        </div>
-      </ReactLayout >
+          Percent
+        </button>
+        <button
+          key={'Preserve'}
+          data-layout={{
+            name: 'Preserve',
+            position: {
+              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+              location: { x: 10, y: 20 },
+              size: { width: 90, height: 24 }
+            }
+          }}
+          onClick={this.setPreserve}
+        >
+          Preserve
+        </button>
+
+        {/* <div
+          key={'Code'}
+          data-layout={{
+            name: 'Code',
+            position: {
+              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+              location: { x: 10, y: 30 },
+              size: { width: 300, height: 100 }
+            }
+          }}
+          style={{ background: 'transparent' as 'transparent' }}
+        >
+          <Highlight  className='javascript'>
+            {`function foo() { return 'bar' }`}
+          </Highlight>
+        </div> */}
+
+      </ReactLayout>
     );
   }
 
-  protected grid = () => {
+  protected grid = (unit: IUnit) => {
     const jsx = [];
 
     for (let j = 0; j < 100; j++) {
       if (j % 2 === 0) {
         const name = `gridH${j + 1}`;
+        const background = (j % 10 === 0) ? 'hsl(210,100%,50%)' : 'hsl(210,100%,80%)';
         jsx.push(
           <div
             key={name}
             data-layout={{
               name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.preserve },
+                units: { origin: { x: 0, y: 0 }, location: unit, size: unit },
                 location: { x: 0, y: j },
                 size: { width: 100, height: .1 }
               }
             }}
-            style={{ backgroundColor: 'hsl(210,100%,80%)' }}
+            style={{ backgroundColor: background }}
           />
         );
       }
     }
 
     for (let i = 0; i < 100; i++) {
+
       if (i % 2 === 0) {
         const name = `gridV${i + 1}`;
+        const background = (i % 10 === 0) ? 'hsl(210,100%,50%)' : 'hsl(210,100%,80%)';
         jsx.push(
           <div
             key={name}
             data-layout={{
               name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
+                units: { origin: { x: 0, y: 0 }, location: unit, size: unit },
                 location: { x: i, y: 0 },
                 size: { width: .1, height: 100 }
               }
             }}
-            style={{ backgroundColor: 'hsl(210,100%,80%)' }}
+            style={{ backgroundColor: background }}
           />
         );
       }

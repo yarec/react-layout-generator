@@ -180,7 +180,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
         if (b && b.positionChildren) {
           // console.log('child', child.props)
-          return React.Children.map(child.props.children, (nestedChild, i) => {
+          const nestedChildren = React.Children.map(child.props.children, (nestedChild, i) => {
             const nestedRect = b.positionChildren!(b, b.generator.params(), i);
             if (nestedRect) {
               const nestedStyle = tileStyle(nestedChild.props.style,
@@ -203,6 +203,16 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             }
             return null;
           });
+          return (
+            React.cloneElement(child,
+              {
+                key: b.name,
+                extent: { width: rect.width, height: rect.height },
+                style: { ...this.props.style, ...child.props.style, ...style }
+              },
+              nestedChildren
+            )
+          );
         } else {
           // console.log(`nested child ${name}`, { ...this.props.style, ...child.props.style, ...style })
           return (

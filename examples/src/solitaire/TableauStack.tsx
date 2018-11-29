@@ -1,16 +1,19 @@
-import * as React from 'react';
-
+import Stack, { descendingCompare } from './Stack'
 import Stock from './Stock';
 
 export default class TableauStack {
-  private _stack: string[] = [];
+  private _stack: Stack;
+
+  constructor(update: ()=>void) {
+    this._stack = new Stack(true, true, update, this.allowDrop)
+  }
 
   public clear = () => {
-    this._stack = [];
+    this._stack.clear();
   }
 
   public populate(stock: Stock, index: number) {
-    this._stack = [];
+    this._stack.clear();
     for (let i = 0; i <= index; i++) {
       const card = stock.pop();
       if (card) {
@@ -20,14 +23,12 @@ export default class TableauStack {
   }
 
   public cards = () => {
-    return this._stack.map((name, i) => {
-      return (
-        <img key={name} draggable={true} src={this.path(name)} />
-      );
-    })
+    return this._stack.cards()
   }
 
-  private path = (name: string) => {
-    return require(`../assets/cards/${name}.jpg`)
+  public allowDrop = (card: string, topCard: string) => {
+    // Descending order of cards for tableau
+
+    return false;
   }
 }
