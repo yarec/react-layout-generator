@@ -1,11 +1,11 @@
-import Stack from './Stack'
+import Stack, {ascendingCompare} from './Stack'
 
 export default class FoundationStack {
 
   private _stack: Stack;
 
   constructor(update: ()=>void) {
-    this._stack = new Stack(true, true, update);
+    this._stack = new Stack(true, true, update, ascendingCompare);
   }
 
   public clear = () => {

@@ -21,7 +21,7 @@ export default class Deck {
       if (suit) {
         for (const value in values) {
           if (value) {
-            this._cards.push(`${values[value]}${suits[suit]}`);
+            this._cards.push(`${values[value]}_${suits[suit]}`);
           }
         }
       }

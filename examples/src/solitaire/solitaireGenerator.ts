@@ -75,7 +75,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
       const p: IPosition = {
         units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
         location: { x: tableauLocation.x + offset, y: tableauLocation.y },
-        size: { width: cardSize.width, height: cardSize.height + 13 * tableauStackSpacing },
+        size: { width: cardSize.width, height: cardSize.height + 20 * tableauStackSpacing },
         positionChildren: positionTableauChildren
       }
 
@@ -86,7 +86,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     const waste: IPosition = {
       units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
       location: { x: wasteLocation.x, y: wasteLocation.y },
-      size: { width: cardSize.width  + 3 * tableauStackSpacing, height: cardSize.height },
+      size: { width: cardSize.width  + 4 * tableauStackSpacing, height: cardSize.height },
       positionChildren: positionWasteChildren
     }
 

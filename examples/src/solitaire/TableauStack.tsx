@@ -5,7 +5,7 @@ export default class TableauStack {
   private _stack: Stack;
 
   constructor(update: ()=>void) {
-    this._stack = new Stack(true, true, update, this.allowDrop)
+    this._stack = new Stack(true, true, update, descendingCompare)
   }
 
   public clear = () => {
@@ -24,11 +24,5 @@ export default class TableauStack {
 
   public cards = () => {
     return this._stack.cards()
-  }
-
-  public allowDrop = (card: string, topCard: string) => {
-    // Descending order of cards for tableau
-
-    return false;
   }
 }

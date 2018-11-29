@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { string } from 'prop-types';
 
 export type IAllowDrop = (card: string, topCard: string) => boolean | undefined;
 
@@ -119,7 +118,7 @@ export default class Stack {
     } else {
       if (gDataTransfer) {
         const top = this._stack[this._stack.length - 1];
-        
+
         if (this._allowDrop && this._allowDrop(gDataTransfer, top)) {
           e.preventDefault();
         }
@@ -143,5 +142,49 @@ export default class Stack {
   }
 }
 
-export descendingCompare(card1: string, card2: string) {
+function getCard(card: string) {
+  const first = card.split('_');
+  let rank: number = Number(first[0]);
+  if (isNaN(rank)) {
+    if (first[0] === 'J') {
+      rank = 11;
+    }
+    if (first[0] === 'Q') {
+      rank = 12;
+    }
+    if (first[0] === 'K') {
+      rank = 13;
+    }
+    if (first[0] === 'A') {
+      rank = 0;
+    }
+  }
+  return ({
+    rank,
+    suite: first[1]
+  });
+}
+
+export function isRedSuite(suite: string) {
+  return suite === 'H' || suite === 'D';
+}
+
+export function descendingCompare(card1: string, card2: string) {
+  if (card2 === undefined || card2.length === 0) {
+    return true;
+  }
+  const first = getCard(card1);
+  const second = getCard(card2);
+
+  return (first.rank - second.rank === -1) && isRedSuite(first.suite) !== isRedSuite(second.suite);
+}
+
+export function ascendingCompare(card1: string, card2: string) {
+  if (card2 === undefined || card2.length === 0) {
+    return true;
+  }
+  const first = getCard(card1);
+  const second = getCard(card2);
+
+  return (first.rank - second.rank === 1) && isRedSuite(first.suite) !== isRedSuite(second.suite);
 }
