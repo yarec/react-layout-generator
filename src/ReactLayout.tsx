@@ -6,15 +6,14 @@ import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
 
+
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
     height: `${height}px`,
-    overflow: 'hidden',
     position: 'absolute' as 'absolute',
     transform: `translate(${x}px, ${y}px)`,
     transformOrigin: 0,
-    whiteSpace: 'nowrap',
     width: `${width}px`,
     ...style
   };
@@ -27,7 +26,7 @@ export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   editLayout?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
-  extent?: ISize;
+  viewport?: ISize;
   g: IGenerator;
 }
 
@@ -40,7 +39,7 @@ export interface IReactLayoutState {
 export default class ReactLayout extends React.Component<IReactLayoutProps, IReactLayoutState> {
   private _g: IGenerator;
   private _editLayout: boolean = false;
-  // private _startRendering: number;
+  private _startRendering: number;
 
   constructor(props: IReactLayoutProps) {
     super(props);
@@ -57,6 +56,10 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     this._g = this.props.g;
   }
 
+  public getWidth = () => {
+    return this.state.width;
+  }
+
   public render(): React.ReactNode {
     this.frameStart();
     this.initLayout();
@@ -69,11 +72,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     // 
 
     const resize = <ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
+
     return (
       /* style height of 100% necessary for ReactResizeDetector to work  */
       <div style={{ height: '100%' }} >
         {this.content()}
-        {this.props.extent ? null : resize}
+        {this.props.viewport ? null : resize}
         {this.frameEnd()}
       </div >
     )
@@ -92,10 +96,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   // }
 
   private onResize = (width: number, height: number) => {
-    // console.log('onResize', this.props.name, width, height);
+    const w = Math.floor(width);
+    const h = Math.floor(height);
+    console.log('onResize', this.props.name, w, h);
 
     if (this.state.width !== width || this.state.height !== height) {
-      this.setState({ width, height });
+      this.setState({ width: w, height: h });
     }
   }
 
@@ -189,12 +195,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                 nestedRect.width,
                 nestedRect.height
               );
-              
+
               return (
                 React.cloneElement(nestedChild,
                   {
                     key: `${nestedChild.key}`,
-                    extent: { width: nestedRect.width, height: nestedRect.height },
+                    viewport: { width: nestedRect.width, height: nestedRect.height },
                     style: { ...this.props.style, ...nestedChild.props.style, ...nestedStyle }
                   },
                   nestedChild.props.children
@@ -214,13 +220,16 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             )
           );
         } else {
-          // console.log(`nested child ${name}`, { ...this.props.style, ...child.props.style, ...style })
+          // const childCount = React.Children.count(this.props.children);
+          // if (childCount === 1 && (this.props.children as JSX.Element).type === 'RLGPanel') {
+           
+          // }
           return (
             <>
               {React.cloneElement(child,
                 {
                   key: b.name,
-                  extent: { width: rect.width, height: rect.height },
+                  viewport: { width: rect.width, height: rect.height },
                   style: { ...this.props.style, ...child.props.style, ...style }
                 },
                 child.props.children
@@ -243,6 +252,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
+      // Pass height width props of container to each child and its children
     }
 
 
@@ -258,6 +268,9 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
+      React.Children.map(child.props.children, nestedChild => {
+        return nestedChild;
+      });
     }
 
     return null;
@@ -272,12 +285,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   }
 
   private frameStart = () => {
-    // this._startRendering = Date.now();
+    this._startRendering = Date.now();
     return null;
   }
 
   private frameEnd = () => {
-    // console.log('frameTime: ', (Date.now() - this._startRendering) + ' ms');
+    console.log('frameTime: ', (Date.now() - this._startRendering) + ' ms');
     return null;
   }
 

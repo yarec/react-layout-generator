@@ -42,7 +42,10 @@ export default class EditPosition extends React.Component<IEditorProps, {}> impl
     super(props);
     this._clonedLayout = this.props.layout.clone();
     this._startOrigin = { x: 0, y: 0 };
-    this._handle = props.layout.rect();
+    if (this.props.edit.updateHandle) {
+      const r = props.layout.rect();
+      this._handle = this.props.edit.updateHandle(r);
+    }
   }
 
   public initUpdate(x: number, y: number) {
@@ -55,8 +58,6 @@ export default class EditPosition extends React.Component<IEditorProps, {}> impl
     const deltaY = y - this._startOrigin.y;
 
     if (deltaX || deltaY) {
-
-      // console.log(`moveUpdate ${deltaX} ${deltaY}`)
 
       // 1 Extend
       const r: IRect = this._clonedLayout.rect();
@@ -71,7 +72,7 @@ export default class EditPosition extends React.Component<IEditorProps, {}> impl
         ur.x = this.props.boundary.x + this.props.boundary.width - ur.width;
       }
 
-      if (ur.y < this.props.boundary.y ) {
+      if (ur.y < this.props.boundary.y) {
         ur.y = this.props.boundary.y;
       }
 
@@ -84,6 +85,14 @@ export default class EditPosition extends React.Component<IEditorProps, {}> impl
       const layout = this._clonedLayout.generator.layouts().get(name);
 
       layout!.update({ x: ur.x, y: ur.y }, { width: ur.width, height: ur.height });
+
+      // update params if needed
+      if (this.props.edit.updateParam) {
+        const p = this.props.edit.updateParam(ur, this.props.edit);
+        if (p) {
+          layout!.generator.params().set(p.name, p.value);
+        }
+      }
 
       // 4 Update handle
       this._handle = this.props.edit.updateHandle!(ur);

@@ -20,7 +20,7 @@ export function cursor(edit: IEdit) {
       break;
     }
     case PositionRef.bottom: {
-      c = 'w-resize';
+      c = 'n-resize';
       break;
     }
     case PositionRef.leftTop: {

@@ -14,7 +14,8 @@ export default function getExtendElement(edit: IEdit): ExtendElement {
     }
     case PositionRef.left: {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
-        return { x: r.x - deltaX, y: r.y, width: r.width + deltaX, height: r.height };
+        // console.log('extendElement left', r.x,  r.width, deltaX)
+        return { x: r.x + deltaX, y: r.y, width: r.width - deltaX, height: r.height };
       }
       break;
     }
@@ -26,7 +27,7 @@ export default function getExtendElement(edit: IEdit): ExtendElement {
     }
     case PositionRef.top: {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
-        return {x: r.x, y: r.y - deltaY, width: r.width, height: r.height + deltaY };
+        return {x: r.x, y: r.y + deltaY, width: r.width, height: r.height - deltaY };
       }
       break;
     }

@@ -1,3 +1,4 @@
+import { ISize } from 'src/types';
 import Layout, { IPosition } from '../components/Layout'
 import Layouts from '../components/Layouts';
 import Params from '../components/Params';
@@ -20,6 +21,7 @@ export interface IGenerator {
   reset: () => void;
   next: () => Layout | undefined;
   lookup: (name: string) => Layout | undefined;
+  viewport: (name: string) => ISize | undefined;
   clear: () => void;
   create?: Create;
   parent?: () => IGenerator | undefined;
@@ -62,6 +64,17 @@ export default class Generator implements IGenerator {
 
   public lookup = (name: string): Layout | undefined => {
     return this._layouts.get(name);
+  }
+
+  public viewport = (name: string): ISize => {
+    const l = this._layouts.get(name);
+    if (l) {
+      const r = l.rect();
+      
+      return {width: r.width, height: r.height};
+    }
+    
+    return {width: 0, height: 0};
   }
 
   public create = (args: ICreate): Layout | undefined => {

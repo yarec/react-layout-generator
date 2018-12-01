@@ -131,7 +131,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           y: titleHeight + headerHeight
         }
         size = {
-          width: viewport.width,
+          width: rightSideWidth,
           height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       } else {
@@ -151,6 +151,9 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
+        edit: [
+          { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
+        ],
         location,
         size
       }
@@ -188,6 +191,9 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
+        edit: [
+          { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
+        ],
         location,
         size
       }
@@ -204,7 +210,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           y: titleHeight + headerHeight
         }
         size = {
-          width: viewport.width - rightSideWidth,
+          width: viewport.width - rightSideWidth - leftSideWidth,
           height: viewport.height - titleHeight - headerHeight - footerHeight
         }
       } else {
@@ -259,6 +265,9 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           location: IUnit.pixel,
           size: IUnit.pixel
         },
+        edit: [
+          { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
+        ],
         location,
         size
       }

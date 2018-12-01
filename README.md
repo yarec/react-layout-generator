@@ -15,8 +15,8 @@ For the time being, you will need to clone or fork the project to evaluate.
 * Finish implementing editor
 * Add left and right align to RLGColumn
 * Implement RLGRow
-* Drop and touch
-* Serialization - should be possible now by saving/restoring params and positions
+* Touch
+* Serialization - should be possible now by saving/restoring params and layouts
 * Breakpoints
 * Additional generators
 * More tests
@@ -33,7 +33,6 @@ For the time being, you will need to clone or fork the project to evaluate.
 ## Features
 
 * Lightweight - uses only a few other lightweight React components
-* Drag and drop
 * Design, interactive, and runtime layout
 * Bounds checking
 * Separate layouts per responsive breakpoint
@@ -65,6 +64,24 @@ The basic use is to use ReactLayout as a parent element followed by zero or more
 ```
 
 ReactLayout can contain instances of ReactLayout. And as usual with React, children of ReactLayout can be programmatically generated.
+
+### RLGPanel
+
+Use RLGPanel as a child of ReactLayout when children need to use the viewport assigned by ReactLayout.
+
+```javascript
+    <RLGPanel data-layout={{ name: 'content' }}>
+      {(viewport: ISize) => (
+          <List viewport={viewport}>
+          // ...
+          </List>
+      )}
+    </RLGPanel>
+```
+
+The function (viewport: ISize) => () makes the property viewport available to all its elements. The actual value of viewport is updated by ReactLayout on every render pass. This function is will not work outside of RLGPanel as a child of ReactLayout.
+
+As a result RLGPanel can only be used as a child of ReactLayout.
 
 ### Responsive Desktop Layout
 
