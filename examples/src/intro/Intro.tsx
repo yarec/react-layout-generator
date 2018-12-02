@@ -40,16 +40,30 @@ export default class Intro extends React.Component {
         </div>
 
         <div data-layout={{
-          name: 'introFeature',
+          name: 'introFeature2',
           position: {
             units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
-            location: { x: 30, y: 30 },
+            location: { x: 25, y: 30 },
             size: { width: 250, height: 350 }
           }
         }}
         >
           <Description>
-            These examples are all layed out using only react-layout-generator.
+            These examples are all laid out using only react-layout-generator.
+          </Description>
+        </div>
+
+        <div data-layout={{
+          name: 'introFeature3',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            location: { x: 50, y: 10 },
+            size: { width: 250, height: 350 }
+          }
+        }}
+        >
+          <Description>
+            Ideal for laying out svg.
           </Description>
         </div>
 

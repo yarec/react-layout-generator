@@ -90,7 +90,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
         editLayout={false}
         g={this._g}
       >
-        {this.grid()}
+        
 
         <div
           key='stock'

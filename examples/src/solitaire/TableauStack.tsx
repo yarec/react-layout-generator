@@ -1,11 +1,11 @@
-import Stack, { descendingCompare } from './Stack'
+import Stack, { tableauCompare } from './Stack'
 import Stock from './Stock';
 
 export default class TableauStack {
   private _stack: Stack;
 
-  constructor(update: ()=>void) {
-    this._stack = new Stack(true, true, update, descendingCompare)
+  constructor(update: () => void) {
+    this._stack = new Stack(true, true, update, tableauCompare)
   }
 
   public clear = () => {
@@ -19,6 +19,11 @@ export default class TableauStack {
       if (card) {
         this._stack.push(card);
       }
+    }
+
+    const top = this._stack.top();
+    if (top) {
+      top.flip();
     }
   }
 

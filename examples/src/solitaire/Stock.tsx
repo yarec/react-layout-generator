@@ -1,11 +1,12 @@
 import Deck from '../algos/Deck';
+import Card, { Face } from './Card'
 import Stack from './Stack';
 
-export default class Stock  {
+export default class Stock {
   private _deck: Deck = new Deck();
   private _stack: Stack;
 
-  constructor(update: ()=>void) {
+  constructor(update: () => void) {
     this._stack = new Stack(false, false, update);
     this._deck.reset();
     this._deck.shuffle();
@@ -17,7 +18,7 @@ export default class Stock  {
 
     this._stack.clear();
     this._deck.cards.map((card) => {
-      this._stack.push(card);
+      this._stack.push(new Card(card, Face.down));
     });
   }
 
@@ -25,7 +26,7 @@ export default class Stock  {
     return this._stack.pop();
   }
 
-  public unshift = (card: string) => {
+  public unshift = (card: Card) => {
     return this._stack.unshift(card);
   }
 

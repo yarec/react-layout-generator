@@ -1,16 +1,18 @@
 import * as React from 'react';
 
-export type IAllowDrop = (card: string, topCard: string) => boolean | undefined;
+import Card, { Face } from './Card';
+
+export type IAllowDrop = (cards: Card, topCard: Card) => boolean | undefined;
 
 /**
  * Chrome does not handle the dataTransfer correctly for the onDragOver. Ugg...
  * The workaround is to use a global data to capture the data being transferred. 
  */
 
-let gDataTransfer: string = '';
+let gDataTransfer: Card[] = [];
 
 export default class Stack {
-  private _stack: string[] = [];
+  private _stack: Card[] = [];
   private _update: () => void;
   private _drag: boolean;
   private _drop: boolean;
@@ -31,57 +33,65 @@ export default class Stack {
     return this._stack.pop();
   }
 
-  public push = (card: string) => {
+  public push = (card: Card) => {
     return this._stack.push(card);
   }
 
-  public unshift = (card: string) => {
+  public unshift = (card: Card) => {
     this._stack.unshift(card);
+  }
+
+  public top = () => {
+    const length = this._stack.length;
+    if (length) {
+      return this._stack[length - 1]
+    }
+    return undefined;
   }
 
   public cards = () => {
     if (this._stack.length) {
-      return this._stack.map((name, i) => {
+      return this._stack.map((card, i) => {
         if (this._drag && this._drop) {
           return (
             <img
-              id={name}
-              key={name}
+              id={card.name}
+              key={card.name}
               draggable={true}
               onDragEnd={this.onDragEnd}
               onDragOver={this.onDragOver}
               onDragStart={this.onDragStart}
               onDrop={this.onDrop}
-              src={this.path(name)}
+              src={card.path}
             />
           );
         } else if (this._drag && !this._drop) {
           return (
             <img
-              id={name}
-              key={name}
+              id={card.name}
+              key={card.name}
               draggable={true}
               onDragStart={this.onDragStart}
-              src={this.path(name)}
+              src={card.path}
             />
           );
         } else if (!this._drag && this._drop) {
           return (
             <img
-              id={name}
-              key={name}
+              id={card.name}
+              key={card.name}
               onDragOver={this.onDragOver}
               onDragEnd={this.onDragEnd}
               onDrop={this.onDrop}
-              src={this.path(name)}
+              src={card.path}
             />
           );
         } else {
           return (
             <img
-              id={name}
-              key={name}
-              src={this.path(name)}
+              id={card.name}
+              key={card.name}
+              src={card.path}
             />
           );
         }
@@ -97,30 +107,43 @@ export default class Stack {
   }
 
   public onDrop = (e: React.DragEvent) => {
-    const card = gDataTransfer;
-    if (card) {
-      this._stack.push(card)
+    const cards = gDataTransfer;
+    if (cards) {
+      cards.map((card) => {
+        this._stack.push(card);
+      });
     }
   }
 
   public onDragStart = (e: React.DragEvent) => {
-    // tslint:disable-next-line:no-string-literal
-    const id = e.target['id'];
-    console.log('onDragStart', id)
-    gDataTransfer = id;
-    // tslint:disable-next-line:no-string-literal
-    e.dataTransfer.setData('text/plain', id);
+    if (this._drag) {
+      // tslint:disable-next-line:no-string-literal
+      const id = e.target['id'];
+      console.log('onDragStart', id)
+      gDataTransfer = this.getCardsToDrag(id);
+
+      if (gDataTransfer.length) {
+        // tslint:disable-next-line:no-string-literal
+        e.dataTransfer.setData('text/plain', id);
+      }
+    }
   }
 
   public onDragOver = (e: React.DragEvent) => {
-    if (this._stack.length === 0) {
-      e.preventDefault();
-    } else {
-      if (gDataTransfer) {
-        const top = this._stack[this._stack.length - 1];
+    if (this._drop) {
+      if (this._stack.length === 0) {
+        e.preventDefault();
+      } else {
+        if (gDataTransfer) {
+          const top = this._stack[this._stack.length - 1];
 
-        if (this._allowDrop && this._allowDrop(gDataTransfer, top)) {
-          e.preventDefault();
+          const t = gDataTransfer[0];
+
+          console.log('onDragOver', top.name, t.name);
+
+          if (this._allowDrop && this._allowDrop(t, top)) {
+            e.preventDefault();
+          }
         }
       }
     }
@@ -129,62 +152,53 @@ export default class Stack {
   public onDragEnd = (e: React.DragEvent) => {
     if (e.dataTransfer.dropEffect === 'move') {
       // Remove
-      if (this._stack.length) {
-        this._stack.pop();
+      gDataTransfer.forEach((card) => {
+        if (this._stack.length) {
+          this._stack.pop();
+        }
+      });
+
+      const top = this.top();
+      if (top && top.face === Face.down) {
+        top.flip();
       }
+
       // Update 
       this._update();
     }
   }
 
-  private path = (name: string) => {
-    return require(`../assets/cards/${name}.jpg`)
+  private getCardsToDrag(id: string) {
+    const cards: Card[] = [];
+    let found = false;
+    this._stack.forEach((card) => {
+      if (!found && card.name === id && card.face === Face.up) {
+        found = true;
+      }
+      if (found) {
+        cards.push(card);
+      }
+    });
+    return cards;
   }
-}
-
-function getCard(card: string) {
-  const first = card.split('_');
-  let rank: number = Number(first[0]);
-  if (isNaN(rank)) {
-    if (first[0] === 'J') {
-      rank = 11;
-    }
-    if (first[0] === 'Q') {
-      rank = 12;
-    }
-    if (first[0] === 'K') {
-      rank = 13;
-    }
-    if (first[0] === 'A') {
-      rank = 0;
-    }
-  }
-  return ({
-    rank,
-    suite: first[1]
-  });
 }
 
 export function isRedSuite(suite: string) {
   return suite === 'H' || suite === 'D';
 }
 
-export function descendingCompare(card1: string, card2: string) {
-  if (card2 === undefined || card2.length === 0) {
+export function tableauCompare(card1: Card, card2: Card) {
+  if (card2 === undefined) {
     return true;
   }
-  const first = getCard(card1);
-  const second = getCard(card2);
 
-  return (first.rank - second.rank === -1) && isRedSuite(first.suite) !== isRedSuite(second.suite);
+  return (card1.rank - card2.rank === -1) && isRedSuite(card1.suite) !== isRedSuite(card2.suite);
 }
 
-export function ascendingCompare(card1: string, card2: string) {
-  if (card2 === undefined || card2.length === 0) {
-    return true;
+export function foundationCompare(card1: Card, card2: Card) {
+  if (card2 === undefined) {
+    return card1.rank === 1 ? true : false;
   }
-  const first = getCard(card1);
-  const second = getCard(card2);
 
-  return (first.rank - second.rank === 1) && isRedSuite(first.suite) !== isRedSuite(second.suite);
+  return (card1.rank - card2.rank === 1) && (card1.suite === card2.suite);
 }

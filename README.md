@@ -2,7 +2,7 @@
 
 *This document is a work in progress. In the meantime see the source code for details.*
 
-React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It started with an experimental simple state machine that produced a sequence of blocks (think grid) and then was expanded to allow responsive and dynamic layout.
+React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is ideal for laying out both html and svg components and allows precise and continuous control for responsive layouts.
 
 This component was inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
@@ -12,6 +12,7 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ## TODO
 
+* Update intro to use both RLGRow and RLGColumn
 * Finish implementing editor
 * Add left and right align to RLGColumn
 * Implement RLGRow
@@ -26,7 +27,6 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ### Bugs
 
-* Use the extent prop in ReactLayout props rather than use 
 * Cleanup initialization of generators and viewport to potentially allow generators to be reused. See 1) ReactLayout initLayout which is called at the beginning of each render and 2) Generator which calls the user supplied init function during the initLayout call.
 * Fix flickering when making the browser window smaller for elements in RLGColumns. This appears to be due to an update issue causing the computed element size to include the scroll bar since the initial layout is being used with the newer smaller element.
 
@@ -51,7 +51,7 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 The basic use is to use ReactLayout as a parent element followed by zero or more elements with a data-layout property.
 
-```html
+```javascript
 <ReactLayout />
   <div data-layout={{name: 'name1'}} >
     elements...
@@ -70,22 +70,56 @@ ReactLayout can contain instances of ReactLayout. And as usual with React, child
 Use RLGPanel as a child of ReactLayout when children need to use the viewport assigned by ReactLayout.
 
 ```javascript
-    <RLGPanel data-layout={{ name: 'content' }}>
-      {(viewport: ISize) => (
-          <List viewport={viewport}>
-          // ...
-          </List>
-      )}
-    </RLGPanel>
+  <RLGPanel data-layout={{ name: 'content' }}>
+    {(viewport: ISize) => (
+        <List viewport={viewport}>
+        // ...
+        </List>
+    )}
+  </RLGPanel>
 ```
 
-The function (viewport: ISize) => () makes the property viewport available to all its elements. The actual value of viewport is updated by ReactLayout on every render pass. This function is will not work outside of RLGPanel as a child of ReactLayout.
+The function (viewport: ISize) => () makes the property viewport available to all its elements. The actual value of viewport is updated by ReactLayout on every render pass. It can be used to set the max-width in css like this:
 
-As a result RLGPanel can only be used as a child of ReactLayout.
+```javascript
+  export const Item = styled.li<IProps>`
+    max-width:  ${p => p.viewport.width};
+    white-space: wrap;
+`
+```
+
+and it can be used to define the viewport in svg.
+
+```javascript
+  <svg
+    width={viewport.width}
+    height={viewport.height}
+    viewBox="0 0 50 20"
+  >
+      <rect x="20" y="10" width="10" height="5"
+            style="stroke: #000000; fill:none;"/>
+  </svg>
+```
+
+The viewBox defines the coordinates system used by svg elements which will be mapped to the viewport.
+
+ReactLayout will also update the viewport param on every render pass. The viewport param can be used by the generator.
+
+You should think of the viewport as the size of every container. The top level viewport in a [generator](#Generator) is set by [ReactSizeDetector](https://www.npmjs.com/package/react-resize-detector). Its children's viewports are computed by the generator.
+
+### Responsive Layout
+
+#### You don't need borders
+
+Borders can distract. Instead let the eye see organize your elements. Use RLGColumns and RLGRows to layout.
 
 ### Responsive Desktop Layout
 
 *See examples/src/index.tsx.*
+
+RLG provides a number of tools to allow for responsive design. 
+
+The simplest one is to just define all the elements in a generator as a function of the viewport.
 
 A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
 
@@ -123,15 +157,29 @@ A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It de
 
 #### Note
 
-In general, you need to use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice is the div element.
+In general, you should use RLGPanel as the children of ReactLayout.
 
-```html
-  <div data-layout={{ name: 'footer' }} >
-    {/* React components here */}
-  </div>
+```javascript
+  <RLGPanel data-layout={{ name: 'footer' }} >
+    {(viewport: ISize) => {
+      {/* React components here */}
+    }}
+  </RLGPanel>
 ```
 
-It is possible to use a React component in some cases, such as styled-component of a html element, or a custom component if it applies the style property to its root html element like this:
+For content styled-components are a good choice for styling since styled-components can be defined to accept properties.
+
+```javascript
+  interface IProps {
+    viewport: ISize;
+  }
+
+  const List = styled.ul<IProps>`
+    max-width:  ${p => p.viewport.width};
+  `
+```
+
+Or you may use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice in this case is the div element. The disadvantage of this approach is that your content will not have access to the viewport.
 
 ```javascript
   render() {

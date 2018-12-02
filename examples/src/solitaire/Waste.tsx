@@ -4,14 +4,17 @@ import Stock from './Stock';
 export default class Waste {
 
   private _waste: Stack;
+  private _update: () => void;
 
   constructor(update: ()=>void) {
     this._waste = new Stack(true, true, update);
+    this._update = update;
   }
 
   public populate = (stock: Stock) => {
     let oldCard = this._waste.pop();
     while(oldCard) {
+      oldCard.flip();
       stock.unshift(oldCard);
       oldCard = this._waste.pop();
     }
@@ -20,16 +23,21 @@ export default class Waste {
 
     let card = stock.pop();
     if (card) {
+      card.flip();
       this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
+      card.flip();
       this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
+      card.flip();
       this._waste.push(card)
     }
+
+    this._update();
   }
 
   public clear = () => {
