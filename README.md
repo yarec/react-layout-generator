@@ -161,13 +161,13 @@ In general, you should use RLGPanel as the children of ReactLayout.
 
 ```javascript
   <RLGPanel data-layout={{ name: 'footer' }} >
-    {(viewport: ISize) => {
+    {(viewport: ISize) => (
       {/* React components here */}
-    }}
+    )}
   </RLGPanel>
 ```
 
-For content styled-components are a good choice for styling since styled-components can be defined to accept properties.
+ A good choice for styling is styled-components since styled-components can be defined to accept properties.
 
 ```javascript
   interface IProps {
@@ -179,7 +179,7 @@ For content styled-components are a good choice for styling since styled-compone
   `
 ```
 
-Or you may use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice in this case is the div element. The disadvantage of this approach is that your content will not have access to the viewport.
+AOr you may use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice in this case is the div element. A disadvantage of this approach is that your content will not have access to the viewport.
 
 ```javascript
   render() {
@@ -265,6 +265,10 @@ function RLGDynamic(name: string): IGenerator {
 }
 ```
 
+#### Notes
+
+When accessing params be sure to clone the value if you intend on making changes to the value, otherwise you could end up modifying the value in the Params store.
+
 ### Scaling
 
 RLG offers multiple builtin options for scaling. 
@@ -305,3 +309,21 @@ interface IPosition {
   size: ISize;
 }
 ```
+
+#### Units
+
+##### Origin
+
+Origin specifies the position within an element that location uses to position the element. Origin is expressed in percent of the width and height of an element. An origin of (0, 0) specifies the left top position of the element. An origin of (50,50) specifies the center of the element. Thus to position an element in the center of a container you would use:
+
+```javascript
+  units: {
+    origin: {50, 50}
+    location: IUnit.percent
+    size: ...
+  }
+  location: {50, 50}
+  size: ...
+```
+
+If you use an origin of (0, 0) then the left top of the element would be placed at the center of the container.

@@ -3,9 +3,8 @@ import getExtendElement, { ExtendElement } from '../editors/extendElement';
 import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam';
 import { IGenerator } from '../generators/Generator';
-import { IPoint, IRect, ISize, Rect } from '../types';
+import { IPoint, ISize, Rect } from '../types';
 import { clone } from '../utils';
-import Params from './Params';
 
 export interface IAlign {
   x: number;
@@ -66,8 +65,9 @@ export interface IEdit {
 
 export type PositionChildren = (
   layout: Layout,
-  params: Params,
-  index: number) => IRect | undefined;
+  g: IGenerator,
+  index: number
+  ) => Layout | undefined;
 
 export interface IHandlers {
   onMouseDown?: () => void;
@@ -109,6 +109,14 @@ export default class Layout {
 
   get units() {
     return this._position.units;
+  }
+
+  get location() {
+    return this._position.location;
+  }
+
+  get size() {
+    return this._position.size;
   }
 
   get generator() {

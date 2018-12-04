@@ -2,51 +2,87 @@ import Layout, { IPosition, IUnit } from '../../../src/components/Layout';
 import Layouts from '../../../src/components/Layouts';
 import Params from '../../../src/components/Params';
 import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
-import { IPoint, ISize } from '../../../src/types'
+import { IPoint, ISize } from '../../../src/types';
+// import { clone } from '../../../src/utils';
 
 export default function solitaireGenerator(name: string, parent?: IGenerator) {
 
-
-  const _cardSize = { width: 10, height: 16 }
-  const _cardSpacing = { x: .02, y: .027 };
-  const _foundationStackSpacing = 2;
-  const _tableauStackSpacing = 2;  
-
-  const _stockLocation = { x: 2, y: 10 };
-  const _wasteLocation = { x: 14, y: 10 };
-  const _foundationLocation = { x: 50, y: 10 };
-  const _tableauLocation = { x: 14, y: 35 };
-
   const _params = new Params([
     ['viewport', { width: 0, height: 0 }],
-    ['cardSize', _cardSize],
-    ['cardSpacing', _cardSpacing],
-    ['foundationStackSpacing', _foundationStackSpacing],
-    ['tableauStackSpacing', _tableauStackSpacing],
-    ['stockLocation', _stockLocation],
-    ['wasteLocation', _wasteLocation],
-    ['foundationLocation', _foundationLocation],
-    ['tableauLocation', _tableauLocation],
+    ['gameMargin', 10],
+    ['cardSizeRatio', 1.3],
+    ['cardSpacingRatio', { x: .18, y: .17 }],
+    ['cardMarginRatio', { x: .18, y: .1 }]
   ])
 
   function init(g: IGenerator): Layouts {
 
     const params = g.params();
 
-    const cardSize = params.get('cardSize') as ISize;
-    const stockLocation = params.get('stockLocation') as IPoint;
-    const foundationLocation = params.get('foundationLocation') as IPoint;
-    const tableauLocation = params.get('tableauLocation') as IPoint;
-    const wasteLocation = params.get('wasteLocation') as IPoint;
-    const foundationStackSpacing = params.get('foundationStackSpacing') as number;
-    const tableauStackSpacing = params.get('tableauStackSpacing') as number;
+    const viewport = params.get('viewport') as ISize;
+    const gameMargin = params.get('gameMargin') as number;
+    const cardSizeRatio = params.get('cardSizeRatio') as number;
+    const cardSpacingRatio = params.get('cardSpacingRatio') as IPoint;
+
+    // // Since  we are going to modify cardMarginRation we need to clone it
+    // const cardMarginRatio = clone(params.get('cardMarginRatio') as IPoint);
+
+    // let { computedCardSize, computedCardMargin, computedCardSpacing } = 
+    // computeSpacing(viewport, gameMargin, cardMarginRatio, cardSizeRatio, cardSpacingRatio);
+
+    // // make sure the vertical layout fits
+    // while(verticalHeight() > viewport.height) {
+    //   cardMarginRatio.x += 0.01;
+    //   cardMarginRatio.y += 0.01;
+    //   const value = computeSpacing(viewport, gameMargin, cardMarginRatio, cardSizeRatio, cardSpacingRatio);
+    //   computedCardSize = value.computedCardSize;
+    //   computedCardMargin = value.computedCardMargin;
+    //   computedCardSpacing = value.computedCardSpacing;
+    // }
+
+    // console.log('cardMarginRatio', cardMarginRatio.x, cardMarginRatio.y);
+
+    const columns = viewport.width < 800 ? 7 : 8;
+
+    // 1) compute interval
+    const interval = ((viewport.width - 2 * gameMargin) / columns)
+
+    // 1) compute cardWidthSize
+    const cardWidth = interval - gameMargin;
+    const cardWidthSize = {
+      width: cardWidth,
+      height: cardWidth * cardSizeRatio
+    }
+
+    // 2) compute cardHeightSize
+    const cardHeight = (viewport.height - 3 * gameMargin) / (1 + 19 * cardSpacingRatio.y)
+    const cardHeightSize = {
+      width: cardHeight / cardSizeRatio,
+      height: cardHeight
+    }
+
+    // 3) set cardSize to minimum of cardWidthSize and cardHeightSize
+    const cardSize = cardWidthSize.width < cardHeightSize.width ? cardWidthSize : cardHeightSize;
+
+    // console.log('cardSize', cardSize.width, cardSize.height);
+    // console.log('cardHeightSize', cardHeightSize.width, cardHeightSize.height);
+    // console.log('cardWidthSize', cardWidthSize.width, cardWidthSize.height);
+
+    // Save cardSize for functions use
+    params.set('cardSize', cardSize);
+    params.set('computedCardSpacing', {x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height})
 
     const layouts = new Layouts([]);
 
+    // Make layout responsive
+    // Adjust number of columns if smaller viewport
+    const foundationStart = viewport.width < 800 ? 1 : 0;
+    const tableauStart = viewport.width < 800 ? 1 : 0
+
     // Stock
     const stock: IPosition = {
-      units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
-      location: stockLocation,
+      units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+      location: { x: gameMargin + (interval - cardSize.width) / 2, y: gameMargin },
       size: cardSize,
       positionChildren: positionStockChildren
     }
@@ -54,43 +90,46 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
 
     layouts.set('stock', new Layout('stock', stock, g));
 
+    // Waste
+    const waste: IPosition = {
+      units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+      location: { x: stock.location.x + interval, y: gameMargin },
+      size: { width: cardSize.width + 3 * cardSize.width * cardSpacingRatio.x, height: cardSize.height },
+      positionChildren: positionWasteChildren
+    }
+
+    layouts.set('waste', new Layout('waste', waste, g));
+
     // Foundation
-    for (let i = 0; i < 4; i++) {
-      const offset = i * (foundationStackSpacing + cardSize.width);
+    for (let i = 4 - foundationStart; i < 8 - foundationStart; i++) {
+      const offset = i * interval;
       const p: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
-        location: { x: foundationLocation.x + offset, y: foundationLocation.y },
+        units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+        location: { x: stock.location.x + offset, y: gameMargin },
         size: cardSize,
         positionChildren: positionFoundationChildren
       }
 
-      const layout = new Layout(`foundation${i + 1}`, p, g);
+      const layout = new Layout(`foundation${i - 3 + foundationStart}`, p, g);
+
+      // console.log(`create layout ${layout.name} ${p.location.x} ${p.location.y}`);
 
       layouts.set(layout.name, layout);
     }
 
     // Tableau
-    for (let i = 0; i < 7; i++) {
-      const offset = i * (tableauStackSpacing + cardSize.width);
+    for (let i = 1 - tableauStart; i < 8 - tableauStart; i++) {
+      const offset = i * interval;
       const p: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
-        location: { x: tableauLocation.x + offset, y: tableauLocation.y },
-        size: { width: cardSize.width, height: cardSize.height + 20 * tableauStackSpacing },
+        units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+        location: { x: stock.location.x + offset, y: cardSize.height + 2 * gameMargin },
+        size: { width: cardSize.width, height: cardSize.height + 19 * cardSpacingRatio.y * cardSize.height },
         positionChildren: positionTableauChildren
       }
 
-      layouts.set(`tableau${i + 1}`, new Layout(`tableau${i + 1}`, p, g));
+      const layout = new Layout(`tableau${i + tableauStart}`, p, g);
+      layouts.set(layout.name, layout);
     }
-
-    // Waste
-    const waste: IPosition = {
-      units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
-      location: { x: wasteLocation.x, y: wasteLocation.y },
-      size: { width: cardSize.width  + 4 * tableauStackSpacing, height: cardSize.height },
-      positionChildren: positionWasteChildren
-    }
-
-    layouts.set('waste', new Layout('waste', waste, g));
 
     // Return new instance of Layouts
     return layouts;
@@ -109,48 +148,75 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     return layout;
   }
 
-  function positionStockChildren(layout: Layout, params: Params, index: number) {
-    // Relative to layout - position at (0, 0)
-    const r = layout.rect();
-    return {
-      x: 0,
-      y: 0,
-      width: r.width,
-      height: r.height
-    }
-  }
-  
-  function positionFoundationChildren(layout: Layout, params: Params, index: number) {
-    // Relative to layout - position at (0, 0)
-    const r = layout.rect();
-    return {
-      x: 0,
-      y: 0,
-      width: r.width,
-      height: r.height
-    }
-  }
-  
-  function positionTableauChildren(layout: Layout, params: Params, index: number) {
-    // Relative to layout - position at (0, cardSpacing.y * index)
-    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location) as IPoint;
-    const cardSize = params.get('cardSize') as ISize;
-    const scaledCardSize = layout.scale({width: cardSize.width / 100, height: cardSize.height / 100 }, layout.units.size) as ISize;
-    
-    return { x: 0, y: cardSpacing.y * index,
-      width: scaledCardSize.width, height: scaledCardSize.height };
-  }
-  
-  function positionWasteChildren(layout: Layout, params: Params, index: number) {
-    // Relative to layout - position at (cardSpacing.x * index, 0)
-    const cardSpacing = layout.scale(params.get('cardSpacing') as IPoint, layout.units.location) as IPoint;
-    const cardSize = params.get('cardSize') as ISize;
-    const scaledCardSize = layout.scale({width: cardSize.width / 100, height: cardSize.height / 100 }, layout.units.size) as ISize;
+  function positionStockChildren(layout: Layout, g: Generator, index: number) {
+    // Return a Layout relative to layout starting at position at (0, 0)
 
-    return { x: cardSpacing.x * index, y: 0,
-      width: scaledCardSize.width, height: scaledCardSize.height };
+    const cardSize = g.params().get('cardSize') as ISize;
+
+    // These children get placed on top of each other
+
+    const child: IPosition = {
+      units: layout.units,
+      location: { x: 0, y: 0 },
+      size: cardSize
+    };
+
+    // This layout is temp and will not be stored in layouts
+    return new Layout('temp', child, g);
+  }
+
+  function positionFoundationChildren(layout: Layout, g: IGenerator, index: number) {
+    // Return a Layout relative to layout starting at position at (0, 0)
+
+    const cardSize = g.params().get('cardSize') as ISize;
+
+    // These children get placed on top of each other
+
+    const child: IPosition = {
+      units: layout.units,
+      location: { x: 0, y: 0 },
+      size: cardSize
+    };
+
+    // This layout is temp and will not be stored in layouts
+    return new Layout('temp', child, g);
+  }
+
+  function positionTableauChildren(layout: Layout, g: IGenerator, index: number) {
+    // Return a Layout relative to layout starting at position at (0, 0)
+
+    const cardSize = g.params().get('cardSize') as ISize;
+    const computedCardSpacing = g.params().get('computedCardSpacing') as IPoint;
+
+    // These children get placed vertically based on index
+    const child: IPosition = {
+      units: layout.units,
+      location: { x: 0, y: index * computedCardSpacing.y },
+      size: cardSize
+    };
+
+    // This layout is temp and will not be stored in layouts
+    return new Layout('temp', child, g);
+  }
+
+  function positionWasteChildren(layout: Layout, g: Generator, index: number) {
+    // Return a Layout relative to layout starting at position at (0, 0)
+
+    const cardSize = g.params().get('cardSize') as ISize;
+    const computedCardSpacing = g.params().get('computedCardSpacing') as IPoint;
+
+    // These children get placed horizontally based on index
+    const child: IPosition = {
+      units: layout.units,
+      location: { x: index * computedCardSpacing.x, y: 0 },
+      size: cardSize
+    };
+
+    // This layout is temp and will not be stored in layouts
+    return new Layout('temp', child, g);
   }
 
   return new Generator(name, init, _params, create, parent);
 }
+
 

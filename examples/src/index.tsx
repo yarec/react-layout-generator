@@ -8,6 +8,8 @@ import { IGenerator } from '../../src/generators/Generator';
 import RLGColumns from '../../src/generators/RLGColumns';
 import RLGDesktop from '../../src/generators/RLGDesktop';
 import ReactLayout from '../../src/ReactLayout';
+import RLGPanel from '../../src/RLGPanel';
+import { ISize } from '../../src/types';
 import CardDeck from './carddeck/CardDeck';
 import ErrorBoundary from './components/ErrorBoundary';
 import NavBar from './components/NavBar'
@@ -17,11 +19,17 @@ import Intro from './intro/Intro';
 import Solitaire from './solitaire/Solitaire';
 
 // tslint:disable-next-line:variable-name
-const Title = styled.h1`
+const Title = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
   background: transparent;
   color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
+
 // tslint:disable-next-line:max-classes-per-file
 export class Examples extends React.Component<{}, { app: any }> {
 
@@ -62,10 +70,13 @@ export class Examples extends React.Component<{}, { app: any }> {
     return (
       <ErrorBoundary>
         <ReactLayout name='intro' g={this.g}>
-          <div data-layout={{ name: 'title' }} style={{backgroundColor: 'black', textAlign: 'center'}}>
-            <Title>React Layout Generator Examples</Title>
-          </div>
-          <div data-layout={{ name: 'header' }} style={{backgroundColor: 'black'}}>
+          <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'black', textAlign: 'center' }} >
+            {(viewport: ISize) => (
+              <Title>React Layout Generator Examples</Title>
+            )}
+          
+          </RLGPanel>
+          <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'black' }}>
             <NavBar elements={[
               { component: <Intro />, name: 'Home' },
               { component: <DeskTop />, name: 'DeskTop' },
@@ -82,7 +93,7 @@ export class Examples extends React.Component<{}, { app: any }> {
           </div>
 
         </ReactLayout>
-      </ErrorBoundary>
+      </ErrorBoundary >
     );
 
   }

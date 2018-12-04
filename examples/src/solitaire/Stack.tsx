@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Card, { Face } from './Card';
 
-export type IAllowDrop = (cards: Card, topCard: Card) => boolean | undefined;
+export type IAllowDrop = (cards: Card, topCard: Card | undefined) => boolean | undefined;
 
 /**
  * Chrome does not handle the dataTransfer correctly for the onDragOver. Ugg...
@@ -130,17 +130,13 @@ export default class Stack {
   }
 
   public onDragOver = (e: React.DragEvent) => {
+    const t = gDataTransfer[0];
     if (this._drop) {
-      if (this._stack.length === 0) {
+      if (this._stack.length === 0 && this._allowDrop && this._allowDrop(t, undefined)) {
         e.preventDefault();
       } else {
         if (gDataTransfer) {
           const top = this._stack[this._stack.length - 1];
-
-          const t = gDataTransfer[0];
-
-          console.log('onDragOver', top.name, t.name);
-
           if (this._allowDrop && this._allowDrop(t, top)) {
             e.preventDefault();
           }
@@ -187,7 +183,7 @@ export function isRedSuite(suite: string) {
   return suite === 'H' || suite === 'D';
 }
 
-export function tableauCompare(card1: Card, card2: Card) {
+export function allowTableauDrop(card1: Card, card2: Card | undefined) {
   if (card2 === undefined) {
     return true;
   }
@@ -195,7 +191,7 @@ export function tableauCompare(card1: Card, card2: Card) {
   return (card1.rank - card2.rank === -1) && isRedSuite(card1.suite) !== isRedSuite(card2.suite);
 }
 
-export function foundationCompare(card1: Card, card2: Card) {
+export function allowFoundationDrop(card1: Card, card2: Card | undefined) {
   if (card2 === undefined) {
     return card1.rank === 1 ? true : false;
   }

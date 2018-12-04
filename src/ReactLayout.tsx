@@ -27,6 +27,7 @@ export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
   viewport?: ISize;
+  debug?: boolean;
   g: IGenerator;
 }
 
@@ -40,6 +41,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   private _g: IGenerator;
   private _editLayout: boolean = false;
   private _startRendering: number;
+
+  private _count: number = 0;
 
   constructor(props: IReactLayoutProps) {
     super(props);
@@ -96,8 +99,10 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   // }
 
   private onResize = (width: number, height: number) => {
+
     const w = Math.floor(width);
     const h = Math.floor(height);
+
     console.log('onResize', this.props.name, w, h);
 
     if (this.state.width !== width || this.state.height !== height) {
@@ -120,6 +125,29 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     }
 
     this._g.reset();
+
+    if (this.props.debug) {
+      const params = this._g.params();
+      const viewport = params.get('viewport') as ISize;
+      if (this._count === 0 && viewport.width && viewport.height) {
+
+        const layouts = this._g.layouts();
+
+        console.log(`ReactLayout debug for ${this.props.name} with generator ${this._g.name()}`);
+        console.log('params');
+        params.map.forEach((value, key) => {
+          console.log(`  ${key} ${JSON.stringify(value)}`);
+        });
+        console.log('layouts (computed position rects)');
+        layouts.map.forEach((value, key) => {
+          const r = value.rect();
+          console.log(`  ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`);
+        });
+
+        this._count += 1;
+      }
+      
+    }
   }
 
   private createPositionedElement = (
@@ -187,8 +215,9 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         if (b && b.positionChildren) {
           // console.log('child', child.props)
           const nestedChildren = React.Children.map(child.props.children, (nestedChild, i) => {
-            const nestedRect = b.positionChildren!(b, b.generator.params(), i);
-            if (nestedRect) {
+            const nestedLayout = b.positionChildren!(b, b.generator, i);
+            if (nestedLayout) {
+              const nestedRect = nestedLayout.rect();
               const nestedStyle = tileStyle(nestedChild.props.style,
                 nestedRect.x,
                 nestedRect.y,
@@ -213,7 +242,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             React.cloneElement(child,
               {
                 key: b.name,
-                extent: { width: rect.width, height: rect.height },
+                viewport: { width: rect.width, height: rect.height },
                 style: { ...this.props.style, ...child.props.style, ...style }
               },
               nestedChildren
@@ -222,7 +251,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         } else {
           // const childCount = React.Children.count(this.props.children);
           // if (childCount === 1 && (this.props.children as JSX.Element).type === 'RLGPanel') {
-           
+
           // }
           return (
             <>

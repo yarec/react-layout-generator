@@ -1,11 +1,11 @@
-import Stack, { tableauCompare } from './Stack'
+import Stack, { allowTableauDrop } from './Stack'
 import Stock from './Stock';
 
 export default class TableauStack {
   private _stack: Stack;
 
   constructor(update: () => void) {
-    this._stack = new Stack(true, true, update, tableauCompare)
+    this._stack = new Stack(true, true, update, allowTableauDrop)
   }
 
   public clear = () => {

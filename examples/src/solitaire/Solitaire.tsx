@@ -88,10 +88,9 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
       <ReactLayout
         name='example.Solitaire'
         editLayout={false}
+        debug={false}
         g={this._g}
       >
-        
-
         <div
           key='stock'
           data-layout={{
@@ -120,8 +119,8 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           data-layout={{
             name: 'New Game',
             position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 102, y: 90 },
+              units: { origin: { x: 50, y: 50 }, location: IUnit.percent, size: IUnit.pixel },
+              location: { x: 50, y: 90 },
               size: { width: 90, height: 24 }
             }
           }}

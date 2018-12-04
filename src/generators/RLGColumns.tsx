@@ -22,15 +22,15 @@ export default function RLGColumns(name: string, parent?: IGenerator) {
     const align = params.get('align') as number;
 
     // if (params.changed()) {
-      
-      // update Layout for each update
-      if (align === 0) {
-        centerColumns(layouts, params);
 
-        // layouts.map.forEach((layout) => {
-        //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
-        // });
-      }
+    // update Layout for each update
+    if (align === 0) {
+      centerColumns(layouts, params);
+
+      // layouts.map.forEach((layout) => {
+      //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
+      // });
+    }
     // }
 
     return layouts;
@@ -49,8 +49,19 @@ export default function RLGColumns(name: string, parent?: IGenerator) {
       totalWidth += layout.rect().width;
     });
 
+    if (0 && totalWidth > viewport.width) {
+      // Split the layouts and add left and right chevron keys (&laquo and &raquo)
+      const keys = layouts.map.keys;
+      let i = keys.length - 1;
+      while (i >= 0 && totalWidth > viewport.width) {
+        const layout = layouts.get(keys[i])
+        totalWidth -= layout!.rect().width;
+        i -= 1;
+      }
+    }
+
     // compute beginning offset
-    const offset0 = (viewport.width / 2 - totalWidth / 2) ;
+    const offset0 = (viewport.width / 2 - totalWidth / 2);
 
     // update
     let currentWidths = 0;
@@ -88,12 +99,12 @@ export default function RLGColumns(name: string, parent?: IGenerator) {
 
     const align = params.get('align') as number;
 
-    
+
     // if ((args.index + 1) === args.count) {
-      
-      if (align === 0) {
-        centerColumns(layouts, params);
-      }
+
+    if (align === 0) {
+      centerColumns(layouts, params);
+    }
     // }
 
     return l;
