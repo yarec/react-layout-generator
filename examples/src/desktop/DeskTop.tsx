@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
+import { IGenerator } from '../../../src/generators/Generator';
 import RLGDesktop from '../../../src/generators/RLGDesktop';
 import ReactLayout from '../../../src/ReactLayout';
 import RLGPanel from '../../../src/RLGPanel';
@@ -9,6 +10,11 @@ import { ISize } from '../../../src/types'
 
 interface IProps {
   viewport: ISize;
+  variable?: string;
+  left?: number | string;
+  top?: number | string;
+  right?: number | string;
+  bottom?: number | string;
 }
 
 export const Instruction = styled.p<IProps>`
@@ -18,12 +24,20 @@ export const Instruction = styled.p<IProps>`
 `
 
 export const List = styled.ul<IProps>`
-  max-width:  ${p => p.viewport.width};
+  max-width: ${p => p.viewport.width};
 `
 
 export const Item = styled.li<IProps>`
-  max-width:  ${p => p.viewport.width};
+  max-width: ${p => p.viewport.width};
   white-space: wrap;
+`
+
+export const Close = styled.button<IProps>` 
+  position: absolute;
+  background: transparent;
+  border: none;
+  right: ${p => p.right};
+  top: ${p => p.top};
 `
 
 interface IDeskTopProps {
@@ -42,7 +56,7 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
   constructor(props: IDeskTopProps) {
     super(props);
 
-    this.state = { update: 0, viewport: {width: 0, height: 0 }};
+    this.state = { update: 0, viewport: { width: 0, height: 0 } };
 
     const p = this.g.params();
 
@@ -68,9 +82,14 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
         editLayout={true}
         g={this.g}
       >
-        <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          <span>LeftSide</span>
-        </div>
+        <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+          {(viewport: ISize, editLayout: boolean, g: IGenerator) => (
+            <>
+              <span>LeftSide</span>
+              {editLayout ? (this.closeButton(viewport, 'leftSideWidth')) : null}
+            </>
+          )}
+        </RLGPanel>
 
         <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
           <span>Header</span>
@@ -91,11 +110,12 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
                 <p>Drag the borders in this container</p>
                 <li>To hide a panel</li>
                 <p>Set its variable to 0</p>
-                
+
                 <Item viewport={viewport}>To make the headers full width</Item>
                 <p>Set the fullWidthHeaders value to 1</p>
 
                 <List viewport={viewport}>
+                  <li>fullWidthHeaders</li>
                   <li>titleHeight</li>
                   <li>headerHeight</li>
                   <li>footerHeight)</li>
@@ -112,6 +132,21 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
         </div>
       </ReactLayout>
     );
+  }
+
+  public closePanel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // tslint:disable-next-line:no-string-literal
+    const value = e.target['value'];
+    this.g.params().set(value, 0);
+    this.setState({ update: this.state.update + 1 });
+  }
+
+  private closeButton = (viewport: ISize, variable: string) =>{
+    return <Close viewport={viewport} right={0} top={0}
+      // tslint:disable-next-line:jsx-no-lambda
+      onClick={this.closePanel} value={variable}>
+      X
+    </Close>;
   }
 }
 

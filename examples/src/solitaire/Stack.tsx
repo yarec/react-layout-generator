@@ -49,6 +49,10 @@ export default class Stack {
     return undefined;
   }
 
+  public get length() {
+    return this._stack.length;
+  }
+
   public cards = () => {
     if (this._stack.length) {
       return this._stack.map((card, i) => {

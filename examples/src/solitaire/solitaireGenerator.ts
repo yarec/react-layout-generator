@@ -9,7 +9,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
 
   const _params = new Params([
     ['viewport', { width: 0, height: 0 }],
-    ['gameMargin', 10],
+    ['gameMargin', 20],
     ['cardSizeRatio', 1.3],
     ['cardSpacingRatio', { x: .18, y: .17 }],
     ['cardMarginRatio', { x: .18, y: .1 }]
@@ -24,25 +24,8 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     const cardSizeRatio = params.get('cardSizeRatio') as number;
     const cardSpacingRatio = params.get('cardSpacingRatio') as IPoint;
 
-    // // Since  we are going to modify cardMarginRation we need to clone it
-    // const cardMarginRatio = clone(params.get('cardMarginRatio') as IPoint);
-
-    // let { computedCardSize, computedCardMargin, computedCardSpacing } = 
-    // computeSpacing(viewport, gameMargin, cardMarginRatio, cardSizeRatio, cardSpacingRatio);
-
-    // // make sure the vertical layout fits
-    // while(verticalHeight() > viewport.height) {
-    //   cardMarginRatio.x += 0.01;
-    //   cardMarginRatio.y += 0.01;
-    //   const value = computeSpacing(viewport, gameMargin, cardMarginRatio, cardSizeRatio, cardSpacingRatio);
-    //   computedCardSize = value.computedCardSize;
-    //   computedCardMargin = value.computedCardMargin;
-    //   computedCardSpacing = value.computedCardSpacing;
-    // }
-
-    // console.log('cardMarginRatio', cardMarginRatio.x, cardMarginRatio.y);
-
     const columns = viewport.width < 800 ? 7 : 8;
+    const maxCards = 13;
 
     // 1) compute interval
     const interval = ((viewport.width - 2 * gameMargin) / columns)
@@ -55,7 +38,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     }
 
     // 2) compute cardHeightSize
-    const cardHeight = (viewport.height - 3 * gameMargin) / (1 + 19 * cardSpacingRatio.y)
+    const cardHeight = (viewport.height - 2 * gameMargin) / (2 + maxCards * cardSpacingRatio.y)
     const cardHeightSize = {
       width: cardHeight / cardSizeRatio,
       height: cardHeight
@@ -64,9 +47,9 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
     // 3) set cardSize to minimum of cardWidthSize and cardHeightSize
     const cardSize = cardWidthSize.width < cardHeightSize.width ? cardWidthSize : cardHeightSize;
 
-    // console.log('cardSize', cardSize.width, cardSize.height);
-    // console.log('cardHeightSize', cardHeightSize.width, cardHeightSize.height);
-    // console.log('cardWidthSize', cardWidthSize.width, cardWidthSize.height);
+    console.log('cardSize', cardSize.width, cardSize.height);
+    console.log('cardHeightSize', cardHeightSize.width, cardHeightSize.height);
+    console.log('cardWidthSize', cardWidthSize.width, cardWidthSize.height);
 
     // Save cardSize for functions use
     params.set('cardSize', cardSize);
@@ -123,7 +106,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
       const p: IPosition = {
         units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
         location: { x: stock.location.x + offset, y: cardSize.height + 2 * gameMargin },
-        size: { width: cardSize.width, height: cardSize.height + 19 * cardSpacingRatio.y * cardSize.height },
+        size: { width: cardSize.width, height: cardSize.height + maxCards * cardSpacingRatio.y * cardSize.height },
         positionChildren: positionTableauChildren
       }
 
@@ -138,7 +121,7 @@ export default function solitaireGenerator(name: string, parent?: IGenerator) {
   function create(args: ICreate): Layout {
 
     if (!args.position) {
-      console.error(`TODO default position ${args.name}`)
+      console.error(`TODO default position ${args.name}`);
     }
 
     const layout = new Layout(args.name, args.position, args.g);

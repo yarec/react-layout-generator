@@ -45,8 +45,8 @@ export class Examples extends React.Component<{}, { app: any }> {
     const p = this.g.params();
 
     // Set variables to 0 to hide section
-    p.set('titleHeight', 80);
-    p.set('headerHeight', 40);
+    p.set('titleHeight', 50);
+    p.set('headerHeight', 20);
     p.set('footerHeight', 0);
     p.set('leftSideWidth', 0);
     p.set('rightSideWidth', 0);

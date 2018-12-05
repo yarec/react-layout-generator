@@ -78,8 +78,10 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
    */
   public onPopulateWaste = (event: React.MouseEvent<HTMLDivElement>) => {
     if (this._stock && this._waste) {
-      this._waste.populate(this._stock);
-      this.setState({ update: this.state.update + 1 });
+      if (this._stock.length) {
+        this._waste.populate(this._stock);
+        this.setState({ update: this.state.update + 1 });
+      }
     }
   }
 
@@ -171,7 +173,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
 
   protected grid = () => {
     const jsx = [];
-    
+
     for (let i = 0; i < 100; i++) {
       if (i % 2 === 0) {
         const name = `gridV${i + 1}`;
@@ -191,7 +193,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
         );
       }
     }
-    
+
     return jsx;
   }
 }

@@ -33,4 +33,8 @@ export default class Stock {
   public cards = () => {
     return this._stack.cards();
   }
+
+  public get length () {
+    return this._stack.length;
+  }
 }

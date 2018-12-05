@@ -16,25 +16,24 @@ export default function RLGColumns(name: string, parent?: IGenerator) {
   ])
 
   function init(g: IGenerator): Layouts {
-    const params = g.params();
-    const layouts = g.layouts();
+    // const params = g.params();
+    // const layouts = g.layouts();
 
-    const align = params.get('align') as number;
+    // const align = params.get('align') as number;
 
     // if (params.changed()) {
 
     // update Layout for each update
-    if (align === 0) {
-      centerColumns(layouts, params);
+    // if (align === 0) {
+    //   centerColumns(layouts, params);
 
-      // layouts.map.forEach((layout) => {
-      //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
-      // });
-    }
-    // }
-
-    return layouts;
+    // layouts.map.forEach((layout) => {
+    //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
+    // });
+    return new Layouts([]);
   }
+  // }
+
 
   /**
    * Align items in center
@@ -81,6 +80,9 @@ export default function RLGColumns(name: string, parent?: IGenerator) {
     const layouts = args.g.layouts();
 
     let p = args.position;
+
+    // console.log('create width', p.size.width);
+
     if (!p) {
       p = {
         units: {

@@ -230,6 +230,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                   {
                     key: `${nestedChild.key}`,
                     viewport: { width: nestedRect.width, height: nestedRect.height },
+                    editLayout: this.props.editLayout,
+                    g: this.props.g,
                     style: { ...this.props.style, ...nestedChild.props.style, ...nestedStyle }
                   },
                   nestedChild.props.children
@@ -243,22 +245,22 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
               {
                 key: b.name,
                 viewport: { width: rect.width, height: rect.height },
+                editLayout: this.props.editLayout,
+                g: this.props.g,
                 style: { ...this.props.style, ...child.props.style, ...style }
               },
               nestedChildren
             )
           );
         } else {
-          // const childCount = React.Children.count(this.props.children);
-          // if (childCount === 1 && (this.props.children as JSX.Element).type === 'RLGPanel') {
-
-          // }
           return (
             <>
               {React.cloneElement(child,
                 {
                   key: b.name,
                   viewport: { width: rect.width, height: rect.height },
+                  editLayout: this.props.editLayout,
+                  g: this.props.g,
                   style: { ...this.props.style, ...child.props.style, ...style }
                 },
                 child.props.children
