@@ -33,6 +33,10 @@ export default class Stack {
     return this._stack.pop();
   }
 
+  public shift = () => {
+    return this._stack.shift();
+  }
+
   public push = (card: Card) => {
     return this._stack.push(card);
   }

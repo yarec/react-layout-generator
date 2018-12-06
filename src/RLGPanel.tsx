@@ -2,9 +2,15 @@ import * as React from 'react';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
 
+export interface IRLPanelArgs {
+  viewport: ISize;
+  edit: boolean;
+  g: IGenerator;
+}
+
 interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   viewport?: ISize;
-  editLayout?: boolean;
+  edit?: boolean;
   g?: IGenerator;
 }
 
@@ -39,10 +45,15 @@ export default class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelS
   }
 
   public render() {
+    const args: IRLPanelArgs = {
+      viewport: this.state.viewport, 
+      edit: this.props.edit!, 
+      g: this.props.g!
+    }
     return (
       <div {...this.props}>
-        {(this.props.children as (viewport?: ISize, editLayout?: boolean, g?: IGenerator) => JSX.Element)(
-          this.state.viewport, this.props.editLayout, this.props.g)}
+        {(this.props.children as (args: IRLPanelArgs) => JSX.Element)(
+          args)}
       </div>
     );
   }

@@ -3,7 +3,7 @@ import Generator, { IGenerator } from '../generators/Generator';
 import { IPoint, IRect, ISize } from '../types';
 
 import Layouts from '../components/Layouts';
-import Params from '../components/Params';
+import Params, { ParamValue } from '../components/Params';
 
 
 function updateParamWidth(updated: IRect, edit: IEdit) {
@@ -20,7 +20,7 @@ function updateParamHeight(updated: IRect, edit: IEdit) {
   }
 }
 
-export default function RLGDesktop(name: string, parent?: IGenerator) {
+export default function RLGDesktop(name: string, exParams?: Params, parent?: IGenerator) {
 
   const _fullWidthHeaders = 0;
   const _titleHeight = 50;
@@ -29,7 +29,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
   const _headerHeight = 24;
   const _footerHeight = 24;
 
-  const _params = new Params([
+  const values: Array<[string, ParamValue]> = [
     ['viewport', { width: 0, height: 0 }],
     ['fullWidthHeaders', _fullWidthHeaders],
     ['titleHeight', _titleHeight],
@@ -37,7 +37,9 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     ['rightSideWidth', _rightSideWidth],
     ['headerHeight', _headerHeight],
     ['footerHeight', _footerHeight]
-  ])
+  ];
+
+  const _params = exParams ? exParams.restore(name, values) : new Params(values);
 
   function init(g: IGenerator) {
     const params = g.params();

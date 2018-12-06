@@ -89,7 +89,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
     return (
       <ReactLayout
         name='example.Solitaire'
-        editLayout={false}
+        edit={false}
         debug={false}
         g={this._g}
       >

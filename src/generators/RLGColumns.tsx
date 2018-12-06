@@ -1,19 +1,21 @@
 import Layout, { IUnit } from '../components/Layout';
 import Layouts from '../components/Layouts';
-import Params from '../components/Params';
+import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
 import { ISize } from '../types';
 
-export default function RLGColumns(name: string, parent?: IGenerator) {
+export default function RLGColumns(name: string, exParams?: Params, parent?: IGenerator) {
 
   const defaultItemWidth = 100;
 
-  const _params = new Params([
+  const values: Array<[string, ParamValue]> = [
     ['viewport', { width: 0, height: 0 }],
     ['align', 0], // -1: left, 0: center, 1: right
     ['spread', 0], // 0: keep width, 1: fills width
     ['defaultItemWidth', defaultItemWidth]
-  ])
+  ]
+
+  const _params = exParams ? exParams.restore(name, values) : new Params(values);
 
   function init(g: IGenerator): Layouts {
     // const params = g.params();

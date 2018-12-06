@@ -22,7 +22,7 @@ export default class Intro extends React.Component {
     return (
       <ReactLayout
         name={'reactLayout.intro.example'}
-        editLayout={true}
+        edit={true}
         g={this._g}
       >
         <div data-layout={{

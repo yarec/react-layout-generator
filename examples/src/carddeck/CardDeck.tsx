@@ -34,7 +34,7 @@ export default class CardDeck extends React.Component<ICardDeckProps, ICardDeckS
     return (
       <ReactLayout
         name={'example.cardDeck'}
-        editLayout={true}
+        edit={true}
         g={this._g}
       >
         {this.createElements()}

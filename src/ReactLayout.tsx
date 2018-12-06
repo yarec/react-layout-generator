@@ -23,7 +23,7 @@ export let gInProgress: number = 0;
 
 export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   name?: string;
-  editLayout?: boolean;
+  edit?: boolean;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
   viewport?: ISize;
@@ -39,7 +39,7 @@ export interface IReactLayoutState {
 
 export default class ReactLayout extends React.Component<IReactLayoutProps, IReactLayoutState> {
   private _g: IGenerator;
-  private _editLayout: boolean = false;
+  private _edit: boolean = false;
   private _startRendering: number;
 
   private _count: number = 0;
@@ -52,7 +52,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
       width: 0
     }
 
-    this._editLayout = props.editLayout ? props.editLayout : false;
+    this._edit = props.edit ? props.edit : false;
 
     // this.divRef = React.createRef();
 
@@ -146,7 +146,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
         this._count += 1;
       }
-      
+
     }
   }
 
@@ -194,7 +194,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         // console.log(name, style)
 
         const editors: JSX.Element[] = [];
-        if (this._editLayout && b.edit) {
+        if (this._edit && b.edit) {
           // this.editOverlay.push(b);
           let i = 0;
           b.edit.forEach((item) => {
@@ -229,9 +229,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                 React.cloneElement(nestedChild,
                   {
                     key: `${nestedChild.key}`,
+
                     viewport: { width: nestedRect.width, height: nestedRect.height },
-                    editLayout: this.props.editLayout,
+                    edit: this.props.edit,
                     g: this.props.g,
+
+
                     style: { ...this.props.style, ...nestedChild.props.style, ...nestedStyle }
                   },
                   nestedChild.props.children
@@ -244,9 +247,11 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             React.cloneElement(child,
               {
                 key: b.name,
+
                 viewport: { width: rect.width, height: rect.height },
-                editLayout: this.props.editLayout,
+                edit: this.props.edit,
                 g: this.props.g,
+
                 style: { ...this.props.style, ...child.props.style, ...style }
               },
               nestedChildren
@@ -258,9 +263,11 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
               {React.cloneElement(child,
                 {
                   key: b.name,
+
                   viewport: { width: rect.width, height: rect.height },
-                  editLayout: this.props.editLayout,
+                  edit: this.props.edit,
                   g: this.props.g,
+
                   style: { ...this.props.style, ...child.props.style, ...style }
                 },
                 child.props.children

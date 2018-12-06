@@ -12,14 +12,14 @@ export default class Waste {
   }
 
   public populate = (stock: Stock) => {
-    let oldCard = this._waste.pop();
+    let oldCard = this._waste.shift();
     while(oldCard) {
       oldCard.flip();
       stock.unshift(oldCard);
-      oldCard = this._waste.pop();
+      oldCard = this._waste.shift();
     }
 
-    this._waste.clear();
+    // this._waste.clear();
 
     let card = stock.pop();
     if (card) {

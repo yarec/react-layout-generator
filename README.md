@@ -126,7 +126,7 @@ A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It de
 ```html
 <ReactLayout
   name={'reactLayout.desktop.example'}
-  editLayout={false}
+  edit={false}
   g={new RLGDesktop()}
 >
   <div data-layout={{ name: 'title' }} >

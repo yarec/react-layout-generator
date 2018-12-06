@@ -1,19 +1,21 @@
 import Layout, { IPosition, IUnit } from '../../../src/components/Layout';
 import Layouts from '../../../src/components/Layouts';
-import Params from '../../../src/components/Params';
+import Params, { ParamValue } from '../../../src/components/Params';
 import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
 import { IPoint, ISize } from '../../../src/types';
 // import { clone } from '../../../src/utils';
 
-export default function solitaireGenerator(name: string, parent?: IGenerator) {
+export default function solitaireGenerator(name: string, exParams?: Params, parent?: IGenerator) {
 
-  const _params = new Params([
+  const values: Array<[string, ParamValue]> = [
     ['viewport', { width: 0, height: 0 }],
     ['gameMargin', 20],
     ['cardSizeRatio', 1.3],
     ['cardSpacingRatio', { x: .18, y: .17 }],
     ['cardMarginRatio', { x: .18, y: .1 }]
-  ])
+  ];
+
+  const _params = exParams ? exParams.restore(name, values) : new Params(values);
 
   function init(g: IGenerator): Layouts {
 

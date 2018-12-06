@@ -1,12 +1,14 @@
 import Layout from '../components/Layout';
 import Layouts from '../components/Layouts';
-import Params from '../components/Params';
+import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator } from './Generator';
 
-export default function RLGDynamic(name: string, parent?: IGenerator): IGenerator {
-  const _params = new Params([
+export default function RLGDynamic(name: string, exParams?: Params, parent?: IGenerator): IGenerator {
+  const values: Array<[string, ParamValue]> = [
     ['viewport', { width: 0, height: 0 }]
-  ])
+  ];
+
+  const _params = exParams ? exParams.restore(name, values) : new Params(values);
 
   function init(g: IGenerator): Layouts {
     const params = g.params();

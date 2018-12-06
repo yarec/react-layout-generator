@@ -30,7 +30,7 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
     return (
       <ReactLayout
         name='example.Grid'
-        editLayout={false}
+        edit={false}
         g={this._g}
       >
         {this.grid(this.state.unit)}
@@ -64,23 +64,7 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
           Preserve
         </button>
 
-        {/* <div
-          key={'Code'}
-          data-layout={{
-            name: 'Code',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 10, y: 30 },
-              size: { width: 300, height: 100 }
-            }
-          }}
-          style={{ background: 'transparent' as 'transparent' }}
-        >
-          <Highlight  className='javascript'>
-            {`function foo() { return 'bar' }`}
-          </Highlight>
-        </div> */}
-
+        
       </ReactLayout>
     );
   }
