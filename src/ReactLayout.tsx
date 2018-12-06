@@ -21,13 +21,23 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
 
 export let gInProgress: number = 0;
 
+export enum EditOptions {
+  none = 0,
+  all
+}
+
+export enum DebugOptions {
+  none = 0,
+  all
+}
+
 export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
   name?: string;
-  edit?: boolean;
+  edit?: EditOptions;
   save?: (name: string, params: string, layouts: string) => void;
   load?: (name: string) => { params: string, layouts: string }
   viewport?: ISize;
-  debug?: boolean;
+  debug?: DebugOptions;
   g: IGenerator;
 }
 
@@ -39,7 +49,7 @@ export interface IReactLayoutState {
 
 export default class ReactLayout extends React.Component<IReactLayoutProps, IReactLayoutState> {
   private _g: IGenerator;
-  private _edit: boolean = false;
+  private _edit: EditOptions = EditOptions.none;
   private _startRendering: number;
 
   private _count: number = 0;
@@ -52,7 +62,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
       width: 0
     }
 
-    this._edit = props.edit ? props.edit : false;
+    this._edit = props.edit ? props.edit : EditOptions.none;
 
     // this.divRef = React.createRef();
 
@@ -126,7 +136,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     this._g.reset();
 
-    if (this.props.debug) {
+    if (this.props.debug === DebugOptions.all) {
       const params = this._g.params();
       const viewport = params.get('viewport') as ISize;
       if (this._count === 0 && viewport.width && viewport.height) {
@@ -231,9 +241,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                     key: `${nestedChild.key}`,
 
                     viewport: { width: nestedRect.width, height: nestedRect.height },
+                    parent: {
+                      name,
+                      position: b.position
+                    },
                     edit: this.props.edit,
                     g: this.props.g,
-
 
                     style: { ...this.props.style, ...nestedChild.props.style, ...nestedStyle }
                   },
@@ -249,6 +262,10 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                 key: b.name,
 
                 viewport: { width: rect.width, height: rect.height },
+                parent: {
+                  name,
+                  position: b.position
+                },
                 edit: this.props.edit,
                 g: this.props.g,
 
@@ -265,6 +282,10 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
                   key: b.name,
 
                   viewport: { width: rect.width, height: rect.height },
+                  parent: {
+                    name,
+                    position: b.position
+                  },
                   edit: this.props.edit,
                   g: this.props.g,
 

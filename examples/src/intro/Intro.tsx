@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { IUnit } from '../../../src/components/Layout';
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
-import ReactLayout from '../../../src/ReactLayout';
+import ReactLayout, { EditOptions } from '../../../src/ReactLayout';
 
 // const Title = styled.h2`
 // `
@@ -22,7 +22,7 @@ export default class Intro extends React.Component {
     return (
       <ReactLayout
         name={'reactLayout.intro.example'}
-        edit={true}
+        edit={EditOptions.all}
         g={this._g}
       >
         <div data-layout={{

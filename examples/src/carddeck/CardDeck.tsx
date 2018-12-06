@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { IUnit, PositionRef } from '../../../src/components/Layout';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
-import ReactLayout from '../../../src/ReactLayout';
+import ReactLayout, { EditOptions } from '../../../src/ReactLayout';
 import Deck from '../algos/Deck';
 
 const Description = styled.p`
@@ -34,7 +34,7 @@ export default class CardDeck extends React.Component<ICardDeckProps, ICardDeckS
     return (
       <ReactLayout
         name={'example.cardDeck'}
-        edit={true}
+        edit={EditOptions.all}
         g={this._g}
       >
         {this.createElements()}

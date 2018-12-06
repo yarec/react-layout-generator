@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // import { IGenerator } from '../../../src/generators/Generator';
 import RLGDesktop from '../../../src/generators/RLGDesktop';
-import ReactLayout from '../../../src/ReactLayout';
+import ReactLayout, { EditOptions } from '../../../src/ReactLayout';
 import RLGPanel, { IRLPanelArgs } from '../../../src/RLGPanel';
 import { ISize } from '../../../src/types'
 
@@ -82,7 +82,7 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
     return (
       <ReactLayout
         name={'reactLayout.desktop.example'}
-        edit={true}
+        edit={EditOptions.all}
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >

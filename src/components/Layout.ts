@@ -127,6 +127,10 @@ export default class Layout {
     return this._positionChildren;
   }
 
+  get position() {
+    return this._position;
+  }
+
   private _name: string;
   private _position: IPosition;
   private _changed: boolean;
@@ -212,7 +216,10 @@ export default class Layout {
         const p: IPoint = ref.fromLocation();
         const s: ISize = ref.fromSize();
         const source: IPoint = this.toAlign(p, s, this._position.align.source);
-        const offset: IPoint = { x: source.x + this._position.align.offset.x, y: source.y + this._position.align.offset.y }
+        const offset: IPoint = { 
+          x: source.x + this._position.align.offset.x, 
+          y: source.y + this._position.align.offset.y 
+        }
         return this.fromAlign(offset, this.fromSize(), this._position.align.self);
       }
     }
