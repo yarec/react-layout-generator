@@ -2,23 +2,22 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import { IOrigin, IUnit } from '../../../src/components/Layout'
+import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
 import ReactLayout from '../../../src/ReactLayout';
 import RLGPanel, { IRLPanelArgs } from '../../../src/RLGPanel';
 import { ISize } from '../../../src/types';
 
-interface IProps {
+export interface IProps {
   viewport: ISize;
-  origin: IOrigin;
 }
 
-const Callout = styled.div<IProps>`
-  position: relative;
-  padding: 15px;
-  /* margin: 1em 0 3em;  */
+const CalloutBottom = styled.div<IProps>`
+  position: absolute;
   color: #000;
+  width: ${(p) => p.viewport.width};
+  height: ${(p) => p.viewport.height};
   background: #f3961c;
   border-radius: 10px;
   background: linear-gradient(top, #f9d835, #f3961c);
@@ -36,6 +35,8 @@ const Callout = styled.div<IProps>`
     border-color: #f3961c transparent;
   }
 `
+
+export { CalloutBottom }
 
 export default class Grid extends React.Component<{}, { unit: IUnit }> {
 
@@ -127,7 +128,7 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
             name: 'square(percent)',
             position: {
               units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
-              location: { x: 50, y: 30 },
+              location: { x: 50, y: 50 },
               size: { width: 20, height: 20 }
             }
           }}
@@ -139,13 +140,13 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
           <span>size (20%, 20%) </span>
         </div>
 
-        <RLGPanel
+        <div
           data-layout={{
             name: 'callout',
             position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.preserve },
+              units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanaged },
               location: { x: 40, y: 40 },
-              size: { width: 20, height: 20 },
+              size: { width: 0, height: 0 },
               align: {
                 key: 'square(percent)',
                 offset: { x: 20, y: 0 },
@@ -155,60 +156,67 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
             }
           }}
 
-          style={{ backgroundColor: 'gray' }}
+          style={{ backgroundColor: '' }}
         >
           {(args: IRLPanelArgs) => (
-            <Callout viewport={args.viewport} origin={args.parent.position.units.origin}>Callout</Callout>
+            <>
+              <span>Hello</span> <br />
+              <span>World</span>
+            </>
           )}
-        </RLGPanel>
-
-        <button
-          key={'Pixel'}
-          data-layout={{
-            name: 'Pixel',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 10, y: 10 },
-              size: { width: 90, height: 24 }
-            }
-          }}
-          onClick={this.setPixel}
-        >
-          Pixel
-        </button>
-        <button
-          key={'Percent'}
-          data-layout={{
-            name: 'Percent',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 10, y: 20 },
-              size: { width: 90, height: 24 }
-            }
-          }}
-          onClick={this.setPercent}
-        >
-          Percent
-        </button>
-        <button
-          key={'Preserve'}
-          data-layout={{
-            name: 'Preserve',
-            position: {
-              units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
-              location: { x: 10, y: 30 },
-              size: { width: 90, height: 24 }
-            }
-          }}
-          onClick={this.setPreserve}
-        >
-          Preserve
-        </button>
+        </div>
 
 
       </ReactLayout>
     );
   }
+
+  protected controls = () => (
+    <div>
+      <button
+        key={'Pixel'}
+        data-layout={{
+          name: 'Pixel',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+            location: { x: 10, y: 10 },
+            size: { width: 90, height: 24 }
+          }
+        }}
+        onClick={this.setPixel}
+      >
+        Pixel
+  </button>
+      <button
+        key={'Percent'}
+        data-layout={{
+          name: 'Percent',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+            location: { x: 10, y: 20 },
+            size: { width: 90, height: 24 }
+          }
+        }}
+        onClick={this.setPercent}
+      >
+        Percent
+  </button>
+      <button
+        key={'Preserve'}
+        data-layout={{
+          name: 'Preserve',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.preserve, size: IUnit.pixel },
+            location: { x: 10, y: 30 },
+            size: { width: 90, height: 24 }
+          }
+        }}
+        onClick={this.setPreserve}
+      >
+        Preserve
+  </button>
+    </div>
+  )
 
   protected grid = (unit: IUnit, viewport: ISize) => {
     const jsx = [];

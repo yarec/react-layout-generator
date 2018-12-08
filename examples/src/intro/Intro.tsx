@@ -67,6 +67,20 @@ export default class Intro extends React.Component {
           </Description>
         </div>
 
+         <div data-layout={{
+          name: 'introFeature4',
+          position: {
+            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            location: { x: 50, y: 50 },
+            size: { width: 250, height: 350 }
+          }
+        }}
+        >
+          <Description>
+            Supports scaling css.
+          </Description>
+        </div>
+
       </ReactLayout>
     );
   }

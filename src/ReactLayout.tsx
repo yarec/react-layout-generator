@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { IPosition, PositionChildren } from './components/Layout';
+import { IPosition, IUnit, PositionChildren, PositionRef } from './components/Layout';
 import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
@@ -15,6 +15,16 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
     transform: `translate(${x}px, ${y}px)`,
     transformOrigin: 0,
     width: `${width}px`,
+    ...style
+  };
+}
+
+function unmanagedTileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
+  return {
+    boxSizing: 'border-box' as 'border-box',
+    position: 'absolute' as 'absolute',
+    transform: `translate(${x}px, ${y}px)`,
+    transformOrigin: 0,
     ...style
   };
 }
@@ -303,6 +313,85 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     return null;
   }
 
+  private updateUnmanagedElement = (
+    child: React.ReactElement<any>,
+    index: number,
+    count: number,
+    name: string,
+    position: IPosition,
+    positionChildren: PositionChildren
+  ) => {
+
+    const b = this._g.lookup(name);
+    if (b) {
+      const rect = b.rect();
+
+      const style = unmanagedTileStyle(child.props.style,
+        rect.x,
+        rect.y,
+        rect.width,
+        rect.height
+      );
+
+      // console.log(name, style)
+
+      const jsx: JSX.Element[] = [];
+
+      const ch = React.cloneElement(child,
+        {
+          key: b.name,
+
+          viewport: { width: rect.width, height: rect.height },
+          parent: {
+            name,
+            position: b.position
+          },
+          edit: this.props.edit,
+          g: this.props.g,
+
+          style: { ...this.props.style, ...child.props.style, ...style }
+        },
+        child.props.children
+      );
+
+      jsx.push(ch);
+
+      if (this._edit && b.edit) {
+        // this.editOverlay.push(b);
+        let i = 0;
+        b.edit.forEach((item) => {
+          if (item.ref === PositionRef.position) {
+            jsx.push(
+              React.createElement('EditPosition', {
+                key: `edit${i}`,
+                edit: item,
+                layout: b!,
+                boundary: { x: 0, y: 0, width: this.state.width, height: this.state.height },
+                onUpdate: this.onUpdate
+              }));
+            i += 1;
+          } else {
+            console.error(`Dynamic size only allows positioning for ${name}`)
+          }
+        })
+      }
+
+      jsx.push(<ReactResizeDetector 
+        key={`reactResizeDetector`}
+        handleWidth={true} 
+        handleHeight={true}  
+        onResize={b.onResize.bind(b)} />
+      );
+
+      return (
+        <>
+          {jsx}
+        </>
+      );
+    }
+    return null;
+  }
+
   private createElement = (child: JSX.Element, index: number, count: number) => {
     const p = child.props['data-layout'];
 
@@ -314,7 +403,6 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
       // Pass height width props of container to each child and its children
     }
 
-
     return null;
   }
 
@@ -323,7 +411,19 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     // console.log('createElement', child.type, child.props)
     if (p && p.name) {
-      return this.updatePositionedElement(child, index, count, p.name, p.position, p.context);
+      const position = p.position as IPosition;
+      if (position && position.units.size === IUnit.unmanaged) {
+        // size determined by element.offsetWidth and element offsetHeight
+
+        // insert react-resize-detector as last child
+        return this.updateUnmanagedElement(
+          child, index, count, p.name, p.position, p.context
+        );
+
+      }
+      return this.updatePositionedElement(
+        child, index, count, p.name, p.position, p.context
+      );
     } else {
       // TODO add support for elements without 'data-layout'
       // Is it needed?
@@ -355,6 +455,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
   private content = () => {
 
+    
     // Only show content if width and height are not 0
     if (this.state.width && this.state.height) {
       const count = React.Children.count(this.props.children);

@@ -15,6 +15,7 @@ export interface IAlign {
  * Defines the units of location and size
  */
 export enum IUnit {
+  unmanaged = 0,
   pixel = 1,
   percent,
   preserve,
@@ -67,7 +68,7 @@ export type PositionChildren = (
   layout: Layout,
   g: IGenerator,
   index: number
-  ) => Layout | undefined;
+) => Layout | undefined;
 
 export interface IHandlers {
   onMouseDown?: () => void;
@@ -117,6 +118,10 @@ export default class Layout {
 
   get size() {
     return this._position.size;
+  }
+
+  get resize() {
+    return this.onResize;
   }
 
   get generator() {
@@ -216,9 +221,9 @@ export default class Layout {
         const p: IPoint = ref.fromLocation();
         const s: ISize = ref.fromSize();
         const source: IPoint = this.toAlign(p, s, this._position.align.source);
-        const offset: IPoint = { 
-          x: source.x + this._position.align.offset.x, 
-          y: source.y + this._position.align.offset.y 
+        const offset: IPoint = {
+          x: source.x + this._position.align.offset.x,
+          y: source.y + this._position.align.offset.y
         }
         return this.fromAlign(offset, this.fromSize(), this._position.align.self);
       }
@@ -259,6 +264,12 @@ export default class Layout {
     // console.log(`Position update x: ${location.x} y: ${location.y}`)
     const p = this.toOrigin(location, size);
     this._position.location = this.inverseScale(p, this._position.units.location) as IPoint;
+    this._position.size = this.inverseScale(size, this._position.units.size) as ISize;
+    this._changed = true;
+  }
+
+  public updateSize = (size: ISize) => {
+    // Takes in world coordinates 
     this._position.size = this.inverseScale(size, this._position.units.size) as ISize;
     this._changed = true;
   }
@@ -352,7 +363,14 @@ export default class Layout {
     return input;
   }
 
-
+  public onResize = (width: number, height: number) => {
+    if (this._position.size.width !== width ||
+      this._position.size.height !== height) {
+      this._position.size.width = width;
+      this._position.size.height = height;
+      this._changed = true;
+    }
+  }
   /**
    * Take pixels and convert to percent
    */
@@ -509,4 +527,6 @@ export default class Layout {
       y: p.y + align.y * s.height
     }
   }
+
+
 }
