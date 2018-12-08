@@ -158,12 +158,8 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
 
           style={{ backgroundColor: '' }}
         >
-          {(args: IRLPanelArgs) => (
-            <>
-              <span>Hello</span> <br />
-              <span>World</span>
-            </>
-          )}
+          <span>Hello</span> <br />
+          <span>World</span>
         </div>
 
 

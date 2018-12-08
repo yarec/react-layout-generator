@@ -6,7 +6,6 @@ import EditPosition from './editors/EditPosition';
 import { IGenerator } from './generators/Generator';
 import { ISize } from './types';
 
-
 function tileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
@@ -20,11 +19,24 @@ function tileStyle(style: React.CSSProperties, x: number, y: number, width: numb
 }
 
 function unmanagedTileStyle(style: React.CSSProperties, x: number, y: number, width: number, height: number): React.CSSProperties {
+
+  if (width === 0 && height === 0) {
+    return {
+      boxSizing: 'border-box' as 'border-box',
+      position: 'absolute' as 'absolute',
+      transform: `translate(${x}px, ${y}px)`,
+      transformOrigin: 0,
+      ...style
+    };
+  }
+
   return {
     boxSizing: 'border-box' as 'border-box',
+    height: `${height}px`,
     position: 'absolute' as 'absolute',
     transform: `translate(${x}px, ${y}px)`,
     transformOrigin: 0,
+    width: `${width}px`,
     ...style
   };
 }
@@ -38,7 +50,16 @@ export enum EditOptions {
 
 export enum DebugOptions {
   none = 0,
-  all
+  // tslint:disable-next-line:no-bitwise
+  info = (1 << 0),
+  // tslint:disable-next-line:no-bitwise
+  data = (1 << 1), 
+  // tslint:disable-next-line:no-bitwise
+  warning = (1 << 2), 
+  // tslint:disable-next-line:no-bitwise
+  error = (1 << 3),
+  // tslint:disable-next-line:no-bitwise
+  all = ~(~0 << 4)
 }
 
 export interface IReactLayoutProps extends React.HTMLProps<HTMLDivElement> {
@@ -74,8 +95,6 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     this._edit = props.edit ? props.edit : EditOptions.none;
 
-    // this.divRef = React.createRef();
-
     this._g = this.props.g;
   }
 
@@ -87,46 +106,48 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     this.frameStart();
     this.initLayout();
 
-    // this.state.update can be used for debug tracing
-    // during or after editing
+    // this.state.update can be used for debug tracing during or after editing
     // if (this.state.update === 0) {
     //   console.log('render');
     // }
-    // 
-
-    const resize = <ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
 
     return (
       /* style height of 100% necessary for ReactResizeDetector to work  */
       <div style={{ height: '100%' }} >
         {this.content()}
-        {this.props.viewport ? null : resize}
+
         {this.frameEnd()}
       </div >
     )
   }
-
-  // componentDidMount = () => {
-  //   window.addEventListener('resize', this.updateDimensions);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener("resize", this.updateDimensions);
-  // }
-
-  // updateDimensions = () => {
-  //   this.onResize(window.innerWidth, window.innerHeight);
-  // }
 
   private onResize = (width: number, height: number) => {
 
     const w = Math.floor(width);
     const h = Math.floor(height);
 
-    console.log('onResize', this.props.name, w, h);
+    // tslint:disable-next-line:no-bitwise
+    if (this.props.debug &&  this.props.debug & DebugOptions.info) {
+      console.log('onResize', this.props.name, w, h);
+    }
 
     if (this.state.width !== width || this.state.height !== height) {
       this.setState({ width: w, height: h });
+    }
+  }
+
+  private onLayoutResize = (name: string) => {
+    // Use closure to determine layout to update
+    return (width: number, height: number) => {
+      const layout = this._g.lookup(name);
+      if (layout) {
+
+        console.log('onLayoutResize', name, width, height);
+        layout.updateSize({ width, height });
+
+        // TODO: Just fire update for unmanaged element
+        this.setState({ update: this.state.update + 1 });
+      }
     }
   }
 
@@ -146,7 +167,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
     this._g.reset();
 
-    if (this.props.debug === DebugOptions.all) {
+    // tslint:disable-next-line:no-bitwise
+    if (this.props.debug && this.props.debug & DebugOptions.data) {
       const params = this._g.params();
       const viewport = params.get('viewport') as ISize;
       if (this._count === 0 && viewport.width && viewport.height) {
@@ -166,7 +188,6 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
         this._count += 1;
       }
-
     }
   }
 
@@ -211,11 +232,8 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
           rect.height
         );
 
-        // console.log(name, style)
-
-        const editors: JSX.Element[] = [];
+        const editors: React.ReactChild[] = [];
         if (this._edit && b.edit) {
-          // this.editOverlay.push(b);
           let i = 0;
           b.edit.forEach((item) => {
             editors.push(
@@ -233,7 +251,6 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         gInProgress -= 1;
 
         if (b && b.positionChildren) {
-          // console.log('child', child.props)
           const nestedChildren = React.Children.map(child.props.children, (nestedChild, i) => {
             const nestedLayout = b.positionChildren!(b, b.generator, i);
             if (nestedLayout) {
@@ -285,6 +302,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
             )
           );
         } else {
+
           return (
             <>
               {React.cloneElement(child,
@@ -333,9 +351,16 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
         rect.height
       );
 
-      // console.log(name, style)
-
       const jsx: JSX.Element[] = [];
+
+      const children = React.Children.toArray(child.props.children);
+
+      children.push(<ReactResizeDetector
+        key={`unmanagedResizeDetector`}
+        handleWidth={true}
+        handleHeight={true}
+        onResize={this.onLayoutResize(name)} />
+      );
 
       const ch = React.cloneElement(child,
         {
@@ -351,13 +376,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
 
           style: { ...this.props.style, ...child.props.style, ...style }
         },
-        child.props.children
+        children
       );
 
       jsx.push(ch);
 
       if (this._edit && b.edit) {
-        // this.editOverlay.push(b);
         let i = 0;
         b.edit.forEach((item) => {
           if (item.ref === PositionRef.position) {
@@ -371,17 +395,10 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
               }));
             i += 1;
           } else {
-            console.error(`Dynamic size only allows positioning for ${name}`)
+            console.error(`Dynamic size only allows edit positioning for ${name}`)
           }
         })
       }
-
-      jsx.push(<ReactResizeDetector 
-        key={`reactResizeDetector`}
-        handleWidth={true} 
-        handleHeight={true}  
-        onResize={b.onResize.bind(b)} />
-      );
 
       return (
         <>
@@ -392,7 +409,7 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
     return null;
   }
 
-  private createElement = (child: JSX.Element, index: number, count: number) => {
+  private createLayout = (child: JSX.Element, index: number, count: number) => {
     const p = child.props['data-layout'];
 
     if (p && p.name) {
@@ -409,13 +426,12 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   private updateElement = (child: React.ReactElement<any>, index: number, count: number) => {
     const p = child.props['data-layout'];
 
-    // console.log('createElement', child.type, child.props)
+
     if (p && p.name) {
       const position = p.position as IPosition;
       if (position && position.units.size === IUnit.unmanaged) {
         // size determined by element.offsetWidth and element offsetHeight
 
-        // insert react-resize-detector as last child
         return this.updateUnmanagedElement(
           child, index, count, p.name, p.position, p.context
         );
@@ -454,32 +470,35 @@ export default class ReactLayout extends React.Component<IReactLayoutProps, IRea
   }
 
   private content = () => {
+    const count = React.Children.count(this.props.children);
+    gInProgress += count;
 
-    
-    // Only show content if width and height are not 0
-    if (this.state.width && this.state.height) {
-      const count = React.Children.count(this.props.children);
-      gInProgress += count;
+    // Phase I create if necessary
+    React.Children.map(this.props.children, (child, i) => {
+      if (child) {
+        // tslint:disable-next-line:no-any
+        this.createLayout(child as React.ReactElement<any>, i, count);
+      }
+    });
 
-      // Phase I create if necessary
+    // Phase II update
+    const elements = (
       React.Children.map(this.props.children, (child, i) => {
         if (child) {
           // tslint:disable-next-line:no-any
-          this.createElement(child as React.ReactElement<any>, i, count);
+          return this.updateElement(child as React.ReactElement<any>, i, count);
         }
-      });
+        return null;
+      })
+    );
 
-      // Phase II update
-      return (
-        React.Children.map(this.props.children, (child, i) => {
-          if (child) {
-            // tslint:disable-next-line:no-any
-            return this.updateElement(child as React.ReactElement<any>, i, count);
-          }
-          return null;
-        })
-      );
-    }
-    return null;
+    elements.push(
+      <ReactResizeDetector
+        key={`contentResizeDetector ${this.props.name}`}
+        handleWidth={true}
+        handleHeight={true}
+        onResize={this.onResize}
+      />);
+    return elements;
   }
 }
