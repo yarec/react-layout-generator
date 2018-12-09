@@ -17,19 +17,21 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".json"],
   },
   module: {
-    rules: [{
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
+    rules: [
       {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader'
       },
+      /* {
+        test: /\.(js|jsx)$/,
+        use: "babel-loader",
+        exclude: /node_modules/
+      }, */
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
@@ -55,6 +57,6 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".css"]
   },
   devServer: {
-    port: 3000
+    port: 3001
   }
 };

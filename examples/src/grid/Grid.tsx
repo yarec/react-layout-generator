@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGDynamic from '../../../src/generators/RLGDynamic';
-import ReactLayout from '../../../src/ReactLayout';
+import ReactLayout, { DebugOptions } from '../../../src/ReactLayout';
 import RLGPanel, { IRLPanelArgs } from '../../../src/RLGPanel';
 import { ISize } from '../../../src/types';
 
@@ -66,6 +66,7 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
     return (
       <ReactLayout
         name='example.Grid'
+        debug={DebugOptions.info}
         g={this._g}
       >
         <RLGPanel
@@ -159,7 +160,7 @@ export default class Grid extends React.Component<{}, { unit: IUnit }> {
           style={{ backgroundColor: '' }}
         >
           <span>Hello</span> <br />
-          <span>World</span>
+          <span>React Layout Generator</span>
         </div>
 
 
