@@ -2,8 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Layout_1 = require("../components/Layout");
 function cursor(edit) {
-    var c = 'default';
+    var c = 'move';
     switch (edit.ref) {
+        case Layout_1.PositionRef.none: {
+            break;
+        }
         case Layout_1.PositionRef.position: {
             c = 'move';
             break;

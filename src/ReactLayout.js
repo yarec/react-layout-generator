@@ -28,12 +28,17 @@ var React = require("react");
 var react_resize_detector_1 = require("react-resize-detector");
 var Layout_1 = require("./components/Layout");
 var EditPosition_1 = require("./editors/EditPosition");
-function tileStyle(style, x, y, width, height) {
-    return __assign({ boxSizing: 'border-box', height: height + "px", position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0, width: width + "px" }, style);
-}
-function unmanagedTileStyle(style, x, y, width, height) {
-    if (width === 0 && height === 0) {
-        return __assign({ boxSizing: 'border-box', position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0 }, style);
+function tileStyle(style, x, y, width, height, unit) {
+    switch (unit) {
+        case Layout_1.IUnit.unmanaged: {
+            return __assign({ boxSizing: 'border-box', position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0 }, style);
+        }
+        case Layout_1.IUnit.unmanagedHeight: {
+            return __assign({ boxSizing: 'border-box', position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0, width: width + "px" }, style);
+        }
+        case Layout_1.IUnit.unmanagedWidth: {
+            return __assign({ boxSizing: 'border-box', position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0, height: height + "px" }, style);
+        }
     }
     return __assign({ boxSizing: 'border-box', height: height + "px", position: 'absolute', transform: "translate(" + x + "px, " + y + "px)", transformOrigin: 0, width: width + "px" }, style);
 }
@@ -144,7 +149,7 @@ var ReactLayout = /** @class */ (function (_super) {
             if (b) {
                 var rect = b.rect();
                 if ((rect.width) && (rect.height)) {
-                    var style = tileStyle(child.props.style, rect.x, rect.y, rect.width, rect.height);
+                    var style = tileStyle(child.props.style, rect.x, rect.y, rect.width, rect.height, b.units.size);
                     var editors_1 = [];
                     if (_this._edit && b.edit) {
                         var i_1 = 0;
@@ -159,7 +164,7 @@ var ReactLayout = /** @class */ (function (_super) {
                             var nestedLayout = b.positionChildren(b, b.generator, i);
                             if (nestedLayout) {
                                 var nestedRect = nestedLayout.rect();
-                                var nestedStyle = tileStyle(nestedChild.props.style, nestedRect.x, nestedRect.y, nestedRect.width, nestedRect.height);
+                                var nestedStyle = tileStyle(nestedChild.props.style, nestedRect.x, nestedRect.y, nestedRect.width, nestedRect.height, b.units.size);
                                 return (React.cloneElement(nestedChild, {
                                     key: "" + nestedChild.key,
                                     viewport: { width: nestedRect.width, height: nestedRect.height },
@@ -209,7 +214,7 @@ var ReactLayout = /** @class */ (function (_super) {
             var b = _this._g.lookup(name);
             if (b) {
                 var rect = b.rect();
-                var style = unmanagedTileStyle(child.props.style, rect.x, rect.y, rect.width, rect.height);
+                var style = tileStyle(child.props.style, rect.x, rect.y, rect.width, rect.height, b.units.size);
                 var jsx_1 = [];
                 var children = React.Children.toArray(child.props.children);
                 children.push(React.createElement(react_resize_detector_1.default, { key: "unmanagedResizeDetector", handleWidth: true, handleHeight: true, onResize: _this.onLayoutResize(name) }));
@@ -228,7 +233,19 @@ var ReactLayout = /** @class */ (function (_super) {
                 if (_this._edit && b.edit) {
                     var i_2 = 0;
                     b.edit.forEach(function (item) {
+                        var allow = false;
                         if (item.ref === Layout_1.PositionRef.position) {
+                            allow = true;
+                        }
+                        if ((item.ref === Layout_1.PositionRef.bottom || item.ref === Layout_1.PositionRef.top) &&
+                            b.units.size === Layout_1.IUnit.unmanagedWidth) {
+                            allow = true;
+                        }
+                        if ((item.ref === Layout_1.PositionRef.left || item.ref === Layout_1.PositionRef.right) &&
+                            b.units.size === Layout_1.IUnit.unmanagedHeight) {
+                            allow = true;
+                        }
+                        if (allow) {
                             jsx_1.push(React.createElement('EditPosition', {
                                 key: "edit" + i_2,
                                 edit: item,
@@ -239,7 +256,7 @@ var ReactLayout = /** @class */ (function (_super) {
                             i_2 += 1;
                         }
                         else {
-                            console.error("Dynamic size only allows edit positioning for " + name);
+                            console.error("Cannot edit " + Layout_1.namedPositionRef(item.ref) + " \n            for layout " + name + " when size is set to " + Layout_1.namedUnit(b.units.size));
                         }
                     });
                 }
@@ -263,7 +280,7 @@ var ReactLayout = /** @class */ (function (_super) {
             var p = child.props['data-layout'];
             if (p && p.name) {
                 var position = p.position;
-                if (position && position.units.size === Layout_1.IUnit.unmanaged) {
+                if (position && position.units.size >= Layout_1.IUnit.unmanaged) {
                     // size determined by element.offsetWidth and element offsetHeight
                     return _this.updateUnmanagedElement(child, index, count, p.name, p.position, p.context);
                 }

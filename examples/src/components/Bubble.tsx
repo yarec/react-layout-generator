@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { IOrigin } from '../../../src/components/Layout';
 
 interface IProps {
-  viewport: ISize;
+  containersize: ISize;
   origin: IOrigin;
 }
 

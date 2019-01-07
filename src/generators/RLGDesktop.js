@@ -1,21 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Layout_1 = require("../components/Layout");
-var Generator_1 = require("../generators/Generator");
 var Layouts_1 = require("../components/Layouts");
 var Params_1 = require("../components/Params");
-function updateParamWidth(updated, edit) {
-    return {
-        name: edit.variable,
-        value: updated.width
-    };
-}
-function updateParamHeight(updated, edit) {
-    return {
-        name: edit.variable,
-        value: updated.height
-    };
-}
+var update_1 = require("../editors/update");
+var Generator_1 = require("../generators/Generator");
 function RLGDesktop(name, exParams, parent) {
     var _fullWidthHeaders = 0;
     var _titleHeight = 50;
@@ -64,7 +53,7 @@ function RLGDesktop(name, exParams, parent) {
                     size: Layout_1.IUnit.pixel
                 },
                 edit: [
-                    { ref: Layout_1.PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
+                    { ref: Layout_1.PositionRef.bottom, variable: 'titleHeight', updateParam: update_1.updateParamHeight }
                 ],
                 location: location,
                 size: size
@@ -101,7 +90,7 @@ function RLGDesktop(name, exParams, parent) {
                     size: Layout_1.IUnit.pixel
                 },
                 edit: [
-                    { ref: Layout_1.PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
+                    { ref: Layout_1.PositionRef.right, variable: 'leftSideWidth', updateParam: update_1.updateParamWidth }
                 ],
                 location: location,
                 size: size
@@ -138,7 +127,7 @@ function RLGDesktop(name, exParams, parent) {
                     size: Layout_1.IUnit.pixel
                 },
                 edit: [
-                    { ref: Layout_1.PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
+                    { ref: Layout_1.PositionRef.left, variable: 'rightSideWidth', updateParam: update_1.updateParamWidth }
                 ],
                 location: location,
                 size: size
@@ -175,7 +164,7 @@ function RLGDesktop(name, exParams, parent) {
                     size: Layout_1.IUnit.pixel
                 },
                 edit: [
-                    { ref: Layout_1.PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
+                    { ref: Layout_1.PositionRef.bottom, variable: 'headerHeight', updateParam: update_1.updateParamHeight }
                 ],
                 location: location,
                 size: size
@@ -246,7 +235,7 @@ function RLGDesktop(name, exParams, parent) {
                     size: Layout_1.IUnit.pixel
                 },
                 edit: [
-                    { ref: Layout_1.PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
+                    { ref: Layout_1.PositionRef.top, variable: 'footerHeight', updateParam: update_1.updateParamHeight }
                 ],
                 location: location,
                 size: size

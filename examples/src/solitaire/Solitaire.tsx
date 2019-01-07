@@ -2,8 +2,9 @@ import * as React from 'react';
 
 import { IUnit } from '../../../src/components/Layout'
 import { IGenerator } from '../../../src/generators/Generator';
-import ReactLayout from '../../../src/ReactLayout';
+import RLGLayout from '../../../src/RLGLayout';
 
+import {IEditHelperProps} from '../../../src/editors/EditHelper';
 import FoundationStack from './FoundationStack';
 import solitaireGenerator from './solitaireGenerator';
 import Stock from './Stock';
@@ -22,16 +23,16 @@ interface ISolitaireState {
   update: number;
 }
 
-export default class Solitaire extends React.Component<ISolitaireProps, ISolitaireState> {
+export default class Solitaire extends React.Component<IEditHelperProps, ISolitaireState> {
 
-  private _g: IGenerator = solitaireGenerator('example.solitaire');
+  private _g: IGenerator = solitaireGenerator({name: 'example.solitaire'});
 
   private _stock: Stock;
   private _waste: Waste;
   private _foundation: FoundationStack[] = [];
   private _tableau: TableauStack[] = [];
 
-  constructor(props: ISolitaireProps) {
+  constructor(props: IEditHelperProps) {
     super(props);
 
     this._stock = new Stock(this.update);
@@ -87,7 +88,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
 
   public render() {
     return (
-      <ReactLayout
+      <RLGLayout
         name='example.Solitaire'
         g={this._g}
       >
@@ -129,7 +130,7 @@ export default class Solitaire extends React.Component<ISolitaireProps, ISolitai
           New Game
         </button>
 
-      </ReactLayout>
+      </RLGLayout>
     );
   }
 

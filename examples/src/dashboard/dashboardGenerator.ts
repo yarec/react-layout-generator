@@ -1,24 +1,12 @@
-import Layout, { IEdit, IPosition, IUnit, PositionRef } from '../components/Layout';
-import Generator, { IGenerator } from '../generators/Generator';
-import { IPoint, IRect, ISize } from '../types';
+import Layout, { IEdit, IPosition, IUnit, PositionRef } from '../../../src/components/Layout';
+import Generator, { IGenerator } from '../../../src/generators/Generator';
+import { IPoint, IRect, ISize } from '../../../src/types';
 
-import Layouts from '../components/Layouts';
-import Params from '../components/Params';
+import Layouts from '../../../src/components/Layouts';
+import Params from '../../../src/components/Params';
 
 
-function updateParamWidth(updated: IRect, edit: IEdit) {
-  return {
-    name: edit.variable!,
-    value: updated.width
-  }
-}
 
-function updateParamHeight(updated: IRect, edit: IEdit) {
-  return {
-    name: edit.variable!,
-    value: updated.height
-  }
-}
 
 export default function RLGDesktop(name: string, parent?: IGenerator) {
 

@@ -3,13 +3,16 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 // import { IGenerator } from '../../../src/generators/Generator';
-import RLGDesktop from '../../../src/generators/RLGDesktop';
-import ReactLayout, { EditOptions } from '../../../src/ReactLayout';
-import RLGPanel, { IRLPanelArgs } from '../../../src/RLGPanel';
-import { ISize } from '../../../src/types'
+import Params, { ParamValue } from '../../../src/components/Params';
+import desktopGenerator from '../../../src/generators/desktopGenerator';
+import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
+import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
+import { ISize, rectSize } from '../../../src/types'
+
+import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 
 interface IProps {
-  viewport: ISize;
+  containersize: ISize;
   variable?: string;
   left?: number | string;
   top?: number | string;
@@ -20,17 +23,17 @@ interface IProps {
 
 export const Instruction = styled.p<IProps>`
   word-break: break-all;
-  max-width: ${p => p.viewport.width};
+  max-width: ${p => p.containersize.width};
   overflow-wrap: break-word;
 `
 
 export const List = styled.ul<IProps>`
-  max-width: ${p => p.viewport.width};
+  max-width: ${p => p.containersize.width};
   list-style: none;
 `
 
 export const Item = styled.li<IProps>`
-  max-width: ${p => p.viewport.width};
+  max-width: ${p => p.containersize.width};
   white-space: wrap;
 
   ${({ bold }) => bold && `font-weight: bold;`}
@@ -43,98 +46,120 @@ export const Close = styled.button<IProps>`
   right: ${p => p.right};
   top: ${p => p.top};
 `
-interface IDeskTopProps {
-  name?: string;
-}
 
 interface IDeskTopState {
   update: number;
-  viewport: ISize;
+  containersize: ISize;
 }
 
-export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopState> {
+const values: Array<[string, ParamValue]> = [
+  ['titleHeight', 0],
+  ['headerHeight', 24],
+  ['footerHeight', 24],
+  ['leftSideWidth', 200],
+  ['rightSideWidth', 200],
+  ['fullWidthHeaders', 1],
+];
 
-  private g = RLGDesktop('rlg.desktop.example');
+const gDesktopParams = new Params({ name: 'desktop', initialValues: values });
 
-  constructor(props: IDeskTopProps) {
+export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopState> {
+
+  private g = desktopGenerator('rlg.desktop.example', gDesktopParams);
+  private _edit: EditOptions = EditOptions.none;
+
+  constructor(props: IEditHelperProps) {
     super(props);
 
-    this.state = { update: 0, viewport: { width: 0, height: 0 } };
+    this.state = { update: 0, containersize: { width: 0, height: 0 } };
+  }
 
-    const p = this.g.params();
+  public componentDidMount() {
+    this.props.editHelper().load([
+      { name: 'edit', command: this.setEdit, status: this.editState }
+    ])
+  }
 
-    // Set variables to 0 to hide section
-    p.set('titleHeight', 0);
-    p.set('headerHeight', 24);
-    p.set('footerHeight', 24);
-    p.set('leftSideWidth', 200);
-    p.set('rightSideWidth', 200);
+  public setEdit = (status: Status) => {
+    if (status === Status.down) {
+      status = Status.up;
+      this._edit = EditOptions.all
+    } else {
+      status = Status.down;
+      this._edit = EditOptions.none
+    }
 
-    // Show full width header and footer
-    p.set('fullWidthHeaders', 1);
+    // this.grid(this._gridUnit)
+    // this._g.clear();
+    this.setState({ update: this.state.update + 1 })
+
+    return status;
+  }
+
+  public editState = () => {
+    return this._edit ? Status.up : Status.down;
   }
 
   public render() {
 
-    const contentViewport = this.g.viewport('content')
-    console.log(`contentViewport width: ${contentViewport.width} height: ${contentViewport.height}`)
+    const contentcontainersize = this.g.containersize('content');
 
     return (
-      <ReactLayout
-        name={'reactLayout.desktop.example'}
-        edit={EditOptions.all}
+      <RLGLayout
+        name={'RLGLayout.desktop.example'}
+        edit={this._edit ? EditOptions.all : EditOptions.none}
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLPanelArgs) => (
+          {(args: IRLGPanelArgs) => (
             <>
               <span>LeftSide</span>
-              {args.edit ? (this.closeButton(args.viewport, 'leftSideWidth')) : null}
+              {args.edit ? (this.closeButton(rectSize(args.container), 'leftSideWidth')) : null}
             </>
           )}
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLPanelArgs) => (
+          {(args: IRLGPanelArgs) => (
             <>
               <span>Header</span>
-              {args.edit ? (this.closeButton(args.viewport, 'headerHeight')) : null}
+              {args.edit ? (this.closeButton(rectSize(args.container), 'headerHeight')) : null}
             </>
           )}
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'footer' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLPanelArgs) => (
+          {(args: IRLGPanelArgs) => (
             <>
               <span>Footer</span>
-              {args.edit ? (this.closeButton(args.viewport, 'footerHeight')) : null}
+              {args.edit ? (this.closeButton(rectSize(args.container), 'footerHeight')) : null}
             </>
           )}
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)', overflow: 'hidden' }}>
-          {(args: IRLPanelArgs) => (
+          {(args: IRLGPanelArgs) => (
             <>
               <span>Desktop Content</span>
-              <List viewport={args.viewport}>
-                <Item viewport={args.viewport} bold={true}>To disable editing</Item>
-                <Instruction viewport={args.viewport}>Set edit prop equal to false</Instruction>
-                <Item viewport={args.viewport} bold={true}>To change panel sizes</Item>
-                <Instruction viewport={args.viewport}>Drag the borders in this container</Instruction>
-                <Item viewport={args.viewport} bold={true}>To hide a panel</Item>
-                <Instruction viewport={args.viewport}>Set its variable to 0 - for this demo click on the close button in the panel</Instruction>
+              <List containersize={rectSize(args.container)}>
+                <Item containersize={rectSize(args.container)} bold={true}>To disable editing</Item>
+                <Instruction containersize={rectSize(args.container)}>Set edit prop equal to false</Instruction>
+                <Item containersize={rectSize(args.container)} bold={true}>To change panel sizes</Item>
+                <Instruction containersize={rectSize(args.container)}>Drag the borders in this container</Instruction>
+                <Item containersize={rectSize(args.container)} bold={true}>To hide a panel</Item>
+                <Instruction containersize={rectSize(args.container)}>Set its variable to 0 - for this demo click on the close button in the panel</Instruction>
 
-                <Item viewport={args.viewport} bold={true}>To make the headers full width</Item>
-                <Instruction viewport={args.viewport}>Set the fullWidthHeaders value to 1</Instruction>
+                <Item containersize={rectSize(args.container)} bold={true}>To make the headers full width</Item>
+                <Instruction containersize={rectSize(args.container)}>Set the fullWidthHeaders value to 1</Instruction>
 
-                <Item viewport={args.viewport} bold={true}>Params used to define the desktop layout</Item>
-                <List viewport={args.viewport}>
-                  <Item viewport={args.viewport}>fullWidthHeaders</Item>
-                  <Item viewport={args.viewport}>titleHeight</Item>
-                  <Item viewport={args.viewport}>headerHeight</Item>
-                  <Item viewport={args.viewport}>footerHeight)</Item>
-                  <Item viewport={args.viewport}>leftSideWidth</Item>
-                  <Item viewport={args.viewport}>rightSideWidth</Item>
+                <Item containersize={rectSize(args.container)} bold={true}>Params used to define the desktop layout</Item>
+                <List containersize={rectSize(args.container)}>
+                  <Item containersize={rectSize(args.container)}>fullWidthHeaders</Item>
+                  <Item containersize={rectSize(args.container)}>titleHeight</Item>
+                  <Item containersize={rectSize(args.container)}>headerHeight</Item>
+                  <Item containersize={rectSize(args.container)}>footerHeight)</Item>
+                  <Item containersize={rectSize(args.container)}>leftSideWidth</Item>
+                  <Item containersize={rectSize(args.container)}>rightSideWidth</Item>
                 </List>
               </List>
             </>
@@ -142,14 +167,14 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'rightSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLPanelArgs) => (
+          {(args: IRLGPanelArgs) => (
             <>
               <span>RightSide</span>
-              {args.edit ? (this.closeButton(args.viewport, 'rightSideWidth')) : null}
+              {args.edit ? (this.closeButton(rectSize(args.container), 'rightSideWidth')) : null}
             </>
           )}
         </RLGPanel>
-      </ReactLayout>
+      </RLGLayout>
     );
   }
 
@@ -160,8 +185,8 @@ export default class DeskTop extends React.Component<IDeskTopProps, IDeskTopStat
     this.setState({ update: this.state.update + 1 });
   }
 
-  private closeButton = (viewport: ISize, variable: string) => {
-    return <Close viewport={viewport} right={0} top={0}
+  private closeButton = (containersize: ISize, variable: string) => {
+    return <Close containersize={containersize} right={0} top={0}
       // tslint:disable-next-line:jsx-no-lambda
       onClick={this.closePanel} value={variable}>
       X

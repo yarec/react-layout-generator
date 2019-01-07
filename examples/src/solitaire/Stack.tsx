@@ -17,12 +17,17 @@ export default class Stack {
   private _drag: boolean;
   private _drop: boolean;
   private _allowDrop: IAllowDrop | undefined;
+  private _allowDragAndDrop: boolean = true;
 
   constructor(drag: boolean, drop: boolean, update: () => void, allowDrop?: IAllowDrop) {
     this._drag = drag;
     this._drop = drop;
     this._update = update;
     this._allowDrop = allowDrop;
+  }
+
+  public allowDragAndDrop = (enable: boolean) => {
+    this._allowDragAndDrop = enable;
   }
 
   public clear = () => {
@@ -123,11 +128,20 @@ export default class Stack {
     }
   }
 
+  public pauseEvent(e: React.DragEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
   public onDragStart = (e: React.DragEvent) => {
+    if (!this._allowDragAndDrop) {
+      this.pauseEvent(e);
+    }
+
     if (this._drag) {
       // tslint:disable-next-line:no-string-literal
       const id = e.target['id'];
-      console.log('onDragStart', id)
       gDataTransfer = this.getCardsToDrag(id);
 
       if (gDataTransfer.length) {
@@ -138,6 +152,10 @@ export default class Stack {
   }
 
   public onDragOver = (e: React.DragEvent) => {
+    if (!this._allowDragAndDrop) {
+      this.pauseEvent(e);
+    }
+
     const t = gDataTransfer[0];
     if (this._drop) {
       if (this._stack.length === 0 && this._allowDrop && this._allowDrop(t, undefined)) {
@@ -154,6 +172,10 @@ export default class Stack {
   }
 
   public onDragEnd = (e: React.DragEvent) => {
+    if (!this._allowDragAndDrop) {
+      this.pauseEvent(e);
+    }
+
     if (e.dataTransfer.dropEffect === 'move') {
       // Remove
       gDataTransfer.forEach((card) => {

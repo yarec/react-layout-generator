@@ -3,17 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Layout_1 = require("../components/Layout");
 var Params_1 = require("../components/Params");
 var Generator_1 = require("../generators/Generator");
-var params = new Params_1.default([
-    ['viewport', { width: 1000, height: 1000 }]
-]);
+var params = new Params_1.default({ name: 'layoutTest', initialValues: [
+        ['containersize', { width: 1000, height: 1000 }]
+    ] });
 function init(_g) {
     return _g.layouts();
 }
 function create(args) {
-    var layout = new Layout_1.default('test', args.position, args.g);
+    var layout;
     var layouts = args.g.layouts();
     if (layouts) {
-        layouts.set(args.name, layout);
+        layout = layouts.set('test', args.position, args.g);
     }
     return layout;
 }

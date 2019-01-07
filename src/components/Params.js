@@ -1,54 +1,121 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var underscore_1 = require("underscore");
-var Params = /** @class */ (function () {
-    function Params(values) {
-        this.map = new Map(values);
-        this.changeCount = 0;
+var types_1 = require("../types");
+var Params = (function () {
+    function Params(props) {
+        this._map = new Map([]);
+        this._name = props.name;
+        this._changeCount = 0;
+        this._save = props.save;
+        this._load = props.load;
+        this._debug = props.debug ? props.debug : types_1.DebugOptions.none;
+        if (props.initialValues) {
+            this.restore('', props.initialValues);
+        }
     }
-    Params.prototype.restore = function (name, values) {
-        // 1) if params are empty then just insert the params
+    Params.prototype.restore = function (name, values, replace) {
         var _this = this;
-        if (this.map.size === 0) {
+        if (this._debug & types_1.DebugOptions.data) {
             values.forEach(function (value) {
-                _this.map.set(value[0], value[1]);
+                console.log("Params restore init values " + value[0], value[1]);
             });
+        }
+        if (replace) {
+            this._map.clear();
+        }
+        if (this._map.size === 0) {
+            if (this._load) {
+                values.forEach(function (value) {
+                    var v = _this._load(_this._name, value[0]);
+                    if (v) {
+                        if (_this._debug & types_1.DebugOptions.data) {
+                            console.log("Params restore from  localStorage " + value[0], v);
+                        }
+                        _this.set(value[0], v);
+                    }
+                    else {
+                        _this.set(value[0], value[1]);
+                    }
+                });
+            }
+            else {
+                values.forEach(function (value) {
+                    _this.set(value[0], value[1]);
+                });
+            }
             return this;
         }
-        // 2) verify that params has all the keys
-        var count = 0;
         values.forEach(function (value) {
-            count += _this.map.get(value[0]) ? 0 : 1;
+            var v = _this._map.get(value[0]);
+            if (v === undefined) {
+                _this.set(value[0], value[1]);
+            }
         });
-        if (count) {
-            throw (new Error("Params mismatch count: " + count + ". Did you pass the wrong Params to generator " + name + "?"));
-        }
         return this;
     };
+    Object.defineProperty(Params.prototype, "map", {
+        get: function () {
+            return this._map;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Params.prototype, "save", {
+        get: function () {
+            return this._save;
+        },
+        set: function (fn) {
+            this._save = fn;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Params.prototype, "load", {
+        get: function () {
+            return this._load;
+        },
+        set: function (fn) {
+            this._load = fn;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Params.prototype.changed = function () {
-        var changed = this.changeCount;
-        this.changeCount = 0;
+        var changed = this._changeCount;
+        this._changeCount = 0;
         return changed !== 0;
     };
     Params.prototype.touch = function () {
-        this.changeCount += 1;
+        this._changeCount += 1;
     };
-    Params.prototype.get = function (key) {
-        return this.map.get(key);
+    Params.prototype.get = function (key, load) {
+        if (load && this._load) {
+            var v = this._load(this._name, key);
+            if (v) {
+                return v;
+            }
+        }
+        return this._map.get(key);
     };
     Params.prototype.set = function (key, v) {
-        var r = this.map.get(key);
-        // Only set if changed
+        var r = this._map.get(key);
         if (r && !underscore_1.isEqual(v, r)) {
-            // console.log('Param.set ', key, v);
-            this.changeCount += 1;
-            this.map.set(key, v);
+            this._changeCount += 1;
+            if (this._save) {
+                this._save(this._name, key, v);
+            }
+            ;
+            this._map.set(key, v);
             return true;
         }
         if (!r) {
-            // console.log('Param.set ', key);
-            this.changeCount += 1;
-            this.map.set(key, v);
+            this._changeCount += 1;
+            if (this._save) {
+                this._save(this._name, key, v);
+            }
+            ;
+            this._map.set(key, v);
             return true;
         }
         return false;

@@ -6,13 +6,14 @@ function getExtendElement(edit) {
         return { x: r.x + deltaX, y: r.y + deltaY, width: r.width, height: r.height };
     };
     switch (edit.ref) {
+        case Layout_1.PositionRef.none: {
+            break;
+        }
         case Layout_1.PositionRef.position: {
-            // use default
             break;
         }
         case Layout_1.PositionRef.left: {
             extendElement = function (r, deltaX, deltaY) {
-                // console.log('extendElement left', r.x,  r.width, deltaX)
                 return { x: r.x + deltaX, y: r.y, width: r.width - deltaX, height: r.height };
             };
             break;

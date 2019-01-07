@@ -1,0 +1,30 @@
+import * as React from 'react';
+import Card from './Card';
+export declare type IAllowDrop = (cards: Card, topCard: Card | undefined) => boolean | undefined;
+export default class Stack {
+    private _stack;
+    private _update;
+    private _drag;
+    private _drop;
+    private _allowDrop;
+    private _allowDragAndDrop;
+    constructor(drag: boolean, drop: boolean, update: () => void, allowDrop?: IAllowDrop);
+    allowDragAndDrop: (enable: boolean) => void;
+    clear: () => void;
+    pop: () => Card | undefined;
+    shift: () => Card | undefined;
+    push: (card: Card) => number;
+    unshift: (card: Card) => void;
+    top: () => Card | undefined;
+    readonly length: number;
+    cards: () => JSX.Element | JSX.Element[];
+    onDrop: (e: React.DragEvent<Element>) => void;
+    pauseEvent(e: React.DragEvent): boolean;
+    onDragStart: (e: React.DragEvent<Element>) => void;
+    onDragOver: (e: React.DragEvent<Element>) => void;
+    onDragEnd: (e: React.DragEvent<Element>) => void;
+    private getCardsToDrag;
+}
+export declare function isRedSuite(suite: string): boolean;
+export declare function allowTableauDrop(card1: Card, card2: Card | undefined): boolean;
+export declare function allowFoundationDrop(card1: Card, card2: Card | undefined): boolean;

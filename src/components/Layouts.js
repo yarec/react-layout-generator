@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Layouts = /** @class */ (function () {
-    // width: number;
-    // height: number;
+var Layout_1 = require("./Layout");
+var Layouts = (function () {
     function Layouts(layouts) {
         var _this = this;
         this._byIndex = new Array();
@@ -11,19 +10,6 @@ var Layouts = /** @class */ (function () {
             _this._byIndex.push(value);
         });
     }
-    // update() {
-    //   this.width = 0;
-    //   this.height = 0;
-    //   Get actual width and height
-    //   this._layouts.forEach((layout) => {
-    //     if (this.width < layout.location.right) {
-    //       this.width = layout.location.right
-    //     }
-    //     if (this.height < layout.location.bottom) {
-    //       this.height = layout.location.bottom
-    //     }
-    //   });
-    // }
     Layouts.prototype.values = function () {
         return this._layouts.values();
     };
@@ -42,20 +28,24 @@ var Layouts = /** @class */ (function () {
         configurable: true
     });
     Layouts.prototype.find = function (i) {
-        // console.log(Object.keys(this._layouts))
-        // const key = Object.keys(this._layouts)[i];
         return this._byIndex[i];
     };
     Layouts.prototype.get = function (key) {
         return this._layouts.get(key);
     };
-    Layouts.prototype.set = function (key, v) {
-        // const s = this._layouts.size;
-        this._layouts.set(key, v);
-        if (this._layouts.size > this._byIndex.length) {
-            // Add to byIndex array
-            this._byIndex.push(v);
+    Layouts.prototype.set = function (key, p, g) {
+        var layout = this._layouts.get(key);
+        if (layout) {
+            layout.updatePosition(p);
         }
+        else {
+            layout = new Layout_1.default(key, p, g);
+            this._layouts.set(key, layout);
+            if (this._layouts.size > this._byIndex.length) {
+                this._byIndex.push(layout);
+            }
+        }
+        return layout;
     };
     return Layouts;
 }());

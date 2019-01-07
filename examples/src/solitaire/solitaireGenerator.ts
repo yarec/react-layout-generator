@@ -1,36 +1,35 @@
 import Layout, { IPosition, IUnit } from '../../../src/components/Layout';
 import Layouts from '../../../src/components/Layouts';
 import Params, { ParamValue } from '../../../src/components/Params';
-import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
+import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../../../src/generators/Generator';
 import { IPoint, ISize } from '../../../src/types';
-// import { clone } from '../../../src/utils';
 
-export default function solitaireGenerator(name: string, exParams?: Params, parent?: IGenerator) {
+export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
   const values: Array<[string, ParamValue]> = [
-    ['viewport', { width: 0, height: 0 }],
+    ['containersize', { width: 0, height: 0 }],
     ['gameMargin', 20],
     ['cardSizeRatio', 1.3],
     ['cardSpacingRatio', { x: .18, y: .17 }],
     ['cardMarginRatio', { x: .18, y: .1 }]
   ];
 
-  const _params = exParams ? exParams.restore(name, values) : new Params(values);
+  const _params = gArgs.exParams ? gArgs.exParams.restore(name, values) : new Params({name, initialValues: values});
 
   function init(g: IGenerator): Layouts {
 
     const params = g.params();
 
-    const viewport = params.get('viewport') as ISize;
+    const containersize = params.get('containersize') as ISize;
     const gameMargin = params.get('gameMargin') as number;
     const cardSizeRatio = params.get('cardSizeRatio') as number;
     const cardSpacingRatio = params.get('cardSpacingRatio') as IPoint;
 
-    const columns = viewport.width < 800 ? 7 : 8;
+    const columns = containersize.width < 800 ? 7 : 8;
     const maxCards = 13;
 
     // 1) compute interval
-    const interval = ((viewport.width - 2 * gameMargin) / columns)
+    const interval = ((containersize.width - 2 * gameMargin) / columns)
 
     // 1) compute cardWidthSize
     const cardWidth = interval - gameMargin;
@@ -40,7 +39,7 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     }
 
     // 2) compute cardHeightSize
-    const cardHeight = (viewport.height - 2 * gameMargin) / (2 + maxCards * cardSpacingRatio.y)
+    const cardHeight = (containersize.height - 2 * gameMargin) / (2 + maxCards * cardSpacingRatio.y)
     const cardHeightSize = {
       width: cardHeight / cardSizeRatio,
       height: cardHeight
@@ -49,10 +48,6 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     // 3) set cardSize to minimum of cardWidthSize and cardHeightSize
     const cardSize = cardWidthSize.width < cardHeightSize.width ? cardWidthSize : cardHeightSize;
 
-    console.log('cardSize', cardSize.width, cardSize.height);
-    console.log('cardHeightSize', cardHeightSize.width, cardHeightSize.height);
-    console.log('cardWidthSize', cardWidthSize.width, cardWidthSize.height);
-
     // Save cardSize for functions use
     params.set('cardSize', cardSize);
     params.set('computedCardSpacing', {x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height})
@@ -60,9 +55,9 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     const layouts = new Layouts([]);
 
     // Make layout responsive
-    // Adjust number of columns if smaller viewport
-    const foundationStart = viewport.width < 800 ? 1 : 0;
-    const tableauStart = viewport.width < 800 ? 1 : 0
+    // Adjust number of columns if smaller containersize
+    const foundationStart = containersize.width < 800 ? 1 : 0;
+    const tableauStart = containersize.width < 800 ? 1 : 0
 
     // Stock
     const stock: IPosition = {
@@ -73,7 +68,7 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     }
     // console.log('cardSize', cardSize);
 
-    layouts.set('stock', new Layout('stock', stock, g));
+    layouts.set('stock', stock, g);
 
     // Waste
     const waste: IPosition = {
@@ -83,7 +78,7 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
       positionChildren: positionWasteChildren
     }
 
-    layouts.set('waste', new Layout('waste', waste, g));
+    layouts.set('waste', waste, g);
 
     // Foundation
     for (let i = 4 - foundationStart; i < 8 - foundationStart; i++) {
@@ -95,11 +90,7 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
         positionChildren: positionFoundationChildren
       }
 
-      const layout = new Layout(`foundation${i - 3 + foundationStart}`, p, g);
-
-      // console.log(`create layout ${layout.name} ${p.location.x} ${p.location.y}`);
-
-      layouts.set(layout.name, layout);
+      layouts.set(`foundation${i - 3 + foundationStart}`, p, g);
     }
 
     // Tableau
@@ -112,23 +103,20 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
         positionChildren: positionTableauChildren
       }
 
-      const layout = new Layout(`tableau${i + tableauStart}`, p, g);
-      layouts.set(layout.name, layout);
+      layouts.set(`tableau${i + tableauStart}`, p, g);
     }
 
     // Return new instance of Layouts
     return layouts;
   }
 
-  function create(args: ICreate): Layout {
+  function create(cArgs: ICreate): Layout {
 
-    if (!args.position) {
-      console.error(`TODO default position ${args.name}`);
+    if (!cArgs.position) {
+      console.error(`TODO default position ${cArgs.name}`);
     }
 
-    const layout = new Layout(args.name, args.position, args.g);
-
-    args.g.layouts().set(layout.name, layout);
+    const layout = cArgs.g.layouts().set(cArgs.name, cArgs.position, cArgs.g);
 
     return layout;
   }
@@ -139,14 +127,13 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     const cardSize = g.params().get('cardSize') as ISize;
 
     // These children get placed on top of each other
-
     const child: IPosition = {
       units: layout.units,
       location: { x: 0, y: 0 },
       size: cardSize
     };
 
-    // This layout is temp and will not be stored in layouts
+    // This layout is temporary and will not be stored in layouts
     return new Layout('temp', child, g);
   }
 
@@ -201,7 +188,7 @@ export default function solitaireGenerator(name: string, exParams?: Params, pare
     return new Layout('temp', child, g);
   }
 
-  return new Generator(name, init, _params, create, parent);
+  return new Generator(name, init, _params, create, gArgs.editHelper);
 }
 
 

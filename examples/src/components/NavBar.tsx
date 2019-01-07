@@ -1,27 +1,29 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import cssColor from '../assets/colors';
+
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
 import { IUnit } from '../../../src/components/Layout';
-import RLGColumns from '../../../src/generators/RLGColumns'
-import ReactLayout from '../../../src/ReactLayout'
+import columnsGenerator from '../../../src/generators/columnsGenerator';
+import RLGLayout from '../../../src/RLGLayout';
+import { DebugOptions } from '../../../src/types';
 
 // tslint:disable-next-line:variable-name
 export const Button = styled.button`
   font-size: 1rem;
   background: transparent;
   border: none;
-  color: white;
+  color: ${cssColor.light};
 `
 
 export const SelectedButton = styled.button`
   font-size: 1rem;
-  background: 'white';
+  background: ${cssColor.light};
   border: none;
-  color: black;
+  color: ${cssColor.dark};
 `
-
 interface IElement {
   component: any;
   name: string;
@@ -42,7 +44,7 @@ interface INavBarState {
 }
 
 export default class NavBar extends React.Component<INavBarProps, INavBarState> {
-  private n = RLGColumns('navbar');
+  private n = columnsGenerator('navbar');
   private elementRefs: IElementRef[] = [];
   private _size: Map<string, number> = new Map();
   private _changed: number = 0;
@@ -50,21 +52,26 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
   constructor(props: INavBarProps) {
     super(props);
 
-    this.state = {
-      selected: undefined,
-      update: 0
-    }
-
     this.props.elements.forEach((e: IElement) => {
       this.elementRefs.push({
         component: e.component,
         name: e.name,
         handler: (event: React.MouseEvent<HTMLButtonElement>) => {
-          this.setState({ selected: e.name });
-          this.props.callback(e.component)
+          if (this.state.selected !== e.name) {
+            this.setState({ selected: e.name });
+            this.props.callback(e.component)
+          }
         }
       })
     });
+
+    this.state = {
+      selected: undefined,
+      update: 0
+    }
+
+    const item = this.elementRefs.length ? this.elementRefs[0].name : undefined;
+    setTimeout(() => { this.setState({ selected: item }) }, 400);
   }
 
   public render() {
@@ -72,9 +79,13 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
     this.n.reset();
 
     return (
-      <ReactLayout name='navbar' g={this.n}>
+      <RLGLayout
+        name='navbar'
+        debug={DebugOptions.none}
+        g={this.n}
+      >
         {this.createElements()}
-      </ReactLayout>
+      </RLGLayout>
     );
   }
 
@@ -128,7 +139,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             }}>
             <Button
               key={e.name}
-              ref={(c) => { if (c) {this.setSize(e.name, c.offsetWidth)}}}
+              ref={(c) => { if (c) { this.setSize(e.name, c.offsetWidth) } }}
 
               onClick={e.handler}
             >

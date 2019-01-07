@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Layouts_1 = require("../components/Layouts");
-var Generator = /** @class */ (function () {
-    function Generator(name, init, params, create, parent) {
+var Generator = (function () {
+    function Generator(name, init, params, create, editHelper) {
         var _this = this;
         this.name = function () {
             return _this._name;
+        };
+        this.editHelper = function () {
+            return _this._editHelper;
         };
         this.params = function () {
             return _this._params;
@@ -13,10 +16,13 @@ var Generator = /** @class */ (function () {
         this.layouts = function () {
             return _this._layouts;
         };
+        this.select = function () {
+            return _this._select;
+        };
         this.lookup = function (name) {
             return _this._layouts.get(name);
         };
-        this.viewport = function (name) {
+        this.containersize = function (name) {
             var l = _this._layouts.get(name);
             if (l) {
                 var r = l.rect();
@@ -30,19 +36,10 @@ var Generator = /** @class */ (function () {
             }
             return undefined;
         };
-        this.parent = function () {
-            return _this._parent;
-        };
         this.reset = function () {
-            // console.log('reset update layouts')
             _this._layouts = _this._init(_this);
             _this.state = _this.start;
             _this._layoutsIterator = _this._layouts.values();
-            // this._layouts.layouts.forEach((item: Layout) => {
-            //   if (item.g) {
-            //     item.g.reset();
-            //   }
-            // })
         };
         this.clear = function () {
             _this._layouts = new Layouts_1.default([]);
@@ -55,33 +52,25 @@ var Generator = /** @class */ (function () {
         this.next = function () {
             return _this.state();
         };
+        this.setup = function (values) {
+            if (_this._params.get('$setup', true) === undefined) {
+                _this._params.set('$setup', 1);
+                values.forEach(function (value) {
+                    _this._params.set(value[0], value[1]);
+                });
+            }
+        };
         this.nextBlock = function () {
             _this.currentLayout = _this._layoutsIterator.next().value;
             if (_this.currentLayout) {
-                // if (this.currentLayout.g) {
-                //   this.state = this.nestedBlock;
-                //   return this.nestedBlock();
-                // } else {
                 _this.state = _this.nextTile;
                 return _this.nextTile();
-                // }
             }
             else {
                 _this.state = _this.start;
                 return undefined;
             }
         };
-        // private nestedBlock = (): Layout | undefined => {
-        //   let b: Layout | undefined = undefined;
-        //   if (this.currentLayout && this.currentLayout.g) {
-        //     b = this.currentLayout.g.next();
-        //   }
-        //   if (b === undefined) {
-        //     this.state = this.nextBlock;
-        //     return this.nextBlock();
-        //   }
-        //   return b;
-        // }
         this.nextTile = function () {
             var b = _this.currentLayout;
             if (b) {
@@ -91,12 +80,12 @@ var Generator = /** @class */ (function () {
         };
         this._name = name;
         this._init = init;
+        this._editHelper = editHelper;
         this._create = create;
         this._layouts = new Layouts_1.default([]);
         this._layoutsIterator = this._layouts.values();
         this.state = this.start;
         this._params = params;
-        this._parent = parent;
     }
     return Generator;
 }());

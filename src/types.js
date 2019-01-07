@@ -1,30 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// export function translate(r: IRect, p: IPoint): IRect {
-//   return {
-//     y: r.y + p.y,
-//     x: r.x + p.x,
-//     width: r.width,
-//     height: r.height
-//   };
-// }
-// export function scale(r: IRect, p: IPoint): IRect {
-//   return {
-//     y: r.y * p.y,
-//     x: r.x * p.x,
-//     height: r.height * p.y,
-//     width: r.width * p.x
-//   };
-// }
-// export function width(r: IRect) {
-//   return r.width;
-// }
-// export function height(r: IRect) {
-//   return r.height;
-// }
-var Rect = /** @class */ (function () {
-    // private _halfWidth: number = 0;
-    // private _halfHeight: number = 0;
+var DebugOptions;
+(function (DebugOptions) {
+    DebugOptions[DebugOptions["none"] = 0] = "none";
+    DebugOptions[DebugOptions["info"] = 1] = "info";
+    DebugOptions[DebugOptions["warning"] = 2] = "warning";
+    DebugOptions[DebugOptions["warningAll"] = 1] = "warningAll";
+    DebugOptions[DebugOptions["error"] = 4] = "error";
+    DebugOptions[DebugOptions["errorAll"] = 3] = "errorAll";
+    DebugOptions[DebugOptions["trace"] = 8] = "trace";
+    DebugOptions[DebugOptions["traceAll"] = 7] = "traceAll";
+    DebugOptions[DebugOptions["timing"] = 16] = "timing";
+    DebugOptions[DebugOptions["data"] = 32] = "data";
+    DebugOptions[DebugOptions["mouseEvents"] = 64] = "mouseEvents";
+    DebugOptions[DebugOptions["all"] = 127] = "all";
+})(DebugOptions = exports.DebugOptions || (exports.DebugOptions = {}));
+function rectSize(rect) {
+    return { width: rect.width, height: rect.height };
+}
+exports.rectSize = rectSize;
+function rectPoint(rect) {
+    return { x: rect.x, y: rect.y };
+}
+exports.rectPoint = rectPoint;
+var Rect = (function () {
     function Rect(rect) {
         this.y = 0;
         this.x = 0;
@@ -40,6 +39,19 @@ var Rect = /** @class */ (function () {
         this.x = p.x;
         this.y = p.y;
     };
+    Object.defineProperty(Rect.prototype, "data", {
+        get: function () {
+            var r = {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height
+            };
+            return r;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Rect.prototype, "location", {
         get: function () {
             return { x: this.x, y: this.y };
@@ -63,8 +75,6 @@ var Rect = /** @class */ (function () {
     Rect.prototype.setSize = function (s) {
         this.width = s.width;
         this.height = s.height;
-        // this._halfWidth = s.width / 2;
-        // this._halfHeight = s.height / 2;
     };
     Object.defineProperty(Rect.prototype, "top", {
         get: function () {
@@ -95,12 +105,6 @@ var Rect = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(Rect.prototype, "leftTop", {
-        // get halfWidth() {
-        //   return this._halfWidth;
-        // }
-        // get halfHeight() {
-        //   return this._halfHeight;
-        // }
         get: function () {
             return { x: this.x, y: this.y };
         },
@@ -126,8 +130,7 @@ var Rect = /** @class */ (function () {
     return Rect;
 }());
 exports.Rect = Rect;
-// tslint:disable-next-line:max-classes-per-file
-var Point = /** @class */ (function () {
+var Point = (function () {
     function Point() {
         var _this = this;
         this.x = 0;
