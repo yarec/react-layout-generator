@@ -10,19 +10,19 @@ const params = new Params({
 })
 
 function init(g: IGenerator) {
-  return g.layouts()
+  return g.blocks()
 }
 
 function create(args: ICreate) {
-  let layout
+  let block
 
-  const layouts = args.g.layouts()
+  const blocks = args.g.blocks()
 
-  if (layouts) {
-    layout = layouts.set(args.name, args.position, g)
+  if (blocks) {
+    block = blocks.set(args.name, args.position, g)
   }
 
-  return layout
+  return block
 }
 
 const g: IGenerator = new Generator('test', init, params, create)

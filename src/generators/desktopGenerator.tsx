@@ -1,9 +1,9 @@
-import Block, { IPosition, IUnit, PositionRef } from '../components/Block';
+import Block, { IPosition } from '../components/Block';
 // import Layouts from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import { updateParamHeight, updateParamWidth } from '../editors/update';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
-import { IPoint, ISize } from '../types';
+import { IPoint, ISize, Unit, PositionRef } from '../types';
 
 export default function desktopGenerator(name: string, exParams?: Params) {
 
@@ -32,7 +32,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
 
   function init(g: IGenerator) {
     const params = g.params();
-    const layouts = g.layouts();
+    const blocks = g.blocks();
     const containersize = params.get('containersize') as ISize;
     const fullWidthHeaders = params.get('fullWidthHeaders') as number;
     const titleHeight = params.get('titleHeight') as number;
@@ -60,7 +60,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
     content();
     footer();
 
-    return layouts;
+    return blocks;
 
     function footer() {
       if (fullWidthHeaders) {
@@ -86,8 +86,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -97,7 +97,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('footer', p, g);
+      blocks.set('footer', p, g);
     }
 
     function content() {
@@ -113,13 +113,13 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         location,
         size
       };
-      layouts.set('content', p, g);
+      blocks.set('content', p, g);
     }
 
     function header() {
@@ -146,8 +146,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -157,7 +157,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('header', p, g);
+      blocks.set('header', p, g);
     }
 
     function contentHeader() {
@@ -173,8 +173,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -184,7 +184,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('contentHeader', p, g);
+      blocks.set('contentHeader', p, g);
     }
 
     function rightSde() {
@@ -211,8 +211,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -222,7 +222,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('rightSide', p, g);
+      blocks.set('rightSide', p, g);
     }
 
     function leftSide() {
@@ -249,8 +249,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -264,7 +264,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('leftSide', p, g);
+      blocks.set('leftSide', p, g);
     }
 
     function title() {
@@ -279,8 +279,8 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         editor: {
           edits: [
@@ -292,7 +292,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
         location,
         size
       };
-      layouts.set('title', p, g);
+      blocks.set('title', p, g);
     }
   }
 
@@ -302,7 +302,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
       console.error(`TODO default position ${args.name}`)
     }
 
-    return args.g.layouts().set(args.name, args.position, args.g);
+    return args.g.blocks().set(args.name, args.position, args.g);
   }
 
   return new Generator(name, init, _params, create);

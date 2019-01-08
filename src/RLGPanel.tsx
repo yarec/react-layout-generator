@@ -5,7 +5,7 @@ import { DebugOptions, EditOptions, IRect } from './types';
 
 export interface IRLGPanelArgs {
   container: IRect;
-  layout: Block;
+  block: Block;
   edit: EditOptions;
   debug: DebugOptions;
   g: IGenerator;
@@ -16,7 +16,7 @@ export interface IRLGPanelArgs {
 // props must be optional to allow them to be injected
 interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   container?: IRect;
-  layout?: Block;
+  block?: Block;
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;
@@ -56,7 +56,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
   public render() {
     const args: IRLGPanelArgs = {
       container: this.state.rect,
-      layout: this.props.layout!,
+      block: this.props.block!,
       edit: this.props.edit!,
       debug: this.props.debug!,
       g: this.props.g!,

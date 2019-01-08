@@ -1,8 +1,8 @@
-import Block, { IUnit } from '../components/Block';
+import Block from '../components/Block';
 import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../generators/Generator';
-import { IAttrRect, ISize, rectSize } from '../types';
+import { IAttrRect, ISize, rectSize, Unit } from '../types';
 
 export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
@@ -20,18 +20,18 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
   function init(g: IGenerator): Blocks {
     const params = g.params();
-    const layouts = g.layouts();
+    const blocks = g.blocks();
 
     if (params.changed()) {
-      distributeRows(layouts, params);
+      distributeRows(blocks, params);
     }
-    return layouts;
+    return blocks;
   }
 
   /**
    * Distribute rows
    */
-  function distributeRows(layouts: Blocks, params: Params) {
+  function distributeRows(blocks: Blocks, params: Params) {
 
     const containersize = params.get('containersize') as ISize;
     // const size = params.get('itemSize') as ISize;
@@ -39,10 +39,10 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     // update
     let currentHeight = margin.top;
-    layouts.map.forEach((layout) => {
-      const rect = layout.rect();
+    blocks.map.forEach((block) => {
+      const rect = block.rect();
       const leftOffset = (containersize.width / 2 - (rect.width + margin.left + margin.right) / 2);
-      layout.update({ x: leftOffset, y: currentHeight }, rectSize(rect));
+      block.update({ x: leftOffset, y: currentHeight }, rectSize(rect));
       currentHeight += rect.height + margin.top + margin.bottom;
     });
   }
@@ -53,7 +53,7 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
     const containersize = params.get('containersize') as ISize;
     const size = params.get('itemSize') as ISize;
 
-    const layouts = args.g.layouts();
+    const blocks = args.g.blocks();
 
     let p = args.position;
 
@@ -61,8 +61,8 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         location: { x: 0, y: 0 },
         size
@@ -71,15 +71,15 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     const margin = params.get('itemMargin') as IAttrRect;
     let topOffset = margin.top;
-    if (layouts.map.size) {
-      const layout = layouts.find(layouts.map.size - 1);
-      const r = layout.rect();
+    if (blocks.map.size) {
+      const block = blocks.find(blocks.map.size - 1);
+      const r = block.rect();
       topOffset = r.y + r.height + margin.bottom + margin.top;
     }
     const leftOffset = (containersize.width / 2) - (size.width + margin.left + margin.right) / 2;
     p.location = { x: leftOffset, y: topOffset }
     
-    return layouts.set(args.name, p, args.g);
+    return blocks.set(args.name, p, args.g);
   }
 
   return new Generator(name, init, _params, create, gen.editHelper);

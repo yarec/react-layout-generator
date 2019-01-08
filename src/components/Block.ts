@@ -32,7 +32,7 @@ export interface IEdit {
 }
 
 export type PositionChildren = (
-  layout: Block,
+  block: Block,
   g: IGenerator,
   index: number
 ) => Block | undefined
@@ -253,7 +253,7 @@ export default class Block {
   }
 
   /**
-   * Change the layout state
+   * Change the block state
    */
   public update = (location: IPoint, size?: ISize) => {
     // Takes in world coordinates
@@ -487,7 +487,7 @@ export default class Block {
       if (typeof this._position.align.key === 'string') {
         ref = this._g.lookup(this._position.align.key as string)
       } else {
-        const l = this._g.layouts()
+        const l = this._g.blocks()
         if (l) {
           ref = l.find(this._position.align.key as number)
         }

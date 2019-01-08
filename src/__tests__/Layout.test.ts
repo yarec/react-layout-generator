@@ -9,17 +9,17 @@ const params = new Params({
 })
 
 function init(_g: IGenerator) {
-  return _g.layouts()
+  return _g.blocks()
 }
 
 function create(args: ICreate) {
-  let layout
-  const layouts = args.g.layouts()
-  if (layouts) {
-    layout = layouts.set('test', args.position, args.g)
+  let block
+  const blocks = args.g.blocks()
+  if (blocks) {
+    block = blocks.set('test', args.position, args.g)
   }
 
-  return layout
+  return block
 }
 
 const g: IGenerator = new Generator('test', init, params, create)

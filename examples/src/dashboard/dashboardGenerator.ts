@@ -1,6 +1,6 @@
-import Block, { IEdit, IPosition, IUnit, PositionRef } from '../../../src/components/Block';
+import Block, { IPosition } from '../../../src/components/Block';
 import Generator, { IGenerator } from '../../../src/generators/Generator';
-import { IPoint, IRect, ISize } from '../../../src/types';
+import { IPoint, ISize, PositionRef, Unit } from '../../../src/types';
 
 import Blocks from '../../../src/components/Blocks';
 import Params from '../../../src/components/Params';
@@ -55,8 +55,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p: IPosition = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         edit: [
           { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
@@ -94,8 +94,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p: IPosition = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         edit: [
           { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
@@ -134,8 +134,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         edit: [
           { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
@@ -174,8 +174,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         edit: [
           { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
@@ -212,8 +212,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         location,
         size
@@ -248,8 +248,8 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       const p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         edit: [
           { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }

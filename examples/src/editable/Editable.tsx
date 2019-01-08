@@ -5,11 +5,10 @@ import styled from 'styled-components';
 import Params, { ParamValue } from '../../../src/components/Params';
 import desktopGenerator from '../../../src/generators/desktopGenerator';
 import { loadFromLocalStorage, saveToLocalStorage } from '../../../src/generators/utils';
-import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
-import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
-import { DebugOptions, ISize, rectSize } from '../../../src/types'
+import  { RLGLayout } from '../../../src/RLGLayout';
+import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
+import { DebugOptions, EditOptions, ISize, rectSize, Unit } from '../../../src/types'
 
-import { IUnit } from '../../../src/components/Block';
 import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 import { IGenerator } from '../../../src/generators/Generator';
 import EditableText from '../components/EditableText';
@@ -154,7 +153,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
             location: { x: 80, y: 60 },
             size: { width: 200, height: 200 },
             editor: {
@@ -169,7 +168,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note2',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
             location: { x: 80, y: 70 },
             size: { width: 200, height: 200 },
             editor: {
@@ -184,7 +183,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note3',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
             location: { x: 80, y: 80 },
             size: { width: 200, height: 200 },
             editor: {

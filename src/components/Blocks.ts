@@ -2,68 +2,51 @@ import { IGenerator } from '../generators/Generator'
 import Block, { IPosition } from './Block'
 
 export default class Blocks {
-  private _layouts: Map<string, Block>
+  private _blocks: Map<string, Block>
   private _byIndex: Block[]
-  // width: number;
-  // height: number;
 
-  constructor(layouts: Array<[string, Block]>) {
+  constructor(blocks: Array<[string, Block]>) {
     this._byIndex = new Array()
-    this._layouts = new Map(layouts)
-    this._layouts.forEach(value => {
+    this._blocks = new Map(blocks)
+    this._blocks.forEach(value => {
       this._byIndex.push(value)
     })
   }
 
-  // update() {
-  //   this.width = 0;
-  //   this.height = 0;
-
-  //   Get actual width and height
-  //   this._layouts.forEach((layout) => {
-  //     if (this.width < layout.location.right) {
-  //       this.width = layout.location.right
-  //     }
-  //     if (this.height < layout.location.bottom) {
-  //       this.height = layout.location.bottom
-  //     }
-  //   });
-  // }
-
   public values() {
-    return this._layouts.values()
+    return this._blocks.values()
   }
 
   get map() {
-    return this._layouts
+    return this._blocks
   }
 
   get size() {
-    return this._layouts.size
+    return this._blocks.size
   }
 
   public find(i: number) {
-    // console.log(Object.keys(this._layouts))
-    // const key = Object.keys(this._layouts)[i];
+    // console.log(Object.keys(this._blocks))
+    // const key = Object.keys(this._blocks)[i];
     return this._byIndex[i]
   }
 
   public get(key: string) {
-    return this._layouts.get(key)
+    return this._blocks.get(key)
   }
 
   public set(key: string, p: IPosition, g: IGenerator): Block {
-    let layout = this._layouts.get(key)
-    if (layout) {
-      layout.updatePosition(p)
+    let block = this._blocks.get(key)
+    if (block) {
+      block.updatePosition(p)
     } else {
-      layout = new Block(key, p, g)
-      this._layouts.set(key, layout)
-      if (this._layouts.size > this._byIndex.length) {
+      block = new Block(key, p, g)
+      this._blocks.set(key, block)
+      if (this._blocks.size > this._byIndex.length) {
         // Add to byIndex array
-        this._byIndex.push(layout)
+        this._byIndex.push(block)
       }
     }
-    return layout
+    return block
   }
 }

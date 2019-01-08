@@ -1,13 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { IUnit } from '../../../src/components/Block';
 import dynamicGenerator from '../../../src/generators/dynamicGenerator';
 import { IGenerator } from '../../../src/generators/Generator';
-import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
+import { RLGLayout } from '../../../src/RLGLayout';
 
 import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
-// import { DebugOptions } from '../../../src/types';
+import { EditOptions, Unit } from '../../../src/types';
 
 // const Title = styled.h2`
 // `
@@ -68,7 +67,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature1',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanagedHeight },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 10, y: 10 },
             size: { width: 150, height: 250 }
           }
@@ -82,7 +81,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature2',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanagedHeight },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 25, y: 30 },
             size: { width: 250, height: 350 }
           }
@@ -96,7 +95,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature3',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanagedHeight },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 50, y: 10 },
             size: { width: 250, height: 350 }
           }
@@ -110,7 +109,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature4',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanagedHeight },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 50, y: 50 },
             size: { width: 250, height: 350 }
           }

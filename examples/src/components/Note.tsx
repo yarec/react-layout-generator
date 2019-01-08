@@ -2,10 +2,9 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import { EditOptions } from '.../../../src/RLGLayout';
 import Block from '../../../src/components/Block';
 import { IGenerator } from '../../../src/generators/Generator';
-import { DebugOptions, IPoint, IRect } from '../../../src/types';
+import { DebugOptions, EditOptions, IPoint, IRect } from '../../../src/types';
 
 const Container = styled.div`
   position: absolute;
@@ -17,7 +16,7 @@ const Container = styled.div`
 `
 interface INoteProps {
   container?: IRect;
-  layout?: Block;
+  block?: Block;
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;
@@ -54,7 +53,7 @@ export default class Note extends React.Component<INoteProps, INoteState> {
     const deltaY = y - this._startOrigin.y;
 
     // update
-    this.props.layout!.update({
+    this.props.block!.update({
       x: this._startLocation.x + deltaX,
       y: this._startLocation.y + deltaY
     });
@@ -63,7 +62,7 @@ export default class Note extends React.Component<INoteProps, INoteState> {
     if (this.props.update) { this.props.update(); }
 
     // // update params
-    // const p = this.props.layout!.location;
+    // const p = this.props.block!.location;
     // if (p) {
     //   const dataLayout = this.props['data-layout'];
     //   const params =  this.props.layout!.generator.params()
@@ -83,7 +82,7 @@ export default class Note extends React.Component<INoteProps, INoteState> {
 
     // initialize 
     this._startOrigin = { x: event.pageX, y: event.pageY }
-    const r = this.props.layout!.rect();
+    const r = this.props.block!.rect();
     this._startLocation = { x: r.x, y: r.y };
   }
 

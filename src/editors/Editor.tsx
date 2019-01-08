@@ -15,7 +15,7 @@ export interface IEditor {
 
 export interface IEditorProps extends React.HTMLProps<HTMLDivElement> {
   key: string;
-  layout: Block;
+  block: Block;
   boundary: IRect;
   debug?: DebugOptions;
   edit: IEdit;

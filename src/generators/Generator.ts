@@ -25,7 +25,7 @@ export type Create = (args: ICreate) => Block | undefined
 export interface IGenerator {
   name: () => string
   params: () => Params
-  layouts: () => Blocks
+  blocks: () => Blocks
   reset: () => void
   next: () => Block | undefined
   lookup: (name: string) => Block | undefined
@@ -77,7 +77,7 @@ export default class Generator implements IGenerator {
     return this._params
   }
 
-  public layouts = (): Blocks => {
+  public blocks = (): Blocks => {
     return this._layouts
   }
 
@@ -108,11 +108,11 @@ export default class Generator implements IGenerator {
   }
 
   public reset = () => {
-    // console.log('reset update layouts')
+    // console.log('reset update blocks')
     this._layouts = this._init(this)
     this.state = this.start
     this._layoutsIterator = this._layouts.values()
-    // this._layouts.layouts.forEach((item: Layout) => {
+    // this._layouts.blocks.forEach((item: Layout) => {
     //   if (item.g) {
     //     item.g.reset();
     //   }

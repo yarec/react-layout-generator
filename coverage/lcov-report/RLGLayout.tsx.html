@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/356</span>
+        <span class='fraction'>0/353</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/237</span>
+        <span class='fraction'>0/235</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/52</span>
+        <span class='fraction'>0/51</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/350</span>
+        <span class='fraction'>0/347</span>
       </div>
     </div>
   </div>
@@ -1076,11 +1076,7 @@
 1031
 1032
 1033
-1034
-1035
-1036
-1037
-1038</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+1034</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1191,10 +1187,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2120,18 +2112,18 @@
 <span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import * as React from 'react';</span>
 <span class="cstat-no" title="statement not covered" >import ReactResizeDetector from 'react-resize-detector';</span>
 &nbsp;
-import Layout, {
+import Block, {
   IMenuItem,
   IPosition,
   PositionChildren
-} from './components/Layout';
+} from './components/Block';
 import { ParamValue } from './components/Params';
 <span class="cstat-no" title="statement not covered" >import RLGContextMenu from './editors/RLGContextMenu';</span>
 <span class="cstat-no" title="statement not covered" >import RLGEditLayout from './editors/RLGEditLayout';</span>
 <span class="cstat-no" title="statement not covered" >import RLGSelect from './editors/RLGSelect';</span>
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
-<span class="cstat-no" title="statement not covered" >import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize, namedPositionRef, PositionRef, IUnit,</span>
+<span class="cstat-no" title="statement not covered" >import { DebugOptions, DebugOptionsArray, EditOptions, IPoint, IRect, ISize, namedPositionRef, PositionRef, Unit,</span>
   namedUnit, } from './types';
 &nbsp;
 interface ILayoutStyle {
@@ -2177,7 +2169,7 @@ function <span class="fstat-no" title="function not covered" >tileStyle(</span>
   y: number,
   width: number,
   height: number,
-  unit: IUnit,
+  unit: Unit,
   selected: boolean,
   zIndex: number
 ): React.CSSProperties {
@@ -2196,17 +2188,17 @@ function <span class="fstat-no" title="function not covered" >tileStyle(</span>
     width: `${width}px`,
   }
 <span class="cstat-no" title="statement not covered" >  switch (unit) {</span>
-    case IUnit.unmanaged: {
+    case Unit.unmanaged: {
 <span class="cstat-no" title="statement not covered" >      size = {};</span>
 <span class="cstat-no" title="statement not covered" >      break;</span>
     }
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanagedHeight: {
 <span class="cstat-no" title="statement not covered" >      size = {</span>
         width: `${width}px`
       };
 <span class="cstat-no" title="statement not covered" >      break;</span>
     }
-    case IUnit.unmanagedWidth: {
+    case Unit.unmanagedWidth: {
 <span class="cstat-no" title="statement not covered" >      size = {</span>
         height: `${height}px`
       };
@@ -2230,18 +2222,14 @@ function <span class="fstat-no" title="function not covered" >tileStyle(</span>
 &nbsp;
 export let <span class="cstat-no" title="statement not covered" >gInProgress: number = 0;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export enum </span>EditOptions {</span>
-<span class="cstat-no" title="statement not covered" >  none = 0,</span>
-<span class="cstat-no" title="statement not covered" >  all</span>
-}
 &nbsp;
 export const <span class="cstat-no" title="statement not covered" >gLayouts: Map&lt;string, RLGLayout&gt; = new Map();</span>
 &nbsp;
 export interface IRLGLayoutProps extends React.HTMLProps&lt;HTMLElement&gt; {
   name: string;
   edit?: EditOptions;
-  save?: (name: string, params: string, layouts: string) =&gt; void;
-  load?: (name: string) =&gt; { params: string, layouts: string };
+  save?: (name: string, params: string, blocks: string) =&gt; void;
+  load?: (name: string) =&gt; { params: string, blocks: string };
   containersize?: ISize;
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
@@ -2252,7 +2240,7 @@ export interface IRLGLayoutState {
   width: number;
   height: number;
   update: number;
-  contextMenu: Layout | undefined;
+  contextMenu: Block | undefined;
   contextMenuActive: boolean;
   devicePixelRatio: number;
 }
@@ -2449,14 +2437,14 @@ export interface IRLGLayoutState {
   }
 &nbsp;
   private <span class="cstat-no" title="statement not covered" >onLayoutResize = <span class="fstat-no" title="function not covered" >(</span>name: string) =&gt; {</span>
-    // Use closure to determine layout to update
+    // Use closure to determine block to update
 <span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(</span>width: number, height: number) =&gt; {</span>
-      const layout = <span class="cstat-no" title="statement not covered" >this._g.lookup(name);</span>
-<span class="cstat-no" title="statement not covered" >      if (layout) {</span>
+      const block = <span class="cstat-no" title="statement not covered" >this._g.lookup(name);</span>
+<span class="cstat-no" title="statement not covered" >      if (block) {</span>
         let w = <span class="cstat-no" title="statement not covered" >Math.ceil(width);</span>
         let h = <span class="cstat-no" title="statement not covered" >Math.ceil(height);</span>
 &nbsp;
-        const r = <span class="cstat-no" title="statement not covered" >layout.fromSize();</span>
+        const r = <span class="cstat-no" title="statement not covered" >block.fromSize();</span>
 <span class="cstat-no" title="statement not covered" >        if (w === 0) {</span>
 <span class="cstat-no" title="statement not covered" >          w = r.width;</span>
         }
@@ -2469,7 +2457,7 @@ export interface IRLGLayoutState {
 <span class="cstat-no" title="statement not covered" >          console.log('onLayoutResize', name, w, h);</span>
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        layout.updateSize({ width: w, height: h });</span>
+<span class="cstat-no" title="statement not covered" >        block.updateSize({ width: w, height: h });</span>
 &nbsp;
         // TODO: Just fire update for unmanaged element
 <span class="cstat-no" title="statement not covered" >        this.setState({ update: this.state.update + 1 });</span>
@@ -2487,11 +2475,11 @@ export interface IRLGLayoutState {
 &nbsp;
     const v = <span class="cstat-no" title="statement not covered" >p.set('containersize', { width: this.state.width, height: this.state.height });</span>
 <span class="cstat-no" title="statement not covered" >    if (v) {</span>
-      const layouts = <span class="cstat-no" title="statement not covered" >this._g.layouts();</span>
-<span class="cstat-no" title="statement not covered" >      if (layouts) {</span>
-<span class="cstat-no" title="statement not covered" >        layouts.map.forEach(<span class="fstat-no" title="function not covered" >(</span>layout) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          layout.touch();</span>
-<span class="cstat-no" title="statement not covered" >          layout.rect();</span>
+      const blocks = <span class="cstat-no" title="statement not covered" >this._g.blocks();</span>
+<span class="cstat-no" title="statement not covered" >      if (blocks) {</span>
+<span class="cstat-no" title="statement not covered" >        blocks.map.forEach(<span class="fstat-no" title="function not covered" >(</span>block) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          block.touch();</span>
+<span class="cstat-no" title="statement not covered" >          block.rect();</span>
         });
       }
     }
@@ -2506,15 +2494,15 @@ export interface IRLGLayoutState {
       const containersize = <span class="cstat-no" title="statement not covered" >params.get('containersize') as ISize;</span>
 <span class="cstat-no" title="statement not covered" >      if (this._count === 0 &amp;&amp; containersize.width &amp;&amp; containersize.height) {</span>
 &nbsp;
-        const layouts = <span class="cstat-no" title="statement not covered" >this._g.layouts();</span>
+        const blocks = <span class="cstat-no" title="statement not covered" >this._g.blocks();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        console.log(`RLGLayout debug for ${this.props.name} with generator ${this._g.name()}`);</span>
 <span class="cstat-no" title="statement not covered" >        console.log('params');</span>
 <span class="cstat-no" title="statement not covered" >        params.map.forEach(<span class="fstat-no" title="function not covered" >(</span>value, key) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          console.log(`  ${key} ${JSON.stringify(value)}`);</span>
         });
-<span class="cstat-no" title="statement not covered" >        console.log('layouts (computed position rects)');</span>
-<span class="cstat-no" title="statement not covered" >        layouts.map.forEach(<span class="fstat-no" title="function not covered" >(</span>value, key) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        console.log('blocks (computed position rects)');</span>
+<span class="cstat-no" title="statement not covered" >        blocks.map.forEach(<span class="fstat-no" title="function not covered" >(</span>value, key) =&gt; {</span>
           const r = <span class="cstat-no" title="statement not covered" >value.rect();</span>
 <span class="cstat-no" title="statement not covered" >          console.log(`  ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`);</span>
         });
@@ -2566,9 +2554,9 @@ export interface IRLGLayoutState {
 &nbsp;
     const props = <span class="cstat-no" title="statement not covered" >this.props as { [key: string]: string };</span>
     // tslint:disable-next-line:no-string-literal
-<span class="cstat-no" title="statement not covered" >    if (!b &amp;&amp; props['layouts']) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!b &amp;&amp; props['blocks']) {</span>
       // tslint:disable-next-line:no-string-literal
-      const rl = <span class="cstat-no" title="statement not covered" >gLayouts.get(props['layouts']);</span>
+      const rl = <span class="cstat-no" title="statement not covered" >gLayouts.get(props['blocks']);</span>
 <span class="cstat-no" title="statement not covered" >      if (rl) {</span>
         //
       }
@@ -2608,7 +2596,7 @@ export interface IRLGLayoutState {
           } : {};
           const args: IRLGPanelArgs = <span class="cstat-no" title="statement not covered" >{</span>
             container: rect,
-            layout: b,
+            block: b,
             edit: this._edit,
             debug: this._debug,
             g: this.props.g,
@@ -2686,7 +2674,7 @@ export interface IRLGLayoutState {
 &nbsp;
       const children = <span class="cstat-no" title="statement not covered" >React.Children.toArray(child.props.children);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (b.units.size === IUnit.unmanaged) {</span>
+<span class="cstat-no" title="statement not covered" >      if (b.units.size === Unit.unmanaged) {</span>
 <span class="cstat-no" title="statement not covered" >        children.push(&lt;ReactResizeDetector</span>
           key={`unmanagedResizeDetector`}
           handleWidth={true}
@@ -2694,7 +2682,7 @@ export interface IRLGLayoutState {
           onResize={this.onLayoutResize(name)} /&gt;
         );
       } 
-<span class="cstat-no" title="statement not covered" >      if (b.units.size === IUnit.unmanagedHeight) {</span>
+<span class="cstat-no" title="statement not covered" >      if (b.units.size === Unit.unmanagedHeight) {</span>
 <span class="cstat-no" title="statement not covered" >        children.push(&lt;ReactResizeDetector</span>
           key={`unmanagedResizeDetector`}
           handleWidth={false}
@@ -2702,7 +2690,7 @@ export interface IRLGLayoutState {
           onResize={this.onLayoutResize(name)} /&gt;
         );
       }
-<span class="cstat-no" title="statement not covered" >      if (b.units.size === IUnit.unmanagedWidth) {</span>
+<span class="cstat-no" title="statement not covered" >      if (b.units.size === Unit.unmanagedWidth) {</span>
 <span class="cstat-no" title="statement not covered" >        children.push(&lt;ReactResizeDetector</span>
           key={`unmanagedResizeDetector`}
           handleWidth={true}
@@ -2716,7 +2704,7 @@ export interface IRLGLayoutState {
       } : {};
       const args: IRLGPanelArgs = <span class="cstat-no" title="statement not covered" >{</span>
         container: rect,
-        layout: b,
+        block: b,
         edit: this._edit,
         debug: this._debug,
         g: this.props.g,
@@ -2764,8 +2752,8 @@ export interface IRLGLayoutState {
     const p = <span class="cstat-no" title="statement not covered" >child.props['data-layout'];</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (p) {</span>
-<span class="cstat-no" title="statement not covered" >      if (p.layout &amp;&amp; p.name) {</span>
-        const ancestor = <span class="cstat-no" title="statement not covered" >gLayouts.get(p.layout);</span>
+<span class="cstat-no" title="statement not covered" >      if (p.block &amp;&amp; p.name) {</span>
+        const ancestor = <span class="cstat-no" title="statement not covered" >gLayouts.get(p.block);</span>
 <span class="cstat-no" title="statement not covered" >        if (ancestor) {</span>
 <span class="cstat-no" title="statement not covered" >          return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);</span>
         }
@@ -2781,14 +2769,14 @@ export interface IRLGLayoutState {
     const p = <span class="cstat-no" title="statement not covered" >child.props['data-layout'];</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (p) {</span>
-<span class="cstat-no" title="statement not covered" >      if (p.layout &amp;&amp; p.name) {</span>
+<span class="cstat-no" title="statement not covered" >      if (p.block &amp;&amp; p.name) {</span>
         const ancestor = <span class="cstat-no" title="statement not covered" >gLayouts.get(p.layout);</span>
 <span class="cstat-no" title="statement not covered" >        if (ancestor) {</span>
           const location = <span class="cstat-no" title="statement not covered" >this.getBoundingLeftTop();</span>
           const ancestorLocation = <span class="cstat-no" title="statement not covered" >ancestor.getBoundingLeftTop();</span>
           const offset = <span class="cstat-no" title="statement not covered" >{ x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };</span>
           const position = <span class="cstat-no" title="statement not covered" >p.position as IPosition;</span>
-<span class="cstat-no" title="statement not covered" >          if (position &amp;&amp; position.units.size &gt;= IUnit.unmanaged) {</span>
+<span class="cstat-no" title="statement not covered" >          if (position &amp;&amp; position.units.size &gt;= Unit.unmanaged) {</span>
             // size determined by element.offsetWidth and element offsetHeight
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return ancestor.updateUnmanagedElement(</span>
@@ -2802,7 +2790,7 @@ export interface IRLGLayoutState {
         }
       } else <span class="cstat-no" title="statement not covered" >if (p.name) {</span>
         const position = <span class="cstat-no" title="statement not covered" >p.position as IPosition;</span>
-<span class="cstat-no" title="statement not covered" >        if (position &amp;&amp; position.units.size &gt;= IUnit.unmanaged) {</span>
+<span class="cstat-no" title="statement not covered" >        if (position &amp;&amp; position.units.size &gt;= Unit.unmanaged) {</span>
           // size determined by element.offsetWidth and element offsetHeight
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          return this.updateUnmanagedElement(</span>
@@ -2842,7 +2830,7 @@ export interface IRLGLayoutState {
 <span class="cstat-no" title="statement not covered" >    this.handleContextMenu(event);</span>
   }
 &nbsp;
-  private <span class="cstat-no" title="statement not covered" >onParentContextMenu = <span class="fstat-no" title="function not covered" >(</span>layout?: Layout) =&gt; {</span>
+  private <span class="cstat-no" title="statement not covered" >onParentContextMenu = <span class="fstat-no" title="function not covered" >(</span>block?: Block) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(</span>event: React.MouseEvent) =&gt; {</span>
       // tslint:disable-next-line:no-bitwise
 <span class="cstat-no" title="statement not covered" >      if (this._debug &amp;&amp; (this._debug &amp; DebugOptions.mouseEvents)) {</span>
@@ -2850,11 +2838,11 @@ export interface IRLGLayoutState {
       }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      event.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >      this.setState({ contextMenu: layout, contextMenuActive: true });</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({ contextMenu: block, contextMenuActive: true });</span>
     }
   }
 &nbsp;
-  // private onContextMenu = (layout?: Layout) =&gt; {
+  // private onContextMenu = (block?: Layout) =&gt; {
   //   return (event: React.MouseEvent) =&gt; {
   //     // tslint:disable-next-line:no-bitwise
   //     if (this._debug &amp;&amp; (this._debug &amp; DebugOptions.mouseEvents)) {
@@ -2862,17 +2850,17 @@ export interface IRLGLayoutState {
   //     }
 &nbsp;
   //     event.preventDefault();
-  //     this.setState({ contextMenu: layout, contextMenuActive: true });
+  //     this.setState({ contextMenu: block, contextMenuActive: true });
   //   }
   // }
 &nbsp;
 &nbsp;
-  private <span class="cstat-no" title="statement not covered" >generateContextMenu = <span class="fstat-no" title="function not covered" >(</span>layout?: Layout) =&gt; {</span>
+  private <span class="cstat-no" title="statement not covered" >generateContextMenu = <span class="fstat-no" title="function not covered" >(</span>block?: Block) =&gt; {</span>
 &nbsp;
     const menuItems: IMenuItem[] | undefined = <span class="cstat-no" title="statement not covered" >this._select &amp;&amp; this._select.commands;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (menuItems &amp;&amp; layout &amp;&amp; layout.editor &amp;&amp; layout.editor.contextMenu) {</span>
-      const contextMenu = <span class="cstat-no" title="statement not covered" >layout.editor.contextMenu;</span>
+<span class="cstat-no" title="statement not covered" >    if (menuItems &amp;&amp; block &amp;&amp; block.editor &amp;&amp; block.editor.contextMenu) {</span>
+      const contextMenu = <span class="cstat-no" title="statement not covered" >block.editor.contextMenu;</span>
 <span class="cstat-no" title="statement not covered" >      menuItems.push({ name: '' });</span>
 <span class="cstat-no" title="statement not covered" >      contextMenu.forEach(<span class="fstat-no" title="function not covered" >(</span>item: IMenuItem) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        menuItems.push(item);</span>
@@ -3022,7 +3010,7 @@ export interface IRLGLayoutState {
     }
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private <span class="cstat-no" title="statement not covered" >positionChildren(</span>child: React.ReactElement&lt;any&gt;, b: Layout, name: string, rect: IRect, style: React.CSSProperties) {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private <span class="cstat-no" title="statement not covered" >positionChildren(</span>child: React.ReactElement&lt;any&gt;, b: Block, name: string, rect: IRect, style: React.CSSProperties) {</span></span>
     const editProps = <span class="cstat-no" title="statement not covered" >{</span>
       edit: this._edit,
       g: this.props.g,
@@ -3044,7 +3032,7 @@ export interface IRLGLayoutState {
         );
         const nArgs: IRLGPanelArgs = <span class="cstat-no" title="statement not covered" >{</span>
           container: nestedRect,
-          layout: b,
+          block: b,
           edit: this._edit,
           debug: this._debug,
           g: this.props.g,
@@ -3068,7 +3056,7 @@ export interface IRLGLayoutState {
     });
     const args: IRLGPanelArgs = <span class="cstat-no" title="statement not covered" >{</span>
       container: rect,
-      layout: b,
+      block: b,
       edit: this._edit,
       debug: this._debug,
       g: this.props.g,
@@ -3090,7 +3078,7 @@ export interface IRLGLayoutState {
       nestedChildren));
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private <span class="cstat-no" title="statement not covered" >createEditors(</span>child: React.ReactElement&lt;any&gt;, b: Layout, rect: { y: number; x: number; width: number; height: number; }) {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private <span class="cstat-no" title="statement not covered" >createEditors(</span>child: React.ReactElement&lt;any&gt;, b: Block, rect: { y: number; x: number; width: number; height: number; }) {</span></span>
     const editors: React.ReactChild[] = <span class="cstat-no" title="statement not covered" >[];</span>
 <span class="cstat-no" title="statement not covered" >    if (this._edit) {</span>
 <span class="cstat-no" title="statement not covered" >      if (child.props.onMouseDown) {</span>
@@ -3105,12 +3093,12 @@ export interface IRLGLayoutState {
         let allow = <span class="cstat-no" title="statement not covered" >true;</span>
 <span class="cstat-no" title="statement not covered" >        b.editor.edits.forEach(<span class="fstat-no" title="function not covered" >(</span>item, i) =&gt; {</span>
           // filter unmanaged edits
-<span class="cstat-no" title="statement not covered" >          if (b.units.size === IUnit.unmanagedWidth &amp;&amp;</span>
+<span class="cstat-no" title="statement not covered" >          if (b.units.size === Unit.unmanagedWidth &amp;&amp;</span>
             (item.ref === PositionRef.bottom || item.ref === PositionRef.top)
           ) {
 <span class="cstat-no" title="statement not covered" >            allow = false;</span>
           }
-<span class="cstat-no" title="statement not covered" >          if (b.units.size === IUnit.unmanagedHeight &amp;&amp;</span>
+<span class="cstat-no" title="statement not covered" >          if (b.units.size === Unit.unmanagedHeight &amp;&amp;</span>
             (item.ref === PositionRef.left || item.ref === PositionRef.right)
           ) {
 <span class="cstat-no" title="statement not covered" >            allow = false;</span>
@@ -3120,7 +3108,7 @@ export interface IRLGLayoutState {
               &lt;RLGEditLayout
                 key={`edit${b.name + i}`}
                 edit={item}
-                layout={b!}
+                block={b!}
                 debug={this._debug}
                 select={this._select}
                 handle={rect}
@@ -3129,7 +3117,7 @@ export interface IRLGLayoutState {
                 zIndex={b.layer(this._zIndex)}
               /&gt;);
           } else {
-<span class="cstat-no" title="statement not covered" >            console.error(`Cannot edit ${namedPositionRef(item.ref)} for layout </span>
+<span class="cstat-no" title="statement not covered" >            console.error(`Cannot edit ${namedPositionRef(item.ref)} for block </span>
             ${name} when size is set to 
             ${namedUnit(b.units.size)}`
             )
@@ -3142,7 +3130,7 @@ export interface IRLGLayoutState {
           &lt;RLGEditLayout
             key={`edit${b.name}`}
             edit={edit}
-            layout={b!}
+            block={b!}
             debug={this._debug}
             select={this._select}
             handle={rect}
@@ -3160,7 +3148,7 @@ export interface IRLGLayoutState {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 01:44:13 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 14:03:51 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="prettify.js"></script>

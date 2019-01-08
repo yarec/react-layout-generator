@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import Block from './components/Block';
 import { IGenerator } from './generators/Generator';
-import { EditOptions } from './RLGLayout';
-import { DebugOptions, IRect } from './types';
+import { DebugOptions, EditOptions, IRect } from './types';
 
 // interface IRLGAppProps {
 //   name: string;
@@ -12,7 +11,7 @@ import { DebugOptions, IRect } from './types';
 interface IRLGDynamicProps extends React.HTMLProps<HTMLDivElement> {
   jsx: JSX.Element[];
   container?: IRect;
-  layout?: Block;
+  block?: Block;
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;

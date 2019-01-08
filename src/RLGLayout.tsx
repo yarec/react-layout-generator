@@ -117,8 +117,8 @@ export const gLayouts: Map<string, RLGLayout> = new Map();
 export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   name: string;
   edit?: EditOptions;
-  save?: (name: string, params: string, layouts: string) => void;
-  load?: (name: string) => { params: string, layouts: string };
+  save?: (name: string, params: string, blocks: string) => void;
+  load?: (name: string) => { params: string, blocks: string };
   containersize?: ISize;
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
@@ -326,14 +326,14 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   }
 
   private onLayoutResize = (name: string) => {
-    // Use closure to determine layout to update
+    // Use closure to determine block to update
     return (width: number, height: number) => {
-      const layout = this._g.lookup(name);
-      if (layout) {
+      const block = this._g.lookup(name);
+      if (block) {
         let w = Math.ceil(width);
         let h = Math.ceil(height);
 
-        const r = layout.fromSize();
+        const r = block.fromSize();
         if (w === 0) {
           w = r.width;
         }
@@ -346,7 +346,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           console.log('onLayoutResize', name, w, h);
         }
 
-        layout.updateSize({ width: w, height: h });
+        block.updateSize({ width: w, height: h });
 
         // TODO: Just fire update for unmanaged element
         this.setState({ update: this.state.update + 1 });
@@ -364,11 +364,11 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     const v = p.set('containersize', { width: this.state.width, height: this.state.height });
     if (v) {
-      const layouts = this._g.layouts();
-      if (layouts) {
-        layouts.map.forEach((layout) => {
-          layout.touch();
-          layout.rect();
+      const blocks = this._g.blocks();
+      if (blocks) {
+        blocks.map.forEach((block) => {
+          block.touch();
+          block.rect();
         });
       }
     }
@@ -383,15 +383,15 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       const containersize = params.get('containersize') as ISize;
       if (this._count === 0 && containersize.width && containersize.height) {
 
-        const layouts = this._g.layouts();
+        const blocks = this._g.blocks();
 
         console.log(`RLGLayout debug for ${this.props.name} with generator ${this._g.name()}`);
         console.log('params');
         params.map.forEach((value, key) => {
           console.log(`  ${key} ${JSON.stringify(value)}`);
         });
-        console.log('layouts (computed position rects)');
-        layouts.map.forEach((value, key) => {
+        console.log('blocks (computed position rects)');
+        blocks.map.forEach((value, key) => {
           const r = value.rect();
           console.log(`  ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`);
         });
@@ -443,9 +443,9 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     const props = this.props as { [key: string]: string };
     // tslint:disable-next-line:no-string-literal
-    if (!b && props['layouts']) {
+    if (!b && props['blocks']) {
       // tslint:disable-next-line:no-string-literal
-      const rl = gLayouts.get(props['layouts']);
+      const rl = gLayouts.get(props['blocks']);
       if (rl) {
         //
       }
@@ -485,7 +485,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           } : {};
           const args: IRLGPanelArgs = {
             container: rect,
-            layout: b,
+            block: b,
             edit: this._edit,
             debug: this._debug,
             g: this.props.g,
@@ -593,7 +593,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       } : {};
       const args: IRLGPanelArgs = {
         container: rect,
-        layout: b,
+        block: b,
         edit: this._edit,
         debug: this._debug,
         g: this.props.g,
@@ -641,8 +641,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.layout && p.name) {
-        const ancestor = gLayouts.get(p.layout);
+      if (p.block && p.name) {
+        const ancestor = gLayouts.get(p.block);
         if (ancestor) {
           return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
         }
@@ -658,7 +658,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.layout && p.name) {
+      if (p.block && p.name) {
         const ancestor = gLayouts.get(p.layout);
         if (ancestor) {
           const location = this.getBoundingLeftTop();
@@ -719,7 +719,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this.handleContextMenu(event);
   }
 
-  private onParentContextMenu = (layout?: Block) => {
+  private onParentContextMenu = (block?: Block) => {
     return (event: React.MouseEvent) => {
       // tslint:disable-next-line:no-bitwise
       if (this._debug && (this._debug & DebugOptions.mouseEvents)) {
@@ -727,11 +727,11 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       }
 
       event.preventDefault();
-      this.setState({ contextMenu: layout, contextMenuActive: true });
+      this.setState({ contextMenu: block, contextMenuActive: true });
     }
   }
 
-  // private onContextMenu = (layout?: Layout) => {
+  // private onContextMenu = (block?: Layout) => {
   //   return (event: React.MouseEvent) => {
   //     // tslint:disable-next-line:no-bitwise
   //     if (this._debug && (this._debug & DebugOptions.mouseEvents)) {
@@ -739,17 +739,17 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   //     }
 
   //     event.preventDefault();
-  //     this.setState({ contextMenu: layout, contextMenuActive: true });
+  //     this.setState({ contextMenu: block, contextMenuActive: true });
   //   }
   // }
 
 
-  private generateContextMenu = (layout?: Block) => {
+  private generateContextMenu = (block?: Block) => {
 
     const menuItems: IMenuItem[] | undefined = this._select && this._select.commands;
 
-    if (menuItems && layout && layout.editor && layout.editor.contextMenu) {
-      const contextMenu = layout.editor.contextMenu;
+    if (menuItems && block && block.editor && block.editor.contextMenu) {
+      const contextMenu = block.editor.contextMenu;
       menuItems.push({ name: '' });
       contextMenu.forEach((item: IMenuItem) => {
         menuItems.push(item);
@@ -921,7 +921,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         );
         const nArgs: IRLGPanelArgs = {
           container: nestedRect,
-          layout: b,
+          block: b,
           edit: this._edit,
           debug: this._debug,
           g: this.props.g,
@@ -945,7 +945,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     });
     const args: IRLGPanelArgs = {
       container: rect,
-      layout: b,
+      block: b,
       edit: this._edit,
       debug: this._debug,
       g: this.props.g,
@@ -997,7 +997,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
               <RLGEditLayout
                 key={`edit${b.name + i}`}
                 edit={item}
-                layout={b!}
+                block={b!}
                 debug={this._debug}
                 select={this._select}
                 handle={rect}
@@ -1006,7 +1006,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
                 zIndex={b.layer(this._zIndex)}
               />);
           } else {
-            console.error(`Cannot edit ${namedPositionRef(item.ref)} for layout 
+            console.error(`Cannot edit ${namedPositionRef(item.ref)} for block 
             ${name} when size is set to 
             ${namedUnit(b.units.size)}`
             )
@@ -1019,7 +1019,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           <RLGEditLayout
             key={`edit${b.name}`}
             edit={edit}
-            layout={b!}
+            block={b!}
             debug={this._debug}
             select={this._select}
             handle={rect}

@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import Block, { IPosition, IUnit, PositionRef } from '../../../src/components/Block';
+import Block, { IPosition } from '../../../src/components/Block';
 import Blocks from '../../../src/components/Blocks';
 import Params from '../../../src/components/Params';
 import { IEditHelperProps } from '../../../src/editors/EditHelper';
 import { updateParamLocation, updateParamOffset } from '../../../src/editors/update';
 import Generator, { IGenerator } from '../../../src/generators/Generator';
-import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
-import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
-import { DebugOptions, IPoint, ISize } from '../../../src/types';
+import { RLGLayout } from '../../../src/RLGLayout';
+import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
+import { DebugOptions, EditOptions, IPoint, ISize, PositionRef, Unit } from '../../../src/types';
 import { t1 } from './tree';
 import TreeMap from './TreeMap';
 
@@ -61,12 +61,12 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
     const containersize = this._params.get('containersize') as ISize;
     const aLocation = this._params.get('aLocation') as IPoint;
 
-    const layouts = g.layouts();
+    const blocks = g.blocks();
 
     if (this._params.changed()) {
       // update Layout for each update
-      layouts.map.forEach((layout) => {
-        layout.touch();
+      blocks.map.forEach((block) => {
+        block.touch();
       });
     }
 
@@ -76,7 +76,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
 
       // Self
       const self: IPosition = {
-        units: { origin: { x: 50, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+        units: { origin: { x: 50, y: 0 }, location: Unit.percent, size: Unit.pixel },
         location: aLocation ? aLocation : { x: 10, y: 10 },
         size: { width: 150, height: 100 },
         editor: {
@@ -87,7 +87,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
       }
       // console.log('cardSize', cardSize);
 
-      layouts.set(this.state.node, self, g);
+      blocks.set(this.state.node, self, g);
 
       if (0 && node.children.length) {
         const spacing = containersize.width / node.children.length;
@@ -95,7 +95,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
 
         node.children.forEach((name, i) => {
           const child: IPosition = {
-            units: { origin: { x: 50, y: 50 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 50, y: 50 }, location: Unit.percent, size: Unit.pixel },
             location: { x: 0, y: 0 },
             size: { width: 150, height: 100 },
             editor: {
@@ -110,12 +110,12 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
               self: { x: 50, y: 0 }
             }
           }
-          layouts.set(name, child, g);
+          blocks.set(name, child, g);
         });
       }
     }
 
-    return layouts;
+    return blocks;
   }
 
   protected createElements() {
@@ -125,8 +125,8 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
     return null;
   }
 
-  protected renderConnection(layout: Block) {
-    const p = layout.connectionHandles();
+  protected renderConnection(block: Block) {
+    const p = block.connectionHandles();
     if (p.length) {
       return null;
     }

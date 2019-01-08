@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Block, { IPosition, IUnit, PositionRef } from '../../../src/components/Block';
+import Block, { IPosition } from '../../../src/components/Block';
 import Blocks from '../../../src/components/Blocks';
 import Params from '../../../src/components/Params';
 import { updateParamLocation } from '../../../src/editors/update';
 import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
-import RLGLayout from '../../../src/RLGLayout';
-import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
-import { DebugOptions, ISize } from '../../../src/types';
+import { RLGLayout} from '../../../src/RLGLayout';
+import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
+import { DebugOptions, ISize, PositionRef, Unit } from '../../../src/types';
 import cssColor from '../assets/colors';
 
 // tslint:disable-next-line:variable-name
@@ -79,19 +79,19 @@ export default class Table extends React.Component<ITableProps> {
     const rowHeight = this._params.get('rowHeight') as number;
     // const footerHeight = this._params.get('footerHeight') as number;
 
-    const layouts = g.layouts();
+    const blocks = g.blocks();
 
     if (this._params.changed()) {
       // update Layout for each update
-      layouts.map.forEach((layout) => {
-        layout.touch();
+      blocks.map.forEach((block) => {
+        block.touch();
       });
     }
 
     if (containersize) {
 
       const title: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+        units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: 0 },
         size: { width: containersize.width, height: titleHeight },
         editor: {
@@ -102,23 +102,23 @@ export default class Table extends React.Component<ITableProps> {
       }
       // console.log('cardSize', cardSize);
 
-      layouts.set('title', title, g);
+      blocks.set('title', title, g);
 
       const row: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+        units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: titleHeight },
         size: { width: containersize.width, height: rowHeight },
         positionChildren: this.positionRowChildren
       }
 
-      layouts.set('row', row, g);
+      blocks.set('row', row, g);
 
     }
-    return layouts;
+    return blocks;
   }
 
-  private positionRowChildren = (layout: Block, g: IGenerator, index: number) => {
-    // Return a Layout relative to layout starting at position at (0, 0)
+  private positionRowChildren = (block: Block, g: IGenerator, index: number) => {
+    // Return a Layout relative to block starting at position at (0, 0)
 
     const rowHeight = this._params.get('rowHeight') as number;
     const containersize = this._params.get('containersize') as ISize;
@@ -126,12 +126,12 @@ export default class Table extends React.Component<ITableProps> {
 
     // These children get placed vertically based on index
     const child: IPosition = {
-      units: layout.units,
+      units: block.units,
       location: { x: 0, y: titleHeight + index * rowHeight },
       size: { width: containersize.width, height: rowHeight }
     };
 
-    // This layout is temp and will not be stored in layouts
+    // This block is temp and will not be stored in blocks
     return new Block('temp', child, g);
   }
 
@@ -141,8 +141,8 @@ export default class Table extends React.Component<ITableProps> {
       console.error(`TODO default position ${args.name}`);
     }
 
-    const layout = args.g.layouts().set(args.name, args.position, args.g);
+    const block = args.g.blocks().set(args.name, args.position, args.g);
 
-    return layout;
+    return block;
   }
 }

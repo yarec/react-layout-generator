@@ -1,8 +1,8 @@
-import Block, { IUnit } from '../components/Block';
+import Block, { } from '../components/Block';  
 import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
-import { ISize } from '../types';
+import { ISize , Unit } from '../types';
 
 export default function columnsGenerator(name: string, exParams?: Params) {
 
@@ -20,7 +20,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
 
   function init(g: IGenerator): Blocks {
     // const params = g.params();
-    // const layouts = g.layouts();
+    // const blocks = g.blocks();
 
     // const align = params.get('align') as number;
 
@@ -28,10 +28,10 @@ export default function columnsGenerator(name: string, exParams?: Params) {
 
     // update Layout for each update
     // if (align === 0) {
-    //   centerColumns(layouts, params);
+    //   centerColumns(blocks, params);
 
-    // layouts.map.forEach((layout) => {
-    //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
+    // blocks.map.forEach((block) => {
+    //   console.log(`centerColumns ${block.name} ${block.rect().x}`)
     // });
     return new Blocks([]);
   }
@@ -41,15 +41,15 @@ export default function columnsGenerator(name: string, exParams?: Params) {
   /**
    * Align items in center
    */
-  function centerColumns(layouts: Blocks, params: Params) {
+  function centerColumns(blocks: Blocks, params: Params) {
 
     const containersize = params.get('containersize') as ISize;
     // const margin = params.get('itemMargin') as IAttrRect;
 
     // compute width of all columns
     let totalWidth = 0
-    layouts.map.forEach((layout) => {
-      totalWidth += layout.rect().width;
+    blocks.map.forEach((block) => {
+      totalWidth += block.rect().width;
     });
 
     // compute beginning offset
@@ -57,9 +57,9 @@ export default function columnsGenerator(name: string, exParams?: Params) {
 
     // update
     let currentWidth = 0;
-    layouts.map.forEach((layout) => {
-      const rect = layout.rect();
-      layout.update({ x: offset0 + currentWidth, y: 0 }, { width: rect.width, height: containersize.height });
+    blocks.map.forEach((block) => {
+      const rect = block.rect();
+      block.update({ x: offset0 + currentWidth, y: 0 }, { width: rect.width, height: containersize.height });
       currentWidth += rect.width;
     });
   }
@@ -70,7 +70,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
     const containersize = params.get('containersize') as ISize;
     const itemSize = params.get('itemSize') as ISize;
 
-    const layouts = args.g.layouts();
+    const blocks = args.g.blocks();
 
     let p = args.position;
 
@@ -80,15 +80,15 @@ export default function columnsGenerator(name: string, exParams?: Params) {
       p = {
         units: {
           origin: { x: 0, y: 0 },
-          location: IUnit.pixel,
-          size: IUnit.pixel
+          location: Unit.pixel,
+          size: Unit.pixel
         },
         location: { x: 0, y: 0 },
         size: { width: itemSize.width, height: containersize.height }
       }
     }
 
-    const l = layouts.set(args.name, p, args.g);
+    const l = blocks.set(args.name, p, args.g);
 
     const align = params.get('align') as number;
 
@@ -96,7 +96,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
     // if ((args.index + 1) === args.count) {
 
     if (align === 0) {
-      centerColumns(layouts, params);
+      centerColumns(blocks, params);
     }
     // }
 

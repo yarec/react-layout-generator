@@ -17,15 +17,15 @@ export default function dynamicGenerator(
 
   function init(g: IGenerator): Blocks {
     const params = g.params();
-    const layouts = g.layouts();
+    const blocks = g.blocks();
 
     if (params.changed()) {
       // update Layout for each update
-      layouts.map.forEach((layout) => {
-        layout.touch();
+      blocks.map.forEach((block) => {
+        block.touch();
       });
     }
-    return layouts;
+    return blocks;
   }
 
   function create(args: ICreate): Block {
@@ -34,7 +34,7 @@ export default function dynamicGenerator(
       console.error(`TODO use default position ${args.name}`)
     }
 
-    return args.g.layouts().set(args.name, args.position, args.g);
+    return args.g.blocks().set(args.name, args.position, args.g);
   }
 
   return new Generator(name, init, _params, create);

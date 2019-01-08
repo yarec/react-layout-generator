@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 import dynamicGenerator from '../../../src/generators/dynamicGenerator';
 import RLGDynamic from '../../../src/RLGDynamic';
-import {EditOptions, RLGLayout } from '../../../src/RLGLayout'
-import { DebugOptions, Unit, PositionRef } from '../../../src/types';
+import {RLGLayout } from '../../../src/RLGLayout'
+import { DebugOptions, EditOptions, PositionRef, Unit } from '../../../src/types';
 import Deck from '../algos/Deck';
 import cssColor from '../assets/colors';
 // import Note from '../components/Note';

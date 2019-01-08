@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { IPosition, IUnit } from '../../../src/components/Block';
+import { IPosition } from '../../../src/components/Block';
 import Params from '../../../src/components/Params';
 import EditHelper, { IEditTool, Status } from '../../../src/editors/EditHelper'
 import { IGenerator } from '../../../src/generators/Generator';
 import rowsGenerator from '../../../src/generators/rowsGenerator';
-import RLGLayout from '../../../src/RLGLayout';
-import { DebugOptions, ISize } from '../../../src/types';
+import {RLGLayout} from '../../../src/RLGLayout';
+import { DebugOptions, ISize, Unit } from '../../../src/types';
 import cssColor from '../assets/colors';
 
 // tslint:disable-next-line:variable-name
@@ -120,8 +120,8 @@ export default class ToolBar extends React.Component<IToolBarProps, IToolBarStat
         const p: IPosition = {
           units: {
             origin: { x: 0, y: 0 },
-            location: IUnit.pixel,
-            size: IUnit.pixel
+            location: Unit.pixel,
+            size: Unit.pixel
           },
           location: { x: 0, y: 0 },
           size: { width: fontSize, height: fontSize / 2 }

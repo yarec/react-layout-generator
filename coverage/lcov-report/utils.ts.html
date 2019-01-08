@@ -505,7 +505,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IPoint, ISize, IUnit } from './types'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IPoint, ISize, Unit } from './types'
 &nbsp;
 export function clone(aObject: any) {
   <span class="missing-if-branch" title="if path not taken" >I</span>if (!aObject) {
@@ -523,7 +523,7 @@ export function clone(aObject: any) {
 }
 &nbsp;
 export interface IValue {
-  unit: IUnit
+  unit: Unit
   value: IPoint | ISize
 }
 &nbsp;
@@ -544,11 +544,11 @@ export class PixelPoint {
 &nbsp;
 export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
   switch (v.unit) {
-<span class="branch-0 cbranch-no" title="branch not covered" >    case IUnit.pixel: {</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >    case Unit.pixel: {</span>
 <span class="cstat-no" title="statement not covered" >      return v.value</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.percent: {
+    case Unit.percent: {
       <span class="missing-if-branch" title="else path not taken" >E</span>if ('x' in v.value) {
         const p = v.value as IPoint
         return {
@@ -564,7 +564,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
       const factor =
         containersize.height &lt; containersize.width
           ? containersize.height
@@ -584,7 +584,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-<span class="branch-3 cbranch-no" title="branch not covered" >    case IUnit.preserveWidth: {</span>
+<span class="branch-3 cbranch-no" title="branch not covered" >    case Unit.preserveWidth: {</span>
       const factor = <span class="cstat-no" title="statement not covered" >containersize.width</span>
 <span class="cstat-no" title="statement not covered" >      if ('x' in v.value) {</span>
         const p = <span class="cstat-no" title="statement not covered" >v.value as IPoint</span>
@@ -601,7 +601,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-<span class="branch-4 cbranch-no" title="branch not covered" >    case IUnit.preserveHeight: {</span>
+<span class="branch-4 cbranch-no" title="branch not covered" >    case Unit.preserveHeight: {</span>
       const factor = <span class="cstat-no" title="statement not covered" >containersize.height</span>
 <span class="cstat-no" title="statement not covered" >      if ('x' in v.value) {</span>
         const p = <span class="cstat-no" title="statement not covered" >v.value as IPoint</span>
@@ -618,9 +618,9 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-<span class="branch-5 cbranch-no" title="branch not covered" >    case IUnit.unmanaged:</span>
-<span class="branch-6 cbranch-no" title="branch not covered" >    case IUnit.unmanagedWidth:</span>
-<span class="branch-7 cbranch-no" title="branch not covered" >    case IUnit.unmanagedHeight: {</span>
+<span class="branch-5 cbranch-no" title="branch not covered" >    case Unit.unmanaged:</span>
+<span class="branch-6 cbranch-no" title="branch not covered" >    case Unit.unmanagedWidth:</span>
+<span class="branch-7 cbranch-no" title="branch not covered" >    case Unit.unmanagedHeight: {</span>
 <span class="cstat-no" title="statement not covered" >      return v.value</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
@@ -630,7 +630,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
 &nbsp;
 export function <span class="fstat-no" title="function not covered" >toPercent(</span>v: IValue, containersize: ISize): IPoint | ISize {
 <span class="cstat-no" title="statement not covered" >  switch (v.unit) {</span>
-    case IUnit.pixel: {
+    case Unit.pixel: {
 <span class="cstat-no" title="statement not covered" >      if ('x' in v.value) {</span>
         const p = <span class="cstat-no" title="statement not covered" >v.value as IPoint</span>
 <span class="cstat-no" title="statement not covered" >        return {</span>
@@ -646,11 +646,11 @@ export function <span class="fstat-no" title="function not covered" >toPercent(<
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.percent: {
+    case Unit.percent: {
 <span class="cstat-no" title="statement not covered" >      return v.value</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
       const factor =
 <span class="cstat-no" title="statement not covered" >        containersize.height &lt; containersize.width</span>
           ? containersize.height
@@ -670,7 +670,7 @@ export function <span class="fstat-no" title="function not covered" >toPercent(<
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserveWidth: {
+    case Unit.preserveWidth: {
       const factor = <span class="cstat-no" title="statement not covered" >containersize.width</span>
 <span class="cstat-no" title="statement not covered" >      if ('x' in v.value) {</span>
         const p = <span class="cstat-no" title="statement not covered" >v.value as IPoint</span>
@@ -687,7 +687,7 @@ export function <span class="fstat-no" title="function not covered" >toPercent(<
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserveHeight: {
+    case Unit.preserveHeight: {
       const factor = <span class="cstat-no" title="statement not covered" >containersize.height</span>
 <span class="cstat-no" title="statement not covered" >      if ('x' in v.value) {</span>
         const p = <span class="cstat-no" title="statement not covered" >v.value as IPoint</span>
@@ -704,9 +704,9 @@ export function <span class="fstat-no" title="function not covered" >toPercent(<
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.unmanaged:
-    case IUnit.unmanagedWidth:
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanaged:
+    case Unit.unmanagedWidth:
+    case Unit.unmanagedHeight: {
 <span class="cstat-no" title="statement not covered" >      return v.value</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
@@ -742,7 +742,7 @@ export function <span class="fstat-no" title="function not covered" >add(</span>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 01:44:13 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 14:03:51 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="prettify.js"></script>

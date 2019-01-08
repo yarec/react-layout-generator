@@ -10,5 +10,5 @@ export interface INamedValue {
 export type UpdateParam = (
   updated: IRect,
   edit: IEdit,
-  layout: Block
+  block: Block
 ) => INamedValue

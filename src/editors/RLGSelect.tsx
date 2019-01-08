@@ -153,28 +153,28 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
   public restore = (data: IUndoRedo) => {
     this._selected.clear();
-    const layouts = this.props.g.layouts();
+    const blocks = this.props.g.blocks();
     const oldData: IUndoRedo = []; 
     data.forEach((saved: ISavedPosition) => {
-      const layout = layouts.get(saved.name);
-      if (layout) {
-        oldData.push({name: saved.name, value: clone(layout.rect())});
+      const block = blocks.get(saved.name);
+      if (block) {
+        oldData.push({name: saved.name, value: clone(block.rect())});
         const r = saved.value;
         console.log(`Select restore ${saved.name} ${saved.value.x} ${saved.value.y}`);
-        layout.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
-        this._selected.set(layout.name, layout);
+        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+        this._selected.set(block.name, block);
       }
     });
     this.props.onUpdate();
     return oldData;
   }
 
-  public add(layout: Block) {
-    this._selected.set(layout.name, layout);
+  public add(block: Block) {
+    this._selected.set(block.name, block);
   }
 
-  public remove(layout: Block) {
-    this._selected.delete(layout.name);
+  public remove(block: Block) {
+    this._selected.delete(block.name);
   }
 
   public clear() {
@@ -187,9 +187,9 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
   public pushState = () => {
     const data: IUndoRedo = []
-    this._selected.forEach((layout: Block) => {
-      // save a clone of layout.rect
-      data.push({ name: layout.name, value: clone(layout.rect()) });
+    this._selected.forEach((block: Block) => {
+      // save a clone of block.rect
+      data.push({ name: block.name, value: clone(block.rect()) });
     })
     this._undo.push(data);
   }
@@ -199,12 +199,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (center === undefined) {
         center = r.x + .5 * r.width;
       } else {
-        layout.update({ x: center - r.width / 2, y: r.y }, { width: r.width, height: r.height })
+        block.update({ x: center - r.width / 2, y: r.y }, { width: r.width, height: r.height })
       }
     });
     if (this._selected.size) {
@@ -217,12 +217,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (middle === undefined) {
         middle = r.y + .5 * r.height;
       } else {
-        layout.update({ x: r.x, y: middle - r.height / 2 }, { width: r.width, height: r.height })
+        block.update({ x: r.x, y: middle - r.height / 2 }, { width: r.width, height: r.height })
       }
     });
     if (this._selected.size) {
@@ -235,12 +235,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (top === undefined) {
         top = r.y;
       }
-      layout.update({ x: r.x, y: top }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: top }, { width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -252,12 +252,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (left === undefined) {
         left = r.x;
       }
-      layout.update({ x: left, y: r.y }, { width: r.width, height: r.height })
+      block.update({ x: left, y: r.y }, { width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -269,12 +269,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (bottom === undefined) {
         bottom = r.y + r.height;
       }
-      layout.update({ x: r.x, y: bottom - r.height }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: bottom - r.height }, { width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -286,12 +286,12 @@ export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSele
 
     this.pushState();
 
-    this._selected.forEach((layout: Block) => {
-      const r = layout.rect();
+    this._selected.forEach((block: Block) => {
+      const r = block.rect();
       if (right === undefined) {
         right = r.x + r.width;
       }
-      layout.update({ x: right - r.width, y: r.y }, { width: r.width, height: r.height })
+      block.update({ x: right - r.width, y: r.y }, { width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();

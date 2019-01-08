@@ -5,9 +5,9 @@ import styled from 'styled-components';
 // import { IGenerator } from '../../../src/generators/Generator';
 import Params, { ParamValue } from '../../../src/components/Params';
 import desktopGenerator from '../../../src/generators/desktopGenerator';
-import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
-import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
-import { ISize, rectSize } from '../../../src/types'
+import  { RLGLayout } from '../../../src/RLGLayout';
+import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
+import { EditOptions, ISize, rectSize } from '../../../src/types'
 
 import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 
@@ -152,7 +152,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
                 <Item containersize={rectSize(args.container)} bold={true}>To make the headers full width</Item>
                 <Instruction containersize={rectSize(args.container)}>Set the fullWidthHeaders value to 1</Instruction>
 
-                <Item containersize={rectSize(args.container)} bold={true}>Params used to define the desktop layout</Item>
+                <Item containersize={rectSize(args.container)} bold={true}>Params used to define the desktop block</Item>
                 <List containersize={rectSize(args.container)}>
                   <Item containersize={rectSize(args.container)}>fullWidthHeaders</Item>
                   <Item containersize={rectSize(args.container)}>titleHeight</Item>

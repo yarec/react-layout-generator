@@ -5,10 +5,10 @@ import cssColor from '../assets/colors';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { IUnit } from '../../../src/components/Block';
+
 import columnsGenerator from '../../../src/generators/columnsGenerator';
-import RLGLayout from '../../../src/RLGLayout';
-import { DebugOptions } from '../../../src/types';
+import {RLGLayout} from '../../../src/RLGLayout';
+import { DebugOptions, Unit } from '../../../src/types';
 
 // tslint:disable-next-line:variable-name
 export const Button = styled.button`
@@ -110,7 +110,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+                units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
                 location: { x: 0, y: 0 },
                 size: { width: width ? width : 100, height: 20 }
               }
@@ -132,7 +132,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+                units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
                 location: { x: 0, y: 0 },
                 size: { width: width ? width : 100, height: 20 }
               }

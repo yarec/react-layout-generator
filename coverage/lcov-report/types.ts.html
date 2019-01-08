@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.86% </span>
+        <span class="strong">53.85% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>74/140</span>
+        <span class='fraction'>77/143</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">17.65% </span>
+        <span class="strong">22.22% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>6/34</span>
+        <span class='fraction'>8/36</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">51.85% </span>
+        <span class="strong">53.57% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>14/27</span>
+        <span class='fraction'>15/28</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.17% </span>
+        <span class="strong">53.19% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>72/138</span>
+        <span class='fraction'>75/141</span>
       </div>
     </div>
   </div>
@@ -424,7 +424,12 @@
 379
 380
 381
-382</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+382
+383
+384
+385
+386
+387</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -614,6 +619,11 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -806,9 +816,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// a Mapped conditional types
-export type NestedFlags&lt;T&gt; = {
-  [K in keyof T]: T[K] extends object ? NestedFlags&lt;T[K]&gt; : boolean
-}
+// export type NestedFlags&lt;T&gt; = {
+//   [K in keyof T]: T[K] extends object ? NestedFlags&lt;T[K]&gt; : boolean
+// }
 &nbsp;
 export interface IOrigin {
   x: number
@@ -818,7 +828,7 @@ export interface IOrigin {
 /**
  * Defines the units of location and size
  */
-export enum IUnit {
+export enum Unit {
   pixel = 1, // px
   percent, // %
   preserve, // %p
@@ -831,13 +841,13 @@ export enum IUnit {
   unmanagedHeight // ah
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >symbolToIUnit(</span>data: string) {
+export function <span class="fstat-no" title="function not covered" >stringToUnit(</span>data: string) {
 <span class="cstat-no" title="statement not covered" >  switch (data.charAt(data.length - 1)) {</span>
     case 'x': {
-<span class="cstat-no" title="statement not covered" >      return IUnit.pixel</span>
+<span class="cstat-no" title="statement not covered" >      return Unit.pixel</span>
     }
     case '%': {
-<span class="cstat-no" title="statement not covered" >      return IUnit.percent</span>
+<span class="cstat-no" title="statement not covered" >      return Unit.percent</span>
     }
     case 'a': {
 <span class="cstat-no" title="statement not covered" >      break</span>
@@ -845,10 +855,10 @@ export function <span class="fstat-no" title="function not covered" >symbolToIUn
     case 'h': {
 <span class="cstat-no" title="statement not covered" >      switch (data.charAt(data.length - 2)) {</span>
         case '%': {
-<span class="cstat-no" title="statement not covered" >          return IUnit.preserveHeight</span>
+<span class="cstat-no" title="statement not covered" >          return Unit.preserveHeight</span>
         }
         case 'a': {
-<span class="cstat-no" title="statement not covered" >          return IUnit.unmanagedWidth</span>
+<span class="cstat-no" title="statement not covered" >          return Unit.unmanagedWidth</span>
         }
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
@@ -856,51 +866,51 @@ export function <span class="fstat-no" title="function not covered" >symbolToIUn
     case 'w': {
 <span class="cstat-no" title="statement not covered" >      switch (data.charAt(data.length - 2)) {</span>
         case '%': {
-<span class="cstat-no" title="statement not covered" >          return IUnit.preserveWidth</span>
+<span class="cstat-no" title="statement not covered" >          return Unit.preserveWidth</span>
         }
         case 'a': {
-<span class="cstat-no" title="statement not covered" >          return IUnit.unmanagedWidth</span>
+<span class="cstat-no" title="statement not covered" >          return Unit.unmanagedWidth</span>
         }
       }
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
   }
-<span class="cstat-no" title="statement not covered" >  return IUnit.pixel</span>
+<span class="cstat-no" title="statement not covered" >  return Unit.pixel</span>
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >namedUnit(</span>u: IUnit) {
+export function <span class="fstat-no" title="function not covered" >namedUnit(</span>u: Unit) {
   let name = <span class="cstat-no" title="statement not covered" >'unknown'</span>
 <span class="cstat-no" title="statement not covered" >  switch (u) {</span>
-    case IUnit.pixel: {
+    case Unit.pixel: {
 <span class="cstat-no" title="statement not covered" >      name = 'pixel'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.percent: {
+    case Unit.percent: {
 <span class="cstat-no" title="statement not covered" >      name = 'percent'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
 <span class="cstat-no" title="statement not covered" >      name = 'preserve'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserveWidth: {
+    case Unit.preserveWidth: {
 <span class="cstat-no" title="statement not covered" >      name = 'preserveWidth'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.preserveHeight: {
+    case Unit.preserveHeight: {
 <span class="cstat-no" title="statement not covered" >      name = 'preserveHeight'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
 &nbsp;
-    case IUnit.unmanaged: {
+    case Unit.unmanaged: {
 <span class="cstat-no" title="statement not covered" >      name = 'unmanaged'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.unmanagedWidth: {
+    case Unit.unmanagedWidth: {
 <span class="cstat-no" title="statement not covered" >      name = 'unmanagedWidth'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanagedHeight: {
 <span class="cstat-no" title="statement not covered" >      name = 'unmanagedHeight'</span>
 <span class="cstat-no" title="statement not covered" >      break</span>
     }
@@ -997,7 +1007,12 @@ export enum DebugOptions {
 &nbsp;
 export type DebugOptionsArray = DebugOptions[]
 &nbsp;
-export type Opaque&lt;K, T&gt; = T &amp; { __TYPE__: K }
+export enum EditOptions {
+  none = 0,
+  all
+}
+&nbsp;
+// export type Opaque&lt;K, T&gt; = T &amp; { __TYPE__: K }
 &nbsp;
 export interface IRect {
   x: number
@@ -1192,7 +1207,7 @@ export class Point implements IPoint {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 01:44:13 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 08 2019 14:03:51 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="prettify.js"></script>

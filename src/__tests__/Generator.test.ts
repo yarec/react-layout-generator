@@ -7,10 +7,10 @@ const params = new Params({
 })
 
 function init(g: Generator) {
-  return g.layouts()
+  return g.blocks()
 }
 
-it('returns undefined with no layouts', () => {
+it('returns undefined with no blocks', () => {
   const g = new Generator('test', init, params)
   expect(g.next()).toBe(undefined)
 })

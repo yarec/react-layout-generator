@@ -54,7 +54,7 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
 
     this._handle = {x: 0, y: 0, width: 0, height: 0}
     if (this.props.edit.updateHandle) {
-      const r = props.layout.rect();
+      const r = props.block.rect();
       this._handle = this.props.edit.updateHandle(r);
     }
 
@@ -74,7 +74,7 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
     if (this._handle) {
       return (
         <div
-          id={this.props.layout.name}
+          id={this.props.block.name}
           style={editStyle({ cursor: this.props.edit.cursor!, handle: this._handle, zIndex: this.props.zIndex })}
           onMouseDown={this.onMouseDown}
           /* onTouchDown={this.onTouchDown} */
@@ -90,7 +90,7 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
 
   public initUpdate(x: number, y: number) {
     this._startOrigin = { x, y };
-    const r = this.props.layout.rect();
+    const r = this.props.block.rect();
     this._handle = this.props.edit.updateHandle!(r);
     this._startRect = clone(this.props.handle);
   }
@@ -139,17 +139,17 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
 
       // tslint:disable-next-line:no-bitwise
       if (this.props.debug && (this.props.debug & DebugOptions.trace)) {
-        const name = this.props.layout.name;
+        const name = this.props.block.name;
         console.log(`RLGEditLayout update location ${name} (x: ${r.x}, y: ${r.y}) to (x: ${ur.x} y: ${ur.y})`);
       }
 
-      this.props.layout.update({ x: ur.x, y: ur.y }, { width: ur.width, height: ur.height });
+      this.props.block.update({ x: ur.x, y: ur.y }, { width: ur.width, height: ur.height });
 
       // update params if needed
       if (this.props.edit.updateParam) {
-        const p = this.props.edit.updateParam(ur, this.props.edit, this.props.layout);
+        const p = this.props.edit.updateParam(ur, this.props.edit, this.props.block);
         if (p) {
-          this.props.layout.generator.params().set(p.name, p.value);
+          this.props.block.generator.params().set(p.name, p.value);
         }
       }
 
@@ -196,7 +196,7 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
 
   public onClick = (event: React.MouseEvent) => {
     if (event.altKey) {
-      const fn = this.props.layout.onClick;
+      const fn = this.props.block.onClick;
       if (fn) {
         fn(event);
       }
@@ -225,26 +225,26 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
         event.stopPropagation();
         if (this.props.select) {
           let select: boolean | undefined = true;
-          if (this.props.layout.position.editor) {
-            const editor = this.props.layout.position.editor;
+          if (this.props.block.position.editor) {
+            const editor = this.props.block.position.editor;
             select = editor.selectable;
             if (select === undefined) {
               select = true;
             }
           }
           if (select) {
-            const alreadySelected = this.props.select.selected(this.props.layout.name);
+            const alreadySelected = this.props.select.selected(this.props.block.name);
             if (alreadySelected) {
-              this.props.select.remove(this.props.layout);
+              this.props.select.remove(this.props.block);
             } else {
-              this.props.select.add(this.props.layout);
+              this.props.select.add(this.props.block);
             }
 
             this.props.onUpdate();
           }
         }
       } else if (event.altKey) {
-        const fn = this.props.layout.onClick;
+        const fn = this.props.block.onClick;
         if (fn) {
           fn(event);
         }
@@ -303,9 +303,9 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
       if (this.state.contextMenu) {
         this.setState({ contextMenu: false });
       } else {
-        const layout = this.props.layout;
-        const r = layout.rect()
-        layout.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+        const block = this.props.block;
+        const r = block.rect()
+        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
       }
       this.props.onUpdate(true);
     }

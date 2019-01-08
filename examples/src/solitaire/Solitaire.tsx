@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { IUnit } from '../../../src/components/Block'
-import { IGenerator } from '../../../src/generators/Generator';
-import RLGLayout from '../../../src/RLGLayout';
-
 import {IEditHelperProps} from '../../../src/editors/EditHelper';
+import { IGenerator } from '../../../src/generators/Generator';
+import { RLGLayout } from '../../../src/RLGLayout';
+import { Unit } from '../../../src/types';
+
 import FoundationStack from './FoundationStack';
 import solitaireGenerator from './solitaireGenerator';
 import Stock from './Stock';
@@ -12,7 +12,7 @@ import TableauStack from './TableauStack';
 import Waste from './Waste';
 
 /**
- * Names of layouts are based on position not on the card names.
+ * Names of blocks are based on position not on the card names.
  */
 
 export interface ISolitaireProps {
@@ -120,7 +120,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
           data-layout={{
             name: 'New Game',
             position: {
-              units: { origin: { x: 50, y: 50 }, location: IUnit.percent, size: IUnit.pixel },
+              units: { origin: { x: 50, y: 50 }, location: Unit.percent, size: Unit.pixel },
               location: { x: 50, y: 90 },
               size: { width: 90, height: 24 }
             }
@@ -182,7 +182,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
             data-layout={{
               name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.percent },
+                units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.percent },
                 location: { x: i, y: 0 },
                 size: { width: 1, height: 100 }
               }
