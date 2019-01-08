@@ -1,8 +1,8 @@
-import { IEdit, PositionRef } from '../components/Layout'
+import { PositionRef } from '../types'
 
-export function cursor(edit: IEdit) {
+export function cursor(ref: PositionRef) {
   let c: string = 'move'
-  switch (edit.ref) {
+  switch (ref) {
     case PositionRef.none: {
       break
     }
@@ -43,7 +43,7 @@ export function cursor(edit: IEdit) {
       break
     }
     default: {
-      console.error(`Invalid PositionRef in cursor ${edit.ref}`)
+      console.error(`Invalid PositionRef in cursor ${ref}`)
       break
     }
   }

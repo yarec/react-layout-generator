@@ -1,5 +1,4 @@
-import { IUnit } from './components/Layout'
-import { IPoint, ISize } from './types'
+import { IPoint, ISize, IUnit } from './types'
 
 export function clone(aObject: any) {
   if (!aObject) {

@@ -3,6 +3,165 @@ export type NestedFlags<T> = {
   [K in keyof T]: T[K] extends object ? NestedFlags<T[K]> : boolean
 }
 
+export interface IOrigin {
+  x: number
+  y: number
+}
+
+/**
+ * Defines the units of location and size
+ */
+export enum IUnit {
+  pixel = 1, // px
+  percent, // %
+  preserve, // %p
+  preserveWidth, // %pw
+  preserveHeight, // %ph
+
+  // Keep unmanaged at the end of the list
+  unmanaged, // a
+  unmanagedWidth, // aw
+  unmanagedHeight // ah
+}
+
+export function symbolToIUnit(data: string) {
+  switch (data.charAt(data.length - 1)) {
+    case 'x': {
+      return IUnit.pixel
+    }
+    case '%': {
+      return IUnit.percent
+    }
+    case 'a': {
+      break
+    }
+    case 'h': {
+      switch (data.charAt(data.length - 2)) {
+        case '%': {
+          return IUnit.preserveHeight
+        }
+        case 'a': {
+          return IUnit.unmanagedWidth
+        }
+      }
+      break
+    }
+    case 'w': {
+      switch (data.charAt(data.length - 2)) {
+        case '%': {
+          return IUnit.preserveWidth
+        }
+        case 'a': {
+          return IUnit.unmanagedWidth
+        }
+      }
+      break
+    }
+  }
+  return IUnit.pixel
+}
+
+export function namedUnit(u: IUnit) {
+  let name = 'unknown'
+  switch (u) {
+    case IUnit.pixel: {
+      name = 'pixel'
+      break
+    }
+    case IUnit.percent: {
+      name = 'percent'
+      break
+    }
+    case IUnit.preserve: {
+      name = 'preserve'
+      break
+    }
+    case IUnit.preserveWidth: {
+      name = 'preserveWidth'
+      break
+    }
+    case IUnit.preserveHeight: {
+      name = 'preserveHeight'
+      break
+    }
+
+    case IUnit.unmanaged: {
+      name = 'unmanaged'
+      break
+    }
+    case IUnit.unmanagedWidth: {
+      name = 'unmanagedWidth'
+      break
+    }
+    case IUnit.unmanagedHeight: {
+      name = 'unmanagedHeight'
+      break
+    }
+  }
+  return name
+}
+
+export interface IOrigin {
+  x: number
+  y: number
+}
+
+export enum PositionRef {
+  none = 0,
+  position,
+  top,
+  bottom,
+  left,
+  right,
+  leftTop,
+  rightTop,
+  leftBottom,
+  rightBottom
+}
+
+export function namedPositionRef(pos: PositionRef) {
+  let name = 'unknown'
+  switch (pos) {
+    case PositionRef.position: {
+      name = 'position'
+      break
+    }
+    case PositionRef.top: {
+      name = 'top'
+      break
+    }
+    case PositionRef.bottom: {
+      name = 'bottom'
+      break
+    }
+    case PositionRef.left: {
+      name = 'left'
+      break
+    }
+    case PositionRef.right: {
+      name = 'right'
+      break
+    }
+    case PositionRef.leftTop: {
+      name = 'leftTop'
+      break
+    }
+    case PositionRef.rightTop: {
+      name = 'rightTop'
+      break
+    }
+    case PositionRef.leftBottom: {
+      name = 'leftBottom'
+      break
+    }
+    case PositionRef.rightBottom: {
+      name = 'rightBottom'
+      break
+    }
+  }
+  return name
+}
+
 export enum DebugOptions {
   none = 0,
   // tslint:disable-next-line:no-bitwise

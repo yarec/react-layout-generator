@@ -4,6 +4,7 @@ import sourceMaps from 'rollup-plugin-sourcemaps'
 import camelCase from 'lodash.camelcase'
 import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
+import postcss from 'rollup-plugin-postcss';
 
 const pkg = require('./package.json')
 
@@ -21,12 +22,43 @@ export default {
     include: 'src/**',
   },
   plugins: [
+    postcss({
+      extensions: ['.css'],
+    }),
     // Allow json resolution
     json(),
     // Compile TypeScript files
     typescript({ useTsconfigDeclarationDir: true }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
+    commonjs({
+      include: [
+        'node_modules/**',
+      ],
+      exclude: [
+        'node_modules/process-es6/**',
+      ],
+      namedExports: {
+        'node_modules/react/index.js': [
+          'Children',
+          'Component',
+          'PureComponent',
+          'PropTypes',
+          'createElement',
+          'Fragment',
+          'cloneElement',
+          'StrictMode',
+          'createFactory',
+          'createRef',
+          'createContext',
+          'isValidElement',
+          'isValidElementType',
+        ],
+        'node_modules/react-dom/index.js': [
+          'render',
+          'hydrate',
+        ],
+      },
+    }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage

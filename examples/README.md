@@ -12,6 +12,7 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ## TODO
 
+* 
 * Update intro to use both RLGRow and RLGColumn
 * Finish implementing editor
 * Add left and right align to RLGColumn
@@ -27,6 +28,7 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ### Bugs
 
+* Fix overflow: hidden bug. Css clips anything outside of its RLGLayout container due to setting overflow: hidden. Scroll bars and overflow hidden should only be set for the outermost RLGLayout.
 * Update not working with browser magnification +/-.
 * Cleanup initialization of generators and viewport to potentially allow generators to be reused. See 1) ReactLayout initLayout which is called at the beginning of each render and 2) Generator which calls the user supplied init function during the initLayout call.
 * Fix flickering when making the browser window smaller for elements in RLGColumns. This appears to be due to an update issue causing the computed element size to include the scroll bar since the initial layout is being used with the newer smaller element.

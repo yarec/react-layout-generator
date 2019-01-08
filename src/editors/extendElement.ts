@@ -1,12 +1,11 @@
-import { IEdit, PositionRef } from '../components/Layout'
-import { IRect, Rect } from '../types'
+import { IRect, Rect, PositionRef } from '../types'
 export type ExtendElement = (
   rect: IRect,
   deltaX: number,
   deltaY: number
 ) => IRect
 
-export default function getExtendElement(edit: IEdit): ExtendElement {
+export default function getExtendElement(ref: PositionRef): ExtendElement {
   // default
   let extendElement: ExtendElement = (
     r: IRect,
@@ -21,7 +20,7 @@ export default function getExtendElement(edit: IEdit): ExtendElement {
     }
   }
 
-  switch (edit.ref) {
+  switch (ref) {
     case PositionRef.none: {
       break
     }
@@ -109,7 +108,7 @@ export default function getExtendElement(edit: IEdit): ExtendElement {
       break
     }
     default: {
-      console.error(`Invalid PositionRef in ExtendElement ${edit.ref}`)
+      console.error(`Invalid PositionRef in ExtendElement ${ref}`)
       break
     }
   }

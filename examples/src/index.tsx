@@ -18,7 +18,7 @@ import { DebugOptions } from '../../src/types';
 // Examples
 import cssColor from './assets/colors';
 import CardDeck from './carddeck/CardDeck';
-import Chart from './chart/chart';
+import Chart from './chart/Chart';
 import ErrorBoundary from './components/ErrorBoundary';
 import NavBar from './components/NavBar'
 import ToolBar from './components/ToolBar';

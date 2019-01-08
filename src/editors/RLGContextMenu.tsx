@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { IMenuItem } from 'src/components/Layout';
-import { DebugOptions, IPoint, ISize } from 'src/types';
+import { IMenuItem } from '../components/Layout';
+import { DebugOptions, IPoint, ISize } from '../types';
 import '../assets/styles.css'
 
 interface IContextMenuProps {
-  commands: IMenuItem[];
+  commands: IMenuItem[] | undefined;
   location: IPoint;
   bounds: ISize;
   debug: DebugOptions;
@@ -36,7 +36,7 @@ export default class RLGContextMenu extends React.Component<IContextMenuProps> {
 
   public render() {
     return (
-      <div className={'dropdown'} style={{zIndex:this.props.zIndex + 10}}>
+      <div className={'dropdown'} style={{ zIndex: this.props.zIndex + 10 }}>
         <div ref={this._root} className='dropdown-content'>
           {this.createChildren()}
         </div>
@@ -46,40 +46,42 @@ export default class RLGContextMenu extends React.Component<IContextMenuProps> {
 
   private createChildren() {
     const jsx: JSX.Element[] = [];
-    this.props.commands.forEach((c: IMenuItem, i: number) => {
+    if (this.props.commands) {
+      this.props.commands.forEach((c: IMenuItem, i: number) => {
 
-      if (c.name === '') {
-        jsx.push(
-          <hr key={`sep${i}`} className='separator' />
-        )
-      } else {
-        if (c.disabled) {
+        if (c.name === '') {
           jsx.push(
-            <div key={c.name} className='disabled'>{c.name}</div>
+            <hr key={`sep${i}`} className='separator' />
           )
         } else {
-          // onMouseDown needed to stopPropagation so that onClick works
-          // otherwise onParentMouseDown gets called which results
-          // in no onClick event on menu items
-          jsx.push(
-            <a
-              key={c.name}
-              href='#'
-              onMouseDown={this._onMouseDown}
-              onClick={this._onClick(c.command)}
-            >
-              {c.name}
-            </a>
-          )
+          if (c.disabled) {
+            jsx.push(
+              <div key={c.name} className='disabled'>{c.name}</div>
+            )
+          } else {
+            // onMouseDown needed to stopPropagation so that onClick works
+            // otherwise onParentMouseDown gets called which results
+            // in no onClick event on menu items
+            jsx.push(
+              <a
+                key={c.name}
+                href='#'
+                onMouseDown={this._onMouseDown}
+                onClick={this._onClick(c.command)}
+              >
+                {c.name}
+              </a>
+            )
+          }
         }
-      }
-    })
+      })
+    }
 
     return jsx;
   }
 
   private _onMouseDown = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.stopPropagation();
+    e.stopPropagation();
   }
 
   private _onClick = (command?: () => void) => {

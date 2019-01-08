@@ -6,7 +6,7 @@ import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
 import { flowLayoutLayer } from '../generators/utils'
-import { IPoint, ISize, Rect } from '../types'
+import { IPoint, IOrigin, ISize, PositionRef, Rect } from '../types'
 import { clone } from '../utils'
 
 export interface IAlign {
@@ -101,67 +101,6 @@ export function namedUnit(u: IUnit) {
     }
     case IUnit.unmanagedHeight: {
       name = 'unmanagedHeight'
-      break
-    }
-  }
-  return name
-}
-
-export interface IOrigin {
-  x: number
-  y: number
-}
-
-export enum PositionRef {
-  none = 0,
-  position,
-  top,
-  bottom,
-  left,
-  right,
-  leftTop,
-  rightTop,
-  leftBottom,
-  rightBottom
-}
-
-export function namedPositionRef(pos: PositionRef) {
-  let name = 'unknown'
-  switch (pos) {
-    case PositionRef.position: {
-      name = 'position'
-      break
-    }
-    case PositionRef.top: {
-      name = 'top'
-      break
-    }
-    case PositionRef.bottom: {
-      name = 'bottom'
-      break
-    }
-    case PositionRef.left: {
-      name = 'left'
-      break
-    }
-    case PositionRef.right: {
-      name = 'right'
-      break
-    }
-    case PositionRef.leftTop: {
-      name = 'leftTop'
-      break
-    }
-    case PositionRef.rightTop: {
-      name = 'rightTop'
-      break
-    }
-    case PositionRef.leftBottom: {
-      name = 'leftBottom'
-      break
-    }
-    case PositionRef.rightBottom: {
-      name = 'rightBottom'
       break
     }
   }
@@ -292,12 +231,19 @@ export default class Layout {
   constructor(name: string, p: IPosition, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
-    this.updatePosition(p)
+    this._position = clone(p)
+    this.updatePosition()
     this.updateLayer(this._position.layer)
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._changed = true
     this._g = g
     this._positionChildren = this._position.positionChildren
+    this._onMouseDown = this.noop
+    this._onClick = this.noop
+  }
+
+  public noop = () => {
+    console.error('Event handler not defined')
   }
 
   // public clone = (): Layout => {
@@ -560,9 +506,7 @@ export default class Layout {
     }
   }
 
-  public updatePosition(p: IPosition) {
-    this._position = clone(p)
-
+  public updatePosition() {
     this._position.units.origin.x = this._position.units.origin.x * 0.01
     this._position.units.origin.y = this._position.units.origin.y * 0.01
 
@@ -610,13 +554,13 @@ export default class Layout {
 
   public setEditDefaults(edit: IEdit) {
     if (!edit.cursor) {
-      edit.cursor = cursor(edit)
+      edit.cursor = cursor(edit.ref)
     }
     if (!edit.updateHandle) {
-      edit.updateHandle = getUpdateHandle(edit)
+      edit.updateHandle = getUpdateHandle(edit.ref)
     }
     if (!edit.extendElement) {
-      edit.extendElement = getExtendElement(edit)
+      edit.extendElement = getExtendElement(edit.ref)
     }
   }
 

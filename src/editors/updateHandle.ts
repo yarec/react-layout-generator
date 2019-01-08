@@ -1,16 +1,15 @@
-import { IEdit, PositionRef } from '../components/Layout'
-import { IRect } from '../types'
+import { IRect, PositionRef } from '../types'
 export type UpdateHandle = (rect: IRect) => IRect
 
 const handleWidth = 6
 const halfHandleWidth = 3
 
-export default function getUpdateHandle(edit: IEdit): UpdateHandle {
+export default function getUpdateHandle(ref: PositionRef): UpdateHandle {
   let handle: UpdateHandle = (r: IRect) => {
     return { x: r.x, y: r.y, width: r.width, height: r.height }
   }
 
-  switch (edit.ref) {
+  switch (ref) {
     case PositionRef.none: {
       // use default
       break
@@ -108,7 +107,7 @@ export default function getUpdateHandle(edit: IEdit): UpdateHandle {
       break
     }
     default: {
-      console.error(`Invalid PositionRef in UpdateHandle ${edit.ref}`)
+      console.error(`Invalid PositionRef in UpdateHandle ${ref}`)
       break
     }
   }

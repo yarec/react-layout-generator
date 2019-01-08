@@ -49,7 +49,10 @@ export default class RLGEditLayout extends React.Component<IEditorProps, IEditLa
     super(props);
     this._startRect = clone(this.props.handle);
     this._startOrigin = { x: 0, y: 0 };
+    this._menuLocation = { x: 0, y: 0 };
     this.state = { activateDrag: false, contextMenu: false };
+
+    this._handle = {x: 0, y: 0, width: 0, height: 0}
     if (this.props.edit.updateHandle) {
       const r = props.layout.rect();
       this._handle = this.props.edit.updateHandle(r);

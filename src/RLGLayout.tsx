@@ -5,10 +5,8 @@ import Layout, {
   IMenuItem,
   IPosition,
   IUnit,
-  namedPositionRef,
   namedUnit,
-  PositionChildren,
-  PositionRef
+  PositionChildren
 } from './components/Layout';
 import { ParamValue } from './components/Params';
 import RLGContextMenu from './editors/RLGContextMenu';
@@ -16,7 +14,7 @@ import RLGEditLayout from './editors/RLGEditLayout';
 import RLGSelect from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
-import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize } from './types';
+import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize, namedPositionRef, PositionRef } from './types';
 
 interface ILayoutStyle {
   style: React.CSSProperties;
@@ -125,7 +123,7 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   name: string;
   edit?: EditOptions;
   save?: (name: string, params: string, layouts: string) => void;
-  load?: (name: string) => { params: string, layouts: string }
+  load?: (name: string) => { params: string, layouts: string };
   containersize?: ISize;
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
@@ -141,16 +139,16 @@ export interface IRLGLayoutState {
   devicePixelRatio: number;
 }
 
-export default class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
-  private _root: HTMLDivElement;
+export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
+  private _root: HTMLDivElement | undefined = undefined;
   private _g: IGenerator;
   private _data: Map<string, any> = new Map();
   private _edit: EditOptions = EditOptions.none;
   private _debug: DebugOptions = DebugOptions.none;
-  private _startRendering: number;
+  private _startRendering: number = Date.now();
 
   private _count: number = 0;
-  private _select: RLGSelect;
+  private _select: RLGSelect | undefined = undefined;
   private _menuLocation: IPoint = { x: 0, y: 0 };
   private _zIndex: number = 0;
 
@@ -164,6 +162,8 @@ export default class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayo
       contextMenuActive: false,
       devicePixelRatio: window.devicePixelRatio
     }
+    
+    this._g = props.g;
 
     this.initProps(props);
   }
@@ -445,10 +445,12 @@ export default class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayo
     }
 
     const b = this._g.lookup(name);
+
+    const props = this.props as { [key: string]: string };
     // tslint:disable-next-line:no-string-literal
-    if (!b && this.props['layouts']) {
+    if (!b && props['layouts']) {
       // tslint:disable-next-line:no-string-literal
-      const rl = gLayouts.get(this.props['layouts']);
+      const rl = gLayouts.get(props['layouts']);
       if (rl) {
         //
       }
@@ -749,9 +751,9 @@ export default class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayo
 
   private generateContextMenu = (layout?: Layout) => {
 
-    const menuItems = this._select && this._select.commands;
+    const menuItems: IMenuItem[] | undefined = this._select && this._select.commands;
 
-    if (layout && layout.editor && layout.editor.contextMenu) {
+    if (menuItems && layout && layout.editor && layout.editor.contextMenu) {
       const contextMenu = layout.editor.contextMenu;
       menuItems.push({ name: '' });
       contextMenu.forEach((item: IMenuItem) => {
