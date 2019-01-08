@@ -1,0 +1,805 @@
+// import * as React from 'react'
+
+import { cursor } from '../editors/cursor'
+import getExtendElement, { ExtendElement } from '../editors/extendElement'
+import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
+import { UpdateParam } from '../editors/updateParam'
+import { IGenerator } from '../generators/Generator'
+import { flowLayoutLayer } from '../generators/utils'
+import { IPoint, ISize, Rect } from '../types'
+import { clone } from '../utils'
+
+export interface IAlign {
+  x: number
+  y: number
+}
+
+/**
+ * Defines the units of location and size
+ */
+export enum IUnit {
+  pixel = 1, // px
+  percent, // %
+  preserve, // %p
+  preserveWidth, // %pw
+  preserveHeight, // %ph
+
+  // Keep unmanaged at the end of the list
+  unmanaged, // a
+  unmanagedWidth, // aw
+  unmanagedHeight // ah
+}
+
+export function symbolToIUnit(data: string) {
+  switch (data.charAt(data.length - 1)) {
+    case 'x': {
+      return IUnit.pixel
+    }
+    case '%': {
+      return IUnit.percent
+    }
+    case 'a': {
+      break
+    }
+    case 'h': {
+      switch (data.charAt(data.length - 2)) {
+        case '%': {
+          return IUnit.preserveHeight
+        }
+        case 'a': {
+          return IUnit.unmanagedWidth
+        }
+      }
+      break
+    }
+    case 'w': {
+      switch (data.charAt(data.length - 2)) {
+        case '%': {
+          return IUnit.preserveWidth
+        }
+        case 'a': {
+          return IUnit.unmanagedWidth
+        }
+      }
+      break
+    }
+  }
+  return IUnit.pixel
+}
+
+export function namedUnit(u: IUnit) {
+  let name = 'unknown'
+  switch (u) {
+    case IUnit.pixel: {
+      name = 'pixel'
+      break
+    }
+    case IUnit.percent: {
+      name = 'percent'
+      break
+    }
+    case IUnit.preserve: {
+      name = 'preserve'
+      break
+    }
+    case IUnit.preserveWidth: {
+      name = 'preserveWidth'
+      break
+    }
+    case IUnit.preserveHeight: {
+      name = 'preserveHeight'
+      break
+    }
+
+    case IUnit.unmanaged: {
+      name = 'unmanaged'
+      break
+    }
+    case IUnit.unmanagedWidth: {
+      name = 'unmanagedWidth'
+      break
+    }
+    case IUnit.unmanagedHeight: {
+      name = 'unmanagedHeight'
+      break
+    }
+  }
+  return name
+}
+
+export interface IOrigin {
+  x: number
+  y: number
+}
+
+export enum PositionRef {
+  none = 0,
+  position,
+  top,
+  bottom,
+  left,
+  right,
+  leftTop,
+  rightTop,
+  leftBottom,
+  rightBottom
+}
+
+export function namedPositionRef(pos: PositionRef) {
+  let name = 'unknown'
+  switch (pos) {
+    case PositionRef.position: {
+      name = 'position'
+      break
+    }
+    case PositionRef.top: {
+      name = 'top'
+      break
+    }
+    case PositionRef.bottom: {
+      name = 'bottom'
+      break
+    }
+    case PositionRef.left: {
+      name = 'left'
+      break
+    }
+    case PositionRef.right: {
+      name = 'right'
+      break
+    }
+    case PositionRef.leftTop: {
+      name = 'leftTop'
+      break
+    }
+    case PositionRef.rightTop: {
+      name = 'rightTop'
+      break
+    }
+    case PositionRef.leftBottom: {
+      name = 'leftBottom'
+      break
+    }
+    case PositionRef.rightBottom: {
+      name = 'rightBottom'
+      break
+    }
+  }
+  return name
+}
+
+export interface IMenuItem {
+  name: string
+  disabled?: boolean
+  checked?: boolean
+  command?: () => void
+}
+
+export interface IEdit {
+  ref: PositionRef
+  variable?: string
+  cursor?: string
+  updateHandle?: UpdateHandle
+  extendElement?: ExtendElement
+  updateParam?: UpdateParam
+  contextMenu?: IMenuItem[]
+}
+
+export type PositionChildren = (
+  layout: Layout,
+  g: IGenerator,
+  index: number
+) => Layout | undefined
+
+export interface IHandlers {
+  onMouseDown?: () => void
+}
+
+export type Layer = (zIndex: number) => number
+export enum LayerOption {
+  normal = 0,
+  moveToBack,
+  moveToFront,
+  moveUp,
+  moveDown
+}
+
+export interface IPosition {
+  units: {
+    origin: IOrigin
+    location: IUnit
+    size: IUnit
+  }
+  align?: {
+    key: string | number
+    offset: IPoint
+    source: IAlign
+    self: IAlign
+  }
+  positionChildren?: PositionChildren
+  editor?: {
+    selectable?: boolean
+    contextMenu?: IMenuItem[]
+    edits?: IEdit[]
+  }
+  layer?: LayerOption
+  handlers?: IHandlers
+  location: IPoint
+  size: ISize
+}
+
+/**
+ * Defines the location and size using
+ * specified origin and units. Supports edit handles
+ * defined by IAlign (.eg left center, right bottom)
+ */
+export default class Layout {
+  get name() {
+    return this._name
+  }
+
+  get editor() {
+    return this._position.editor
+  }
+
+  get units() {
+    return this._position.units
+  }
+
+  get location() {
+    return this._position.location
+  }
+
+  get size() {
+    return this._position.size
+  }
+
+  get resize() {
+    return this.onResize
+  }
+
+  get generator() {
+    return this._g
+  }
+
+  get positionChildren() {
+    return this._positionChildren
+  }
+
+  get position() {
+    return this._position
+  }
+
+  set position(p: IPosition) {
+    this._position = p
+  }
+
+  set sibling(key: string) {
+    this._siblings.set(key, true)
+  }
+
+  private _siblings: Map<string, boolean> = new Map()
+  private _name: string
+  private _position: IPosition
+  private _changed: boolean
+  private _cached: Rect
+  private _g: IGenerator
+  private _positionChildren: PositionChildren | undefined
+  private _layer: Layer = flowLayoutLayer
+  private _onMouseDown: (e: React.MouseEvent) => void
+  private _onClick: (e: React.MouseEvent) => void
+
+  constructor(name: string, p: IPosition, g: IGenerator) {
+    // console.log(`initialize Layout ${name}`)
+    this._name = name
+    this.updatePosition(p)
+    this.updateLayer(this._position.layer)
+    this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
+    this._changed = true
+    this._g = g
+    this._positionChildren = this._position.positionChildren
+  }
+
+  // public clone = (): Layout => {
+  //   const p = clone(this._position);
+  //   return new Layout(this._name, p, this._g);
+  // }
+
+  public get onMouseDown() {
+    return this._onMouseDown
+  }
+
+  public set onMouseDown(fn: (e: React.MouseEvent) => void) {
+    this._onMouseDown = fn
+  }
+
+  public get onClick() {
+    return this._onClick
+  }
+
+  public set onClick(fn: (e: React.MouseEvent) => void) {
+    this._onClick = fn
+  }
+
+  public layer(zIndex: number) {
+    return this._layer(zIndex)
+  }
+
+  public connectionHandles = () => {
+    const align = this._position.align
+    if (align) {
+      const ref = this.getRef()
+      if (ref) {
+        const p1: IPoint = ref.fromLocation()
+        const s1: ISize = ref.fromSize()
+
+        const r1 = this.getConnectPoint(p1, s1, align.source)
+
+        const p2: IPoint = this.fromLocation()
+        const s2: ISize = this.fromSize()
+
+        const r2 = this.getConnectPoint(p2, s2, align.self)
+
+        return [r1, r2]
+      }
+    }
+    return []
+  }
+
+  /**
+   * Converts location to pixels
+   */
+  public fromLocation = (): IPoint => {
+    // Handle align - ignore actual value of location
+    if (this._position.align) {
+      const ref = this.getRef()
+      if (ref) {
+        const p: IPoint = ref.fromLocation()
+        const s: ISize = ref.fromSize()
+        const source: IPoint = this.toAlign(p, s, this._position.align.source)
+        const offset: IPoint = {
+          x: source.x + this._position.align.offset.x,
+          y: source.y + this._position.align.offset.y
+        }
+        return this.fromAlign(
+          offset,
+          this.fromSize(),
+          this._position.align.self
+        )
+      }
+    }
+
+    const point = this.scale(
+      this._position.location,
+      this._position.units.location
+    ) as IPoint
+    if (point.x === undefined) {
+      console.log('fromLocation ', point.x)
+    }
+    return this.fromOrigin(point, this.position.units.origin, this.fromSize())
+  }
+
+  /**
+   * Converts size to pixels
+   */
+  public fromSize = () => {
+    // console.log('size ' + this._position.size.width)
+    return this.scale(this._position.size, this._position.units.size) as ISize
+  }
+
+  public rect = (force?: boolean) => {
+    if (this._changed || force) {
+      this._changed = false
+      this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
+    }
+    return this._cached.data
+  }
+
+  public touch = () => {
+    this.changed()
+  }
+
+  /**
+   * Change the layout state
+   */
+  public update = (location: IPoint, size?: ISize) => {
+    // Takes in world coordinates
+    // console.log(`Position update x: ${location.x} y: ${location.y}`)
+
+    const itemSize = size ? size : this.fromSize()
+
+    if (this._position.align && this.getRef()) {
+      const align = this._position.align
+      // Get source and self points
+      const ref = this.getRef()
+      const p1: IPoint = ref!.fromLocation()
+      const s1: ISize = ref!.fromSize()
+
+      const r1 = this.getConnectPoint(p1, s1, align.source)
+
+      const p = this.toOrigin(location, this._position.units.origin, itemSize)
+      // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
+      const s2 = this.inverseScale(itemSize, this._position.units.size) as ISize
+
+      const r2 = this.getConnectPoint(p, s2, align.self)
+
+      // Compute new offset
+      const offset: IPoint = {
+        x: r2.x - r1.x,
+        y: r2.y - r1.y
+      }
+
+      // Update align offset
+      align.offset = offset
+    } else {
+      const p = this.toOrigin(location, this._position.units.origin, itemSize)
+      this._position.location = this.inverseScale(
+        p,
+        this._position.units.location
+      ) as IPoint
+      this._position.size = this.inverseScale(
+        itemSize,
+        this._position.units.size
+      ) as ISize
+    }
+    this.changed()
+  }
+
+  public updateSize = (size: ISize) => {
+    // Takes in world coordinates
+    this._position.size = this.inverseScale(
+      size,
+      this._position.units.size
+    ) as ISize
+    this.changed()
+  }
+
+  /**
+   * Take unit and convert to real world
+   */
+  public scale = (input: IPoint | ISize, unit: IUnit): IPoint | ISize => {
+    switch (unit) {
+      case IUnit.percent: {
+        const size = this._g.params().get('containersize') as ISize
+        if ('x' in input) {
+          const p = input as IPoint
+          return {
+            x: p.x * size.width,
+            y: p.y * size.height
+          }
+        } else {
+          const s = input as ISize
+          return {
+            width: s.width * size.width,
+            height: s.height * size.height
+          }
+        }
+        break
+      }
+      case IUnit.preserve: {
+        const size = this._g.params().get('containersize') as ISize
+
+        const minWidth = size.width < size.height ? size.width : size.height
+
+        if ('x' in input) {
+          const p = input as IPoint
+          return {
+            x: p.x * minWidth,
+            y: p.y * minWidth
+          }
+        } else {
+          const s = input as ISize
+          return {
+            width: s.width * minWidth,
+            height: s.height * minWidth
+          }
+        }
+        break
+      }
+      case IUnit.preserveWidth: {
+        const size = this._g.params().get('containersize') as ISize
+
+        const factor = size.width
+
+        if ('x' in input) {
+          const p = input as IPoint
+          return {
+            x: p.x * factor,
+            y: p.y * factor
+          }
+        } else {
+          const s = input as ISize
+          return {
+            width: s.width * factor,
+            height: s.height * factor
+          }
+        }
+        break
+      }
+      case IUnit.preserveHeight: {
+        const size = this._g.params().get('containersize') as ISize
+
+        const factor = size.height
+
+        if ('x' in input) {
+          const p = input as IPoint
+          return {
+            x: p.x * factor,
+            y: p.y * factor
+          }
+        } else {
+          const s = input as ISize
+          return {
+            width: s.width * factor,
+            height: s.height * factor
+          }
+        }
+        break
+      }
+    }
+    // default no translation needed
+    return input
+  }
+
+  public onResize = (width: number, height: number) => {
+    if (
+      this._position.size.width !== width ||
+      this._position.size.height !== height
+    ) {
+      this._position.size.width = width
+      this._position.size.height = height
+      this.changed()
+    }
+  }
+
+  public updateLayer(layer?: LayerOption) {
+    if (layer === undefined) {
+      return
+    }
+    switch (layer) {
+    }
+  }
+
+  public updatePosition(p: IPosition) {
+    this._position = clone(p)
+
+    this._position.units.origin.x = this._position.units.origin.x * 0.01
+    this._position.units.origin.y = this._position.units.origin.y * 0.01
+
+    // Convert percents to decimal
+    if (
+      this._position.units.location === IUnit.percent ||
+      this._position.units.location === IUnit.preserve ||
+      this._position.units.location === IUnit.preserveWidth ||
+      this._position.units.location === IUnit.preserveHeight
+    ) {
+      this._position.location.x = this._position.location.x * 0.01
+      this._position.location.y *= 0.01
+    }
+
+    // Convert percents to decimal
+    if (
+      this._position.units.size === IUnit.percent ||
+      this._position.units.size === IUnit.preserve ||
+      this._position.units.size === IUnit.preserveWidth ||
+      this._position.units.size === IUnit.preserveHeight
+    ) {
+      this._position.size.width *= 0.01
+      this._position.size.height *= 0.01
+    }
+
+    // Convert percents to decimal
+    if (this._position.align) {
+      this._position.align.source.x *= 0.01
+      this._position.align.source.y *= 0.01
+      this._position.align.self.x *= 0.01
+      this._position.align.self.y *= 0.01
+    }
+
+    if (this._position.editor) {
+      if (this._position.editor.edits) {
+        this._position.editor.edits.forEach((edit, i) => {
+          this.setEditDefaults(edit)
+        })
+      }
+    }
+
+    // console.log('Layout updatePosition', this._name, this._position);
+    this.changed()
+  }
+
+  public setEditDefaults(edit: IEdit) {
+    if (!edit.cursor) {
+      edit.cursor = cursor(edit)
+    }
+    if (!edit.updateHandle) {
+      edit.updateHandle = getUpdateHandle(edit)
+    }
+    if (!edit.extendElement) {
+      edit.extendElement = getExtendElement(edit)
+    }
+  }
+
+  private changed() {
+    this._changed = true
+    this._siblings.forEach((value: boolean, key: string) => {
+      const l = this._g.lookup(key)
+      if (l) {
+        l.touch()
+      }
+    })
+  }
+
+  private getRef = () => {
+    let ref
+    if (this._position.align) {
+      if (typeof this._position.align.key === 'string') {
+        ref = this._g.lookup(this._position.align.key as string)
+      } else {
+        const l = this._g.layouts()
+        if (l) {
+          ref = l.find(this._position.align.key as number)
+        }
+      }
+    }
+    if (ref) {
+      ref.sibling = this.name
+    }
+    return ref
+  }
+
+  private getConnectPoint(l: IPoint, s: ISize, a: IAlign) {
+    return { x: l.x + s.width * a.x, y: l.y + s.height * a.y }
+  }
+
+  /**
+   * Take pixels and convert to percent
+   */
+  private inverseScale = (
+    input: IPoint | ISize,
+    unit: IUnit
+  ): IPoint | ISize => {
+    switch (unit) {
+      case IUnit.percent: {
+        const size = this._g.params().get('containersize') as ISize
+        if (size.width && size.height) {
+          if ('x' in input) {
+            const p = input as IPoint
+            return {
+              x: p.x / size.width,
+              y: p.y / size.height
+            }
+          } else {
+            const s = input as ISize
+            return {
+              width: s.width / size.width,
+              height: s.height / size.height
+            }
+          }
+        }
+        break
+      }
+      case IUnit.preserve: {
+        const size = this._g.params().get('containersize') as ISize
+
+        const minWidth = size.width < size.height ? size.width : size.height
+        if (minWidth) {
+          if ('x' in input) {
+            const p = input as IPoint
+            return {
+              x: p.x / minWidth,
+              y: p.y / minWidth
+            }
+          } else {
+            const s = input as ISize
+            return {
+              width: s.width / minWidth,
+              height: s.height / minWidth
+            }
+          }
+        }
+        break
+      }
+      case IUnit.preserveWidth: {
+        const size = this._g.params().get('containersize') as ISize
+        const factor = size.width
+        if (factor) {
+          if ('x' in input) {
+            const p = input as IPoint
+            return {
+              x: p.x / factor,
+              y: p.y / factor
+            }
+          } else {
+            const s = input as ISize
+            return {
+              width: s.width / factor,
+              height: s.height / factor
+            }
+          }
+        }
+        break
+      }
+      case IUnit.preserveHeight: {
+        const size = this._g.params().get('containersize') as ISize
+        const factor = size.height
+        if (factor) {
+          if ('x' in input) {
+            const p = input as IPoint
+            return {
+              x: p.x / factor,
+              y: p.y / factor
+            }
+          } else {
+            const s = input as ISize
+            return {
+              width: s.width / factor,
+              height: s.height / factor
+            }
+          }
+        }
+        break
+      }
+    }
+
+    // default
+    return input
+  }
+
+  /**
+   * Defines the origin of location in percent
+   * If the origin is (50,50) then the top left is
+   * (p.x - .50 * s.x, p.y - .50 * s.y)
+   *
+   *  x----------------
+   *  |               |
+   *  |       o       |
+   *  |               |
+   *  ----------------
+   *  o: origin
+   *  x: left top
+   */
+  private fromOrigin = (p: IPoint, origin: IPoint, s: ISize): IPoint => {
+    return {
+      x: p.x - origin.x * s.width,
+      y: p.y - origin.y * s.height
+    }
+  }
+
+  /**
+   * reverses fromOrigin
+   */
+  private toOrigin = (p: IPoint, origin: IPoint, s: ISize): IPoint => {
+    return {
+      x: p.x + origin.x * s.width,
+      y: p.y + origin.y * s.height
+    }
+  }
+
+  /**
+   * Compute left top point of rectangle based on align value
+   * If p represents the bottom center point then the top left
+   * position is (p.x - s.x / 2, p.y - s.y;)
+   * Inverse of toAlign.
+   */
+  private fromAlign = (p: IPoint, s: ISize, align: IAlign): IPoint => {
+    return {
+      x: p.x - align.x * s.width,
+      y: p.y - align.y * s.height
+    }
+  }
+
+  /**
+   * Gets the point of an handle given an origin and size
+   * if align is left top then return (rect.left, rect.top)
+   * if align if bottom center then return
+   * (r.left + r.halfWidth, r.bottom;)
+   *  Inverse of fromAlign.
+   */
+  private toAlign = (p: IPoint, s: ISize, align: IAlign): IPoint => {
+    return {
+      x: p.x + align.x * s.width,
+      y: p.y + align.y * s.height
+    }
+  }
+}
