@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IUnit } from '../../../src/components/Layout'
+import { IUnit } from '../../../src/components/Block'
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGLayout from '../../../src/RLGLayout';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Layout, { IPosition, IUnit, PositionRef } from '../../../src/components/Layout';
-import Layouts from '../../../src/components/Layouts';
+import Block, { IPosition, IUnit, PositionRef } from '../../../src/components/Block';
+import Blocks from '../../../src/components/Blocks';
 import Params from '../../../src/components/Params';
 import { IEditHelperProps } from '../../../src/editors/EditHelper';
 import { updateParamLocation, updateParamOffset } from '../../../src/editors/update';
@@ -56,7 +56,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
     )
   }
 
-  public init = (g: IGenerator): Layouts => {
+  public init = (g: IGenerator): Blocks => {
     const node = this._treeMap.lookup(this.state.node);
     const containersize = this._params.get('containersize') as ISize;
     const aLocation = this._params.get('aLocation') as IPoint;
@@ -125,7 +125,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
     return null;
   }
 
-  protected renderConnection(layout: Layout) {
+  protected renderConnection(layout: Block) {
     const p = layout.connectionHandles();
     if (p.length) {
       return null;

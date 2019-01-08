@@ -1,4 +1,4 @@
-import Layout, {IEdit} from '../components/Layout';
+import Block, {IEdit} from '../components/Block';
 import RLGSelect from '../editors/RLGSelect';
 import {IRect} from '../types';
 import { DebugOptions } from '../types';
@@ -15,7 +15,7 @@ export interface IEditor {
 
 export interface IEditorProps extends React.HTMLProps<HTMLDivElement> {
   key: string;
-  layout: Layout;
+  layout: Block;
   boundary: IRect;
   debug?: DebugOptions;
   edit: IEdit;

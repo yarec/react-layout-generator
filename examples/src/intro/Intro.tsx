@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { IUnit } from '../../../src/components/Layout';
+import { IUnit } from '../../../src/components/Block';
 import dynamicGenerator from '../../../src/generators/dynamicGenerator';
 import { IGenerator } from '../../../src/generators/Generator';
 import RLGLayout, { EditOptions } from '../../../src/RLGLayout';

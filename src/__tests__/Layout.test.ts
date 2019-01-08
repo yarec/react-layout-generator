@@ -1,4 +1,4 @@
-import Layout from '../components/Layout'
+import Block from '../components/Block'
 import Params from '../components/Params'
 import Generator, { ICreate, IGenerator } from '../generators/Generator'
 import { Unit } from '../types'
@@ -35,7 +35,7 @@ it('location #1 - default units', () => {
     size: { width: 100, height: 10 }
   }
 
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromLocation()).toEqual({ x: 0, y: 10 })
 })
 
@@ -49,7 +49,7 @@ it('location #2 - location in percent', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromLocation()).toEqual({ x: 500, y: 500 })
 })
 
@@ -63,7 +63,7 @@ it('location #3', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromLocation()).toEqual({ x: 500, y: 500 })
 })
 
@@ -77,7 +77,7 @@ it('location #4', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromLocation()).toEqual({ x: 495, y: 495 })
 })
 
@@ -91,7 +91,7 @@ it('size #1', () => {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromSize()).toEqual({ width: 100, height: 10 })
 })
 
@@ -105,7 +105,7 @@ it('size #2', () => {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromSize()).toEqual({ width: 100, height: 10 })
 })
 
@@ -119,7 +119,7 @@ it('size #3', () => {
     location: { x: 50, y: 50 },
     size: { width: 100, height: 100 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromSize()).toEqual({ width: 100, height: 100 })
 })
 
@@ -133,7 +133,7 @@ it('size #4', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.fromSize()).toEqual({ width: 100, height: 100 })
 })
 
@@ -147,7 +147,7 @@ it('rect #1', () => {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.rect()).toEqual({ x: 0, y: 10, width: 100, height: 10 })
 })
 
@@ -161,7 +161,7 @@ it('rect #2', () => {
     location: { x: 500, y: 500 },
     size: { width: 100, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.rect()).toEqual({ x: 450, y: 495, width: 100, height: 10 })
 })
 
@@ -175,7 +175,7 @@ it('rect #3', () => {
     location: { x: 50, y: 50 },
     size: { width: 100, height: 10 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.rect()).toEqual({ x: 450, y: 495, width: 100, height: 10 })
 })
 
@@ -189,7 +189,7 @@ it('rect #4', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 5 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   expect(l.rect()).toEqual({ x: 450, y: 475, width: 100, height: 50 })
 })
 
@@ -203,7 +203,7 @@ it('update #1', () => {
     location: { x: 50, y: 50 },
     size: { width: 10, height: 5 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   l.update({ x: 450, y: 475 }, { width: 100, height: 50 })
 
   expect(l.rect()).toEqual({ x: 450, y: 475, width: 100, height: 50 })
@@ -219,7 +219,7 @@ it('update #2', () => {
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   l.update({ x: 250, y: 250 }, { width: 50, height: 50 })
 
   expect(l.rect()).toEqual({ x: 250, y: 250, width: 50, height: 50 })
@@ -235,7 +235,7 @@ it('update #3', () => {
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }
   }
-  const l = new Layout('test', p, g)
+  const l = new Block('test', p, g)
   l.update({ x: 250, y: 250 }, { width: 50, height: 50 })
 
   expect(l.rect()).toEqual({ x: 250, y: 250, width: 50, height: 50 })

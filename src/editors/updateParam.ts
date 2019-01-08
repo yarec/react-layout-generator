@@ -1,4 +1,4 @@
-import Layout, { IEdit } from '../components/Layout'
+import Block, { IEdit } from '../components/Block'
 import { ParamValue } from '../components/Params'
 import { IRect } from '../types'
 
@@ -10,5 +10,5 @@ export interface INamedValue {
 export type UpdateParam = (
   updated: IRect,
   edit: IEdit,
-  layout: Layout
+  layout: Block
 ) => INamedValue

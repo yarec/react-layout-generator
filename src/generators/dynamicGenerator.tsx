@@ -1,5 +1,5 @@
-import Layout from '../components/Layout';
-import Layouts from '../components/Layouts';
+import Block from '../components/Block';
+import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator } from './Generator';
 
@@ -15,7 +15,7 @@ export default function dynamicGenerator(
     name: 'dynamicGenerator', initialValues: values
   });
 
-  function init(g: IGenerator): Layouts {
+  function init(g: IGenerator): Blocks {
     const params = g.params();
     const layouts = g.layouts();
 
@@ -28,7 +28,7 @@ export default function dynamicGenerator(
     return layouts;
   }
 
-  function create(args: ICreate): Layout {
+  function create(args: ICreate): Block {
 
     if (!args.position) {
       console.error(`TODO use default position ${args.name}`)

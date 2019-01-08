@@ -1,5 +1,5 @@
-import Layout, { IPosition } from '../components/Layout'
-import Layouts from '../components/Layouts'
+import Block, { IPosition } from '../components/Block'
+import Blocks from '../components/Blocks'
 import Params, { ParamValue } from '../components/Params'
 import EditHelper from '../editors/EditHelper'
 import RLGSelect from '../editors/RLGSelect'
@@ -11,7 +11,7 @@ export interface IGeneratorFunctionArgs {
   editHelper?: EditHelper
 }
 
-export type IInit = (g: IGenerator) => Layouts
+export type IInit = (g: IGenerator) => Blocks
 export interface ICreate {
   index: number
   count: number
@@ -20,15 +20,15 @@ export interface ICreate {
   position: IPosition
 }
 
-export type Create = (args: ICreate) => Layout | undefined
+export type Create = (args: ICreate) => Block | undefined
 
 export interface IGenerator {
   name: () => string
   params: () => Params
-  layouts: () => Layouts
+  layouts: () => Blocks
   reset: () => void
-  next: () => Layout | undefined
-  lookup: (name: string) => Layout | undefined
+  next: () => Block | undefined
+  lookup: (name: string) => Block | undefined
   containersize: (name: string) => ISize | undefined
   clear: () => void
   create?: Create
@@ -36,15 +36,15 @@ export interface IGenerator {
 }
 
 export default class Generator implements IGenerator {
-  public currentLayout: Layout | undefined
+  public currentLayout: Block | undefined
 
-  public state: () => Layout | undefined
+  public state: () => Block | undefined
   private _name: string
   private _editHelper: EditHelper | undefined
   private _params: Params
-  private _layouts: Layouts
+  private _layouts: Blocks
   private _select: RLGSelect
-  private _layoutsIterator: IterableIterator<Layout> | undefined
+  private _layoutsIterator: IterableIterator<Block> | undefined
   private _init: IInit
   private _create: Create | undefined
 
@@ -59,7 +59,7 @@ export default class Generator implements IGenerator {
     this._init = init
     this._editHelper = editHelper
     this._create = create
-    this._layouts = new Layouts([])
+    this._layouts = new Blocks([])
     this._layoutsIterator = this._layouts.values()
     this.state = this.start
     this._params = params
@@ -77,7 +77,7 @@ export default class Generator implements IGenerator {
     return this._params
   }
 
-  public layouts = (): Layouts => {
+  public layouts = (): Blocks => {
     return this._layouts
   }
 
@@ -85,7 +85,7 @@ export default class Generator implements IGenerator {
     return this._select
   }
 
-  public lookup = (name: string): Layout | undefined => {
+  public lookup = (name: string): Block | undefined => {
     return this._layouts.get(name)
   }
 
@@ -100,7 +100,7 @@ export default class Generator implements IGenerator {
     return { width: 0, height: 0 }
   }
 
-  public create = (args: ICreate): Layout | undefined => {
+  public create = (args: ICreate): Block | undefined => {
     if (this._create) {
       return this._create(args)
     }
@@ -120,16 +120,16 @@ export default class Generator implements IGenerator {
   }
 
   public clear = () => {
-    this._layouts = new Layouts([])
+    this._layouts = new Blocks([])
     this.state = this.start
     this._layoutsIterator = this._layouts.values()
   }
 
-  public start = (): Layout | undefined => {
+  public start = (): Block | undefined => {
     return this.nextBlock()
   }
 
-  public next = (): Layout | undefined => {
+  public next = (): Block | undefined => {
     return this.state()
   }
 
@@ -142,7 +142,7 @@ export default class Generator implements IGenerator {
     }
   }
 
-  private nextBlock = (): Layout | undefined => {
+  private nextBlock = (): Block | undefined => {
     this.currentLayout = this._layoutsIterator!.next().value
     if (this.currentLayout) {
       // if (this.currentLayout.g) {
@@ -170,8 +170,8 @@ export default class Generator implements IGenerator {
   //   return b;
   // }
 
-  private nextTile = (): Layout | undefined => {
-    const b: Layout | undefined = this.currentLayout
+  private nextTile = (): Block | undefined => {
+    const b: Block | undefined = this.currentLayout
     if (b) {
       this.state = this.nextBlock
     }

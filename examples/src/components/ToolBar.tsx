@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { IPosition, IUnit } from '../../../src/components/Layout';
+import { IPosition, IUnit } from '../../../src/components/Block';
 import Params from '../../../src/components/Params';
 import EditHelper, { IEditTool, Status } from '../../../src/editors/EditHelper'
 import { IGenerator } from '../../../src/generators/Generator';

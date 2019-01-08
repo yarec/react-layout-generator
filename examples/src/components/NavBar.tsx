@@ -5,7 +5,7 @@ import cssColor from '../assets/colors';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { IUnit } from '../../../src/components/Layout';
+import { IUnit } from '../../../src/components/Block';
 import columnsGenerator from '../../../src/generators/columnsGenerator';
 import RLGLayout from '../../../src/RLGLayout';
 import { DebugOptions } from '../../../src/types';

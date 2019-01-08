@@ -9,7 +9,7 @@ import RLGLayout, { EditOptions } from '../../../src/RLGLayout';
 import RLGPanel, { IRLGPanelArgs } from '../../../src/RLGPanel';
 import { DebugOptions, ISize, rectSize } from '../../../src/types'
 
-import { IUnit } from '../../../src/components/Layout';
+import { IUnit } from '../../../src/components/Block';
 import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 import { IGenerator } from '../../../src/generators/Generator';
 import EditableText from '../components/EditableText';

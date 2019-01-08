@@ -1,5 +1,5 @@
-import Layout, { IUnit } from '../components/Layout';
-import Layouts from '../components/Layouts';
+import Block, { IUnit } from '../components/Block';
+import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
 import { ISize } from '../types';
@@ -18,7 +18,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
   const _params = exParams ? exParams.restore(name, values) : new Params({
     name: 'columnsGenerator', initialValues: values});
 
-  function init(g: IGenerator): Layouts {
+  function init(g: IGenerator): Blocks {
     // const params = g.params();
     // const layouts = g.layouts();
 
@@ -33,7 +33,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
     // layouts.map.forEach((layout) => {
     //   console.log(`centerColumns ${layout.name} ${layout.rect().x}`)
     // });
-    return new Layouts([]);
+    return new Blocks([]);
   }
   // }
 
@@ -41,7 +41,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
   /**
    * Align items in center
    */
-  function centerColumns(layouts: Layouts, params: Params) {
+  function centerColumns(layouts: Blocks, params: Params) {
 
     const containersize = params.get('containersize') as ISize;
     // const margin = params.get('itemMargin') as IAttrRect;
@@ -64,7 +64,7 @@ export default function columnsGenerator(name: string, exParams?: Params) {
     });
   }
 
-  function create(args: ICreate): Layout {
+  function create(args: ICreate): Block {
     // console.log(`centerColumns: create ${args.name}`)
     const params = args.g.params();
     const containersize = params.get('containersize') as ISize;

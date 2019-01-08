@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ISize } from '../../../src/types';
 
 import styled from 'styled-components';
-import { IOrigin } from '../../../src/components/Layout';
+import { IOrigin } from '../../../src/components/Block';
 
 interface IProps {
   containersize: ISize;

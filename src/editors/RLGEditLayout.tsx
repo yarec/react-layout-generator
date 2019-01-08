@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-// import Layout from 'src/components/Layout';
+// import Layout from 'src/components/Block';
 import { DebugOptions, IPoint, IRect } from '../types';
 import { clone } from '../utils';
 import { IEditor, IEditorProps, IUndo } from './Editor';

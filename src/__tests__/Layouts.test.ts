@@ -1,5 +1,5 @@
-import Layout from '../components/Layout'
-import Layouts from '../components/Layouts'
+import Block from '../components/Block'
+import Blocks from '../components/Blocks'
 import Params from '../components/Params'
 import Generator, { ICreate, IGenerator } from '../generators/Generator'
 import { Unit } from '../types'
@@ -37,8 +37,8 @@ it('Layouts index returns the correct key value #1', () => {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
-  const t: Layout = new Layout('test', p, g)
-  const l = new Layouts([['a', t]])
+  const t: Block = new Block('test', p, g)
+  const l = new Blocks([['a', t]])
   expect(l.find(0)).toBe(t)
 })
 
@@ -53,7 +53,7 @@ it('Layouts index returns the correct key value #2', () => {
     size: { width: 100, height: 10 }
   }
 
-  const l = new Layouts([])
+  const l = new Blocks([])
   l.set('t', p, g)
   const t2 = l.set('t2', p, g)
 
@@ -71,10 +71,10 @@ it('Layouts index returns the correct key value #3', () => {
     size: { width: 100, height: 10 }
   }
 
-  const l = new Layouts([])
+  const l = new Blocks([])
 
   l.set('t1', p, g)
-  const t2: Layout = l.set('t2', p, g)
+  const t2: Block = l.set('t2', p, g)
 
   expect(l.find(1)).toBe(t2)
 })
@@ -90,7 +90,7 @@ it('Layouts index returns the correct key value #4', () => {
     size: { width: 100, height: 10 }
   }
 
-  const l = new Layouts([])
+  const l = new Blocks([])
   l.set('t1', p, g)
   const t2 = l.set('t2', p, g)
   l.set('t3', p, g)

@@ -1,5 +1,5 @@
-import Layout, { IPosition, IUnit, PositionRef } from '../components/Layout';
-// import Layouts from '../components/Layouts';
+import Block, { IPosition, IUnit, PositionRef } from '../components/Block';
+// import Layouts from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import { updateParamHeight, updateParamWidth } from '../editors/update';
 import Generator, { ICreate, IGenerator } from '../generators/Generator';
@@ -296,7 +296,7 @@ export default function desktopGenerator(name: string, exParams?: Params) {
     }
   }
 
-  function create(args: ICreate): Layout {
+  function create(args: ICreate): Block {
 
     if (!args.position) {
       console.error(`TODO default position ${args.name}`)

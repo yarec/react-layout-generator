@@ -1,5 +1,5 @@
-import Layout, {IUnit} from '../components/Layout';
-import Layouts from '../components/Layouts';
+import Block, {IUnit} from '../components/Block';
+import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, {ICreate, IGenerator} from '../generators/Generator';
 import { ISize } from '../types';
@@ -17,7 +17,7 @@ export default function listGenerator(name: string, exParams?: Params) {
 
   const _params = exParams ? exParams.restore(name, values) : new Params({name: 'listGenerator', initialValues: values});
 
-  function init(g: IGenerator): Layouts {
+  function init(g: IGenerator): Blocks {
     
     const params = g.params();
     const layouts = g.layouts();
@@ -32,7 +32,7 @@ export default function listGenerator(name: string, exParams?: Params) {
     return layouts;
   }
 
-  function create(args: ICreate): Layout {
+  function create(args: ICreate): Block {
     const params = args.g.params();
     const containersize = params.get('containersize') as ISize;
     const titleHeight = params.get('titleHeight') as number;

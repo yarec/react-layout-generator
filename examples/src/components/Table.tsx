@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Layout, { IPosition, IUnit, PositionRef } from '../../../src/components/Layout';
-import Layouts from '../../../src/components/Layouts';
+import Block, { IPosition, IUnit, PositionRef } from '../../../src/components/Block';
+import Blocks from '../../../src/components/Blocks';
 import Params from '../../../src/components/Params';
 import { updateParamLocation } from '../../../src/editors/update';
 import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
@@ -72,7 +72,7 @@ export default class Table extends React.Component<ITableProps> {
     return null;
   }
 
-  private init = (g: IGenerator): Layouts => {
+  private init = (g: IGenerator): Blocks => {
 
     const containersize = this._params.get('containersize') as ISize;
     const titleHeight = this._params.get('titleHeight') as number;
@@ -117,7 +117,7 @@ export default class Table extends React.Component<ITableProps> {
     return layouts;
   }
 
-  private positionRowChildren = (layout: Layout, g: IGenerator, index: number) => {
+  private positionRowChildren = (layout: Block, g: IGenerator, index: number) => {
     // Return a Layout relative to layout starting at position at (0, 0)
 
     const rowHeight = this._params.get('rowHeight') as number;
@@ -132,10 +132,10 @@ export default class Table extends React.Component<ITableProps> {
     };
 
     // This layout is temp and will not be stored in layouts
-    return new Layout('temp', child, g);
+    return new Block('temp', child, g);
   }
 
-  private create(args: ICreate): Layout {
+  private create(args: ICreate): Block {
 
     if (!args.position) {
       console.error(`TODO default position ${args.name}`);

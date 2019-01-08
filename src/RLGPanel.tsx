@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Layout from './components/Layout';
+import Block from './components/Block';
 import { IGenerator } from './generators/Generator';
 import { DebugOptions, EditOptions, IRect } from './types';
 
 export interface IRLGPanelArgs {
   container: IRect;
-  layout: Layout;
+  layout: Block;
   edit: EditOptions;
   debug: DebugOptions;
   g: IGenerator;
@@ -16,7 +16,7 @@ export interface IRLGPanelArgs {
 // props must be optional to allow them to be injected
 interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   container?: IRect;
-  layout?: Layout;
+  layout?: Block;
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;

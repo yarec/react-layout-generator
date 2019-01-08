@@ -1,13 +1,13 @@
 import { IGenerator } from '../generators/Generator'
-import Layout, { IPosition } from './Layout'
+import Block, { IPosition } from './Block'
 
-export default class Layouts {
-  private _layouts: Map<string, Layout>
-  private _byIndex: Layout[]
+export default class Blocks {
+  private _layouts: Map<string, Block>
+  private _byIndex: Block[]
   // width: number;
   // height: number;
 
-  constructor(layouts: Array<[string, Layout]>) {
+  constructor(layouts: Array<[string, Block]>) {
     this._byIndex = new Array()
     this._layouts = new Map(layouts)
     this._layouts.forEach(value => {
@@ -52,12 +52,12 @@ export default class Layouts {
     return this._layouts.get(key)
   }
 
-  public set(key: string, p: IPosition, g: IGenerator): Layout {
+  public set(key: string, p: IPosition, g: IGenerator): Block {
     let layout = this._layouts.get(key)
     if (layout) {
       layout.updatePosition(p)
     } else {
-      layout = new Layout(key, p, g)
+      layout = new Block(key, p, g)
       this._layouts.set(key, layout)
       if (this._layouts.size > this._byIndex.length) {
         // Add to byIndex array

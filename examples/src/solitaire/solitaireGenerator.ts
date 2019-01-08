@@ -1,5 +1,5 @@
-import Layout, { IPosition, IUnit } from '../../../src/components/Layout';
-import Layouts from '../../../src/components/Layouts';
+import Block, { IPosition, IUnit } from '../../../src/components/Block';
+import Blocks from '../../../src/components/Blocks';
 import Params, { ParamValue } from '../../../src/components/Params';
 import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../../../src/generators/Generator';
 import { IPoint, ISize } from '../../../src/types';
@@ -16,7 +16,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
   const _params = gArgs.exParams ? gArgs.exParams.restore(name, values) : new Params({name, initialValues: values});
 
-  function init(g: IGenerator): Layouts {
+  function init(g: IGenerator): Blocks {
 
     const params = g.params();
 
@@ -52,7 +52,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     params.set('cardSize', cardSize);
     params.set('computedCardSpacing', {x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height})
 
-    const layouts = new Layouts([]);
+    const layouts = new Blocks([]);
 
     // Make layout responsive
     // Adjust number of columns if smaller containersize
@@ -110,7 +110,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return layouts;
   }
 
-  function create(cArgs: ICreate): Layout {
+  function create(cArgs: ICreate): Block {
 
     if (!cArgs.position) {
       console.error(`TODO default position ${cArgs.name}`);
@@ -121,7 +121,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return layout;
   }
 
-  function positionStockChildren(layout: Layout, g: Generator, index: number) {
+  function positionStockChildren(layout: Block, g: Generator, index: number) {
     // Return a Layout relative to layout starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -134,10 +134,10 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     // This layout is temporary and will not be stored in layouts
-    return new Layout('temp', child, g);
+    return new Block('temp', child, g);
   }
 
-  function positionFoundationChildren(layout: Layout, g: IGenerator, index: number) {
+  function positionFoundationChildren(layout: Block, g: IGenerator, index: number) {
     // Return a Layout relative to layout starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -151,10 +151,10 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     // This layout is temp and will not be stored in layouts
-    return new Layout('temp', child, g);
+    return new Block('temp', child, g);
   }
 
-  function positionTableauChildren(layout: Layout, g: IGenerator, index: number) {
+  function positionTableauChildren(layout: Block, g: IGenerator, index: number) {
     // Return a Layout relative to layout starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -168,10 +168,10 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     // This layout is temp and will not be stored in layouts
-    return new Layout('temp', child, g);
+    return new Block('temp', child, g);
   }
 
-  function positionWasteChildren(layout: Layout, g: Generator, index: number) {
+  function positionWasteChildren(layout: Block, g: Generator, index: number) {
     // Return a Layout relative to layout starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -185,7 +185,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     // This layout is temp and will not be stored in layouts
-    return new Layout('temp', child, g);
+    return new Block('temp', child, g);
   }
 
   return new Generator(name, init, _params, create, gArgs.editHelper);

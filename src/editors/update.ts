@@ -1,10 +1,10 @@
-import Layout, { IEdit, IUnit } from '../components/Layout'
+import Block, { IEdit, IUnit } from '../components/Block'
 import { IRect } from '../types'
 
 export function updateParamLocation(
   updated: IRect,
   edit: IEdit,
-  layout: Layout
+  layout: Block
 ) {
   let factor = 1
   if (layout.units.location !== IUnit.pixel) {
@@ -20,7 +20,7 @@ export function updateParamLocation(
   }
 }
 
-export function updateParamOffset(updated: IRect, edit: IEdit, layout: Layout) {
+export function updateParamOffset(updated: IRect, edit: IEdit, layout: Block) {
   let factor = 1
   if (layout.units.location !== IUnit.pixel) {
     // convert to percent
@@ -35,7 +35,7 @@ export function updateParamOffset(updated: IRect, edit: IEdit, layout: Layout) {
   }
 }
 
-export function updateParamWidth(updated: IRect, edit: IEdit, layout: Layout) {
+export function updateParamWidth(updated: IRect, edit: IEdit, layout: Block) {
   let factor = 1
   if (layout.units.size !== IUnit.pixel) {
     // convert to percent
@@ -47,7 +47,7 @@ export function updateParamWidth(updated: IRect, edit: IEdit, layout: Layout) {
   }
 }
 
-export function updateParamHeight(updated: IRect, edit: IEdit, layout: Layout) {
+export function updateParamHeight(updated: IRect, edit: IEdit, layout: Block) {
   let factor = 1
   if (layout.units.size !== IUnit.pixel) {
     // convert to percent

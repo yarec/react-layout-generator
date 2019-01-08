@@ -1,11 +1,11 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import Layout, {
+import Block, {
   IMenuItem,
   IPosition,
   PositionChildren
-} from './components/Layout';
+} from './components/Block';
 import { ParamValue } from './components/Params';
 import RLGContextMenu from './editors/RLGContextMenu';
 import RLGEditLayout from './editors/RLGEditLayout';
@@ -129,7 +129,7 @@ export interface IRLGLayoutState {
   width: number;
   height: number;
   update: number;
-  contextMenu: Layout | undefined;
+  contextMenu: Block | undefined;
   contextMenuActive: boolean;
   devicePixelRatio: number;
 }
@@ -719,7 +719,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this.handleContextMenu(event);
   }
 
-  private onParentContextMenu = (layout?: Layout) => {
+  private onParentContextMenu = (layout?: Block) => {
     return (event: React.MouseEvent) => {
       // tslint:disable-next-line:no-bitwise
       if (this._debug && (this._debug & DebugOptions.mouseEvents)) {
@@ -744,7 +744,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   // }
 
 
-  private generateContextMenu = (layout?: Layout) => {
+  private generateContextMenu = (layout?: Block) => {
 
     const menuItems: IMenuItem[] | undefined = this._select && this._select.commands;
 
@@ -899,7 +899,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     }
   }
 
-  private positionChildren(child: React.ReactElement<any>, b: Layout, name: string, rect: IRect, style: React.CSSProperties) {
+  private positionChildren(child: React.ReactElement<any>, b: Block, name: string, rect: IRect, style: React.CSSProperties) {
     const editProps = {
       edit: this._edit,
       g: this.props.g,
@@ -967,7 +967,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       nestedChildren));
   }
 
-  private createEditors(child: React.ReactElement<any>, b: Layout, rect: { y: number; x: number; width: number; height: number; }) {
+  private createEditors(child: React.ReactElement<any>, b: Block, rect: { y: number; x: number; width: number; height: number; }) {
     const editors: React.ReactChild[] = [];
     if (this._edit) {
       if (child.props.onMouseDown) {

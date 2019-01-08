@@ -32,10 +32,10 @@ export interface IEdit {
 }
 
 export type PositionChildren = (
-  layout: Layout,
+  layout: Block,
   g: IGenerator,
   index: number
-) => Layout | undefined
+) => Block | undefined
 
 export interface IHandlers {
   onMouseDown?: () => void
@@ -79,7 +79,7 @@ export interface IPosition {
  * specified origin and units. Supports edit handles
  * defined by IAlign (.eg left center, right bottom)
  */
-export default class Layout {
+export default class Block {
   get name() {
     return this._name
   }

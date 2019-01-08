@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { EditOptions } from '.../../../src/RLGLayout';
-import Layout from '../../../src/components/Layout';
+import Block from '../../../src/components/Block';
 import { IGenerator } from '../../../src/generators/Generator';
 import { DebugOptions, IPoint, IRect } from '../../../src/types';
 
@@ -17,7 +17,7 @@ const Container = styled.div`
 `
 interface INoteProps {
   container?: IRect;
-  layout?: Layout;
+  layout?: Block;
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;

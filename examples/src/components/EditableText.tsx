@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import { IOrigin } from '../../../src/components/Layout';
+import { IOrigin } from '../../../src/components/Block';
 import Params, { IEditableTextData } from '../../../src/components/Params';
 import { EditOptions } from '../../../src/RLGLayout';
 import { DebugOptions, ISize } from '../../../src/types';

@@ -1,5 +1,5 @@
-import Layout, { IUnit } from '../components/Layout';
-import Layouts from '../components/Layouts';
+import Block, { IUnit } from '../components/Block';
+import Blocks from '../components/Blocks';
 import Params, { ParamValue } from '../components/Params';
 import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../generators/Generator';
 import { IAttrRect, ISize, rectSize } from '../types';
@@ -18,7 +18,7 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
     name: 'rowsGenerator', initialValues: values
   });
 
-  function init(g: IGenerator): Layouts {
+  function init(g: IGenerator): Blocks {
     const params = g.params();
     const layouts = g.layouts();
 
@@ -31,7 +31,7 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
   /**
    * Distribute rows
    */
-  function distributeRows(layouts: Layouts, params: Params) {
+  function distributeRows(layouts: Blocks, params: Params) {
 
     const containersize = params.get('containersize') as ISize;
     // const size = params.get('itemSize') as ISize;
@@ -47,7 +47,7 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
     });
   }
 
-  function create(args: ICreate): Layout {
+  function create(args: ICreate): Block {
 
     const params = args.g.params();
     const containersize = params.get('containersize') as ISize;
