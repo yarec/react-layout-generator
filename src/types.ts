@@ -1,7 +1,7 @@
 // a Mapped conditional types
-export type NestedFlags<T> = {
-  [K in keyof T]: T[K] extends object ? NestedFlags<T[K]> : boolean
-}
+// export type NestedFlags<T> = {
+//   [K in keyof T]: T[K] extends object ? NestedFlags<T[K]> : boolean
+// }
 
 export interface IOrigin {
   x: number
@@ -11,7 +11,7 @@ export interface IOrigin {
 /**
  * Defines the units of location and size
  */
-export enum IUnit {
+export enum Unit {
   pixel = 1, // px
   percent, // %
   preserve, // %p
@@ -24,13 +24,13 @@ export enum IUnit {
   unmanagedHeight // ah
 }
 
-export function symbolToIUnit(data: string) {
+export function stringToUnit(data: string) {
   switch (data.charAt(data.length - 1)) {
     case 'x': {
-      return IUnit.pixel
+      return Unit.pixel
     }
     case '%': {
-      return IUnit.percent
+      return Unit.percent
     }
     case 'a': {
       break
@@ -38,10 +38,10 @@ export function symbolToIUnit(data: string) {
     case 'h': {
       switch (data.charAt(data.length - 2)) {
         case '%': {
-          return IUnit.preserveHeight
+          return Unit.preserveHeight
         }
         case 'a': {
-          return IUnit.unmanagedWidth
+          return Unit.unmanagedWidth
         }
       }
       break
@@ -49,51 +49,51 @@ export function symbolToIUnit(data: string) {
     case 'w': {
       switch (data.charAt(data.length - 2)) {
         case '%': {
-          return IUnit.preserveWidth
+          return Unit.preserveWidth
         }
         case 'a': {
-          return IUnit.unmanagedWidth
+          return Unit.unmanagedWidth
         }
       }
       break
     }
   }
-  return IUnit.pixel
+  return Unit.pixel
 }
 
-export function namedUnit(u: IUnit) {
+export function namedUnit(u: Unit) {
   let name = 'unknown'
   switch (u) {
-    case IUnit.pixel: {
+    case Unit.pixel: {
       name = 'pixel'
       break
     }
-    case IUnit.percent: {
+    case Unit.percent: {
       name = 'percent'
       break
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
       name = 'preserve'
       break
     }
-    case IUnit.preserveWidth: {
+    case Unit.preserveWidth: {
       name = 'preserveWidth'
       break
     }
-    case IUnit.preserveHeight: {
+    case Unit.preserveHeight: {
       name = 'preserveHeight'
       break
     }
 
-    case IUnit.unmanaged: {
+    case Unit.unmanaged: {
       name = 'unmanaged'
       break
     }
-    case IUnit.unmanagedWidth: {
+    case Unit.unmanagedWidth: {
       name = 'unmanagedWidth'
       break
     }
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanagedHeight: {
       name = 'unmanagedHeight'
       break
     }
@@ -190,7 +190,12 @@ export enum DebugOptions {
 
 export type DebugOptionsArray = DebugOptions[]
 
-export type Opaque<K, T> = T & { __TYPE__: K }
+export enum EditOptions {
+  none = 0,
+  all
+}
+
+// export type Opaque<K, T> = T & { __TYPE__: K }
 
 export interface IRect {
   x: number

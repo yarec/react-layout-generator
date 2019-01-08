@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1546939689566" clover="3.2.0">
-  <project timestamp="1546939689566" name="All files">
+<coverage generated="1546940653186" clover="3.2.0">
+  <project timestamp="1546940653186" name="All files">
     <metrics statements="606" coveredstatements="95" conditionals="335" coveredconditionals="16" methods="94" coveredmethods="17" elements="1035" coveredelements="128" complexity="0" loc="606" ncloc="606" packages="1" files="6" classes="6">
       <file name="RLGDynamic.tsx" path="C:\Users\chetm\projects\react-layout-generator\src\RLGDynamic.tsx">
         <metrics statements="12" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>

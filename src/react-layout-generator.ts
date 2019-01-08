@@ -2,4 +2,7 @@
 // import "core-js/fn/array.find"
 // ...
 
-export { RLGLayout } from './RLGLayout'
+export { RLGLayout as Layout } from './RLGLayout'
+export { RLGPanel as Panel } from './RLGPanel'
+
+export { Unit, DebugOptions, EditOptions, PositionRef } from './types'

@@ -7,13 +7,14 @@ import styled from 'styled-components';
 import 'highlight.js/styles/vs';
 
 // RLG Library
+import * as RLG from '../../dist/types/react-layout-generator'
+
 import EditHelper from '../../dist/types/editors/EditHelper'
 import columnsGenerator from '../../dist/types/generators/columnsGenerator';
 import desktopGenerator from '../../src/generators/desktopGenerator';
 import { IGenerator } from '../../src/generators/Generator';
-import { EditOptions, RLGLayout } from '../../src/RLGLayout';
-import RLGPanel, { IRLGPanelArgs } from '../../src/RLGPanel';
-import { DebugOptions } from '../../src/types';
+import { IRLGPanelArgs } from '../../src/RLGPanel';
+// import { EditOptions } from '../../src/types';
 
 // Examples
 import cssColor from './assets/colors';
@@ -92,18 +93,18 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
   public render() {
     return (
       <ErrorBoundary>
-          <RLGLayout
+          <RLG.Layout
             name='framework'
-            debug={DebugOptions.none}
-            edit={EditOptions.all}
+            debug={RLG.DebugOptions.none}
+            edit={RLG.EditOptions.all}
             g={this.g}
           >
-            <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
+            <RLG.Panel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
               {(args: IRLGPanelArgs) => (
                 <Title>React Layout Generator Examples</Title>
               )}
 
-            </RLGPanel>
+            </RLG.Panel>
             <div data-layout={{ name: 'header' }} style={{ backgroundColor: cssColor.dark }}>
               <NavBar elements={[
                 // if props change then the props should be functions that return the correct value

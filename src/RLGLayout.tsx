@@ -12,7 +12,7 @@ import RLGEditLayout from './editors/RLGEditLayout';
 import RLGSelect from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
-import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize, namedPositionRef, PositionRef, IUnit,
+import { DebugOptions, DebugOptionsArray, EditOptions, IPoint, IRect, ISize, namedPositionRef, PositionRef, Unit,
   namedUnit, } from './types';
 
 interface ILayoutStyle {
@@ -58,7 +58,7 @@ function tileStyle(
   y: number,
   width: number,
   height: number,
-  unit: IUnit,
+  unit: Unit,
   selected: boolean,
   zIndex: number
 ): React.CSSProperties {
@@ -77,17 +77,17 @@ function tileStyle(
     width: `${width}px`,
   }
   switch (unit) {
-    case IUnit.unmanaged: {
+    case Unit.unmanaged: {
       size = {};
       break;
     }
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanagedHeight: {
       size = {
         width: `${width}px`
       };
       break;
     }
-    case IUnit.unmanagedWidth: {
+    case Unit.unmanagedWidth: {
       size = {
         height: `${height}px`
       };
@@ -111,10 +111,6 @@ function tileStyle(
 
 export let gInProgress: number = 0;
 
-export enum EditOptions {
-  none = 0,
-  all
-}
 
 export const gLayouts: Map<string, RLGLayout> = new Map();
 
@@ -567,7 +563,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
       const children = React.Children.toArray(child.props.children);
 
-      if (b.units.size === IUnit.unmanaged) {
+      if (b.units.size === Unit.unmanaged) {
         children.push(<ReactResizeDetector
           key={`unmanagedResizeDetector`}
           handleWidth={true}
@@ -575,7 +571,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           onResize={this.onLayoutResize(name)} />
         );
       } 
-      if (b.units.size === IUnit.unmanagedHeight) {
+      if (b.units.size === Unit.unmanagedHeight) {
         children.push(<ReactResizeDetector
           key={`unmanagedResizeDetector`}
           handleWidth={false}
@@ -583,7 +579,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           onResize={this.onLayoutResize(name)} />
         );
       }
-      if (b.units.size === IUnit.unmanagedWidth) {
+      if (b.units.size === Unit.unmanagedWidth) {
         children.push(<ReactResizeDetector
           key={`unmanagedResizeDetector`}
           handleWidth={true}
@@ -669,7 +665,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           const ancestorLocation = ancestor.getBoundingLeftTop();
           const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
           const position = p.position as IPosition;
-          if (position && position.units.size >= IUnit.unmanaged) {
+          if (position && position.units.size >= Unit.unmanaged) {
             // size determined by element.offsetWidth and element offsetHeight
 
             return ancestor.updateUnmanagedElement(
@@ -683,7 +679,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         }
       } else if (p.name) {
         const position = p.position as IPosition;
-        if (position && position.units.size >= IUnit.unmanaged) {
+        if (position && position.units.size >= Unit.unmanaged) {
           // size determined by element.offsetWidth and element offsetHeight
 
           return this.updateUnmanagedElement(
@@ -986,12 +982,12 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         let allow = true;
         b.editor.edits.forEach((item, i) => {
           // filter unmanaged edits
-          if (b.units.size === IUnit.unmanagedWidth &&
+          if (b.units.size === Unit.unmanagedWidth &&
             (item.ref === PositionRef.bottom || item.ref === PositionRef.top)
           ) {
             allow = false;
           }
-          if (b.units.size === IUnit.unmanagedHeight &&
+          if (b.units.size === Unit.unmanagedHeight &&
             (item.ref === PositionRef.left || item.ref === PositionRef.right)
           ) {
             allow = false;

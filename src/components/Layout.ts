@@ -6,7 +6,7 @@ import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
 import { flowLayoutLayer } from '../generators/utils'
-import { IPoint, IOrigin, ISize, IUnit, PositionRef, Rect } from '../types'
+import { IPoint, IOrigin, ISize, Unit, PositionRef, Rect } from '../types'
 import { clone } from '../utils'
 
 export interface IAlign {
@@ -53,8 +53,8 @@ export enum LayerOption {
 export interface IPosition {
   units: {
     origin: IOrigin
-    location: IUnit
-    size: IUnit
+    location: Unit
+    size: Unit
   }
   align?: {
     key: string | number
@@ -310,9 +310,9 @@ export default class Layout {
   /**
    * Take unit and convert to real world
    */
-  public scale = (input: IPoint | ISize, unit: IUnit): IPoint | ISize => {
+  public scale = (input: IPoint | ISize, unit: Unit): IPoint | ISize => {
     switch (unit) {
-      case IUnit.percent: {
+      case Unit.percent: {
         const size = this._g.params().get('containersize') as ISize
         if ('x' in input) {
           const p = input as IPoint
@@ -329,7 +329,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserve: {
+      case Unit.preserve: {
         const size = this._g.params().get('containersize') as ISize
 
         const minWidth = size.width < size.height ? size.width : size.height
@@ -349,7 +349,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserveWidth: {
+      case Unit.preserveWidth: {
         const size = this._g.params().get('containersize') as ISize
 
         const factor = size.width
@@ -369,7 +369,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserveHeight: {
+      case Unit.preserveHeight: {
         const size = this._g.params().get('containersize') as ISize
 
         const factor = size.height
@@ -419,10 +419,10 @@ export default class Layout {
 
     // Convert percents to decimal
     if (
-      this._position.units.location === IUnit.percent ||
-      this._position.units.location === IUnit.preserve ||
-      this._position.units.location === IUnit.preserveWidth ||
-      this._position.units.location === IUnit.preserveHeight
+      this._position.units.location === Unit.percent ||
+      this._position.units.location === Unit.preserve ||
+      this._position.units.location === Unit.preserveWidth ||
+      this._position.units.location === Unit.preserveHeight
     ) {
       this._position.location.x = p.location.x * 0.01
       this._position.location.y = p.location.y * 0.01
@@ -430,10 +430,10 @@ export default class Layout {
 
     // Convert percents to decimal
     if (
-      this._position.units.size === IUnit.percent ||
-      this._position.units.size === IUnit.preserve ||
-      this._position.units.size === IUnit.preserveWidth ||
-      this._position.units.size === IUnit.preserveHeight
+      this._position.units.size === Unit.percent ||
+      this._position.units.size === Unit.preserve ||
+      this._position.units.size === Unit.preserveWidth ||
+      this._position.units.size === Unit.preserveHeight
     ) {
       this._position.size.width = p.size.width * 0.01
       this._position.size.height = p.size.height * 0.01
@@ -508,10 +508,10 @@ export default class Layout {
    */
   private inverseScale = (
     input: IPoint | ISize,
-    unit: IUnit
+    unit: Unit
   ): IPoint | ISize => {
     switch (unit) {
-      case IUnit.percent: {
+      case Unit.percent: {
         const size = this._g.params().get('containersize') as ISize
         if (size.width && size.height) {
           if ('x' in input) {
@@ -530,7 +530,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserve: {
+      case Unit.preserve: {
         const size = this._g.params().get('containersize') as ISize
 
         const minWidth = size.width < size.height ? size.width : size.height
@@ -551,7 +551,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserveWidth: {
+      case Unit.preserveWidth: {
         const size = this._g.params().get('containersize') as ISize
         const factor = size.width
         if (factor) {
@@ -571,7 +571,7 @@ export default class Layout {
         }
         break
       }
-      case IUnit.preserveHeight: {
+      case Unit.preserveHeight: {
         const size = this._g.params().get('containersize') as ISize
         const factor = size.height
         if (factor) {

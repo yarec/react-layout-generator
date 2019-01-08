@@ -5,7 +5,7 @@ import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 import dynamicGenerator from '../../../src/generators/dynamicGenerator';
 import RLGDynamic from '../../../src/RLGDynamic';
 import {EditOptions, RLGLayout } from '../../../src/RLGLayout'
-import { DebugOptions, IUnit, PositionRef } from '../../../src/types';
+import { DebugOptions, Unit, PositionRef } from '../../../src/types';
 import Deck from '../algos/Deck';
 import cssColor from '../assets/colors';
 // import Note from '../components/Note';
@@ -89,7 +89,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         <button data-layout={{
           name: 'shuffle',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
             location: { x: 80, y: 80 },
             size: { width: 100, height: 24 }
           }
@@ -101,7 +101,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         <Container data-layout={{
           name: 'instructions',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.percent, size: IUnit.unmanagedHeight },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 70, y: 10 },
             size: { width: 200, height: 350 }
           }
@@ -138,7 +138,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         data-layout={{
           name: card,
           position: {
-            units: { origin: { x: 0, y: 0 }, location: IUnit.pixel, size: IUnit.pixel },
+            units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
             location: { x: 25, y: 25 },
             editor: {
               edits: [{ ref: PositionRef.position }]

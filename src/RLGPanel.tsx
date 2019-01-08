@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Layout from './components/Layout';
 import { IGenerator } from './generators/Generator';
-import { EditOptions } from './RLGLayout';
-import { DebugOptions, IRect } from './types';
+import { DebugOptions, EditOptions, IRect } from './types';
 
 export interface IRLGPanelArgs {
   container: IRect;
@@ -29,7 +28,7 @@ interface IRLGPanelState {
   rect: IRect;
 }
 
-export default class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
+export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
   constructor(props: IRLGPanelProps) {
     super(props);
 

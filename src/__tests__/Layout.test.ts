@@ -1,7 +1,7 @@
 import Layout from '../components/Layout'
 import Params from '../components/Params'
 import Generator, { ICreate, IGenerator } from '../generators/Generator'
-import { IUnit } from '../types'
+import { Unit } from '../types'
 
 const params = new Params({
   name: 'layoutTest',
@@ -28,8 +28,8 @@ it('location #1 - default units', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
@@ -43,8 +43,8 @@ it('location #2 - location in percent', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
@@ -57,8 +57,8 @@ it('location #3', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
@@ -71,8 +71,8 @@ it('location #4', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
@@ -85,8 +85,8 @@ it('size #1', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
@@ -99,8 +99,8 @@ it('size #2', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
@@ -113,8 +113,8 @@ it('size #3', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 50, y: 50 },
     size: { width: 100, height: 100 }
@@ -127,8 +127,8 @@ it('size #4', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.percent
+      location: Unit.percent,
+      size: Unit.percent
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 10 }
@@ -141,8 +141,8 @@ it('rect #1', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
@@ -155,8 +155,8 @@ it('rect #2', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 500, y: 500 },
     size: { width: 100, height: 10 }
@@ -169,8 +169,8 @@ it('rect #3', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 50, y: 50 },
     size: { width: 100, height: 10 }
@@ -183,8 +183,8 @@ it('rect #4', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.percent
+      location: Unit.percent,
+      size: Unit.percent
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 5 }
@@ -197,8 +197,8 @@ it('update #1', () => {
   const p = {
     units: {
       origin: { x: 50, y: 50 },
-      location: IUnit.percent,
-      size: IUnit.percent
+      location: Unit.percent,
+      size: Unit.percent
     },
     location: { x: 50, y: 50 },
     size: { width: 10, height: 5 }
@@ -213,8 +213,8 @@ it('update #2', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.pixel,
-      size: IUnit.pixel
+      location: Unit.pixel,
+      size: Unit.pixel
     },
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }
@@ -229,8 +229,8 @@ it('update #3', () => {
   const p = {
     units: {
       origin: { x: 0, y: 0 },
-      location: IUnit.percent,
-      size: IUnit.pixel
+      location: Unit.percent,
+      size: Unit.pixel
     },
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }

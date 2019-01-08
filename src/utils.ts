@@ -1,4 +1,4 @@
-import { IPoint, ISize, IUnit } from './types'
+import { IPoint, ISize, Unit } from './types'
 
 export function clone(aObject: any) {
   if (!aObject) {
@@ -16,7 +16,7 @@ export function clone(aObject: any) {
 }
 
 export interface IValue {
-  unit: IUnit
+  unit: Unit
   value: IPoint | ISize
 }
 
@@ -37,11 +37,11 @@ export class PixelPoint {
 
 export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
   switch (v.unit) {
-    case IUnit.pixel: {
+    case Unit.pixel: {
       return v.value
       break
     }
-    case IUnit.percent: {
+    case Unit.percent: {
       if ('x' in v.value) {
         const p = v.value as IPoint
         return {
@@ -57,7 +57,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
       const factor =
         containersize.height < containersize.width
           ? containersize.height
@@ -77,7 +77,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.preserveWidth: {
+    case Unit.preserveWidth: {
       const factor = containersize.width
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -94,7 +94,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.preserveHeight: {
+    case Unit.preserveHeight: {
       const factor = containersize.height
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -111,9 +111,9 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.unmanaged:
-    case IUnit.unmanagedWidth:
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanaged:
+    case Unit.unmanagedWidth:
+    case Unit.unmanagedHeight: {
       return v.value
       break
     }
@@ -123,7 +123,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
 
 export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
   switch (v.unit) {
-    case IUnit.pixel: {
+    case Unit.pixel: {
       if ('x' in v.value) {
         const p = v.value as IPoint
         return {
@@ -139,11 +139,11 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.percent: {
+    case Unit.percent: {
       return v.value
       break
     }
-    case IUnit.preserve: {
+    case Unit.preserve: {
       const factor =
         containersize.height < containersize.width
           ? containersize.height
@@ -163,7 +163,7 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.preserveWidth: {
+    case Unit.preserveWidth: {
       const factor = containersize.width
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -180,7 +180,7 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.preserveHeight: {
+    case Unit.preserveHeight: {
       const factor = containersize.height
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -197,9 +197,9 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
       }
       break
     }
-    case IUnit.unmanaged:
-    case IUnit.unmanagedWidth:
-    case IUnit.unmanagedHeight: {
+    case Unit.unmanaged:
+    case Unit.unmanagedWidth:
+    case Unit.unmanagedHeight: {
       return v.value
       break
     }

@@ -1,12 +1,12 @@
 // import { loadFromLocalStorage, saveToLocalStorage } from '../generators/utils'
-import { IPoint, IUnit } from '../types'
+import { IPoint, Unit } from '../types'
 import { toPixel } from '../utils'
 
 const containersize = { width: 1000, height: 500 }
 
 it('convert toPixel #1', () => {
   const p = toPixel(
-    { value: { x: 50, y: 50 }, unit: IUnit.percent },
+    { value: { x: 50, y: 50 }, unit: Unit.percent },
     containersize
   ) as IPoint
   expect(p.x + p.y).toEqual(750)
@@ -14,7 +14,7 @@ it('convert toPixel #1', () => {
 
 it('convert toPixel #2', () => {
   const p = toPixel(
-    { value: { x: 50, y: 50 }, unit: IUnit.preserve },
+    { value: { x: 50, y: 50 }, unit: Unit.preserve },
     containersize
   ) as IPoint
   expect(p.x + p.y).toEqual(500)
@@ -22,7 +22,7 @@ it('convert toPixel #2', () => {
 
 it('convert toPixel #3', () => {
   const p = toPixel(
-    { value: { x: 50, y: 50 }, unit: IUnit.preserve },
+    { value: { x: 50, y: 50 }, unit: Unit.preserve },
     containersize
   ) as IPoint
   expect(p).toEqual({ x: 250, y: 250 })
