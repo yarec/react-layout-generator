@@ -11,6 +11,6 @@ function init(g: Generator) {
 }
 
 it('returns undefined with no layouts', () => {
-  const g = new Generator(name, init, params)
+  const g = new Generator('test', init, params)
   expect(g.next()).toBe(undefined)
 })

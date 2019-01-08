@@ -6,105 +6,12 @@ import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
 import { flowLayoutLayer } from '../generators/utils'
-import { IPoint, IOrigin, ISize, PositionRef, Rect } from '../types'
+import { IPoint, IOrigin, ISize, IUnit, PositionRef, Rect } from '../types'
 import { clone } from '../utils'
 
 export interface IAlign {
   x: number
   y: number
-}
-
-/**
- * Defines the units of location and size
- */
-export enum IUnit {
-  pixel = 1, // px
-  percent, // %
-  preserve, // %p
-  preserveWidth, // %pw
-  preserveHeight, // %ph
-
-  // Keep unmanaged at the end of the list
-  unmanaged, // a
-  unmanagedWidth, // aw
-  unmanagedHeight // ah
-}
-
-export function symbolToIUnit(data: string) {
-  switch (data.charAt(data.length - 1)) {
-    case 'x': {
-      return IUnit.pixel
-    }
-    case '%': {
-      return IUnit.percent
-    }
-    case 'a': {
-      break
-    }
-    case 'h': {
-      switch (data.charAt(data.length - 2)) {
-        case '%': {
-          return IUnit.preserveHeight
-        }
-        case 'a': {
-          return IUnit.unmanagedWidth
-        }
-      }
-      break
-    }
-    case 'w': {
-      switch (data.charAt(data.length - 2)) {
-        case '%': {
-          return IUnit.preserveWidth
-        }
-        case 'a': {
-          return IUnit.unmanagedWidth
-        }
-      }
-      break
-    }
-  }
-  return IUnit.pixel
-}
-
-export function namedUnit(u: IUnit) {
-  let name = 'unknown'
-  switch (u) {
-    case IUnit.pixel: {
-      name = 'pixel'
-      break
-    }
-    case IUnit.percent: {
-      name = 'percent'
-      break
-    }
-    case IUnit.preserve: {
-      name = 'preserve'
-      break
-    }
-    case IUnit.preserveWidth: {
-      name = 'preserveWidth'
-      break
-    }
-    case IUnit.preserveHeight: {
-      name = 'preserveHeight'
-      break
-    }
-
-    case IUnit.unmanaged: {
-      name = 'unmanaged'
-      break
-    }
-    case IUnit.unmanagedWidth: {
-      name = 'unmanagedWidth'
-      break
-    }
-    case IUnit.unmanagedHeight: {
-      name = 'unmanagedHeight'
-      break
-    }
-  }
-  return name
 }
 
 export interface IMenuItem {
@@ -232,7 +139,7 @@ export default class Layout {
     // console.log(`initialize Layout ${name}`)
     this._name = name
     this._position = clone(p)
-    this.updatePosition()
+    this.updatePosition(this._position)
     this.updateLayer(this._position.layer)
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._changed = true
@@ -506,9 +413,9 @@ export default class Layout {
     }
   }
 
-  public updatePosition() {
-    this._position.units.origin.x = this._position.units.origin.x * 0.01
-    this._position.units.origin.y = this._position.units.origin.y * 0.01
+  public updatePosition(p: IPosition) {
+    this._position.units.origin.x = p.units.origin.x * 0.01
+    this._position.units.origin.y = p.units.origin.y * 0.01
 
     // Convert percents to decimal
     if (
@@ -517,8 +424,8 @@ export default class Layout {
       this._position.units.location === IUnit.preserveWidth ||
       this._position.units.location === IUnit.preserveHeight
     ) {
-      this._position.location.x = this._position.location.x * 0.01
-      this._position.location.y *= 0.01
+      this._position.location.x = p.location.x * 0.01
+      this._position.location.y = p.location.y * 0.01
     }
 
     // Convert percents to decimal
@@ -528,16 +435,16 @@ export default class Layout {
       this._position.units.size === IUnit.preserveWidth ||
       this._position.units.size === IUnit.preserveHeight
     ) {
-      this._position.size.width *= 0.01
-      this._position.size.height *= 0.01
+      this._position.size.width = p.size.width * 0.01
+      this._position.size.height = p.size.height * 0.01
     }
 
     // Convert percents to decimal
-    if (this._position.align) {
-      this._position.align.source.x *= 0.01
-      this._position.align.source.y *= 0.01
-      this._position.align.self.x *= 0.01
-      this._position.align.self.y *= 0.01
+    if (this._position.align && p.align) {
+      this._position.align.source.x = p.align!.source.x * 0.01
+      this._position.align.source.y = p.align!.source.y * 0.01
+      this._position.align.self.x = p.align!.self.x * 0.01
+      this._position.align.self.y = p.align!.self.y * 0.01
     }
 
     if (this._position.editor) {

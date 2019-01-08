@@ -4,8 +4,6 @@ import ReactResizeDetector from 'react-resize-detector';
 import Layout, {
   IMenuItem,
   IPosition,
-  IUnit,
-  namedUnit,
   PositionChildren
 } from './components/Layout';
 import { ParamValue } from './components/Params';
@@ -14,7 +12,8 @@ import RLGEditLayout from './editors/RLGEditLayout';
 import RLGSelect from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
-import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize, namedPositionRef, PositionRef } from './types';
+import { DebugOptions, DebugOptionsArray, IPoint, IRect, ISize, namedPositionRef, PositionRef, IUnit,
+  namedUnit, } from './types';
 
 interface ILayoutStyle {
   style: React.CSSProperties;

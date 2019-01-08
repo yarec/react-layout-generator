@@ -1,7 +1,8 @@
-import Layout, { IUnit } from '../components/Layout'
+import Layout from '../components/Layout'
 import Layouts from '../components/Layouts'
 import Params from '../components/Params'
 import Generator, { ICreate, IGenerator } from '../generators/Generator'
+import { IUnit } from '../types'
 
 const params = new Params({
   name: 'layoutTest',
@@ -18,13 +19,13 @@ function create(args: ICreate) {
   const layouts = args.g.layouts()
 
   if (layouts) {
-    layout = layouts.set('test', args.position, g)
+    layout = layouts.set(args.name, args.position, g)
   }
 
   return layout
 }
 
-const g: IGenerator = new Generator(name, init, params, create)
+const g: IGenerator = new Generator('test', init, params, create)
 
 it('Layouts index returns the correct key value #1', () => {
   const p = {

@@ -1,6 +1,7 @@
-import Layout, { IUnit } from '../components/Layout'
+import Layout from '../components/Layout'
 import Params from '../components/Params'
 import Generator, { ICreate, IGenerator } from '../generators/Generator'
+import { IUnit } from '../types'
 
 const params = new Params({
   name: 'layoutTest',
@@ -21,7 +22,7 @@ function create(args: ICreate) {
   return layout
 }
 
-const g: IGenerator = new Generator(name, init, params, create)
+const g: IGenerator = new Generator('test', init, params, create)
 
 it('location #1 - default units', () => {
   const p = {

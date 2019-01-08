@@ -1,4 +1,4 @@
-import { DebugOptions } from 'src/types'
+import { DebugOptions } from '../types'
 
 it('DebugOption.errorAll includes none', () => {
   // tslint:disable-next-line:no-bitwise

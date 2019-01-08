@@ -7,11 +7,11 @@ import styled from 'styled-components';
 import 'highlight.js/styles/vs';
 
 // RLG Library
-import EditHelper from '../../src/editors/EditHelper'
-import columnsGenerator from '../../src/generators/columnsGenerator';
+import EditHelper from '../../dist/types/editors/EditHelper'
+import columnsGenerator from '../../dist/types/generators/columnsGenerator';
 import desktopGenerator from '../../src/generators/desktopGenerator';
 import { IGenerator } from '../../src/generators/Generator';
-import RLGLayout, { EditOptions } from '../../src/RLGLayout';
+import { EditOptions, RLGLayout } from '../../src/RLGLayout';
 import RLGPanel, { IRLGPanelArgs } from '../../src/RLGPanel';
 import { DebugOptions } from '../../src/types';
 

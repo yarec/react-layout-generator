@@ -1,4 +1,4 @@
-import { IGenerator } from 'src/generators/Generator'
+import { IGenerator } from '../generators/Generator'
 import Layout, { IPosition } from './Layout'
 
 export default class Layouts {

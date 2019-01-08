@@ -1,6 +1,5 @@
-import { IUnit } from 'src/components/Layout'
-import { loadFromLocalStorage, saveToLocalStorage } from 'src/generators/utils'
-import { IPoint } from 'src/types'
+// import { loadFromLocalStorage, saveToLocalStorage } from '../generators/utils'
+import { IPoint, IUnit } from '../types'
 import { toPixel } from '../utils'
 
 const containersize = { width: 1000, height: 500 }
@@ -29,8 +28,8 @@ it('convert toPixel #3', () => {
   expect(p).toEqual({ x: 250, y: 250 })
 })
 
-it('saves params to localStorage', () => {
-  saveToLocalStorage('test', 'param', { x: 0, y: 0 })
-  const v = loadFromLocalStorage('test', 'param')
-  expect(v).toEqual({ x: 0, y: 0 })
-})
+// it('saves params to localStorage', () => {
+//   saveToLocalStorage('test', 'param', { x: 0, y: 0 })
+//   const v = loadFromLocalStorage('test', 'param')
+//   expect(v).toEqual({ x: 0, y: 0 })
+// })

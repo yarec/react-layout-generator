@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import Layout from './components/Layout';
 import { IGenerator } from './generators/Generator';
-import RLGLayout, { EditOptions } from './RLGLayout';
+import { EditOptions } from './RLGLayout';
 import { DebugOptions, IRect } from './types';
 
-interface IRLGAppProps {
-  name: string;
-}
+// interface IRLGAppProps {
+//   name: string;
+// }
 
 interface IRLGDynamicProps extends React.HTMLProps<HTMLDivElement> {
   jsx: JSX.Element[];

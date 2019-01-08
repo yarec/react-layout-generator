@@ -1,7 +1,7 @@
-import Layout, {IEdit} from 'src/components/Layout';
-import RLGSelect from 'src/editors/RLGSelect';
-import {IRect} from 'src/types';
-import { DebugOptions } from 'src/types';
+import Layout, {IEdit} from '../components/Layout';
+import RLGSelect from '../editors/RLGSelect';
+import {IRect} from '../types';
+import { DebugOptions } from '../types';
 
 export interface IUndo {
   editor: IEditor;
