@@ -39,7 +39,9 @@
 
 <!-- /TOC -->
 
-React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is ideal for laying out both html and svg components and allows precise and continuous control for responsive layouts.
+React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is ideal for laying out both html and svg components and allows precise and continuous control for responsive layouts. This is an early pre-alpha release.
+
+
 
 This component was inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
@@ -49,7 +51,7 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ## TODO
 
-- Update this readme. Keyboard controls, toolBar, context menu.
+- Update this readme.
 - Describe saving and restoring.
 - Implement layers, bring forward, ...
 - Support dynamic addition of elements to page (alternative to params?)
@@ -58,30 +60,22 @@ For the time being, you will need to clone or fork the project to evaluate.
 - Implement nudge with arrow keys.
 - Implement current select commands.
 - Add cut, copy, and paste commands.
-- Update intro to use both RLGRow and RLGColumn
 - Finish implementing editor
-- Add left and right align to RLGColumn
-- Implement rowsGenerator
-- Touch
-- Breakpoints (needed??)
-- Additional generators
+- Add options to align RLGColumn and RLGColumn.
+- Add Touch support in editor.
 - Upload component to npm
 - Host website on Github
-- Alpha version - current release is early pre-alpha
 
 ### Bugs
 
-- Attached elements cannot be edited.
-- Does not work with browser magnification +/-.
-- Cleanup initialization of generators and containersize to potentially allow generators to be reused. See 1) RLGLayout initLayout which is called at the beginning of each render and 2) Generator which calls the user supplied init function during the initLayout call.
-- Fix flickering when making the browser window smaller for elements in RLGColumns. This appears to be due to an update issue causing the computed element size to include the scroll bar since the initial layout is being used with the newer smaller element.
+- Does not work smoothly with browser magnification +/-.
+- Fix flickering when making the browser window smaller. 
 
 ## Features
 
-* Lightweight - uses only a few other lightweight React components
-* Design, interactive, and runtime layout
-* Bounds checking
-* Separate layouts per responsive breakpoint
+* Top down design of websites.
+* Lightweight - minimal use of other React libraries.
+* Editor, interactive, and runtime layout
 * Serializable
 
 ## Applications

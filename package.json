@@ -31,7 +31,7 @@
   "scripts": {
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --excludePrivate --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
@@ -42,7 +42,8 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "doc": "typedoc --out docs --target es6 --excludePrivate --theme minimal --mode file src"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -78,7 +79,9 @@
         "statements": 95
       }
     },
-    "modulePathIgnorePatterns": ["dist"],
+    "modulePathIgnorePatterns": [
+      "dist"
+    ],
     "collectCoverageFrom": [
       "src/*.{ts|tsx}"
     ]
@@ -131,6 +134,7 @@
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.12.0",
+    "typedoc-plugin-no-inherit": "^1.1.1",
     "typescript": "^3.0.3",
     "underscore": "^1.9.1"
   }

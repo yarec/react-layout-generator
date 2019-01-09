@@ -1,5 +1,9 @@
 import { PositionRef } from '../types'
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function cursor(ref: PositionRef) {
   let c: string = 'move'
   switch (ref) {

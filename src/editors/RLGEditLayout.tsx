@@ -6,12 +6,20 @@ import { clone } from '../utils';
 import { IEditor, IEditorProps, IUndo } from './Editor';
 // import RLGContextMenu from './RLGContextMenu';
 
+/**
+ * internal use only
+ * @ignore
+ */
 interface IEditHandleProps {
   cursor?: string;
   handle: IRect;
   zIndex: number
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 function editStyle(args: IEditHandleProps): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
@@ -28,11 +36,19 @@ function editStyle(args: IEditHandleProps): React.CSSProperties {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 interface IEditLayoutState {
   activateDrag: boolean;
   contextMenu: boolean;
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export default class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutState> implements IEditor {
   public _startRect: IRect;
   public _startOrigin: IPoint;

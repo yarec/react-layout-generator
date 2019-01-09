@@ -4,6 +4,10 @@ import { IMenuItem } from '../components/Block';
 import { DebugOptions, IPoint, ISize } from '../types';
 import '../assets/styles.css'
 
+/**
+ * internal use only
+ * @ignore
+ */
 interface IContextMenuProps {
   commands: IMenuItem[] | undefined;
   location: IPoint;
@@ -13,6 +17,10 @@ interface IContextMenuProps {
   zIndex: number;
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export default class RLGContextMenu extends React.Component<IContextMenuProps> {
 
   private _root: React.RefObject<HTMLDivElement>;

@@ -7,6 +7,10 @@ import { clone } from '../utils';
 import EditHelper, {ICommand, Status} from './EditHelper';
 // import RLGContextMenu from './RLGContextMenu';
 
+/**
+ * internal use only
+ * @ignore
+ */
 export interface IRLGSelectProps {
   name: string;
   boundary: IRect;
@@ -16,17 +20,33 @@ export interface IRLGSelectProps {
   g: IGenerator;
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export interface IRLGSelectState {
-  contextMenu: boolean;
+  contextMenu: boolean; 
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 interface ISavedPosition {
   name: string;
   value: IRect;
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 type IUndoRedo = ISavedPosition[];
 
+/**
+ * internal use only
+ * @ignore
+ */
 export interface IMenuItem {
   name: string;
   disabled?: boolean;
@@ -35,6 +55,10 @@ export interface IMenuItem {
 
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 class Command implements ICommand {
   
   public name: string;
@@ -70,6 +94,10 @@ class Command implements ICommand {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 // tslint:disable-next-line:max-classes-per-file
 export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState> {
 

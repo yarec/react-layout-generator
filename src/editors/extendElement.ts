@@ -5,6 +5,10 @@ export type ExtendElement = (
   deltaY: number
 ) => IRect
 
+/**
+ * internal use only
+ * @ignore
+ */
 export default function getExtendElement(ref: PositionRef): ExtendElement {
   // default
   let extendElement: ExtendElement = (

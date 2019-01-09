@@ -12,9 +12,16 @@ import RLGEditLayout from './editors/RLGEditLayout';
 import RLGSelect from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
-import { DebugOptions, DebugOptionsArray, EditOptions, IPoint, IRect, ISize, namedPositionRef, PositionRef, Unit,
-  namedUnit, } from './types';
+import {
+  DebugOptions, DebugOptionsArray, EditOptions, IPoint, IRect, ISize, namedPositionRef, PositionRef, Unit,
+  namedUnit,
+} from './types';
 
+
+/**
+ * internal use only
+ * @ignore
+ */
 interface ILayoutStyle {
   style: React.CSSProperties;
   rect: IRect;
@@ -23,6 +30,10 @@ interface ILayoutStyle {
   zIndex: number;
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function selectedStyle(rect: IRect) {
   const offset = 3;
   const x = rect.x - offset;
@@ -40,6 +51,10 @@ export function selectedStyle(rect: IRect) {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function layoutStyle(args: ILayoutStyle) {
   return tileStyle(
     args.style,
@@ -52,6 +67,10 @@ export function layoutStyle(args: ILayoutStyle) {
     args.zIndex);
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 function tileStyle(
   style: React.CSSProperties,
   x: number,
@@ -109,12 +128,28 @@ function tileStyle(
   };
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export let gInProgress: number = 0;
 
-
+/**
+ * internal use only
+ * @ignore
+ */
 export const gLayouts: Map<string, RLGLayout> = new Map();
 
+
+/**
+ * Props for RLGLayout.
+ * @noInheritDoc
+ */
 export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
+  /** 
+   * Name is required by [RLGDynamic](#RLGDynamic) and useful when debugging even if you are not using dynamic rendering.
+   * 
+   */
   name: string;
   edit?: EditOptions;
   save?: (name: string, params: string, blocks: string) => void;
@@ -134,6 +169,19 @@ export interface IRLGLayoutState {
   devicePixelRatio: number;
 }
 
+/**
+ * This class is required in order to use RLG.
+ * 
+ * Usage:
+ * ```html
+ *  <RLGLayout
+ *    name={}
+ *  >
+ *    { content }
+ *  </RLGLayout>
+ * ```
+ * @noInheritDoc
+ */
 export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
   private _root: HTMLDivElement | undefined = undefined;
   private _g: IGenerator;
@@ -157,7 +205,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       contextMenuActive: false,
       devicePixelRatio: window.devicePixelRatio
     }
-    
+
     this._g = props.g;
 
     this.initProps(props);
@@ -570,7 +618,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           handleHeight={true}
           onResize={this.onLayoutResize(name)} />
         );
-      } 
+      }
       if (b.units.size === Unit.unmanagedHeight) {
         children.push(<ReactResizeDetector
           key={`unmanagedResizeDetector`}

@@ -1,6 +1,10 @@
 import Block, { IEdit } from '../components/Block'
 import { IRect, Unit } from '../types'
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   let factor = 1
   if (block.units.location !== Unit.pixel) {
@@ -16,6 +20,10 @@ export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
   let factor = 1
   if (block.units.location !== Unit.pixel) {
@@ -31,6 +39,10 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
   let factor = 1
   if (block.units.size !== Unit.pixel) {
@@ -43,6 +55,10 @@ export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
   }
 }
 
+/**
+ * internal use only
+ * @ignore
+ */
 export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
   let factor = 1
   if (block.units.size !== Unit.pixel) {
