@@ -18,7 +18,7 @@ export interface IEditTool {
   updateTool: () => void
 }
 
-export default class EditHelper {
+export class EditHelper {
   private _commands: Map<string, (state: Status) => Status | undefined>
   private _status: Map<string, (() => Status) | number | undefined>
   private _updateTool: IEditTool | undefined

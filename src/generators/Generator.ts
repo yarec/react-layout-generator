@@ -1,7 +1,7 @@
-import Block, { IPosition } from '../components/Block'
-import Blocks from '../components/Blocks'
-import Params, { ParamValue } from '../components/Params'
-import EditHelper from '../editors/EditHelper'
+import { Block, IPosition } from '../components/Block'
+import { Blocks } from '../components/Blocks'
+import { Params, ParamValue } from '../components/Params'
+import { EditHelper } from '../editors/EditHelper'
 import RLGSelect from '../editors/RLGSelect'
 import { ISize } from '../types'
 
@@ -35,7 +35,7 @@ export interface IGenerator {
   editor?: () => EditHelper | undefined
 }
 
-export default class Generator implements IGenerator {
+export class Generator implements IGenerator {
   public currentLayout: Block | undefined
 
   public state: () => Block | undefined

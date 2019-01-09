@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Block from './components/Block';
+
+import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
 import { DebugOptions, EditOptions, IRect } from './types';
 
@@ -9,7 +10,7 @@ export interface IRLGPanelArgs {
   edit: EditOptions;
   debug: DebugOptions;
   g: IGenerator;
-  context: Map<string,any>;
+  context: Map<string, any>;
   // update: () => void;
 }
 
@@ -20,7 +21,7 @@ interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   edit?: EditOptions;
   debug?: DebugOptions;
   g?: IGenerator;
-  context?: Map<string,any>;
+  context?: Map<string, any>;
   // update?: () => void;
 }
 
@@ -68,7 +69,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
 
     return (
       <div style={this.props.style}>
-        {(this.props.children as (args: IRLGPanelArgs) => JSX.Element) (
+        {(this.props.children as (args: IRLGPanelArgs) => JSX.Element)(
           args)}
       </div>
     );

@@ -1,12 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import dynamicGenerator from '../../../src/generators/dynamicGenerator';
-import { IGenerator } from '../../../src/generators/Generator';
-import { RLGLayout } from '../../../src/RLGLayout';
+import { 
+  dynamicGenerator,
+  EditOptions,
+  RLGLayout, 
+  Status, 
+  Unit
+} from '../../../dist/types/react-layout-generator'
 
-import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
-import { EditOptions, Unit } from '../../../src/types';
+import { IEditHelperProps } from '../../../dist/types/editors/EditHelper';
 
 // const Title = styled.h2`
 // `
@@ -23,7 +26,7 @@ interface IIntroState {
 
 export default class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
-  private _g: IGenerator = dynamicGenerator('rlg.intro');
+  private _g = dynamicGenerator('rlg.intro');
   private _edit: EditOptions = EditOptions.none;
 
   constructor(props: IEditHelperProps) {

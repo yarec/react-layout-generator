@@ -1,11 +1,10 @@
-import Block, { IPosition } from '../components/Block';
-// import Layouts from '../components/Blocks';
-import Params, { ParamValue } from '../components/Params';
+import { Block, IPosition } from '../components/Block';
+import { Params, ParamValue } from '../components/Params';
 import { updateParamHeight, updateParamWidth } from '../editors/update';
-import Generator, { ICreate, IGenerator } from '../generators/Generator';
+import { Generator, ICreate, IGenerator } from '../generators/Generator';
 import { IPoint, ISize, Unit, PositionRef } from '../types';
 
-export default function desktopGenerator(name: string, exParams?: Params) {
+export function desktopGenerator(name: string, exParams?: Params) {
 
   const _fullWidthHeaders = 0;
   const _titleHeight = 50;

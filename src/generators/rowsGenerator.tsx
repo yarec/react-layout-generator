@@ -1,10 +1,10 @@
-import Block from '../components/Block';
-import Blocks from '../components/Blocks';
-import Params, { ParamValue } from '../components/Params';
-import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../generators/Generator';
+import { Block } from '../components/Block';
+import { Blocks } from '../components/Blocks';
+import { Params, ParamValue } from '../components/Params';
+import { Generator, ICreate, IGenerator, IGeneratorFunctionArgs } from '../generators/Generator';
 import { IAttrRect, ISize, rectSize, Unit } from '../types';
 
-export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
+export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
   const values: Array<[string, ParamValue]> = [
     ['containersize', { width: 0, height: 0 }],
@@ -78,7 +78,7 @@ export default function rowsGenerator(gen: IGeneratorFunctionArgs) {
     }
     const leftOffset = (containersize.width / 2) - (size.width + margin.left + margin.right) / 2;
     p.location = { x: leftOffset, y: topOffset }
-    
+
     return blocks.set(args.name, p, args.g);
   }
 

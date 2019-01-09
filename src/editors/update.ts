@@ -1,4 +1,4 @@
-import Block, { IEdit } from '../components/Block'
+import { Block, IEdit } from '../components/Block'
 import { IRect, Unit } from '../types'
 
 /**

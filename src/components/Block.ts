@@ -79,7 +79,7 @@ export interface IPosition {
  * specified origin and units. Supports edit handles
  * defined by IAlign (.eg left center, right bottom)
  */
-export default class Block {
+export class Block {
   get name() {
     return this._name
   }

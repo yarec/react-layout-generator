@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import Block, { IMenuItem } from '../components/Block';
+import { Block, IMenuItem } from '../components/Block';
 import { IGenerator } from '../generators/Generator';
 import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
-import EditHelper, {ICommand, Status} from './EditHelper';
+import {EditHelper, ICommand, Status} from './EditHelper';
 // import RLGContextMenu from './RLGContextMenu';
 
 /**

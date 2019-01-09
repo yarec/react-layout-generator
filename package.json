@@ -137,5 +137,8 @@
     "typedoc-plugin-no-inherit": "^1.1.1",
     "typescript": "^3.0.3",
     "underscore": "^1.9.1"
+  },
+  "dependencies": {
+    "deep-equal": "^1.0.1"
   }
 }

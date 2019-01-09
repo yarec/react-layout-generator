@@ -1,9 +1,9 @@
-import Block from '../components/Block';
-import Blocks from '../components/Blocks';
-import Params, { ParamValue } from '../components/Params';
-import Generator, { ICreate, IGenerator } from './Generator';
+import { Block } from '../components/Block';
+import { Blocks } from '../components/Blocks';
+import { Params, ParamValue } from '../components/Params';
+import { Generator, ICreate, IGenerator } from './Generator';
 
-export default function dynamicGenerator(
+export function dynamicGenerator(
   name: string,
   exParams?: Params
 ): IGenerator {
@@ -21,7 +21,7 @@ export default function dynamicGenerator(
 
     if (params.changed()) {
       // update Layout for each update
-      blocks.map.forEach((block) => {
+      blocks.map.forEach((block: Block) => {
         block.touch();
       });
     }

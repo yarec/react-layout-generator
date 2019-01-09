@@ -1,7 +1,7 @@
 import { IGenerator } from '../generators/Generator'
-import Block, { IPosition } from './Block'
+import { Block, IPosition } from './Block'
 
-export default class Blocks {
+export class Blocks {
   private _blocks: Map<string, Block>
   private _byIndex: Block[]
 

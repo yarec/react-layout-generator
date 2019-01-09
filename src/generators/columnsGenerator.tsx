@@ -1,10 +1,10 @@
-import Block, { } from '../components/Block';  
-import Blocks from '../components/Blocks';
-import Params, { ParamValue } from '../components/Params';
-import Generator, { ICreate, IGenerator } from '../generators/Generator';
-import { ISize , Unit } from '../types';
+import { Block } from '../components/Block';
+import { Blocks } from '../components/Blocks';
+import { Params, ParamValue } from '../components/Params';
+import { Generator, ICreate, IGenerator } from '../generators/Generator';
+import { ISize, Unit } from '../types';
 
-export default function columnsGenerator(name: string, exParams?: Params) {
+export function columnsGenerator(name: string, exParams?: Params) {
 
   const defaultItemWidth = 100;
 
@@ -12,11 +12,12 @@ export default function columnsGenerator(name: string, exParams?: Params) {
     ['containersize', { width: 0, height: 0 }],
     ['align', 0], // -1: left, 0: center, 1: right
     ['spread', 0], // 0: keep width, 1: fills width
-    ['itemSize', {width: defaultItemWidth, height: 0}]
+    ['itemSize', { width: defaultItemWidth, height: 0 }]
   ]
 
   const _params = exParams ? exParams.restore(name, values) : new Params({
-    name: 'columnsGenerator', initialValues: values});
+    name: 'columnsGenerator', initialValues: values
+  });
 
   function init(g: IGenerator): Blocks {
     // const params = g.params();

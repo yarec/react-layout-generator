@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Block from './components/Block';
+import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
 import { DebugOptions, EditOptions, IRect } from './types';
 
@@ -18,7 +18,7 @@ interface IRLGDynamicProps extends React.HTMLProps<HTMLDivElement> {
   context?: Map<string, any>;
 }
 
-export default class RLGDynamic extends React.Component<IRLGDynamicProps, IRLGDynamicProps> {
+export class RLGDynamic extends React.Component<IRLGDynamicProps, IRLGDynamicProps> {
   private _jsx: JSX.Element[] = [];
 
   constructor(props: IRLGDynamicProps) {

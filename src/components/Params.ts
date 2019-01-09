@@ -1,5 +1,6 @@
-import { isEqual } from 'underscore'
 import { DebugOptions, IAttrRect, IPoint, IRect, ISize } from '../types'
+
+const deepEqual = require('deep-equal')
 
 export interface IEditableTextData {
   content: string
@@ -26,7 +27,7 @@ export interface IParamsProps {
   debug?: DebugOptions
 }
 
-export default class Params {
+export class Params {
   private _map: Map<string, ParamValue>
   private _changeCount: number
   private _name: string
@@ -144,7 +145,7 @@ export default class Params {
     const r: ParamValue | undefined = this._map.get(key)
 
     // Only set if changed
-    if (r && !isEqual(v, r)) {
+    if (r && !deepEqual(v, r)) {
       // console.log('Param.set ', key, v);
       this._changeCount += 1
       if (this._save) {

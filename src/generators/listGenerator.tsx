@@ -1,24 +1,24 @@
-import Block from '../components/Block';
-import Blocks from '../components/Blocks';
-import Params, { ParamValue } from '../components/Params';
-import Generator, {ICreate, IGenerator} from '../generators/Generator';
+import { Block } from '../components/Block';
+import { Blocks } from '../components/Blocks';
+import { Params, ParamValue } from '../components/Params';
+import { Generator, ICreate, IGenerator } from '../generators/Generator';
 import { ISize, Unit } from '../types';
 
-export default function listGenerator(name: string, exParams?: Params) {
+export function listGenerator(name: string, exParams?: Params) {
 
   const _titleHeight = 34;
   const _itemHeight = 24;
 
   const values: Array<[string, ParamValue]> = [
-    ['containersize', {width: 0, height: 0}],
+    ['containersize', { width: 0, height: 0 }],
     ['titleHeight', _titleHeight],
     ['itemHeight', _itemHeight]
   ];
 
-  const _params = exParams ? exParams.restore(name, values) : new Params({name: 'listGenerator', initialValues: values});
+  const _params = exParams ? exParams.restore(name, values) : new Params({ name: 'listGenerator', initialValues: values });
 
   function init(g: IGenerator): Blocks {
-    
+
     const params = g.params();
     const blocks = g.blocks();
 
@@ -42,18 +42,18 @@ export default function listGenerator(name: string, exParams?: Params) {
     if (!p) {
       p = {
         units: {
-          origin: {x: 0, y: 0},
+          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
         align: {
-          key: args.index-1,
-          offset: {x: 0, y: 0},
-          source: {x: 0, y: 100},
-          self: {x: 0, y: 0}
+          key: args.index - 1,
+          offset: { x: 0, y: 0 },
+          source: { x: 0, y: 100 },
+          self: { x: 0, y: 0 }
         },
-        location: {x: 5, y: 0},
-        size: {width: containersize.width, height: args.index === 0? titleHeight : itemHeight}
+        location: { x: 5, y: 0 },
+        size: { width: containersize.width, height: args.index === 0 ? titleHeight : itemHeight }
       }
     }
 

@@ -2,14 +2,30 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import dynamicGenerator from '../../../src/generators/dynamicGenerator';
-import { IGenerator } from '../../../src/generators/Generator';
-import { RLGLayout  } from '../../../src/RLGLayout';
-import  {IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
-import { DebugOptions, EditOptions, IPoint, ISize, rectSize, Unit } from '../../../src/types';
+import { 
+  DebugOptions,
+  dynamicGenerator,
+  EditOptions,
+  RLGLayout, 
+  RLGPanel, 
+  Status, 
+  Unit
+} from '../../../dist/types/react-layout-generator'
+
+import { 
+  IPoint,
+  ISize,
+  rectSize
+} from '../../../dist/types/types'
+
+import { IEditHelperProps } from '../../../dist/types/editors/EditHelper'
+
+// import { IGenerator } from '../../../src/generators/Generator';
+// import { RLGLayout  } from '../../../src/RLGLayout';
+import  {IRLGPanelArgs } from '../../../src/RLGPanel';
+
 import { toPixel } from '../../../src/utils';
 
-import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
 import Button from '../components/Button';
 import Table from '../components/Table';
 
@@ -37,12 +53,12 @@ export { CalloutBottom }
 
 export default class Grid extends React.Component<IEditHelperProps, { update: number }> {
 
-  private _g: IGenerator = dynamicGenerator('example.grid');
+  private _g = dynamicGenerator('example.grid');
   private _grid: HTMLCanvasElement;
-  private _gridUnitSquare: IPoint = { x: 0, y: 0 };
-  private _gridUnit: Unit = Unit.pixel;
-  private _units: string = '1%';
-  private _edit: EditOptions = EditOptions.none;
+  private _gridUnitSquare = { x: 0, y: 0 };
+  private _gridUnit = Unit.pixel;
+  private _units = '1%';
+  private _edit = EditOptions.none;
 
   constructor(props: IEditHelperProps) {
     super(props);
@@ -343,7 +359,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
     const lineWidth = 1;
 
-    let unitStep: IPoint = { x: 1, y: 1 };
+    let unitStep = { x: 1, y: 1 };
 
     if (this._grid) {
       const ctx = this._grid.getContext("2d")
