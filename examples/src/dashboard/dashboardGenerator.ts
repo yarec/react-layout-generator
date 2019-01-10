@@ -1,11 +1,17 @@
-import Block, { IPosition } from '../../../src/components/Block';
-import Generator, { IGenerator } from '../../../src/generators/Generator';
-import { IPoint, ISize, PositionRef, Unit } from '../../../src/types';
-
-import Blocks from '../../../src/components/Blocks';
-import Params from '../../../src/components/Params';
-
-
+import {
+  Block,
+  Blocks,
+  Generator,
+  IGenerator,
+  IPoint,
+  IPosition,
+  ISize,
+  Params,
+  PositionRef,
+  Unit,
+  updateParamHeight,
+  updateParamWidth
+} from '../importRLG'
 
 
 export default function RLGDesktop(name: string, parent?: IGenerator) {
@@ -16,14 +22,16 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
   const _headerHeight = 24;
   const _footerHeight = 24;
 
-  const _params = new Params([
-    ['viewport', { width: 0, height: 0 }],
-    ['titleHeight', _titleHeight],
-    ['leftSideWidth', _leftSideWidth],
-    ['rightSideWidth', _rightSideWidth],
-    ['headerHeight', _headerHeight],
-    ['footerHeight', _footerHeight]
-  ])
+  const _params = new Params({
+    name: 'dashboard', initialValues: [
+      ['viewport', { width: 0, height: 0 }],
+      ['titleHeight', _titleHeight],
+      ['leftSideWidth', _leftSideWidth],
+      ['rightSideWidth', _rightSideWidth],
+      ['headerHeight', _headerHeight],
+      ['footerHeight', _footerHeight]
+    ]
+  })
 
   function init(g: IGenerator) {
     const params = g.params();
@@ -58,9 +66,11 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           location: Unit.pixel,
           size: Unit.pixel
         },
-        edit: [
-          { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
-        ],
+        editor: {
+          edits: [
+            { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
+          ]
+        },
         location,
         size
       }
@@ -97,9 +107,12 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           location: Unit.pixel,
           size: Unit.pixel
         },
-        edit: [
-          { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
-        ],
+        editor: {
+          edits: [
+            { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
+          ]
+        }
+        ,
         location,
         size
       }
@@ -272,5 +285,5 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     ])
   }
 
-  return new Generator(name, init, _params, undefined, parent);
+  return new Generator(name, init, _params);
 }

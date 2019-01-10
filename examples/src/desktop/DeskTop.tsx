@@ -2,14 +2,19 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-// import { IGenerator } from '../../../src/generators/Generator';
-import Params, { ParamValue } from '../../../src/components/Params';
-import desktopGenerator from '../../../src/generators/desktopGenerator';
-import  { RLGLayout } from '../../../src/RLGLayout';
-import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
-import { EditOptions, ISize, rectSize } from '../../../src/types'
-
-import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
+import {
+  desktopGenerator,
+  EditOptions,
+  IEditHelperProps,
+  IRLGPanelArgs,
+  ISize,
+  Params,
+  ParamValue,
+  rectSize, 
+  RLGLayout, 
+  RLGPanel,
+  Status
+} from '../importRLG'
 
 interface IProps {
   containersize: ISize;
@@ -102,7 +107,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
 
   public render() {
 
-    const contentcontainersize = this.g.containersize('content');
+    // const contentcontainersize = this.g.containersize('content');
 
     return (
       <RLGLayout

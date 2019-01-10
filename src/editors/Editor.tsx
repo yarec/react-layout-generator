@@ -1,6 +1,6 @@
-import Block, {IEdit} from '../components/Block';
-import RLGSelect from '../editors/RLGSelect';
-import {IRect} from '../types';
+import { Block, IEdit } from '../components/Block';
+import { RLGSelect } from '../editors/RLGSelect';
+import { IRect } from '../types';
 import { DebugOptions } from '../types';
 
 /**
@@ -33,6 +33,6 @@ export interface IEditorProps extends React.HTMLProps<HTMLDivElement> {
   edit: IEdit;
   handle: IRect;
   select: RLGSelect | undefined;
-  onUpdate: (reset?: boolean)=>void;
+  onUpdate: (reset?: boolean) => void;
   zIndex: number;
 }

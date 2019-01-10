@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import { 
   dynamicGenerator,
   EditOptions,
+  IEditHelperProps,
   RLGLayout, 
   Status, 
   Unit
-} from '../../../dist/types/react-layout-generator'
-
-import { IEditHelperProps } from '../../../dist/types/editors/EditHelper';
+} from '../importRLG'
 
 // const Title = styled.h2`
 // `

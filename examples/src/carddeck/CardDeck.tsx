@@ -1,11 +1,18 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
-import dynamicGenerator from '../../../src/generators/dynamicGenerator';
-import RLGDynamic from '../../../src/RLGDynamic';
-import {RLGLayout } from '../../../src/RLGLayout'
-import { DebugOptions, EditOptions, PositionRef, Unit } from '../../../src/types';
+import {
+  DebugOptions,
+  dynamicGenerator,
+  EditOptions,
+  IEditHelperProps,
+  PositionRef,
+  RLGDynamic,
+  RLGLayout, 
+  Status,
+  Unit
+} from '../importRLG'
+
 import Deck from '../algos/Deck';
 import cssColor from '../assets/colors';
 // import Note from '../components/Note';

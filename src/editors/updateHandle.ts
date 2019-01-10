@@ -1,4 +1,5 @@
 import { IRect, PositionRef } from '../types'
+
 export type UpdateHandle = (rect: IRect) => IRect
 
 /**
@@ -17,7 +18,7 @@ const halfHandleWidth = 3
  * internal use only
  * @ignore
  */
-export default function getUpdateHandle(ref: PositionRef): UpdateHandle {
+export function getUpdateHandle(ref: PositionRef): UpdateHandle {
   let handle: UpdateHandle = (r: IRect) => {
     return { x: r.x, y: r.y, width: r.width, height: r.height }
   }

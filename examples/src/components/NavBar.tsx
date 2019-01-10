@@ -5,10 +5,12 @@ import cssColor from '../assets/colors';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-
-import columnsGenerator from '../../../src/generators/columnsGenerator';
-import {RLGLayout} from '../../../src/RLGLayout';
-import { DebugOptions, Unit } from '../../../src/types';
+import {
+  columnsGenerator,
+  DebugOptions,
+  RLGLayout,
+  Unit
+} from '../importRLG'
 
 // tslint:disable-next-line:variable-name
 export const Button = styled.button`

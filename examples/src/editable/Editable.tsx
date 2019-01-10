@@ -2,15 +2,25 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import Params, { ParamValue } from '../../../src/components/Params';
-import desktopGenerator from '../../../src/generators/desktopGenerator';
-import { loadFromLocalStorage, saveToLocalStorage } from '../../../src/generators/utils';
-import  { RLGLayout } from '../../../src/RLGLayout';
-import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
-import { DebugOptions, EditOptions, ISize, rectSize, Unit } from '../../../src/types'
+import {
+  DebugOptions,
+  desktopGenerator,
+  EditOptions,
+  IEditHelperProps,
+  IGenerator,
+  IRLGPanelArgs,
+  ISize,
+  loadFromLocalStorage,
+  Params,
+  ParamValue, 
+  rectSize,
+  RLGLayout, 
+  RLGPanel,
+  saveToLocalStorage,
+  Status,
+  Unit
+} from '../importRLG'
 
-import { IEditHelperProps, Status } from '../../../src/editors/EditHelper';
-import { IGenerator } from '../../../src/generators/Generator';
 import EditableText from '../components/EditableText';
 
 // tslint:disable-next-line:variable-name

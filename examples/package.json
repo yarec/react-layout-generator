@@ -1,11 +1,11 @@
 {
-  "name": "react-layout-generator",
+  "name": "react-layout-generator-examples",
   "version": "0.1.0",
-  "description": "In development. Not ready to use.",
+  "description": "examples for react-layout-generator",
   "main": "index.tsx",
   "scripts": {
     "test": "jest",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --mode development --clientLogLevel error",
     "build": "webpack --mode production",
     "transpile": "tsc",
     "deploy": "gh-pages -d examples/dist",

@@ -1,9 +1,11 @@
-import * as React from 'react';
 
-import { ISize } from '../../../src/types';
 
 import styled from 'styled-components';
-import { IOrigin } from '../../../src/components/Block';
+
+import { 
+  IOrigin,
+  ISize
+} from '../importRLG'
 
 interface IProps {
   containersize: ISize;

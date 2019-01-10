@@ -2,8 +2,14 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import Params, { IEditableTextData } from '../../../src/components/Params';
-import { DebugOptions, EditOptions, IOrigin, ISize } from '../../../src/types';
+import {
+  DebugOptions,
+  EditOptions,
+  IEditableTextData,
+  IOrigin,
+  ISize,
+  Params,
+} from '../importRLG'
 
 interface IProps {
   containersize: ISize;

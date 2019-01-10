@@ -1,5 +1,5 @@
-import Params from '../components/Params'
-import Generator from '../generators/Generator'
+import { Params } from '../components/Params'
+import { Generator } from '../generators/Generator'
 
 const params = new Params({
   name: 'generatorTest',

@@ -8,9 +8,9 @@ import {
   PositionChildren
 } from './components/Block';
 import { ParamValue } from './components/Params';
-import RLGContextMenu from './editors/RLGContextMenu';
-import RLGEditLayout from './editors/RLGEditLayout';
-import RLGSelect from './editors/RLGSelect';
+import {RLGContextMenu} from './editors/RLGContextMenu';
+import {RLGEditLayout} from './editors/RLGEditLayout';
+import {RLGSelect} from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
 import {
@@ -492,9 +492,9 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     const props = this.props as { [key: string]: string };
     // tslint:disable-next-line:no-string-literal
-    if (!b && props['blocks']) {
+    if (!b && props['layout']) {
       // tslint:disable-next-line:no-string-literal
-      const rl = gLayouts.get(props['blocks']);
+      const rl = gLayouts.get(props['layout']);
       if (rl) {
         //
       }
@@ -690,8 +690,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.block && p.name) {
-        const ancestor = gLayouts.get(p.block);
+      if (p.layout && p.name) {
+        const ancestor = gLayouts.get(p.layout);
         if (ancestor) {
           return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
         }
@@ -707,7 +707,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.block && p.name) {
+      if (p.layout && p.name) {
         const ancestor = gLayouts.get(p.layout);
         if (ancestor) {
           const location = this.getBoundingLeftTop();

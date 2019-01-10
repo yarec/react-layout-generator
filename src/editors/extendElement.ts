@@ -9,7 +9,7 @@ export type ExtendElement = (
  * internal use only
  * @ignore
  */
-export default function getExtendElement(ref: PositionRef): ExtendElement {
+export function getExtendElement(ref: PositionRef): ExtendElement {
   // default
   let extendElement: ExtendElement = (
     r: IRect,

@@ -99,7 +99,7 @@ class Command implements ICommand {
  * @ignore
  */
 // tslint:disable-next-line:max-classes-per-file
-export default class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState> {
+export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState> {
 
   private _editHelper: EditHelper | undefined;
   private _selected: Map<string, Block> = new Map([]);

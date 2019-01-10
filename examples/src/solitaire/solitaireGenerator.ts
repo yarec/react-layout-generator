@@ -1,8 +1,17 @@
-import Block, { IPosition } from '../../../src/components/Block';
-import Blocks from '../../../src/components/Blocks';
-import Params, { ParamValue } from '../../../src/components/Params';
-import Generator, { ICreate, IGenerator, IGeneratorFunctionArgs } from '../../../src/generators/Generator';
-import { IPoint, ISize, Unit } from '../../../src/types';
+import { 
+  Block,
+  Blocks,
+  Generator,
+  ICreate,
+  IGenerator, 
+  IGeneratorFunctionArgs, 
+  IPoint,
+  IPosition, 
+  ISize,
+  Params, 
+  ParamValue,
+  Unit
+} from '../importRLG'
 
 export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
@@ -14,7 +23,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     ['cardMarginRatio', { x: .18, y: .1 }]
   ];
 
-  const _params = gArgs.exParams ? gArgs.exParams.restore(name, values) : new Params({name, initialValues: values});
+  const _params = gArgs.exParams ? gArgs.exParams.restore(name, values) : new Params({ name, initialValues: values });
 
   function init(g: IGenerator): Blocks {
 
@@ -50,7 +59,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // Save cardSize for functions use
     params.set('cardSize', cardSize);
-    params.set('computedCardSpacing', {x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height})
+    params.set('computedCardSpacing', { x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height })
 
     const blocks = new Blocks([]);
 

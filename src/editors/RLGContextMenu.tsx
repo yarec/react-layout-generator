@@ -21,7 +21,7 @@ interface IContextMenuProps {
  * internal use only
  * @ignore
  */
-export default class RLGContextMenu extends React.Component<IContextMenuProps> {
+export class RLGContextMenu extends React.Component<IContextMenuProps> {
 
   private _root: React.RefObject<HTMLDivElement>;
   // private elementRefs: IElementRef[] = [];

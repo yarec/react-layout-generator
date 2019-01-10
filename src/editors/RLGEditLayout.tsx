@@ -49,7 +49,7 @@ interface IEditLayoutState {
  * internal use only
  * @ignore
  */
-export default class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutState> implements IEditor {
+export class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutState> implements IEditor {
   public _startRect: IRect;
   public _startOrigin: IPoint;
 

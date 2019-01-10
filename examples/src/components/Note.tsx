@@ -2,9 +2,15 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import Block from '../../../src/components/Block';
-import { IGenerator } from '../../../src/generators/Generator';
-import { DebugOptions, EditOptions, IPoint, IRect } from '../../../src/types';
+import {
+  Block,
+  DebugOptions,
+  EditOptions,
+  IGenerator,
+  IPoint,
+  IRect
+} from '../importRLG'
+
 
 const Container = styled.div`
   position: absolute;

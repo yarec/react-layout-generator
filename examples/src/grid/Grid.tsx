@@ -6,25 +6,17 @@ import {
   DebugOptions,
   dynamicGenerator,
   EditOptions,
+  IEditHelperProps,
+  IPoint,
+  IRLGPanelArgs,
+  ISize,
+  rectSize,
   RLGLayout, 
   RLGPanel, 
-  Status, 
+  Status,
+  toPixel, 
   Unit
-} from '../../../dist/types/react-layout-generator'
-
-import { 
-  IPoint,
-  ISize,
-  rectSize
-} from '../../../dist/types/types'
-
-import { IEditHelperProps } from '../../../dist/types/editors/EditHelper'
-
-// import { IGenerator } from '../../../src/generators/Generator';
-// import { RLGLayout  } from '../../../src/RLGLayout';
-import  {IRLGPanelArgs } from '../../../src/RLGPanel';
-
-import { toPixel } from '../../../src/utils';
+} from '../importRLG'
 
 import Button from '../components/Button';
 import Table from '../components/Table';

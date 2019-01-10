@@ -2,7 +2,7 @@ import { Block, IPosition } from '../components/Block'
 import { Blocks } from '../components/Blocks'
 import { Params, ParamValue } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
-import RLGSelect from '../editors/RLGSelect'
+import { RLGSelect } from '../editors/RLGSelect'
 import { ISize } from '../types'
 
 export interface IGeneratorFunctionArgs {
@@ -42,9 +42,9 @@ export class Generator implements IGenerator {
   private _name: string
   private _editHelper: EditHelper | undefined
   private _params: Params
-  private _layouts: Blocks
+  private _blocks: Blocks
   private _select: RLGSelect
-  private _layoutsIterator: IterableIterator<Block> | undefined
+  private _blocksIterator: IterableIterator<Block> | undefined
   private _init: IInit
   private _create: Create | undefined
 
@@ -59,8 +59,8 @@ export class Generator implements IGenerator {
     this._init = init
     this._editHelper = editHelper
     this._create = create
-    this._layouts = new Blocks([])
-    this._layoutsIterator = this._layouts.values()
+    this._blocks = new Blocks([])
+    this._blocksIterator = this._blocks.values()
     this.state = this.start
     this._params = params
   }
@@ -78,7 +78,7 @@ export class Generator implements IGenerator {
   }
 
   public blocks = (): Blocks => {
-    return this._layouts
+    return this._blocks
   }
 
   public select = (): RLGSelect => {
@@ -86,11 +86,11 @@ export class Generator implements IGenerator {
   }
 
   public lookup = (name: string): Block | undefined => {
-    return this._layouts.get(name)
+    return this._blocks.get(name)
   }
 
   public containersize = (name: string): ISize => {
-    const l = this._layouts.get(name)
+    const l = this._blocks.get(name)
     if (l) {
       const r = l.rect()
 
@@ -109,10 +109,10 @@ export class Generator implements IGenerator {
 
   public reset = () => {
     // console.log('reset update blocks')
-    this._layouts = this._init(this)
+    this._blocks = this._init(this)
     this.state = this.start
-    this._layoutsIterator = this._layouts.values()
-    // this._layouts.blocks.forEach((item: Layout) => {
+    this._blocksIterator = this._blocks.values()
+    // this._blocks.blocks.forEach((item: Layout) => {
     //   if (item.g) {
     //     item.g.reset();
     //   }
@@ -120,9 +120,9 @@ export class Generator implements IGenerator {
   }
 
   public clear = () => {
-    this._layouts = new Blocks([])
+    this._blocks = new Blocks([])
     this.state = this.start
-    this._layoutsIterator = this._layouts.values()
+    this._blocksIterator = this._blocks.values()
   }
 
   public start = (): Block | undefined => {
@@ -143,7 +143,7 @@ export class Generator implements IGenerator {
   }
 
   private nextBlock = (): Block | undefined => {
-    this.currentLayout = this._layoutsIterator!.next().value
+    this.currentLayout = this._blocksIterator!.next().value
     if (this.currentLayout) {
       // if (this.currentLayout.g) {
       //   this.state = this.nestedBlock;

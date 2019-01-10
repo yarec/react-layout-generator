@@ -3,13 +3,21 @@ import styled from 'styled-components';
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { IPosition } from '../../../src/components/Block';
-import Params from '../../../src/components/Params';
-import EditHelper, { IEditTool, Status } from '../../../src/editors/EditHelper'
-import { IGenerator } from '../../../src/generators/Generator';
-import rowsGenerator from '../../../src/generators/rowsGenerator';
-import {RLGLayout} from '../../../src/RLGLayout';
-import { DebugOptions, ISize, Unit } from '../../../src/types';
+
+import {
+  DebugOptions,
+  EditHelper,
+  IEditTool,
+  IGenerator,
+  IPosition,
+  ISize,
+  Params,
+  RLGLayout,
+  rowsGenerator,
+  Status, 
+  Unit,
+} from '../importRLG'
+
 import cssColor from '../assets/colors';
 
 // tslint:disable-next-line:variable-name
@@ -45,7 +53,7 @@ interface IToolBarState {
   update: number;
 }
 
-export default class ToolBar extends React.Component<IToolBarProps, IToolBarState> implements IEditTool{
+export default class ToolBar extends React.Component<IToolBarProps, IToolBarState> implements IEditTool {
   private _n: IGenerator;
   private _params: Params;
 

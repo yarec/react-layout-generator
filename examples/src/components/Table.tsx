@@ -1,14 +1,24 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Block, { IPosition } from '../../../src/components/Block';
-import Blocks from '../../../src/components/Blocks';
-import Params from '../../../src/components/Params';
-import { updateParamLocation } from '../../../src/editors/update';
-import Generator, { ICreate, IGenerator } from '../../../src/generators/Generator';
-import { RLGLayout} from '../../../src/RLGLayout';
-import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
-import { DebugOptions, ISize, PositionRef, Unit } from '../../../src/types';
+import {
+  Block,
+  Blocks, 
+  DebugOptions,
+  Generator,
+  ICreate, 
+  IGenerator,
+  IPosition,
+  IRLGPanelArgs,
+  ISize,
+  Params,
+  PositionRef,
+  RLGLayout, 
+  RLGPanel, 
+  Unit,
+  updateParamLocation,
+} from '../importRLG'
+
 import cssColor from '../assets/colors';
 
 // tslint:disable-next-line:variable-name

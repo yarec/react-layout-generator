@@ -1,9 +1,11 @@
 import * as React from 'react';
 
-import {IEditHelperProps} from '../../../src/editors/EditHelper';
-import { IGenerator } from '../../../src/generators/Generator';
-import { RLGLayout } from '../../../src/RLGLayout';
-import { Unit } from '../../../src/types';
+import {
+  IEditHelperProps,
+  IGenerator,
+  RLGLayout,
+  Unit
+} from '../importRLG'
 
 import FoundationStack from './FoundationStack';
 import solitaireGenerator from './solitaireGenerator';

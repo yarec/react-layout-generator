@@ -1,14 +1,26 @@
 import * as React from 'react';
 
-import Block, { IPosition } from '../../../src/components/Block';
-import Blocks from '../../../src/components/Blocks';
-import Params from '../../../src/components/Params';
-import { IEditHelperProps } from '../../../src/editors/EditHelper';
-import { updateParamLocation, updateParamOffset } from '../../../src/editors/update';
-import Generator, { IGenerator } from '../../../src/generators/Generator';
-import { RLGLayout } from '../../../src/RLGLayout';
-import { IRLGPanelArgs, RLGPanel } from '../../../src/RLGPanel';
-import { DebugOptions, EditOptions, IPoint, ISize, PositionRef, Unit } from '../../../src/types';
+import {
+  Block,
+  Blocks, 
+  DebugOptions,
+  EditOptions,
+  Generator,
+  IEditHelperProps,
+  IGenerator,
+  IPoint,
+  IPosition,
+  IRLGPanelArgs,
+  ISize,
+  Params,
+  PositionRef,
+  RLGLayout, 
+  RLGPanel, 
+  Unit,
+  updateParamLocation,
+  updateParamOffset
+} from '../importRLG'
+
 import { t1 } from './tree';
 import TreeMap from './TreeMap';
 

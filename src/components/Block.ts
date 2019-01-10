@@ -1,8 +1,8 @@
 // import * as React from 'react'
 
 import { cursor } from '../editors/cursor'
-import getExtendElement, { ExtendElement } from '../editors/extendElement'
-import getUpdateHandle, { UpdateHandle } from '../editors/updateHandle'
+import { getExtendElement, ExtendElement } from '../editors/extendElement'
+import { getUpdateHandle, UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
 import { flowLayoutLayer } from '../generators/utils'
@@ -418,25 +418,37 @@ export class Block {
     this._position.units.origin.y = p.units.origin.y * 0.01
 
     // Convert percents to decimal
+    const locUnit = this._position.units.location
     if (
-      this._position.units.location === Unit.percent ||
-      this._position.units.location === Unit.preserve ||
-      this._position.units.location === Unit.preserveWidth ||
-      this._position.units.location === Unit.preserveHeight
+      locUnit === Unit.percent ||
+      locUnit === Unit.preserve ||
+      locUnit === Unit.preserveWidth ||
+      locUnit === Unit.preserveHeight
     ) {
       this._position.location.x = p.location.x * 0.01
       this._position.location.y = p.location.y * 0.01
+    } else if (locUnit === Unit.pixel) {
+      this._position.location.x = p.location.x
+      this._position.location.y = p.location.y
+    } else {
+      console.error('Block.updatePosition add support for new unit')
     }
 
     // Convert percents to decimal
+    const sizeUnit = this._position.units.size
     if (
-      this._position.units.size === Unit.percent ||
-      this._position.units.size === Unit.preserve ||
-      this._position.units.size === Unit.preserveWidth ||
-      this._position.units.size === Unit.preserveHeight
+      sizeUnit === Unit.percent ||
+      sizeUnit === Unit.preserve ||
+      sizeUnit === Unit.preserveWidth ||
+      sizeUnit === Unit.preserveHeight
     ) {
       this._position.size.width = p.size.width * 0.01
       this._position.size.height = p.size.height * 0.01
+    } else if (sizeUnit === Unit.pixel) {
+      this._position.size.width = p.size.width
+      this._position.size.height = p.size.height
+    } else {
+      console.error('Block.updatePosition add support for new unit')
     }
 
     // Convert percents to decimal
@@ -445,6 +457,8 @@ export class Block {
       this._position.align.source.y = p.align!.source.y * 0.01
       this._position.align.self.x = p.align!.self.x * 0.01
       this._position.align.self.y = p.align!.self.y * 0.01
+      this._position.align.offset.x = p.align!.offset.x
+      this._position.align.offset.y = p.align!.offset.y
     }
 
     if (this._position.editor) {
