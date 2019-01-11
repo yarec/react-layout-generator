@@ -8,9 +8,9 @@ import {
   PositionChildren
 } from './components/Block';
 import { ParamValue } from './components/Params';
-import {RLGContextMenu} from './editors/RLGContextMenu';
-import {RLGEditLayout} from './editors/RLGEditLayout';
-import {RLGSelect} from './editors/RLGSelect';
+import { RLGContextMenu } from './editors/RLGContextMenu';
+import { RLGEditLayout } from './editors/RLGEditLayout';
+import { RLGSelect } from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
 import {
@@ -184,9 +184,14 @@ export interface IRLGLayoutState {
  * @noInheritDoc
  */
 export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
+
+  get select() {
+    return this._select;
+  }
+
   private _root: HTMLDivElement | undefined = undefined;
   private _g: IGenerator;
-  private _data: Map<string, any> = new Map();
+  private _context: Map<string, any> = new Map();
   private _edit: EditOptions = EditOptions.none;
   private _debug: DebugOptions = DebugOptions.none;
   private _startRendering: number = Date.now();
@@ -199,9 +204,9 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   constructor(props: IRLGLayoutProps) {
     super(props);
     this.state = {
-      height: 0,
+      height: props.containersize ? props.containersize.height : 0 ,
       update: 0,
-      width: 0,
+      width: props.containersize ? props.containersize.width : 0,
       contextMenu: undefined,
       contextMenuActive: false,
       devicePixelRatio: window.devicePixelRatio
@@ -210,6 +215,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this._g = props.g;
 
     this.initProps(props);
+
+    console.log('props', props)
   }
 
   public componentDidMount() {
@@ -318,6 +325,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   }
 
   private initProps(props: IRLGLayoutProps) {
+    
+
     this._edit = props.edit ? props.edit : EditOptions.none;
     this._debug = DebugOptions.none;
     if (props.debug) {
@@ -538,13 +547,14 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             edit: this._edit,
             debug: this._debug,
             g: this.props.g,
-            context: this._data,
+            context: this._context,
             // update: this.onUpdate
           };
           const cc = React.cloneElement(child,
             {
               ...child.props, ...{
                 key: b.name,
+                id: b.name,
 
                 ...args,
 
@@ -646,13 +656,14 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         edit: this._edit,
         debug: this._debug,
         g: this.props.g,
-        context: this._data,
+        context: this._context,
         // update: this.onUpdate
       };
       const ch = React.cloneElement(child,
         {
           ...child.props, ...{
             key: b.name,
+            id: b.name,
 
             ...args,
 
@@ -836,8 +847,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     document.removeEventListener('mouseup', this.onHtmlMouseUp);
   }
 
-  private select = (instance: RLGSelect) => {
-    this._select = instance
+  private selectCallback = (instance: RLGSelect) => {
+  this._select = instance
   }
 
   private onUpdate = (reset: boolean = false) => {
@@ -910,13 +921,13 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     );
 
 
-    if (this.props.edit) {
+    if (elements && this.props.edit) {
       elements.unshift(
         <RLGSelect
           name={`select-${name}`}
           key={`select-${name}`}
           debug={this._debug}
-          select={this.select}
+          selectCallback={this.selectCallback}
           boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
           onUpdate={this.onUpdate}
           g={this._g}
@@ -924,13 +935,15 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       );
     }
 
-    elements.push(
-      <ReactResizeDetector
-        key={`contentResizeDetector ${this.props.name}`}
-        handleWidth={true}
-        handleHeight={true}
-        onResize={this.onResize}
-      />);
+    if (elements && this.props.containersize === undefined) {
+      elements.push(
+        <ReactResizeDetector
+          key={`contentResizeDetector ${this.props.name}`}
+          handleWidth={true}
+          handleHeight={true}
+          onResize={this.onResize}
+        />);
+    }
 
     return elements;
   }
@@ -974,13 +987,14 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           edit: this._edit,
           debug: this._debug,
           g: this.props.g,
-          context: this._data,
+          context: this._context,
           // update: this.onUpdate
         };
         return (React.cloneElement(nestedChild,
           {
             ...nestedChild.props, ...{
               key: `${nestedChild.key}`,
+              id: `${nestedChild.key}`,
 
               ...nArgs,
 
@@ -998,13 +1012,14 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       edit: this._edit,
       debug: this._debug,
       g: this.props.g,
-      context: this._data,
+      context: this._context,
       // update: this.onUpdate
     };
     return (React.cloneElement(child,
       {
         ...child.props, ...{
           key: b.name,
+          id: b.name,
 
           ...args,
 

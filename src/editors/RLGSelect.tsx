@@ -15,7 +15,7 @@ export interface IRLGSelectProps {
   name: string;
   boundary: IRect;
   debug?: DebugOptions;
-  select: (instance: RLGSelect) => void;
+  selectCallback: (instance: RLGSelect) => void;
   onUpdate: (reset?: boolean) => void;
   g: IGenerator;
 }
@@ -109,7 +109,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   constructor(props: IRLGSelectProps) {
     super(props);
     // set instance
-    this.props.select(this);
+    this.props.selectCallback(this);
 
     this._editHelper = this.props.g.editor &&  this.props.g.editor();
 

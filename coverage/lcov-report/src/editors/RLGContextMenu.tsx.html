@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/editors/RLGContextMenu.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/editors</a> RLGContextMenu.tsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.24% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>10/58</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.55% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/55</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+&nbsp;
+import { IMenuItem } from '../components/Block';
+import { DebugOptions, IPoint, ISize } from '../types';
+import '../assets/styles.css'
+&nbsp;
+/**
+ * internal use only
+ * @ignore
+ */
+interface IContextMenuProps {
+  commands: IMenuItem[] | undefined;
+  location: IPoint;
+  bounds: ISize;
+  debug: DebugOptions;
+  hideMenu: () =&gt; void;
+  zIndex: number;
+}
+&nbsp;
+/**
+ * internal use only
+ * @ignore
+ */
+export class RLGContextMenu extends React.Component&lt;IContextMenuProps&gt; {
+&nbsp;
+  private _root: React.RefObject&lt;HTMLDivElement&gt;;
+  // private elementRefs: IElementRef[] = [];
+&nbsp;
+<span class="fstat-no" title="function not covered" >  constructor(</span>props: IContextMenuProps) {
+<span class="cstat-no" title="statement not covered" >    super(props);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._root = React.createRef();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public componentDidMount() {</span>
+<span class="cstat-no" title="statement not covered" >    document.addEventListener('click', this._onHtmlClick);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._init();</span>
+  };
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public componentWillUnmount() {</span>
+<span class="cstat-no" title="statement not covered" >    document.removeEventListener('click', this._onHtmlClick);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public render() {</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className={'dropdown'} style={{ zIndex: this.props.zIndex + 10 }}&gt;
+        &lt;div ref={this._root} className='dropdown-content'&gt;
+          {this.createChildren()}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  private createChildren() {</span></span>
+    const jsx: JSX.Element[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >    if (this.props.commands) {</span>
+<span class="cstat-no" title="statement not covered" >      this.props.commands.forEach(<span class="fstat-no" title="function not covered" >(</span>c: IMenuItem, i: number) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (c.name === '') {</span>
+<span class="cstat-no" title="statement not covered" >          jsx.push(</span>
+            &lt;hr key={`sep${i}`} className='separator' /&gt;
+          )
+        } else {
+<span class="cstat-no" title="statement not covered" >          if (c.disabled) {</span>
+<span class="cstat-no" title="statement not covered" >            jsx.push(</span>
+              &lt;div key={c.name} className='disabled'&gt;{c.name}&lt;/div&gt;
+            )
+          } else {
+            // onMouseDown needed to stopPropagation so that onClick works
+            // otherwise onParentMouseDown gets called which results
+            // in no onClick event on menu items
+<span class="cstat-no" title="statement not covered" >            jsx.push(</span>
+              &lt;a
+                key={c.name}
+                href='#'
+                onMouseDown={this._onMouseDown}
+                onClick={this._onClick(c.command)}
+              &gt;
+                {c.name}
+              &lt;/a&gt;
+            )
+          }
+        }
+      })
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return jsx;</span>
+  }
+&nbsp;
+  private <span class="cstat-no" title="statement not covered" >_onMouseDown = <span class="fstat-no" title="function not covered" >(</span>e: React.MouseEvent&lt;HTMLAnchorElement&gt;) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    e.stopPropagation();</span>
+  }
+&nbsp;
+  private <span class="cstat-no" title="statement not covered" >_onClick = <span class="fstat-no" title="function not covered" >(</span>command?: () =&gt; void) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(</span>e: React.MouseEvent&lt;HTMLAnchorElement&gt;) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      e.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >      e.stopPropagation();</span>
+<span class="cstat-no" title="statement not covered" >      if (command) {</span>
+<span class="cstat-no" title="statement not covered" >        command();</span>
+      };
+&nbsp;
+    }
+  }
+&nbsp;
+  private <span class="cstat-no" title="statement not covered" >_init = <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+&nbsp;
+    const clickX = <span class="cstat-no" title="statement not covered" >this.props.location.x;</span>
+    const clickY = <span class="cstat-no" title="statement not covered" >this.props.location.y;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this._root.current) {</span>
+      const rootW = <span class="cstat-no" title="statement not covered" >this._root.current.offsetWidth;</span>
+      const rootH = <span class="cstat-no" title="statement not covered" >this._root.current.offsetHeight;</span>
+&nbsp;
+      const right = <span class="cstat-no" title="statement not covered" >(this.props.bounds.width - clickX) &gt; rootW;</span>
+      const left = <span class="cstat-no" title="statement not covered" >!right;</span>
+      const top = <span class="cstat-no" title="statement not covered" >(this.props.bounds.height - clickY) &gt; rootH;</span>
+      const bottom = <span class="cstat-no" title="statement not covered" >!top;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (right) {</span>
+<span class="cstat-no" title="statement not covered" >        this._root.current.style.left = `${clickX + 5}px`;</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (left) {</span>
+<span class="cstat-no" title="statement not covered" >        this._root.current.style.left = `${clickX - rootW - 5}px`;</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (top) {</span>
+<span class="cstat-no" title="statement not covered" >        this._root.current.style.top = `${clickY + 5}px`;</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (bottom) {</span>
+<span class="cstat-no" title="statement not covered" >        this._root.current.style.top = `${clickY - rootH - 5}px`;</span>
+      }
+    }
+  };
+&nbsp;
+  private <span class="cstat-no" title="statement not covered" >_onHtmlClick = <span class="fstat-no" title="function not covered" >(</span>event: MouseEvent) =&gt; {</span>
+&nbsp;
+    let wasOutside = <span class="cstat-no" title="statement not covered" >false;</span>
+<span class="cstat-no" title="statement not covered" >    if (event &amp;&amp; event.target) {</span>
+<span class="cstat-no" title="statement not covered" >      wasOutside = !(event.target === this._root.current);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (wasOutside) {</span>
+<span class="cstat-no" title="statement not covered" >      this.props.hideMenu();</span>
+    }
+  };
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jan 10 2019 20:57:45 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

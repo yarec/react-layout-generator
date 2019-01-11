@@ -33,11 +33,12 @@ export function stringToUnit(data: string) {
       return Unit.percent
     }
     case 'a': {
+      return Unit.unmanaged
       break
     }
     case 'h': {
       switch (data.charAt(data.length - 2)) {
-        case '%': {
+        case 'p': {
           return Unit.preserveHeight
         }
         case 'a': {
@@ -48,7 +49,7 @@ export function stringToUnit(data: string) {
     }
     case 'w': {
       switch (data.charAt(data.length - 2)) {
-        case '%': {
+        case 'p': {
           return Unit.preserveWidth
         }
         case 'a': {

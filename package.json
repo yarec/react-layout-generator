@@ -34,7 +34,8 @@
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
     "docs": "typedoc --out docs --target es6 --excludePrivate --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
-    "test": "jest --coverage",
+    "test": "jest",
+    "covtest": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
@@ -57,8 +58,15 @@
     }
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/testSetup.js"
+    ],
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)$": "ts-jest",
+      ".(css)$": "<rootDir>/node_modules/jest-css-modules-transform"
+    },
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/src/assets/css/__mocks__/styleMock.js"
     },
     "testEnvironment": "node",
     "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
@@ -71,7 +79,8 @@
       "/node_modules/",
       "/test/",
       "/dist/",
-      ".rpt2_cache"
+      ".rpt2_cache",
+      "/src/react-layout-generator.ts" 
     ],
     "coverageThreshold": {
       "global": {
@@ -85,8 +94,11 @@
       "dist"
     ],
     "collectCoverageFrom": [
-      "src/*.{ts|tsx}"
-    ]
+      "src/**/*.{ts|tsx}"
+    ],
+    "globals": {
+      "window": true
+    }
   },
   "prettier": {
     "semi": false,
@@ -101,9 +113,12 @@
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@types/enzyme": "^3.1.15",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.3.2",
+    "@types/jsdom": "^12.2.1",
     "@types/node": "^10.11.0",
     "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
     "@types/react-resize-detector": "^3.1.0",
     "@types/underscore": "^1.8.9",
     "colors": "^1.3.2",
@@ -113,14 +128,18 @@
     "cz-conventional-changelog": "^2.1.0",
     "deep-equal": "^1.0.1",
     "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "husky": "^1.0.1",
     "jest": "^23.6.0",
     "jest-config": "^23.6.0",
+    "jest-css-modules-transform": "^2.1.1",
+    "jsdom": "^13.1.0",
     "lint-staged": "^8.0.0",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-resize-detector": "^3.4.0",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",

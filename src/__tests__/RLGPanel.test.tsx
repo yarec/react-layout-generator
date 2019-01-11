@@ -6,6 +6,7 @@ import { RLGLayout } from '../RLGLayout'
 import { DebugOptions, EditOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
+import { RLGPanel, IRLGPanelArgs } from '../RLGPanel';
 
 const { mount } = Enzyme
 
@@ -36,8 +37,21 @@ describe('RLGLayout', () => {
     expect(wrapper.props().debug).toEqual(DebugOptions.all);
   });
 
-  test('it should allow props to be set #2', () => {
-    const wrapper = mount(<RLGLayout name='test#2' edit={EditOptions.all} g={g} />)
+  test('RLGPanel test #1', () => {
+    const wrapper = mount(
+      <RLGLayout name='panelTest#1' edit={EditOptions.all} g={g} >
+        <RLGPanel
+          key={'a'}
+          data-layout={{ name: 'a' }}
+        >
+          {(args: IRLGPanelArgs) => (
+            <div>
+              <span >Panel</span>
+            </div>
+          )}
+        </RLGPanel>
+      </RLGLayout>
+    )
     expect(wrapper.props().edit).toEqual(EditOptions.all);
   });
 })

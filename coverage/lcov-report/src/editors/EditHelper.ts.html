@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/editors/EditHelper.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/editors</a> EditHelper.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.43% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/42</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">22.22% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/40</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface IEditHelperProps {
+  editHelper: () =&gt; EditHelper
+}
+&nbsp;
+export enum Status {
+  disabled = 0,
+  down,
+  up
+}
+&nbsp;
+export interface ICommand {
+  name: string
+  command: (status: Status) =&gt; Status | undefined
+  status?: (() =&gt; Status) | Status | undefined
+}
+&nbsp;
+export interface IEditTool {
+  updateTool: () =&gt; void
+}
+&nbsp;
+export class EditHelper {
+  private _commands: Map&lt;string, (state: Status) =&gt; Status | undefined&gt;
+  private _status: Map&lt;string, (() =&gt; Status) | number | undefined&gt;
+  private _updateTool: IEditTool | undefined
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  constructor() {</span></span>
+<span class="cstat-no" title="statement not covered" >    this._commands = new Map()</span>
+<span class="cstat-no" title="statement not covered" >    this._status = new Map()</span>
+<span class="cstat-no" title="statement not covered" >    this._updateTool = undefined</span>
+  }
+&nbsp;
+  public <span class="cstat-no" title="statement not covered" >register = <span class="fstat-no" title="function not covered" >(</span>editTool: IEditTool) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    this._updateTool = editTool</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public clear() {</span>
+<span class="cstat-no" title="statement not covered" >    this._commands.clear()</span>
+<span class="cstat-no" title="statement not covered" >    this._status.clear()</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  public load(</span>commands: ICommand[]) {</span>
+<span class="cstat-no" title="statement not covered" >    this._commands.clear()</span>
+<span class="cstat-no" title="statement not covered" >    this._status.clear()</span>
+<span class="cstat-no" title="statement not covered" >    commands.forEach(<span class="fstat-no" title="function not covered" >(</span>item: ICommand) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this._commands.set(item.name, item.command)</span>
+<span class="cstat-no" title="statement not covered" >      this._status.set(item.name, item.status)</span>
+    })
+&nbsp;
+    // this._status.forEach((item: () =&gt; Status, name: string) =&gt; {console.log(`Status ${name} ${item()}`);});
+    // console.log('update EditHelper', this._updateTool ? 'registered' : 'not registered');
+<span class="cstat-no" title="statement not covered" >    if (this._updateTool) {</span>
+<span class="cstat-no" title="statement not covered" >      this._updateTool.updateTool()</span>
+    }
+  }
+&nbsp;
+  public <span class="cstat-no" title="statement not covered" >do = <span class="fstat-no" title="function not covered" >(</span>name: string) =&gt; {</span>
+    const command = <span class="cstat-no" title="statement not covered" >this._commands.get(name)</span>
+<span class="cstat-no" title="statement not covered" >    if (command) {</span>
+      const v = <span class="cstat-no" title="statement not covered" >this._status.get(name)</span>
+<span class="cstat-no" title="statement not covered" >      if (v &amp;&amp; typeof v === 'function') {</span>
+<span class="cstat-no" title="statement not covered" >        command(v())</span>
+      } else <span class="cstat-no" title="statement not covered" >if (v &amp;&amp; typeof v === 'number') {</span>
+        const status = <span class="cstat-no" title="statement not covered" >command(v as Status)</span>
+<span class="cstat-no" title="statement not covered" >        if (status) {</span>
+<span class="cstat-no" title="statement not covered" >          this._status.set(name, status)</span>
+        }
+      }
+    }
+  }
+&nbsp;
+  public <span class="cstat-no" title="statement not covered" >status = <span class="fstat-no" title="function not covered" >(</span>name: string) =&gt; {</span>
+    // console.log('EditHelpers status', name);
+    const r = <span class="cstat-no" title="statement not covered" >this._status.get(name)</span>
+<span class="cstat-no" title="statement not covered" >    if (r &amp;&amp; typeof r === 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      return r()</span>
+    } else <span class="cstat-no" title="statement not covered" >if (r &amp;&amp; typeof r === 'number') {</span>
+<span class="cstat-no" title="statement not covered" >      return r as Status</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return Status.disabled</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jan 10 2019 20:57:45 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

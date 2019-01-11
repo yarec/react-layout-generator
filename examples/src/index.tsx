@@ -97,8 +97,8 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
       <ErrorBoundary>
           <RLGLayout
             name='framework'
-            debug={DebugOptions.all}
-            edit={EditOptions.all}
+            debug={DebugOptions.none}
+            edit={EditOptions.none}
             g={this.g}
           >
             <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >

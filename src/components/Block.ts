@@ -430,6 +430,12 @@ export class Block {
     } else if (locUnit === Unit.pixel) {
       this._position.location.x = p.location.x
       this._position.location.y = p.location.y
+    } else if (
+      locUnit === Unit.unmanaged ||
+      locUnit === Unit.unmanagedWidth ||
+      locUnit === Unit.unmanagedHeight
+    ) {
+      // TODO needed? only applies to size
     } else {
       console.error('Block.updatePosition add support for new unit')
     }
@@ -447,6 +453,12 @@ export class Block {
     } else if (sizeUnit === Unit.pixel) {
       this._position.size.width = p.size.width
       this._position.size.height = p.size.height
+    } else if (
+      sizeUnit === Unit.unmanaged ||
+      sizeUnit === Unit.unmanagedWidth ||
+      sizeUnit === Unit.unmanagedHeight
+    ) {
+      // TODO needed? only applies to size
     } else {
       console.error('Block.updatePosition add support for new unit')
     }

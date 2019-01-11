@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for react-layout-generator.ts</title>
+    <title>Code coverage report for src/react-layout-generator.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="prettify.css" />
-    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="..\prettify.css" />
+    <link rel="stylesheet" href="..\base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(sort-arrow-sprite.png);
+            background-image: url(..\sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="index.html">All files</a> react-layout-generator.ts
+      <a href="..\index.html">All files</a> / <a href="index.html">src</a> react-layout-generator.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/28</span>
+        <span class='fraction'>0/30</span>
       </div>
     </div>
   </div>
@@ -95,7 +95,9 @@
 50
 51
 52
-53</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+53
+54
+55</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,16 +121,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -139,12 +132,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
@@ -169,7 +173,12 @@
 } from './types'
 <span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >PixelPoint,</span> <span class="cstat-no" title="statement not covered" >toPixel,</span> <span class="cstat-no" title="statement not covered" >toPercent </span>} from './utils'</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >EditHelper,</span> IEditTool, IEditHelperProps, <span class="cstat-no" title="statement not covered" >Status </span>} from './editors/EditHelper'</span>
+<span class="cstat-no" title="statement not covered" >export {</span>
+<span class="cstat-no" title="statement not covered" >  EditHelper,</span>
+  IEditTool,
+  IEditHelperProps,
+<span class="cstat-no" title="statement not covered" >  Status</span>
+} from './editors/EditHelper'
 <span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >columnsGenerator </span>} from './generators/columnsGenerator'</span>
 <span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >desktopGenerator </span>} from './generators/desktopGenerator'</span>
 <span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >dynamicGenerator </span>} from './generators/dynamicGenerator'</span>
@@ -195,20 +204,17 @@
 <span class="cstat-no" title="statement not covered" >export { <span class="cstat-no" title="statement not covered" >Blocks </span>} from './components/Blocks'</span>
 <span class="cstat-no" title="statement not covered" >export { IEditableTextData, <span class="cstat-no" title="statement not covered" >Params,</span> ParamValue } from './components/Params'</span>
 &nbsp;
-&nbsp;
-// 
-&nbsp;
-&nbsp;
+//
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 17:20:21 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jan 10 2019 20:44:13 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
-<script src="prettify.js"></script>
+<script src="..\prettify.js"></script>
 <script>
 window.onload = function () {
         if (typeof prettyPrint === 'function') {
@@ -216,6 +222,6 @@ window.onload = function () {
         }
 };
 </script>
-<script src="sorter.js"></script>
+<script src="..\sorter.js"></script>
 </body>
 </html>
