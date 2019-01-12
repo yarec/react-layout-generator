@@ -2,7 +2,6 @@
 // import "core-js/fn/array.find"
 // ...
 
-export { RLGDynamic } from './RLGDynamic'
 export { RLGLayout } from './RLGLayout'
 export { RLGPanel, IRLGPanelArgs } from './RLGPanel'
 
@@ -14,6 +13,7 @@ export {
   IPoint,
   IOrigin,
   IRect,
+  OverflowOptions,
   PositionRef,
   rectPoint,
   rectSize

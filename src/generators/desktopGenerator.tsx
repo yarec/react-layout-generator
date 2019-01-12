@@ -11,7 +11,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
   const _leftSideWidth = 200;
   const _rightSideWidth = 0;
   const _headerHeight = 24;
-  const _contentHeaderHeight = 0;
   const _footerHeight = 24;
 
   const values: Array<[string, ParamValue]> = [
@@ -21,7 +20,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
     ['leftSideWidth', _leftSideWidth],
     ['rightSideWidth', _rightSideWidth],
     ['headerHeight', _headerHeight],
-    ['contentHeaderHeight', _contentHeaderHeight],
     ['footerHeight', _footerHeight]
   ];
 
@@ -38,7 +36,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
     let leftSideWidth = params.get('leftSideWidth') as number;
     let rightSideWidth = params.get('rightSideWidth') as number;
     const headerHeight = params.get('headerHeight') as number;
-    const contentHeaderHeight = params.get('contentHeaderHeight') as number;
     const footerHeight = params.get('footerHeight') as number;
 
     if (containersize.width < 600) {
@@ -55,7 +52,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
     leftSide();
     rightSde();
     header();
-    contentHeader();
     content();
     footer();
 
@@ -102,11 +98,11 @@ export function desktopGenerator(name: string, exParams?: Params) {
     function content() {
       location = {
         x: leftSideWidth,
-        y: titleHeight + headerHeight + contentHeaderHeight
+        y: titleHeight + headerHeight
       };
       size = {
         width: containersize.width - rightSideWidth - leftSideWidth,
-        height: containersize.height - titleHeight - headerHeight - contentHeaderHeight - footerHeight
+        height: containersize.height - titleHeight - headerHeight  - footerHeight
       };
 
       p = {
@@ -159,32 +155,32 @@ export function desktopGenerator(name: string, exParams?: Params) {
       blocks.set('header', p, g);
     }
 
-    function contentHeader() {
-      location = {
-        x: leftSideWidth,
-        y: titleHeight + headerHeight
-      };
-      size = {
-        width: containersize.width - leftSideWidth - rightSideWidth,
-        height: contentHeaderHeight
-      };
+    // function contentHeader() {
+    //   location = {
+    //     x: leftSideWidth,
+    //     y: titleHeight + headerHeight
+    //   };
+    //   size = {
+    //     width: containersize.width - leftSideWidth - rightSideWidth,
+    //     height: contentHeaderHeight
+    //   };
 
-      p = {
-        units: {
-          origin: { x: 0, y: 0 },
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
-        editor: {
-          edits: [
-            { ref: PositionRef.bottom, variable: 'contentHeaderHeight', updateParam: updateParamHeight }
-          ]
-        },
-        location,
-        size
-      };
-      blocks.set('contentHeader', p, g);
-    }
+    //   p = {
+    //     units: {
+    //       origin: { x: 0, y: 0 },
+    //       location: Unit.pixel,
+    //       size: Unit.pixel
+    //     },
+    //     editor: {
+    //       edits: [
+    //         { ref: PositionRef.bottom, variable: 'contentHeaderHeight', updateParam: updateParamHeight }
+    //       ]
+    //     },
+    //     location,
+    //     size
+    //   };
+    //   blocks.set('contentHeader', p, g);
+    // }
 
     function rightSde() {
       if (fullWidthHeaders) {

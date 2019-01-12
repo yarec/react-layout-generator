@@ -3,6 +3,13 @@
 //   [K in keyof T]: T[K] extends object ? NestedFlags<T[K]> : boolean
 // }
 
+export enum OverflowOptions {
+  visible = 0,
+  hidden,
+  scroll,
+  auto
+}
+
 export interface IOrigin {
   x: number
   y: number
@@ -22,6 +29,9 @@ export enum Unit {
   unmanaged, // a
   unmanagedWidth, // aw
   unmanagedHeight // ah
+}
+export function isUnmanaged(u: Unit) {
+  return u >= Unit.unmanaged
 }
 
 export function stringToUnit(data: string) {

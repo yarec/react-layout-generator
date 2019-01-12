@@ -14,22 +14,35 @@ import { RLGSelect } from './editors/RLGSelect';
 import { IGenerator } from './generators/Generator';
 import { IRLGPanelArgs } from './RLGPanel';
 import {
-  DebugOptions, DebugOptionsArray, EditOptions, IPoint, IRect, ISize, namedPositionRef, PositionRef, Unit,
+  DebugOptions,
+  DebugOptionsArray,
+  EditOptions,
+  IPoint,
+  IRect,
+  ISize,
+  namedPositionRef,
+  PositionRef,
+  Unit,
   namedUnit,
+  OverflowOptions,
+  isUnmanaged,
+  rectSize,
 } from './types';
 
 
-/**
- * internal use only
- * @ignore
- */
-interface ILayoutStyle {
-  style: React.CSSProperties;
-  rect: IRect;
-  position: IPosition;
-  selected: boolean;
-  zIndex: number;
-}
+// /**
+//  * internal use only
+//  * @ignore
+//  */
+// interface ILayoutStyle {
+//   style: React.CSSProperties;
+//   rect: IRect;
+//   position: IPosition;
+//   selected: boolean;
+//   zIndex: number;
+//   overflowX?: OverflowOptions;
+//   overflowY?: OverflowOptions;
+// }
 
 /**
  * internal use only
@@ -52,21 +65,21 @@ export function selectedStyle(rect: IRect) {
   }
 }
 
-/**
- * internal use only
- * @ignore
- */
-export function layoutStyle(args: ILayoutStyle) {
-  return tileStyle(
-    args.style,
-    args.rect.x,
-    args.rect.y,
-    args.rect.width,
-    args.rect.height,
-    args.position.units.size,
-    args.selected,
-    args.zIndex);
-}
+// /**
+//  * internal use only
+//  * @ignore
+//  */
+// function layoutStyle(args: ILayoutStyle) {
+//   return tileStyle(
+//     args.style,
+//     args.rect.x,
+//     args.rect.y,
+//     args.rect.width,
+//     args.rect.height,
+//     args.position.units.size,
+//     args.selected,
+//     args.zIndex);
+// }
 
 /**
  * internal use only
@@ -124,7 +137,6 @@ function tileStyle(
     // overflow: 'hidden',
     zIndex,
     // ...border,
-    overflow: 'hidden',
     ...style
   };
 }
@@ -140,7 +152,7 @@ export let gInProgress: number = 0;
  * @ignore
  */
 export const gLayouts: Map<string, RLGLayout> = new Map();
-
+export const gContext: Map<string, any> = new Map();
 
 /**
  * Props for RLGLayout.
@@ -159,6 +171,8 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
   params?: Array<[string, ParamValue]>;
+  overflowX?: OverflowOptions;
+  overflowY?: OverflowOptions;
 }
 
 export interface IRLGLayoutState {
@@ -174,7 +188,7 @@ export interface IRLGLayoutState {
  * This class is required in order to use RLG.
  * 
  * Usage:
- * ```html
+ * ```jsx
  *  <RLGLayout
  *    name={}
  *  >
@@ -191,7 +205,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
   private _root: HTMLDivElement | undefined = undefined;
   private _g: IGenerator;
-  private _context: Map<string, any> = new Map();
+
   private _edit: EditOptions = EditOptions.none;
   private _debug: DebugOptions = DebugOptions.none;
   private _startRendering: number = Date.now();
@@ -204,7 +218,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   constructor(props: IRLGLayoutProps) {
     super(props);
     this.state = {
-      height: props.containersize ? props.containersize.height : 0 ,
+      height: props.containersize ? props.containersize.height : 0,
       update: 0,
       width: props.containersize ? props.containersize.width : 0,
       contextMenu: undefined,
@@ -215,8 +229,6 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this._g = props.g;
 
     this.initProps(props);
-
-    console.log('props', props)
   }
 
   public componentDidMount() {
@@ -261,12 +273,34 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
   public render(): React.ReactNode {
 
+    function overflowFn(options: OverflowOptions | undefined) {
+      let v = 'visible'
+
+      if (options) {
+        if (options === OverflowOptions.auto) {
+          v = 'auto'
+        }
+        if (options === OverflowOptions.hidden) {
+          v = 'hidden'
+        }
+        if (options === OverflowOptions.scroll) {
+          v = 'scroll'
+        }
+      }
+      return v
+    }
+
+
     this.initLayout();
 
     // this.state.update can be used for debug tracing during or after editing
     // if (this.state.update === 0) {
     //   console.log('render');
     // }
+
+    const style = (this.props.overflowX || this.props.overflowY) ?
+      { width: '100%', height: '100%', overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}` } :
+      { width: '100%', height: '100%' }
 
     if (this.props.edit) {
       this.frameStart();
@@ -275,7 +309,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         <div
           id={'main'}
           ref={this.onRootRef}
-          style={{ height: '100%', width: '100%' }}
+          style={style}
           onMouseDown={this.onParentMouseDown}
           onContextMenu={this.onParentContextMenu()}
         >
@@ -301,7 +335,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       <div
         id={'main'}
         ref={this.onRootRef}
-        style={{ height: '100%', width: '100%' }}
+        style={style}
       >
         {this.content()}
       </div>
@@ -325,7 +359,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   }
 
   private initProps(props: IRLGLayoutProps) {
-    
+
 
     this._edit = props.edit ? props.edit : EditOptions.none;
     this._debug = DebugOptions.none;
@@ -383,34 +417,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     }
   }
 
-  private onLayoutResize = (name: string) => {
-    // Use closure to determine block to update
-    return (width: number, height: number) => {
-      const block = this._g.lookup(name);
-      if (block) {
-        let w = Math.ceil(width);
-        let h = Math.ceil(height);
 
-        const r = block.fromSize();
-        if (w === 0) {
-          w = r.width;
-        }
-        if (h === 0) {
-          h = r.height;
-        }
-
-        // tslint:disable-next-line:no-bitwise
-        if (this._debug && (this._debug & DebugOptions.info)) {
-          console.log('onLayoutResize', name, w, h);
-        }
-
-        block.updateSize({ width: w, height: h });
-
-        // TODO: Just fire update for unmanaged element
-        this.setState({ update: this.state.update + 1 });
-      }
-    }
-  }
 
   private initLayout = () => {
     const p = this._g.params();
@@ -499,15 +506,16 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     const b = this._g.lookup(name);
 
-    const props = this.props as { [key: string]: string };
+    // const props = this.props as { [key: string]: string };
     // tslint:disable-next-line:no-string-literal
-    if (!b && props['layout']) {
-      // tslint:disable-next-line:no-string-literal
-      const rl = gLayouts.get(props['layout']);
-      if (rl) {
-        //
-      }
-    }
+    // if (!b && props['layout']) {
+    //   // tslint:disable-next-line:no-string-literal
+    //   const rl = gLayouts.get(props['layout']);
+    //   if (rl) {
+    //     //
+    //   }
+    // }
+
     if (b) {
 
       this._zIndex += 1;
@@ -519,7 +527,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         console.log(`updatePositionedElement ${name} position:`, b.position);
       }
 
-      if ((rect.width) && (rect.height)) {
+      if (((rect.width) && (rect.height)) || isUnmanaged(b.units.size)) {
         const style = tileStyle(child.props.style,
           rect.x + (offset ? offset.x : 0),
           rect.y + (offset ? offset.y : 0),
@@ -547,14 +555,91 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             edit: this._edit,
             debug: this._debug,
             g: this.props.g,
-            context: this._context,
+            context: gContext,
             // update: this.onUpdate
           };
+
+          // const children = React.Children.toArray(child.props.children)
+          // const children2 = React.Children.map(child.props.children, nestedChild => {
+          //   return nestedChild
+          // })
+
+          // if (isUnmanaged(b.units.size)) {
+          //   this.createResizeForUnmanaged(b, children2, name);
+          // }
+
+          class Local {
+            private _b: Block
+            private _s: ISize
+
+            constructor(b: Block) {
+              this._b = b
+              this._s = rectSize(b.rect())
+            }
+
+            setSize(w: number, h: number) {
+              if (w && h) {
+                if (this._s.width !== w || this._s.height != h) {
+                  console.log('Local setSize', w, h)
+                  const sizeUnit = this._b.position.units.size
+                  const r = this._b.rect()
+                  if (sizeUnit === Unit.unmanaged) {
+                    this._b.updateSize({ width: w, height: h });
+                    this._s.width = w
+                    this._s.height = h
+                  } else if (sizeUnit === Unit.unmanagedWidth) {
+                    this._b.updateSize({ width: w, height: r.height });
+                    this._s.width = w
+                  } else if (sizeUnit === Unit.unmanagedHeight) {
+                    this._b.updateSize({ width: r.width, height: h });
+                    this._s.height = h
+                  }
+                }
+              }
+            }
+
+            // onLayoutResize = (name: string) => {
+            //   // Use closure to determine block to update
+            //   return (width: number, height: number) => {
+            //     const block = this._g.lookup(name);
+            //     if (block) {
+            //       let w = Math.ceil(width);
+            //       let h = Math.ceil(height);
+
+            //       const r = block.fromSize();
+            //       if (w === 0) {
+            //         w = r.width;
+            //       }
+            //       if (h === 0) {
+            //         h = r.height;
+            //       }
+
+            //       // tslint:disable-next-line:no-bitwise
+            //       if (this._debug && (this._debug & DebugOptions.info)) {
+            //         console.log('onLayoutResize', name, w, h);
+            //       }
+
+            //       block.updateSize({ width: w, height: h });
+
+            //       // TODO: Just fire update for unmanaged element
+            //       this.setState({ update: this.state.update + 1 });
+            //     }
+            //   }
+            // }
+
+            selectedStyle() {
+              return selectedStyle(this._b.rect());
+            }
+          }
+
+          const local = new Local(b);
+
           const cc = React.cloneElement(child,
             {
               ...child.props, ...{
                 key: b.name,
                 id: b.name,
+                ref: (c: any) => { if (c) { local.setSize(c.offsetWidth, c.offsetHeight) } },
 
                 ...args,
 
@@ -569,7 +654,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           let e;
           if (this._select && this._select.selected(name)) {
             e = (
-              <div style={selectedStyle(rect)} />
+              <div key={`select${index}`} style={local.selectedStyle()} />
             );
           }
 
@@ -587,115 +672,92 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     return null;
   }
 
-  private updateUnmanagedElement = (
-    child: React.ReactElement<any>,
-    index: number,
-    count: number,
-    name: string,
-    position: IPosition,
-    positionChildren: PositionChildren,
-    offset?: IPoint
-  ) => {
+  // private updateUnmanagedElement = (
+  //   child: React.ReactElement<any>,
+  //   index: number,
+  //   count: number,
+  //   name: string,
+  //   position: IPosition,
+  //   positionChildren: PositionChildren,
+  //   offset?: IPoint,
+  // ) => {
 
-    const c = this._g.params().get('containersize') as ISize;
-    if (c.width === 0 && c.height === 0) {
-      return null;
-    }
+  //   const c = this._g.params().get('containersize') as ISize;
+  //   if (c.width === 0 && c.height === 0) {
+  //     return null;
+  //   }
 
-    const b = this._g.lookup(name);
-    if (b) {
-      this._zIndex += 1;
+  //   const b = this._g.lookup(name);
+  //   if (b) {
+  //     this._zIndex += 1;
 
-      const rect = b.rect();
+  //     const rect = b.rect();
 
-      const style = tileStyle(child.props.style,
-        rect.x + (offset ? offset.x : 0),
-        rect.y + (offset ? offset.y : 0),
-        rect.width,
-        rect.height,
-        b.units.size,
-        this._select ? this._select.selected(name) : false,
-        b.layer(this._zIndex)
-      );
+  //     const style = tileStyle(child.props.style,
+  //       rect.x + (offset ? offset.x : 0),
+  //       rect.y + (offset ? offset.y : 0),
+  //       rect.width,
+  //       rect.height,
+  //       b.units.size,
+  //       this._select ? this._select.selected(name) : false,
+  //       b.layer(this._zIndex)
+  //     );
 
-      const jsx: JSX.Element[] = [];
+  //     const jsx: JSX.Element[] = [];
 
-      const children = React.Children.toArray(child.props.children);
+  //     const children = React.Children.toArray(child.props.children);
 
-      if (b.units.size === Unit.unmanaged) {
-        children.push(<ReactResizeDetector
-          key={`unmanagedResizeDetector`}
-          handleWidth={true}
-          handleHeight={true}
-          onResize={this.onLayoutResize(name)} />
-        );
-      }
-      if (b.units.size === Unit.unmanagedHeight) {
-        children.push(<ReactResizeDetector
-          key={`unmanagedResizeDetector`}
-          handleWidth={false}
-          handleHeight={true}
-          onResize={this.onLayoutResize(name)} />
-        );
-      }
-      if (b.units.size === Unit.unmanagedWidth) {
-        children.push(<ReactResizeDetector
-          key={`unmanagedResizeDetector`}
-          handleWidth={true}
-          handleHeight={false}
-          onResize={this.onLayoutResize(name)} />
-        );
-      }
-      const editProps = this._edit ? {
-        edit: this._edit,
-        g: this.props.g,
-      } : {};
-      const args: IRLGPanelArgs = {
-        container: rect,
-        block: b,
-        edit: this._edit,
-        debug: this._debug,
-        g: this.props.g,
-        context: this._context,
-        // update: this.onUpdate
-      };
-      const ch = React.cloneElement(child,
-        {
-          ...child.props, ...{
-            key: b.name,
-            id: b.name,
+  //     this.createResizeForUnmanaged(b, children, name);
+  //     const editProps = this._edit ? {
+  //       edit: this._edit,
+  //       g: this.props.g,
+  //     } : {};
+  //     const args: IRLGPanelArgs = {
+  //       container: rect,
+  //       block: b,
+  //       edit: this._edit,
+  //       debug: this._debug,
+  //       g: this.props.g,
+  //       context: gContext,
+  //       // update: this.onUpdate
+  //     };
+  //     const ch = React.cloneElement(child,
+  //       {
+  //         ...child.props, ...{
+  //           key: b.name,
+  //           id: b.name,
 
-            ...args,
+  //           ...args,
 
-            ...editProps,
+  //           ...editProps,
 
-            style: { ...this.props.style, ...child.props.style, ...style }
-          }
-        },
-        children
-      );
+  //           style: { ...this.props.style, ...child.props.style, ...style }
+  //         }
+  //       },
+  //       children
+  //     );
 
-      if (this._select && this._select.selected(name)) {
-        jsx.push(
-          <div style={selectedStyle(rect)}>
-            {ch}
-          </div>
-        );
-      } else {
-        jsx.push(ch);
-      }
+  //     if (this._select && this._select.selected(name)) {
+  //       jsx.push(
+  //         <div key={`select${index}`} style={selectedStyle(rect)}>
+  //           {ch}
+  //         </div>
+  //       );
+  //     } else {
+  //       jsx.push(ch);
+  //     }
 
-      const editors = this.createEditors(child, b, rect);
+  //     const editors = this.createEditors(child, b, rect);
 
-      return (
-        <>
-          {jsx}
-          {editors}
-        </>
-      );
-    }
-    return null;
-  }
+  //     return (
+  //       <>
+  //         {jsx}
+  //         {editors}
+  //       </>
+  //     );
+  //   }
+  //   return null;
+  // }
 
   private createLayout = (child: JSX.Element, index: number, count: number) => {
     const p = child.props['data-layout'];
@@ -706,9 +768,11 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         if (ancestor) {
           return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
         }
-      } else if (p.name) {
-        return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
-      }
+      } else
+
+        if (p.name) {
+          return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
+        }
     }
 
     return null;
@@ -724,41 +788,61 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           const location = this.getBoundingLeftTop();
           const ancestorLocation = ancestor.getBoundingLeftTop();
           const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
-          const position = p.position as IPosition;
-          if (position && position.units.size >= Unit.unmanaged) {
-            // size determined by element.offsetWidth and element offsetHeight
+          // console.log(`dynamic offset ${offset.x} ${offset.y} 
+          //   location ${location.x} ${location.y}
+          //   ancestorLocation ${ancestorLocation.x} ${ancestorLocation.y}
+          //   `)
+          // const position = p.position as IPosition;
+          // if (position && position.units.size >= Unit.unmanaged) {
+          //   // size determined by element.offsetWidth and element offsetHeight
 
-            return ancestor.updateUnmanagedElement(
-              child, index, count, p.name, p.position, p.context, offset
-            );
+          //   return ancestor.updateUnmanagedElement(
+          //     child, index, count, p.name, p.position, p.context, offset
+          //   );
 
-          }
+          // }
           return ancestor.updatePositionedElement(
             child, index, count, p.name, p.position, p.context, offset
           );
         }
-      } else if (p.name) {
-        const position = p.position as IPosition;
-        if (position && position.units.size >= Unit.unmanaged) {
-          // size determined by element.offsetWidth and element offsetHeight
+      } else
 
-          return this.updateUnmanagedElement(
+        if (p.name) {
+          // const position = p.position as IPosition;
+          // if (position && position.units.size >= Unit.unmanaged) {
+          //   // size determined by element.offsetWidth and element offsetHeight
+
+          //   return this.updateUnmanagedElement(
+          //     child, index, count, p.name, p.position, p.context
+          //   );
+
+          // }
+          return this.updatePositionedElement(
             child, index, count, p.name, p.position, p.context
           );
-
         }
-        return this.updatePositionedElement(
-          child, index, count, p.name, p.position, p.context
-        );
-      }
     }
 
-    return React.Children.map(child.props.children, nestedChild => {
-      console.error(`
-        Child ${nestedChild} in RLGLayout ${this.props.name} will not be rendered.
-        Only RLGLayout children with a data-layout property will be rendered.
-        `)
-    });
+    return React.cloneElement(child,
+      {
+        ...child.props, ...{
+
+          edit: this._edit,
+          debug: this._debug,
+          context: gContext,
+          g: this.props.g,
+
+          style: child.props.style
+        }
+      },
+      child.props.children
+    );
+    // return React.Children.map(child.props.children, nestedChild => {
+    //   console.error(`
+    //     Child ${nestedChild} in RLGLayout ${this.props.name} will not be rendered.
+    //     Only RLGLayout children with a data-layout property will be rendered.
+    //     `)
+    // });
   }
 
   private onParentMouseDown = (event: React.MouseEvent) => {
@@ -848,7 +932,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   }
 
   private selectCallback = (instance: RLGSelect) => {
-  this._select = instance
+    this._select = instance
   }
 
   private onUpdate = (reset: boolean = false) => {
@@ -948,6 +1032,33 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     return elements;
   }
 
+  // private createResizeForUnmanaged(b: Block, children: React.ReactChild[], name: string) {
+  //   if (b.units.size === Unit.unmanaged) {
+  //     children.push(<ReactResizeDetector
+  //       key={`unmanagedResizeDetector`}
+  //       handleWidth={true}
+  //       handleHeight={true}
+  //       onResize={this.onLayoutResize(name)}
+  //     />);
+  //   }
+  //   if (b.units.size === Unit.unmanagedHeight) {
+  //     children.push(<ReactResizeDetector
+  //       key={`unmanagedResizeDetector`}
+  //       handleWidth={false}
+  //       handleHeight={true}
+  //       onResize={this.onLayoutResize(name)}
+  //     />);
+  //   }
+  //   if (b.units.size === Unit.unmanagedWidth) {
+  //     children.push(<ReactResizeDetector
+  //       key={`unmanagedResizeDetector`}
+  //       handleWidth={true}
+  //       handleHeight={false}
+  //       onResize={this.onLayoutResize(name)}
+  //     />);
+  //   }
+  // }
+
   private handleContextMenu(event: React.MouseEvent<Element>) {
     if (event.button === 2) { // Right click
       event.preventDefault();
@@ -987,7 +1098,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           edit: this._edit,
           debug: this._debug,
           g: this.props.g,
-          context: this._context,
+          context: gContext,
           // update: this.onUpdate
         };
         return (React.cloneElement(nestedChild,
@@ -1012,7 +1123,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       edit: this._edit,
       debug: this._debug,
       g: this.props.g,
-      context: this._context,
+      context: gContext,
       // update: this.onUpdate
     };
     return (React.cloneElement(child,

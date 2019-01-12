@@ -7,14 +7,13 @@ import {
   EditOptions,
   IEditHelperProps,
   PositionRef,
-  RLGDynamic,
-  RLGLayout, 
+  RLGLayout,
   Status,
   Unit
 } from '../importRLG'
 
 import Deck from '../algos/Deck';
-import cssColor from '../assets/colors';
+// import cssColor from '../assets/colors';
 // import Note from '../components/Note';
 
 const Description = styled.p`
@@ -24,17 +23,18 @@ const Description = styled.p`
 `;
 
 // tslint:disable-next-line:variable-name
-const Title = styled.h3`
-  font-family: Arial, Helvetica, sans-serif;
-  background: transparent;
-  color: ${cssColor.dark};
-  margin: 0;
-  position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-  left: 10;
-`
+// const Title = styled.h3`
+//   font-family: Arial, Helvetica, sans-serif;
+//   background: transparent;
+//   color: ${cssColor.dark};
+//   margin: 0;
+//   position: absolute;
+//   // top: 50%;
+//   // left: 50%;
+//   // transform: translate(-50%, -50%);
+//   left: 10;
+// `
+
 const Container = styled.div`
   position: absolute;
   color: #000;
@@ -49,7 +49,7 @@ interface ICardDeckState {
 
 export default class CardDeck extends React.Component<IEditHelperProps, ICardDeckState> {
 
-  private _g = dynamicGenerator('example.CardDeck', );
+  private _g = dynamicGenerator('example.CardDeck');
   private _deck = new Deck();
   private _edit: EditOptions = EditOptions.all;
 
@@ -90,9 +90,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         g={this._g}
       >
         {this.createElements()}
-        <RLGDynamic data-layout={{ layout: 'framework', name: 'contentHeader' }} jsx={[
-          <Title key={'t'} >A Deck of Cards</Title>
-        ]} />
+        
         <button data-layout={{
           name: 'shuffle',
           position: {

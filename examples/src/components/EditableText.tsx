@@ -93,6 +93,7 @@ export default class EditableText extends React.Component<IEditableTextProps, IE
           origin={{ x: 0, y: 0 }}
           fontSize={fontSize}
           onMouseDown={this.onMouseDown}
+          onKeyDown={this.onKeyDown}
         >
           {this._data.content}
         </Editable>
@@ -115,6 +116,13 @@ export default class EditableText extends React.Component<IEditableTextProps, IE
   private onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     // capture the mouse
     event.stopPropagation();
+  }
+
+  private onKeyDown = (e: React.KeyboardEvent) => {
+    if (e && e.key === 'Enter') {
+      e.stopPropagation()
+      e.preventDefault()
+    }
   }
 
   private onContentChange: MutationCallback = (mutations: MutationRecord[]) => {

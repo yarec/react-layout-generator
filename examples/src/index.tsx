@@ -36,6 +36,7 @@ import { FaRegEdit, FaRegSave } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { MdContentCopy, MdContentCut, MdContentPaste, MdRedo, MdUndo } from 'react-icons/md'
 
+
 // tslint:disable-next-line:variable-name
 const Title = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
@@ -69,7 +70,6 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
     // Set variables to 0 to hide section
     p.set('titleHeight', 60);
     p.set('headerHeight', 20);
-    p.set('contentHeaderHeight', 40);
     p.set('footerHeight', 0);
     p.set('leftSideWidth', 40);
     p.set('rightSideWidth', 0);
@@ -95,56 +95,54 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
   public render() {
     return (
       <ErrorBoundary>
-          <RLGLayout
-            name='framework'
-            debug={DebugOptions.none}
-            edit={EditOptions.none}
-            g={this.g}
-          >
-            <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
-              {(args: IRLGPanelArgs) => (
-                <Title>React Layout Generator Examples</Title>
-              )}
+        <RLGLayout
+          name='framework'
+          debug={DebugOptions.none}
+          edit={EditOptions.none}
+          g={this.g}
+        >
+          <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
+            {(args: IRLGPanelArgs) => (
+              <Title>React Layout Generator Examples</Title>
+            )}
+          </RLGPanel>
 
-            </RLGPanel>
-            <div data-layout={{ name: 'header' }} style={{ backgroundColor: cssColor.dark }}>
-              <NavBar elements={[
-                // if props change then the props should be functions that return the correct value
-                { component: <Intro editHelper={this.getEditHelper} />, name: 'Home' },
-                { component: <DeskTop editHelper={this.getEditHelper} />, name: 'DeskTop' },
-                { component: <CardDeck editHelper={this.getEditHelper} />, name: 'CardDeck' },
-                { component: <Solitaire editHelper={this.getEditHelper} />, name: 'Solitaire' },
-                { component: <Grid editHelper={this.getEditHelper} />, name: 'Grid' },
-                { component: <Chart editHelper={this.getEditHelper} />, name: 'Chart' },
-                { component: <Editable editHelper={this.getEditHelper} />, name: 'Editable' },
-              ]}
-                callback={this.select}
-              />
-            </div>
+          <div data-layout={{ name: 'header' }} style={{ backgroundColor: cssColor.dark }}>
+            <NavBar elements={[
+              // if props change then the props should be functions that return the correct value
+              { component: <Intro editHelper={this.getEditHelper} />, name: 'Home' },
+              { component: <DeskTop editHelper={this.getEditHelper} />, name: 'DeskTop' },
+              { component: <CardDeck editHelper={this.getEditHelper} />, name: 'CardDeck' },
+              { component: <Solitaire editHelper={this.getEditHelper} />, name: 'Solitaire' },
+              { component: <Grid editHelper={this.getEditHelper} />, name: 'Grid' },
+              { component: <Chart editHelper={this.getEditHelper} />, name: 'Chart' },
+              { component: <Editable editHelper={this.getEditHelper} />, name: 'Editable' },
+            ]}
+              callback={this.select}
+            />
+          </div>
 
-            <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: cssColor.dark }} >
-              <ToolBar editHelper={this._editHelper} commands={[
-                // These just define the buttons for the toolbar - behavior is controlled by EditHelpers
-                { component: FaRegEdit, name: 'edit' },
-                { component: FaRegSave, name: 'save' },
-                { component: this.separator, name: '' },
-                { component: MdUndo, name: 'undo' },
-                { component: MdRedo, name: 'redo' },
-                { component: this.separator, name: '' },
-                { component: MdContentCut, name: 'cut' },
-                { component: MdContentCopy, name: 'copy' },
-                { component: MdContentPaste, name: 'paste' },
-                { component: this.separator, name: '' },
-              ]}
-              />
-            </div>
-            <div data-layout={{ name: 'contentHeader' }} style={{ backgroundColor: cssColor.light }}>
-              {}
-            </div> 
-            <div data-layout={{ name: 'content' }} >
-              {this.state.app}
-            </div>
-          </RLGLayout>
+          <div data-layout={{ name: 'leftSide' }} style={{ backgroundColor: cssColor.dark }} >
+            <ToolBar editHelper={this._editHelper} commands={[
+              // These just define the buttons for the toolbar - behavior is controlled by EditHelpers
+              { component: FaRegEdit, name: 'edit' },
+              { component: FaRegSave, name: 'save' },
+              { component: this.separator, name: '' },
+              { component: MdUndo, name: 'undo' },
+              { component: MdRedo, name: 'redo' },
+              { component: this.separator, name: '' },
+              { component: MdContentCut, name: 'cut' },
+              { component: MdContentCopy, name: 'copy' },
+              { component: MdContentPaste, name: 'paste' },
+              { component: this.separator, name: '' },
+            ]}
+            />
+          </div>
+
+          <div data-layout={{ name: 'content' }} >
+            {this.state.app}
+          </div>
+        </RLGLayout>
       </ErrorBoundary >
     );
 

@@ -6,7 +6,7 @@
  * This is a manual process because js does not allow macros
  */
 
-export { RLGDynamic } from '../../src/RLGDynamic'
+ 
 export { RLGLayout } from '../../src/RLGLayout'
 export { RLGPanel, IRLGPanelArgs } from '../../src/RLGPanel'
 
@@ -17,6 +17,7 @@ export {
   ISize,
   IPoint,
   IOrigin,
+  OverflowOptions,
   IRect,
   PositionRef,
   rectPoint,

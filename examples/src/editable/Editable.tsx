@@ -12,9 +12,9 @@ import {
   ISize,
   loadFromLocalStorage,
   Params,
-  ParamValue, 
+  ParamValue,
   rectSize,
-  RLGLayout, 
+  RLGLayout,
   RLGPanel,
   saveToLocalStorage,
   Status,
@@ -52,7 +52,7 @@ const values: Array<[string, ParamValue]> = [
   ['titleHeight', 200],
   ['leftSideWidth', 0],
   ['rightSideWidth', 0],
-  ['headerHeight', 100],
+  ['headerHeight', 10],
   ['footerHeight', 0],
   ['title', { content: `Click to Edit`, fontSize: 30 }],
   ['subtitle', { content: `Click to Edit` }],
@@ -80,8 +80,6 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
   }
 
   public componentDidMount() {
-    console.log('EditHelpers load Intro');
-
     if (this._save) {
       const edit = loadFromLocalStorage('rlg.eTemplate.example', 'edit');
       this._edit = edit === 1 ? EditOptions.all : EditOptions.none;
@@ -148,11 +146,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
           )}
         </RLGPanel>
 
-        <RLGPanel data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
-            <div />
-          )}
-        </RLGPanel>
+        <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,10%)' }} />
 
         <RLGPanel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(220,100%,80%)' }} >
           {(args: IRLGPanelArgs) => (
@@ -163,55 +157,23 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
-            location: { x: 80, y: 60 },
-            size: { width: 200, height: 200 },
+            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
+            location: { x: 75, y: 40 },
+            size: { width: 250, height: 300 },
             editor: {
               selectable: true
             }
           }
         }}
         >
+          <p>To edit the text, first active edit (in the toolbar) and then click on the text.</p>
           <p>Save state enabled and currently can not be disabled.</p>
+          <p>Change size of title panel to change font size by dragging the top of the black drag bar.</p>
+          <p>The editable text widget does not allow line breaks.</p>
         </div>
-
-        <div data-layout={{
-          name: 'note2',
-          position: {
-            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
-            location: { x: 80, y: 70 },
-            size: { width: 200, height: 200 },
-            editor: {
-              selectable: true
-            }
-          }
-        }}
-        >
-          <p>Change size of title panel to change font size. Use the drag bar at the bottom.</p>
-        </div>
-
-        <div data-layout={{
-          name: 'note3',
-          position: {
-            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.pixel },
-            location: { x: 80, y: 80 },
-            size: { width: 200, height: 200 },
-            editor: {
-              selectable: true
-            }
-          }
-        }}
-        >
-          <p>Editable text widget does not allow line breaks at this time.</p>
-        </div>
-
-
       </RLGLayout>
     );
   }
 }
 
-{/* <RLGElement data-name='note4' location={{ x: 80, y: 95 }} size={{ width: 200, height: 200 }}>
-<p>Test RLGDiv</p>
-</RLGElement> */}
 
