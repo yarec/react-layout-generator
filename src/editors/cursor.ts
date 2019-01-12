@@ -39,11 +39,11 @@ export function cursor(ref: PositionRef) {
       break
     }
     case PositionRef.leftBottom: {
-      c = 'nw-resize'
+      c = 'ne-resize'
       break
     }
     case PositionRef.rightBottom: {
-      c = 'ne-resize'
+      c = 'nw-resize'
       break
     }
     default: {

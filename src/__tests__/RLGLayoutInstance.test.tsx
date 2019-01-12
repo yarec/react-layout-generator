@@ -54,15 +54,14 @@ describe('RLGLayout', () => {
     )
     const rlgLayout = wrapper.find('RLGLayout').at(0).instance()
 
-    console.log('rlgLayout:', rlgLayout)
+    // console.log('rlgLayout:', rlgLayout)
 
+    const hello = wrapper.find("[id='hello']").at(0).instance();
+    // if (hello) {
+    //   console.log('hello:', hello)
+    // }
 
-    const e = wrapper.find("[id='hello']").at(0).instance();
-    if (e) {
-      console.log('e:', e)
-    }
-
-    expect(e[0]).toBeTruthy();
+    expect(rlgLayout && hello).toBeTruthy();
   });
 
 })

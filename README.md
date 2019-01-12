@@ -250,7 +250,7 @@ This is because RLG uses css internally and css only transforms html. If you do 
 
 ### Generator
 
-*See columnsGenerator, desktopGenerator, dynamicGenerator and listGenerator for examples.*
+*See columnsGenerator, desktopGenerator, and dynamicGenerator for examples.*
 
 A generator is just a function that returns an instance of Generator. The function must define the generators Param, contain an init function and an optional create function. Here is a simple Empty generator:
 

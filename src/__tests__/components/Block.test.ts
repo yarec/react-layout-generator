@@ -1,7 +1,7 @@
-import { Block } from '../components/Block'
-import { Params } from '../components/Params'
-import { Generator, ICreate, IGenerator } from '../generators/Generator'
-import { Unit } from '../types'
+import { Block } from '../../components/Block'
+import { Params } from '../../components/Params'
+import { Generator, ICreate, IGenerator } from '../../generators/Generator'
+import { Unit } from '../../types'
 
 const params = new Params({
   name: 'layoutTest',

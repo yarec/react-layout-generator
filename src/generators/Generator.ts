@@ -1,6 +1,6 @@
 import { Block, IPosition } from '../components/Block'
 import { Blocks } from '../components/Blocks'
-import { Params, ParamValue } from '../components/Params'
+import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
 import { RLGSelect } from '../editors/RLGSelect'
 import { ISize } from '../types'
@@ -27,7 +27,7 @@ export interface IGenerator {
   params: () => Params
   blocks: () => Blocks
   reset: () => void
-  next: () => Block | undefined
+  // next: () => Block | undefined
   lookup: (name: string) => Block | undefined
   containersize: (name: string) => ISize | undefined
   clear: () => void
@@ -38,13 +38,13 @@ export interface IGenerator {
 export class Generator implements IGenerator {
   public currentLayout: Block | undefined
 
-  public state: () => Block | undefined
+  // public state: () => Block | undefined
   private _name: string
   private _editHelper: EditHelper | undefined
   private _params: Params
   private _blocks: Blocks
   private _select: RLGSelect
-  private _blocksIterator: IterableIterator<Block> | undefined
+  // private _blocksIterator: IterableIterator<Block> | undefined
   private _init: IInit
   private _create: Create | undefined
 
@@ -60,8 +60,8 @@ export class Generator implements IGenerator {
     this._editHelper = editHelper
     this._create = create
     this._blocks = new Blocks([])
-    this._blocksIterator = this._blocks.values()
-    this.state = this.start
+    // this._blocksIterator = this._blocks.values()
+    // this.state = this.start
     this._params = params
   }
 
@@ -110,8 +110,8 @@ export class Generator implements IGenerator {
   public reset = () => {
     // console.log('reset update blocks')
     this._blocks = this._init(this)
-    this.state = this.start
-    this._blocksIterator = this._blocks.values()
+    // this.state = this.start
+    // this._blocksIterator = this._blocks.values()
     // this._blocks.blocks.forEach((item: Layout) => {
     //   if (item.g) {
     //     item.g.reset();
@@ -121,42 +121,42 @@ export class Generator implements IGenerator {
 
   public clear = () => {
     this._blocks = new Blocks([])
-    this.state = this.start
-    this._blocksIterator = this._blocks.values()
+    // this.state = this.start
+    // this._blocksIterator = this._blocks.values()
   }
 
-  public start = (): Block | undefined => {
-    return this.nextBlock()
-  }
+  // public start = (): Block | undefined => {
+  //   return this.nextBlock()
+  // }
 
-  public next = (): Block | undefined => {
-    return this.state()
-  }
+  // public next = (): Block | undefined => {
+  //   return this.state()
+  // }
 
-  protected setup = (values: Array<[string, ParamValue]>) => {
-    if (this._params.get('$setup', true) === undefined) {
-      this._params.set('$setup', 1)
-      values.forEach((value: [string, ParamValue]) => {
-        this._params.set(value[0], value[1])
-      })
-    }
-  }
+  // protected setup = (values: Array<[string, ParamValue]>) => {
+  //   if (this._params.get('$setup', true) === undefined) {
+  //     this._params.set('$setup', 1)
+  //     values.forEach((value: [string, ParamValue]) => {
+  //       this._params.set(value[0], value[1])
+  //     })
+  //   }
+  // }
 
-  private nextBlock = (): Block | undefined => {
-    this.currentLayout = this._blocksIterator!.next().value
-    if (this.currentLayout) {
-      // if (this.currentLayout.g) {
-      //   this.state = this.nestedBlock;
-      //   return this.nestedBlock();
-      // } else {
-      this.state = this.nextTile
-      return this.nextTile()
-      // }
-    } else {
-      this.state = this.start
-      return undefined
-    }
-  }
+  // private nextBlock = (): Block | undefined => {
+  //   this.currentLayout = this._blocksIterator!.next().value
+  //   if (this.currentLayout) {
+  //     // if (this.currentLayout.g) {
+  //     //   this.state = this.nestedBlock;
+  //     //   return this.nestedBlock();
+  //     // } else {
+  //     // this.state = this.nextTile
+  //     return this.nextTile()
+  //     // }
+  //   } else {
+  //     // this.state = this.start
+  //     return undefined
+  //   }
+  // }
 
   // private nestedBlock = (): Layout | undefined => {
   //   let b: Layout | undefined = undefined;
@@ -170,12 +170,12 @@ export class Generator implements IGenerator {
   //   return b;
   // }
 
-  private nextTile = (): Block | undefined => {
-    const b: Block | undefined = this.currentLayout
-    if (b) {
-      this.state = this.nextBlock
-    }
+  // private nextTile = (): Block | undefined => {
+  //   const b: Block | undefined = this.currentLayout
+  //   if (b) {
+  //     this.state = this.nextBlock
+  //   }
 
-    return b
-  }
+  //   return b
+  // }
 }

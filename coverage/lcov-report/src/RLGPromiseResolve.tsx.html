@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/RLGDynamic.tsx</title>
+    <title>Code coverage report for src/RLGPromiseResolve.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\prettify.css" />
     <link rel="stylesheet" href="..\base.css" />
@@ -16,18 +16,18 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\index.html">All files</a> / <a href="index.html">src</a> RLGDynamic.tsx
+      <a href="..\index.html">All files</a> / <a href="index.html">src</a> RLGPromiseResolve.tsx
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>0/17</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>0/15</span>
       </div>
     </div>
   </div>
@@ -90,7 +90,16 @@
 45
 46
 47
-48</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+48
+49
+50
+51</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,30 +120,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import * as React from 'react';</span>
@@ -147,8 +153,14 @@ import { DebugOptions, EditOptions, IRect } from './types';
 //   name: string;
 // }
 &nbsp;
-interface IRLGDynamicProps extends React.HTMLProps&lt;HTMLDivElement&gt; {
-  jsx: JSX.Element[];
+interface IPromise {
+  update: () =&gt; void;
+  content: any;
+}
+&nbsp;
+interface IRLGPromiseResolveProps extends React.HTMLProps&lt;HTMLDivElement&gt; {
+  name: string;
+  jsx: string[];
   container?: IRect;
   block?: Block;
   edit?: EditOptions;
@@ -157,32 +169,29 @@ interface IRLGDynamicProps extends React.HTMLProps&lt;HTMLDivElement&gt; {
   context?: Map&lt;string, any&gt;;
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class <span class="cstat-no" title="statement not covered" >RLGDynamic </span>extends <span class="cstat-no" title="statement not covered" >React.Component&lt;</span>IRLGDynamicProps, IRLGDynamicProps&gt; </span>{</span>
-  private <span class="cstat-no" title="statement not covered" >_jsx: JSX.Element[] = [];</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class <span class="cstat-no" title="statement not covered" >RLGPromiseResolve </span>extends <span class="cstat-no" title="statement not covered" >React.Component&lt;</span>IRLGPromiseResolveProps&gt; </span>{</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  constructor(</span>props: IRLGDynamicProps) {
-<span class="cstat-no" title="statement not covered" >    super(props);</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    this._jsx = this.props.jsx;</span>
+<span class="fstat-no" title="function not covered" >  constructor(</span>props: IRLGPromiseResolveProps) {
+    super(props)
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  public <span class="cstat-no" title="statement not covered" >componentDidMount() {</span></span>
     const c = <span class="cstat-no" title="statement not covered" >this.props.context;</span>
+<span class="cstat-no" title="statement not covered" >    console.log('RLGPromiseResolve');</span>
 <span class="cstat-no" title="statement not covered" >    if (c) {</span>
-<span class="cstat-no" title="statement not covered" >      c.set('test', this._jsx);</span>
+      const p = <span class="cstat-no" title="statement not covered" >c.get(this.props.name) as IPromise</span>
+<span class="cstat-no" title="statement not covered" >      if (p &amp;&amp; p.update) {</span>
+<span class="cstat-no" title="statement not covered" >        p.content = this.props.jsx;</span>
+<span class="cstat-no" title="statement not covered" >        c.set(this.props.name, p);</span>
+<span class="cstat-no" title="statement not covered" >        p.update();</span>
+<span class="cstat-no" title="statement not covered" >        console.log('RLGPromiseResolve update');</span>
+      }
     }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  public <span class="cstat-no" title="statement not covered" >render() {</span></span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;div {...this.props}&gt;
-        {this._jsx}
-      &lt;/div&gt;
-    )
-&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null</span>
   }
-&nbsp;
-&nbsp;
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr>
 </table></pre>

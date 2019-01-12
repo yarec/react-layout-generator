@@ -35,7 +35,7 @@
     "docs": "typedoc --out docs --target es6 --excludePrivate --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
-    "covtest": "jest --coverage",
+    "covtest": "jest  --coverage",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
@@ -58,6 +58,7 @@
     }
   },
   "jest": {
+    "verbose": true,
     "setupFiles": [
       "<rootDir>/testSetup.js"
     ],
@@ -69,6 +70,7 @@
       "\\.(css)$": "<rootDir>/src/assets/css/__mocks__/styleMock.js"
     },
     "testEnvironment": "node",
+    "testURL": "http://localhost/",
     "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
@@ -80,7 +82,7 @@
       "/test/",
       "/dist/",
       ".rpt2_cache",
-      "/src/react-layout-generator.ts" 
+      "/src/react-layout-generator.ts"
     ],
     "coverageThreshold": {
       "global": {
@@ -136,6 +138,7 @@
     "jsdom": "^13.1.0",
     "lint-staged": "^8.0.0",
     "lodash.camelcase": "^4.3.0",
+    "mock-local-storage": "^1.1.8",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "react": "^16.7.0",

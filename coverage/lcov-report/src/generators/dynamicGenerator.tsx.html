@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">93.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/15</span>
+        <span class='fraction'>14/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>4/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">93.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/15</span>
+        <span class='fraction'>14/15</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -86,85 +86,85 @@
 41
 42</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Block } from '../components/Block';
 import { Blocks } from '../components/Blocks';
-<span class="cstat-no" title="statement not covered" >import { Params, ParamValue } from '../components/Params';</span>
-<span class="cstat-no" title="statement not covered" >import { Generator, ICreate, IGenerator } from './Generator';</span>
+import { Params, ParamValue } from '../components/Params';
+import { Generator, ICreate, IGenerator } from './Generator';
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export function <span class="fstat-no" title="function not covered" >dynamicGenerator(</span></span>
+export function dynamicGenerator(
   name: string,
   exParams?: Params
 ): IGenerator {
-  const values: Array&lt;[string, ParamValue]&gt; = <span class="cstat-no" title="statement not covered" >[</span>
+  const values: Array&lt;[string, ParamValue]&gt; = [
     ['containersize', { width: 0, height: 0 }]
   ];
 &nbsp;
-  const _params = <span class="cstat-no" title="statement not covered" >exParams ? exParams.restore(name, values) : new Params({</span>
+  const _params = exParams ? <span class="branch-0 cbranch-no" title="branch not covered" >exParams.restore(name, values) </span>: new Params({
     name: 'dynamicGenerator', initialValues: values
   });
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >init(</span>g: IGenerator): Blocks {
-    const params = <span class="cstat-no" title="statement not covered" >g.params();</span>
-    const blocks = <span class="cstat-no" title="statement not covered" >g.blocks();</span>
+  function init(g: IGenerator): Blocks {
+    const params = g.params();
+    const blocks = g.blocks();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (params.changed()) {</span>
+    if (params.changed()) {
       // update Layout for each update
-<span class="cstat-no" title="statement not covered" >      blocks.map.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
+      blocks.map.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {
 <span class="cstat-no" title="statement not covered" >        block.touch();</span>
       });
     }
-<span class="cstat-no" title="statement not covered" >    return blocks;</span>
+    return blocks;
   }
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >create(</span>args: ICreate): Block {
+  function create(args: ICreate): Block {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!args.position) {</span>
-<span class="cstat-no" title="statement not covered" >      console.error(`TODO use default position ${args.name}`)</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!args.position) {
+      console.error(`TODO use default position ${args.name}`)
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return args.g.blocks().set(args.name, args.position, args.g);</span>
+    return args.g.blocks().set(args.name, args.position, args.g);
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return new Generator(name, init, _params, create);</span>
+  return new Generator(name, init, _params, create);
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -172,7 +172,7 @@ import { Blocks } from '../components/Blocks';
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jan 10 2019 20:57:45 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 11:35:35 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

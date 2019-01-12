@@ -1,3 +1,6 @@
+
+
+
 const enzyme = require("enzyme");
 const Adapter = require("enzyme-adapter-react-16");
 
@@ -7,6 +10,11 @@ const { JSDOM } = require('jsdom');
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
+
+// Does not work?
+// global.window = {}
+// const mock = require('mock-local-storage')
+// window.localStorage = global.localStorage
 
 function copyProps(src, target) {
   Object.defineProperties(target, {

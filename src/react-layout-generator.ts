@@ -35,7 +35,7 @@ export {
   IGenerator,
   IGeneratorFunctionArgs
 } from './generators/Generator'
-export { listGenerator } from './generators/listGenerator'
+
 export { rowsGenerator } from './generators/rowsGenerator'
 
 export { saveToLocalStorage, loadFromLocalStorage } from './generators/utils'

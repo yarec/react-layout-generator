@@ -138,7 +138,19 @@ export class Block {
   constructor(name: string, p: IPosition, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
-    this._position = clone(p)
+    if (p) {
+      this._position = clone(p)
+    } else {
+      this.position = {
+        units: {
+          origin: { x: 0, y: 0 },
+          location: Unit.pixel,
+          size: Unit.pixel
+        },
+        location: { x: 0, y: 0 },
+        size: { width: 100, height: 100 }
+      }
+    }
     this.updatePosition(this._position)
     this.updateLayer(this._position.layer)
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
