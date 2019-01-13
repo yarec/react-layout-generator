@@ -1,8 +1,3 @@
-// a Mapped conditional types
-// export type NestedFlags<T> = {
-//   [K in keyof T]: T[K] extends object ? NestedFlags<T[K]> : boolean
-// }
-
 export enum OverflowOptions {
   visible = 0,
   hidden,
@@ -10,6 +5,13 @@ export enum OverflowOptions {
   auto
 }
 
+/**
+ * IOrigin specifies the position within an element that location
+ * uses to position the element. IOrigin is expressed in percent
+ * of the width and height of an element. An origin of (0, 0)
+ * specifies the left top position of the element. An origin of
+ * (50,50) specifies the center of the element.
+ */
 export interface IOrigin {
   x: number
   y: number
@@ -44,7 +46,6 @@ export function stringToUnit(data: string) {
     }
     case 'a': {
       return Unit.unmanaged
-      break
     }
     case 'h': {
       switch (data.charAt(data.length - 2)) {

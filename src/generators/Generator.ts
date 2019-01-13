@@ -13,11 +13,11 @@ export interface IGeneratorFunctionArgs {
 
 export type IInit = (g: IGenerator) => Blocks
 export interface ICreate {
-  index: number
-  count: number
   name: string
   g: IGenerator
   position: IPosition
+  index?: number
+  count?: number
 }
 
 export type Create = (args: ICreate) => Block | undefined

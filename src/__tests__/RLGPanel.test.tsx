@@ -33,7 +33,7 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
   test('it should allow props to be set #1', () => {
-    const wrapper = mount(<RLGLayout name='test#1' debug={DebugOptions.all} g={g} />)
+    const wrapper = mount(<RLGLayout name='test#1' edit={EditOptions.all} debug={DebugOptions.all} g={g} />)
     expect(wrapper.props().debug).toEqual(DebugOptions.all);
   });
 

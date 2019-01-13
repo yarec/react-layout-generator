@@ -30,13 +30,23 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
     // convert to percent
     factor = 100
   }
-  return {
+  let r = {
     name: edit.variable!,
     value: {
-      x: block.position.align!.offset.x * factor,
-      y: block.position.align!.offset.y * factor
+      x: 0,
+      y: 0
     }
   }
+  if (block.position.align) {
+    r = {
+      name: edit.variable!,
+      value: {
+        x: block.position.align!.offset.x * factor,
+        y: block.position.align!.offset.y * factor
+      }
+    }
+  }
+  return r
 }
 
 /**

@@ -50,12 +50,14 @@ For the time being, you will need to clone or fork the project to evaluate.
 * Editors
 * Games
 
-## Use
+## Usage
 
-The basic use is to use ReactLayout as a parent element followed by zero or more elements with a data-layout property.
+### RLGLayout
+
+Use [RLGLayout](classes/rlglayout.html) as a parent element followed by one or more elements with a data-layout property.
 
 ```javascript
-<ReactLayout />
+<RLGLayout name={ name } g={ generator }>
   <div data-layout={{name: 'name1'}} >
     elements...
   </div>
@@ -63,18 +65,18 @@ The basic use is to use ReactLayout as a parent element followed by zero or more
   <div data-layout={{name: 'name2'}} >
     elements...
   </div>
-</ReactLayout>
+</RLGLayout>
 ```
 
-ReactLayout can contain instances of ReactLayout. And as usual with React, children of ReactLayout can be programmatically generated.
+Note that RLGLayout can contain instances of RLGLayout. And as usual with React, children of RLGLayout can be programmatically generated (be sure to add keys so that React is happy).
 
 ### RLGPanel
 
-Use RLGPanel as a child of ReactLayout when children need to use the viewport assigned by ReactLayout.
+Use RLGPanel as a child of RLGLayout when children need access to the Block assigned by RLGLayout.
 
 ```javascript
   <RLGPanel data-layout={{ name: 'content' }}>
-    {(viewport: ISize) => (
+    {(args: ISize) => (
         <List viewport={viewport}>
         // ...
         </List>
@@ -106,31 +108,17 @@ and it can be used to define the viewport in svg.
 
 The viewBox defines the coordinates system used by svg elements which will be mapped to the viewport.
 
-ReactLayout will also update the viewport param on every render pass. The viewport param can be used by the generator.
-
-You should think of the viewport as the size of every container. The top level viewport in a [generator](#Generator) is set by [ReactSizeDetector](https://www.npmjs.com/package/react-resize-detector). Its children's viewports are computed by the generator.
-
 ### Responsive Layout
 
-#### You don't need borders
+RLG provides a number of options to allow for responsive design including the generator functions. You can also define the location and size parameters specialized units including pixel and percent.
 
-Borders can distract. Instead let the eye see organize your elements. Use RLGColumns and RLGRows to layout.
+The best approach is to define all the elements in a generator as a function of the containersize. An example of this is the[desktopGenerator](globals.html#desktopgenerator). It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
 
-### Responsive Desktop Layout
-
-*See examples/src/index.tsx.*
-
-RLG provides a number of tools to allow for responsive design. 
-
-The simplest one is to just define all the elements in a generator as a function of the viewport.
-
-A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
-
-```html
+```javascript
 <ReactLayout
   name={'reactLayout.desktop.example'}
   edit={false}
-  g={new RLGDesktop()}
+  g={desktopGenerator(...)}
 >
   <div data-layout={{ name: 'title' }} >
     <span>Title</span>
@@ -158,6 +146,8 @@ A Responsive Desktop is defined by the [generator](#Generator) RLGDesktop. It de
 </ReactLayout>
 ```
 
+By using the desktopGenerator you are assured that all components are always responsive. And since the generator is just a javascript function you have the flexibility to adapt logically to the physical size of the container. The desktopGenerator will for example hide the left and right panels if the width is too small.
+
 #### Note
 
 In general, you should use RLGPanel as the children of ReactLayout.
@@ -182,7 +172,7 @@ In general, you should use RLGPanel as the children of ReactLayout.
   `
 ```
 
-AOr you may use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice in this case is the div element. A disadvantage of this approach is that your content will not have access to the viewport.
+Or you may use html elements to wrap React components rather than directly using React components with a data-layout property. A common choice in this case is the div element. A disadvantage of this approach is that your content will not have access to the viewport.
 
 ```javascript
   render() {

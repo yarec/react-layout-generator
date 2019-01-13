@@ -6,7 +6,16 @@ import { getUpdateHandle, UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
 import { flowLayoutLayer } from '../generators/utils'
-import { IPoint, IOrigin, ISize, Unit, PositionRef, Rect } from '../types'
+import {
+  IPoint,
+  IOrigin,
+  ISize,
+  Unit,
+  PositionRef,
+  Rect,
+  isUnmanaged,
+  namedUnit
+} from '../types'
 import { clone } from '../utils'
 
 export interface IAlign {
@@ -425,7 +434,25 @@ export class Block {
     }
   }
 
+  public validate(p: IPosition) {
+    if (p.editor && p.editor.edits) {
+      // p.editor.edits.forEach((edit) => {
+      //   if (edit.ref === PositionRef.position) {
+      //   }
+      // })
+
+      if (p.units && isUnmanaged(p.units.location)) {
+        console.error(`Position ${namedUnit(p.units.location)} in ${
+          this.name
+        } is NOT supported
+        for location. It is only supported for size.
+        `)
+      }
+    }
+  }
+
   public updatePosition(p: IPosition) {
+    this.validate(p)
     this._position.units.origin.x = p.units.origin.x * 0.01
     this._position.units.origin.y = p.units.origin.y * 0.01
 

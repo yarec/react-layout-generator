@@ -1,6 +1,7 @@
 # React Layout Generator
 
 *This document is a work in progress. In the meantime see the source code for details.*
+
 <!-- TOC -->
 
 - [React Layout Generator](#react-layout-generator)
@@ -11,57 +12,39 @@
   - [Applications](#applications)
   - [Usage](#usage)
     - [RLGLayout](#rlglayout)
-      - [Options](#options)
-        - [DebugOptions](#debugoptions)
-        - [EditOptions](#editoptions)
     - [RLGPanel](#rlgpanel)
     - [Responsive Layout](#responsive-layout)
-      - [You don't need borders](#you-dont-need-borders)
     - [Responsive Desktop Layout](#responsive-desktop-layout)
       - [Note](#note)
     - [Generator](#generator)
-      - [Notes](#notes)
-    - [Scaling](#scaling)
     - [Editing](#editing)
       - [Configuration](#configuration)
       - [Controls](#controls)
-  - [API](#api)
-    - [RLGLayout component](#rlglayout-component)
-    - [data-layout property](#data-layout-property)
-    - [Layout component](#layout-component)
-    - [IPosition interface](#iposition-interface)
-      - [Units](#units)
-        - [Origin](#origin)
-    - [Generator Init and Create](#generator-init-and-create)
-      - [Init](#init)
-      - [Create](#create)
   - [FAQ](#faq)
 
 <!-- /TOC -->
 
-React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is ideal for laying out both html and svg components and allows precise and continuous control for responsive layouts. This is an early pre-alpha release.
+React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is focused on layout and editing of both html and svg components. The approach used enables precise and continuous control of responsive layouts.
 
+This release should be considered pre-alpha.
 
-
-This component was inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
+This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
 ## Install
 
-For the time being, you will need to clone or fork the project to evaluate.
+For the time being, you will need to clone or fork the project to evaluate. To run locally follow these steps: 1) cd to the \<directory\> where you installed RLG, 2) run npm install or yarn, 3) cd to the examples directory, 4) run npm install or yarn, and 4) run start (to build the examples).
 
 ## TODO
 
-- Update this readme.
 - Describe saving and restoring.
 - Implement layers, bring forward, ...
-- Support dynamic addition of elements to page (alternative to params?)
+- Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar
 - Add arrange group to toolBar (align, layers,
 - Implement nudge with arrow keys.
 - Implement current select commands.
 - Add cut, copy, and paste commands.
-- Finish implementing editor
-- Add options to align RLGColumn and RLGColumn.
+- Add options to align columnsGenerator and rowsGenerator.
 - Add Touch support in editor.
 - Upload component to npm
 - Host website on Github
@@ -69,35 +52,38 @@ For the time being, you will need to clone or fork the project to evaluate.
 ### Bugs
 
 - Does not work smoothly with browser magnification +/-.
-- Fix flickering when making the browser window smaller. 
+- Fix flickering when making the browser window smaller.
 
 ## Features
 
-* Top down design of websites.
-* Lightweight - minimal use of other React libraries.
-* Editor, interactive, and runtime layout
-* Serializable
+- Top down design of websites.
+- Lightweight - minimal use of other React libraries.
+- Includes core edit capabilities with runtime layout.
+- Layout is fully serializable.
 
 ## Applications
 
-* Responsive page layout
-* Dashboards
-* Organization charts
-* Diagrams
-* Editors
-* Games
+- Responsive page layout
+- Dashboards
+- Organization charts
+- Diagrams
+- Games
+- Animations
+- Free from layout
 
 ## Usage
 
-The basic use is to use RLGLayout as a parent element followed by one or more elements with a data-layout property.
+### RLGLayout
+
+Use RLGLayout as a parent element followed by one or more elements with a data-layout property.
 
 ```javascript
-<RLGLayout />
-  <div data-layout={{name: 'name1'}} >
+<RLGLayout name='layoutName' ... />
+  <div data-layout={{name: 'name1', ...}} >
     elements...
   </div>
   ...
-  <div data-layout={{name: 'name2'}} >
+  <div data-layout={{name: 'nameN', ...}} >
     elements...
   </div>
 </RLGLayout>
@@ -105,83 +91,60 @@ The basic use is to use RLGLayout as a parent element followed by one or more el
 
 RLGLayout can contain instances of RLGLayout. And as usual with React, children of RLGLayout can be programmatically generated.
 
-### RLGLayout
-
-#### Options
-
-##### DebugOptions
-
-To dynamically control DebugOptions you can set the variable 'debugOptions' using params from the generator.
-
-##### EditOptions
-
-To dynamically control EditOptions you can set the variable 'editOptions' using params from the generator.
-
 ### RLGPanel
 
-Use RLGPanel as a child of RLGLayout when children need to use the containersize assigned by RLGLayout.
+Use [RLGPanel](classes/rlgpanel.html) as a direct child of RLGLayout when its children need access to information about their container including their location and size.
 
 ```javascript
   <RLGPanel data-layout={{ name: 'content' }}>
-    {(containersize: ISize) => (
-        <List containersize={containersize}>
-        // ...
-        </List>
+    {(args: IRLGPanelArgs) => (
+       ...
     )}
   </RLGPanel>
 ```
 
-The function (containersize: ISize) => () makes the property containersize available to all its elements. The actual value of containersize is updated by RLGLayout on every render pass allowing elements to respond to changes in the size of the containersize.
+The function (args: [IRLGPanelArgs](interfaces/irlgpanelargs.html)) => () makes its args available to all the jsx included. These args are updated by RLGLayout on every render pass allowing elements to respond to changes including animation.
 
-It can be used to set the max-width in css like this:
+One way to utilize these args is to use Styled-components with a Style defined like this:
 
 ```javascript
-  export const Item = styled.li<IProps>`
+  const Item = styled.li<{containersize: ISize}>`
     max-width:  ${p => p.containersize.width};
     white-space: wrap;
 `
 ```
 
-and it can be used to define the containersize in svg.
+then just pass the args to \<Item containersize={args.containersize} \>
+
+Likewise it can be used to define the width and hight in a svg element.
 
 ```javascript
   <svg
-    width={containersize.width}
-    height={containersize.height}
+    width={args.containersize.width}
+    height={args.containersize.height}
     viewBox="0 0 50 20"
   >
-      <rect x="20" y="10" width="10" height="5"
-            style="stroke: #000000; fill:none;"/>
+    <rect x="20" y="10" width="10" height="5"
+      style="stroke: #000000; fill:none;"/>
   </svg>
 ```
 
-The viewBox defines the coordinates system used by svg elements which will be mapped to the containersize.
-
-RLGLayout will also update the containersize param on every render pass. The containersize param can be used by the generator.
-
-You should think of the containersize as the size of every container. The top level containersize in a [generator](#Generator) is set by [ReactSizeDetector](https://www.npmjs.com/package/react-resize-detector). Its children's containersizes are computed by the generator.
+In the above snippet the viewBox defines the coordinates system used by svg elements which will now be mapped to the containersize.
 
 ### Responsive Layout
 
-#### You don't need borders
-
-Borders can distract. Instead let the eye see organize your elements. Use RLGColumns and RLGRows to layout.
-
 ### Responsive Desktop Layout
 
-*See examples/src/index.tsx.*
+RLG provides a number of features to allow for responsive design.
 
-RLG provides a number of tools to allow for responsive design.
+The simplest approach is to just define all the elements in a generator as a function of the containersize.
 
-The simplest one is to just define all the elements in a generator as a function of the containersize.
+An example of a responsive [generator](#Generator) is defined by the desktopGenerator. This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
 
-An example of a responsive generator is defined by the [generator](#Generator) desktopGenerator. It defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional except for the content (it is the remaining area). It also can be configured to use full header and footer if desired.
-
-```html
+```javascript
 <RLGLayout
-  name={'RLGLayout.desktop.example'}
-  edit={false}
-  g={new desktopGenerator()}
+  name={'example'}
+  g={desktopGenerator(...)}
 >
   <div data-layout={{ name: 'title' }} >
     <span>Title</span>
@@ -196,7 +159,7 @@ An example of a responsive generator is defined by the [generator](#Generator) d
   </div>
 
   <div data-layout={{ name: 'content' }}>
-    <span>App content</span>
+    <span>Page content</span>
   </div>
 
    <div data-layout={{ name: 'rightSide' }} >
@@ -252,7 +215,7 @@ This is because RLG uses css internally and css only transforms html. If you do 
 
 *See columnsGenerator, desktopGenerator, and dynamicGenerator for examples.*
 
-A generator is just a function that returns an instance of Generator. The function must define the generators Param, contain an init function and an optional create function. Here is a simple Empty generator:
+A generator is just a function that returns an instance of Generator. A generator function must define its parameters storage, contain an init function and an optional create function. Here is a simple Empty generator:
 
 ```javascript
 function emptyGenerator(name: string) {
@@ -279,9 +242,9 @@ function emptyGenerator(name: string) {
 }
 ```
 
-emptyGenerator will not generate any elements even if it contains data-layout elements.
+emptyGenerator will not generate any elements even if it has children that contains data-layout elements.
 
-To make it a useful dynamic generator we just add a create function to the generator. That's how the dynamicGenerator is defined. It lets you define a layout manually and offers the best flexibility, but only limited responsiveness by using just the properties of the [position](#IPosition) interface.
+To make it a useful dynamic generator we just add a create function to the generator. That's how the [dynamicGenerator](globals/dynamicgenerator.html) is defined. It lets you define a layout manually and offers the best flexibility, but only limited responsiveness using just the properties of the [position](interfaces/iposition.html) interface.
 
 ```javascript
 function dynamicGenerator(name: string): IGenerator {
@@ -319,14 +282,6 @@ function dynamicGenerator(name: string): IGenerator {
 }
 ```
 
-#### Notes
-
-When accessing params be sure to clone the value if you intend on making changes to the value, otherwise you could end up modifying the value in the Params store.
-
-### Scaling
-
-RLG offers multiple builtin options for scaling.
-
 ### Editing
 
 #### Configuration
@@ -336,68 +291,5 @@ RLG offers multiple builtin options for scaling.
 | Control |  Description |
 |------------------ :------------------------------------------------:|
 | Drag + ctlr | constrain to horizontal or vertical |
-
-## API
-
-### RLGLayout component
-
-This is the main component that a user needs. It is the manager for each RLG group. Its purpose is to dynamically define the layout using the generator and the data-layout specification.
-
-### data-layout property
-
-### Layout component
-
-This is an internal component. It is accessible when building a generator function.
-
-### IPosition interface
-
-These parameters are a per element configuration. For parameters that apply to all elements in a RLGLayout use the Params object.
-
-```javascript
-interface IPosition {
-  units: {
-    origin: IOrigin,
-    location: IUnit,
-    size: IUnit
-  }
-  align?: {
-    origin: IOrigin;
-    key: string | number,
-    offset: IPoint,
-    source: IAlign,
-    self: IAlign
-  },
-  edit?: IEdit[];
-  handlers?: IHandlers;
-  location: IPoint;
-  size: ISize;
-}
-```
-
-#### Units
-
-##### Origin
-
-Origin specifies the position within an element that location uses to position the element. Origin is expressed in percent of the width and height of an element. An origin of (0, 0) specifies the left top position of the element. An origin of (50,50) specifies the center of the element. Thus to position an element in the center of a container you would use:
-
-```javascript
-  units: {
-    origin: {50, 50}
-    location: IUnit.percent
-    size: ...
-  }
-  location: {50, 50}
-  size: ...
-```
-
-If you use an origin of (0, 0) then the left top of the element would be placed at the center of the container.
-
-### Generator Init and Create
-
-#### Init
-
-The init function passed to the Generator must define the complete view of a layout. If the create function is being used then the init function should respect the layouts added by create.
-
-#### Create
 
 ## FAQ

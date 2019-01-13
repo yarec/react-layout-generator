@@ -18,6 +18,9 @@ it('stringToUnit return correct value', () => {
   expect(stringToUnit('50aw').toFixed(Unit.unmanagedWidth)) // aw
   expect(stringToUnit('50ah').toFixed(Unit.unmanagedHeight)) // ah
   expect(stringToUnit('50').toFixed(Unit.pixel))
+
+  expect(stringToUnit('1%h').toFixed(Unit.pixel)) // %ph
+  expect(stringToUnit('50w').toFixed(Unit.unmanagedHeight)) // ah
 })
 
 it('namedUnit return correct value', () => {

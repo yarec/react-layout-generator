@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, Unit } from '../types'
+import { DebugOptions, Unit, EditOptions } from '../types'
 // import ReactResizeDetector from 'react-resize-detector'
 
 import * as Enzyme from 'enzyme';
@@ -38,7 +38,7 @@ describe('RLGLayout', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     const wrapper = mount(
-      <RLGLayout name='instance#3' debug={DebugOptions.none} g={g} containersize={{ width: 1000, height: 500 }}>
+      <RLGLayout name='instance#3' edit={EditOptions.all} debug={DebugOptions.all} g={g} containersize={{ width: 1000, height: 500 }}>
         <div data-layout={{
           name: 'hello',
           position: {

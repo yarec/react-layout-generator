@@ -506,16 +506,6 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     const b = this._g.lookup(name);
 
-    // const props = this.props as { [key: string]: string };
-    // tslint:disable-next-line:no-string-literal
-    // if (!b && props['layout']) {
-    //   // tslint:disable-next-line:no-string-literal
-    //   const rl = gLayouts.get(props['layout']);
-    //   if (rl) {
-    //     //
-    //   }
-    // }
-
     if (b) {
 
       this._zIndex += 1;

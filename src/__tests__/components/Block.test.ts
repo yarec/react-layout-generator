@@ -240,3 +240,71 @@ it('update #3', () => {
 
   expect(l.rect()).toEqual({ x: 250, y: 250, width: 50, height: 50 })
 })
+
+it('align #1', () => {
+  const p = {
+    units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+    location: { x: 100, y: 100 },
+    size: { width: 100, height: 100 }
+  }
+
+  const pAlign = {
+    units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+    location: { x: 0, y: 0 },
+    size: { width: 100, height: 80 },
+    align: {
+      key: 'one',
+      offset: { x: 20, y: 0 },
+      source: { x: 100, y: 0 },
+      self: { x: 0, y: 50 }
+    }
+  }
+
+  g.clear()
+  const blocks = g.blocks()
+  blocks.set('one', p, g)
+  const bAlign = blocks.set('bAlign', pAlign, g)
+
+  if (bAlign) {
+    expect(bAlign.rect()).toEqual({ x: 220, y: 60, width: 100, height: 80 })
+  } else {
+    expect(bAlign).toEqual(undefined)
+  }
+})
+
+it('misc #1', () => {
+  const p = {
+    units: {
+      origin: { x: 0, y: 0 },
+      location: Unit.pixel,
+      size: Unit.pixel
+    },
+    location: { x: 250, y: 250 },
+    size: { width: 100, height: 50 }
+  }
+  const b = new Block('test', p, g)
+  b.update({ x: 250, y: 250 }, { width: 50, height: 50 })
+
+  expect(b.location).toEqual({ x: 250, y: 250 })
+  expect(b.size).toEqual({ width: 50, height: 50 })
+  expect(b.resize).toBeTruthy()
+  expect(b.generator).toBeTruthy()
+})
+
+it('misc #2', () => {
+  const p = {
+    units: {
+      origin: { x: 0, y: 0 },
+      location: Unit.percent,
+      size: Unit.pixel
+    },
+    location: { x: 250, y: 250 },
+    size: { width: 100, height: 50 }
+  }
+  const b = new Block('test', p, g)
+  b.update({ x: 250, y: 250 }, { width: 50, height: 50 })
+
+  expect(b.noop).toBeTruthy()
+  expect(b.connectionHandles()).toBeTruthy()
+  expect(b.touch()).toEqual(undefined)
+})
