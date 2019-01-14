@@ -1,47 +1,37 @@
 # React Layout Generator
 
-*React-layout-generator is a project that is exploring a layout system that uses React to compute the layouts directly when arranging the basic elements. We call this [Layout in React](layout-in-react.md).*
+*React-layout-generator (RLG) is a project that is exploring a layout system that uses React to compute the layouts directly when arranging elements.*
 
-<!-- TOC -->
-
-- [React Layout Generator](#react-layout-generator)
-  - [Install](#install)
-    - [Contributing](#contributing)
-  - [TODO](#todo)
-  - [Bugs](#bugs)
-  - [Features](#features)
-  - [Applications](#applications)
-  - [Usage](#usage)
-    - [RLGLayout](#rlglayout)
-      - [Note](#note)
-    - [RLGPanel](#rlgpanel)
-    - [Responsive Layout](#responsive-layout)
-    - [Responsive Desktop Layout](#responsive-desktop-layout)
-    - [Generator](#generator)
-    - [Editing](#editing)
-      - [Configuration](#configuration)
-      - [Controls](#controls)
-  - [FAQ](#faq)
-
-<!-- /TOC -->
-
-React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is focused on layout and editing of both html and svg components. The approach used enables precise and continuous control of responsive layouts.
-
-This release should be considered pre-alpha.
+RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
 This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
 ## Install
 
-For the time being, you will need to clone or fork the project to evaluate. To run locally follow these steps: 1) cd to the \<directory\> where you installed RLG, 2) run npm install or yarn, 3) cd to the examples directory, 4) run npm install or yarn, and 4) run start (to build the examples).
+Coming soon on npm.
 
 ### Contributing
 
-We're really glad you're reading [this](CONTRIBUTING.md), because we need volunteer developers to help this project come to fruition. Also see the [code of conduct](code-of-conduct.md) before working on the repo.
+We're really glad you're reading this, because we need volunteer developers to help this project come to fruition. In particular we need components that are designed to use RLG.
+
+These steps will guide you through contributing to this project:
+
+- Fork RLG
+- Clone it and install dependencies
+- Build
+
+git clone `https://github.com/YOUR-USERNAME/react-layout-generator`
+
+Then run `npm install` or `yarn`.
+
+RLG includes an examples sub-project so it too will need to be initialized using npm or yarn. See the package.json for scripts supported.
+
+Make and commit your changes. Make sure the commands start, build, test, and test:prod are working.
+
+Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-generator/compare?expand=1) with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/)). Make sure all of your commits are atomic (one feature per commit).
 
 ## TODO
 
-- Describe saving and restoring.
 - Implement layers, bring forward, ...
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar
@@ -56,8 +46,7 @@ We're really glad you're reading [this](CONTRIBUTING.md), because we need volunt
 
 ## Bugs
 
-- Does not work smoothly with browser magnification +/-.
-- Fix flickering when making the browser window smaller.
+- Fix flickering when making the browser window smaller/larger.
 
 ## Features
 
@@ -82,7 +71,7 @@ We're really glad you're reading [this](CONTRIBUTING.md), because we need volunt
 
 Use RLGLayout as a parent element followed by one or more elements with a data-layout property.
 
-```javascript
+```ts
 <RLGLayout name='layoutName' ... />
   <div data-layout={{name: 'name1', ...}} >
     elements...
@@ -104,7 +93,7 @@ A common choice is to wrap a react component with a div element. A disadvantage 
 
 You can only use react components as direct children that apply the style property in their render method.
 
-```javascript
+```ts
   render() {
     ...
     return (
@@ -119,7 +108,7 @@ You can only use react components as direct children that apply the style proper
 
 Use [RLGPanel](classes/rlgpanel.html) as a direct child of RLGLayout when its children need access their location, size and other information.
 
-```javascript
+```ts
   <RLGPanel data-layout={{ name: 'content' }}>
     {(args: IRLGPanelArgs) => (
        ...
@@ -131,7 +120,7 @@ The function (args: [IRLGPanelArgs](interfaces/irlgpanelargs.html)) => () makes 
 
 One way to utilize these args is to use Styled-components with a Style defined like this:
 
-```javascript
+```ts
   const Item = styled.li<{containersize: ISize}>`
     max-width:  ${p => p.containersize.width};
     white-space: wrap;
@@ -142,7 +131,7 @@ then just pass the args to \<Item containersize={args.containersize} \>
 
 Likewise it can be used to define the width and height in a svg element.
 
-```javascript
+```ts
   <svg
     width={args.containersize.width}
     height={args.containersize.height}
@@ -165,7 +154,7 @@ A key approach is to just define all the elements in a generator as a function o
 
 An example of a responsive generator is defined by the [desktopGenerator](globals#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired.
 
-```javascript
+```ts
 <RLGLayout
   name={'example'}
   g={desktopGenerator(...)}
@@ -234,7 +223,7 @@ emptyGenerator will not generate any elements even if it has children that conta
 
 To make it a useful dynamic generator we add a create function to the generator. That's how the [dynamicGenerator](globals/dynamicgenerator.html) is defined. It lets you define a layout manually and offers the most flexibility, but only limited responsiveness using just the properties of the [position](interfaces/iposition.html) interface.
 
-```javascript
+```jsx
 function dynamicGenerator(name: string): IGenerator {
   const _params = new Params([
     ['containersize', { width: 0, height: 0 }]
@@ -259,25 +248,11 @@ function dynamicGenerator(name: string): IGenerator {
       console.error(`${args.name} dynamicGenerator requires that a position is defined`)
     }
 
-    const layout = new Layout(args.name, args.position, args.g);
-
-    args.g.layouts().set(layout.name, layout);
-
-    return layout;
+    return args.g.layouts().set(layout.name, args.position, args.g)
   }
 
   return new Generator(name, init, _params, create);
 }
 ```
 
-### Editing
-
-#### Configuration
-
-#### Controls
-
-| Control |  Description |
-|------------------ :------------------------------------------------:|
-| Drag + ctlr | constrain to horizontal or vertical |
-
-## FAQ
+Note that generators do not have to be packaged as a function. It is easy to implement a generator as part of a class.

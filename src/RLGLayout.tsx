@@ -29,21 +29,6 @@ import {
   rectSize,
 } from './types';
 
-
-// /**
-//  * internal use only
-//  * @ignore
-//  */
-// interface ILayoutStyle {
-//   style: React.CSSProperties;
-//   rect: IRect;
-//   position: IPosition;
-//   selected: boolean;
-//   zIndex: number;
-//   overflowX?: OverflowOptions;
-//   overflowY?: OverflowOptions;
-// }
-
 /**
  * internal use only
  * @ignore
@@ -65,22 +50,6 @@ export function selectedStyle(rect: IRect) {
   }
 }
 
-// /**
-//  * internal use only
-//  * @ignore
-//  */
-// function layoutStyle(args: ILayoutStyle) {
-//   return tileStyle(
-//     args.style,
-//     args.rect.x,
-//     args.rect.y,
-//     args.rect.width,
-//     args.rect.height,
-//     args.position.units.size,
-//     args.selected,
-//     args.zIndex);
-// }
-
 /**
  * internal use only
  * @ignore
@@ -95,14 +64,6 @@ function tileStyle(
   selected: boolean,
   zIndex: number
 ): React.CSSProperties {
-
-  // For selected elements
-  // const border = selected ? {
-  //   borderStyle: 'dotted',
-  //   borderWidth: '1px',
-  //   borderColor: 'red',
-  //   padding: '3px'
-  // } : {};
 
   // For unmanaged elements
   let size: any = {
@@ -152,6 +113,11 @@ export let gInProgress: number = 0;
  * @ignore
  */
 export const gLayouts: Map<string, RLGLayout> = new Map();
+
+/**
+ * internal use only
+ * @ignore
+ */
 export const gContext: Map<string, any> = new Map();
 
 /**
@@ -159,17 +125,23 @@ export const gContext: Map<string, any> = new Map();
  * @noInheritDoc
  */
 export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
-  /** 
-   * Name is required by [RLGDynamic](#RLGDynamic) and useful when debugging even if you are not using dynamic rendering.
-   * 
+  /**  
+   * Name is required by [RLGDynamic](#RLGDynamic) and 
+   * useful when debugging even if you are not using dynamic 
+   * rendering.
    */
   name: string;
+  /** 
+   * The default is EditOptions.none. Set to EditOptions.all to edit.
+   */
   edit?: EditOptions;
-  save?: (name: string, params: string, blocks: string) => void;
-  load?: (name: string) => { params: string, blocks: string };
-  containersize?: ISize;
+   /** 
+   * The default is DebugOptions.none. You may include more than one
+   * of the options. Only the DebugOptions.all includes any other options.
+   */
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
+  containersize?: ISize;
   params?: Array<[string, ParamValue]>;
   overflowX?: OverflowOptions;
   overflowY?: OverflowOptions;

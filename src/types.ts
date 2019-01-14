@@ -1,7 +1,30 @@
+/**
+ * This defines the overflow property that are passed to css.
+ * The options have the same meaning as the css overflow options.
+ * These options only apply to RLGLayout.
+ *
+ * This property specifies whether to clip content or to add
+ * scrollbars when an element's content is too big to fit in a
+ * specified area.
+ *
+ * The default is visible.
+ */
 export enum OverflowOptions {
+  /**
+   * The overflow is not clipped. It renders outside the element's box. This is default.
+   */
   visible = 0,
+  /**
+   * The overflow is clipped, and the rest of the content will be invisible.
+   */
   hidden,
+  /**
+   * The overflow is clipped, but a scroll-bar is added to see the rest of the content.
+   */
   scroll,
+  /**
+   * If overflow is clipped, a scroll-bar should be added to see the rest of the content.
+   */
   auto
 }
 
@@ -18,22 +41,78 @@ export interface IOrigin {
 }
 
 /**
- * Defines the units of location and size
+ * Defines the units of location and size passed to data-layout or
+ * in [IPosition](iposition.html). Most computation will be done in pixels.
  */
 export enum Unit {
+  /**
+   * Pixels (px) are relative to the viewing device. For low-dpi
+   * devices, 1px is one device pixel (dot) of the display. For
+   * printers and high resolution screens 1px implies multiple
+   * device pixels.
+   *
+   * Pixels are not generally recommended because screen sizes
+   * vary so much. However, since RLG is doing computational
+   * positioning they do not present as much of a problem.
+   * Still we recommend using one of the other options.
+   */
   pixel = 1, // px
+  /**
+   * Percent is relative to the parent size. That means that
+   * if the parent size is rectangular the value will be proportional
+   * to the parent size. In other words a perfect square will
+   * be displayed as a rectangular element.
+   */
   percent, // %
+  /**
+   * Preserve is similar percent except that it takes the shorter
+   * axis to define the value of a 1% pixel and then applies that
+   * to the other axis. This means that a perfect square will still
+   * be presented as a square.
+   *
+   * One option for layout is to use Preserve or Pixel for the size of
+   * an element and Percent for the location to eliminate distortion
+   * due to scaling.
+   */
   preserve, // %p
+  /**
+   * PreserveWidth is same as Preserve except that horizontal axis is
+   * taken as the basis.
+   */
   preserveWidth, // %pw
+  /**
+   * PreserveHeight is same as Preserve except that Vertical axis is
+   * taken as the basis.
+   */
   preserveHeight, // %ph
 
   // Keep unmanaged at the end of the list
+
+  /**
+   * Unmanaged is only usable for the size of an element. The actual
+   * value is the natural size of the content as determined by the browser.
+   *
+   * Unmanaged applies to both width and height.
+   */
   unmanaged, // a
+  /**
+   * UnmanagedWidth is the same as Unmanaged except it only applies to the
+   * width.
+   */
   unmanagedWidth, // aw
+  /**
+   * UnmanagedHeight is the same as Unmanaged except it only applies to the
+   * height.
+   */
   unmanagedHeight // ah
 }
-export function isUnmanaged(u: Unit) {
-  return u >= Unit.unmanaged
+
+/**
+ * isUnmanaged returns true if the unit is one of the Unmanaged options.
+ * @param unit
+ */
+export function isUnmanaged(unit: Unit) {
+  return unit >= Unit.unmanaged
 }
 
 export function stringToUnit(data: string) {
@@ -174,40 +253,75 @@ export function namedPositionRef(pos: PositionRef) {
   return name
 }
 
+/**
+ * Defines debug options that write to the console when enabled.
+ */
 export enum DebugOptions {
+  /**
+   * No debug output will be written to the console except
+   * for critical errors which will throw. This is the default.
+   */
   none = 0,
+  /**
+   * Only general information will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   info = 1 << 0,
+  /**
+   * Only a warnings will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   warning = 1 << 1,
-  // tslint:disable-next-line:no-bitwise
-  warningAll = ~(~0 << 1),
+  /**
+   * Critical errors are alway written the console. This option adds non-critical errors.
+   */
   // tslint:disable-next-line:no-bitwise
   error = 1 << 2,
-  // tslint:disable-next-line:no-bitwise
-  errorAll = ~(~0 << 2),
+  /**
+   * Only instrumented trace information will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   trace = 1 << 3,
-  // tslint:disable-next-line:no-bitwise
-  traceAll = ~(~0 << 3),
+  /**
+   * Only frame timing will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   timing = 1 << 4,
+  /**
+   * Params and Blocks values will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   data = 1 << 5,
+  /**
+   * Selected mouse events will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   mouseEvents = 1 << 6,
+  /**
+   * All instrumented logging will be written to the console.
+   */
   // tslint:disable-next-line:no-bitwise
   all = ~(~0 << 7)
 }
 
+/**
+ * Allows multiple DebugOptions to be combined.
+ */
 export type DebugOptionsArray = DebugOptions[]
 
+/**
+ * Defines edit options that allow editing of layouts.
+ */
 export enum EditOptions {
+  /**
+   * Editing will not be enabled. This is the default.
+   */
   none = 0,
+  /**
+   * Editing will be enabled.
+   */
   all
 }
-
-// export type Opaque<K, T> = T & { __TYPE__: K }
 
 export interface IRect {
   x: number

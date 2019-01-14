@@ -922,9 +922,6 @@ img { max-width: 100%; }
 					<a href="debugoptions.html#error" class="tsd-kind-icon">error</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="debugoptions.html#errorall" class="tsd-kind-icon">error<wbr>All</a>
-				</li>
-				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 					<a href="debugoptions.html#info" class="tsd-kind-icon">info</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
@@ -940,13 +937,7 @@ img { max-width: 100%; }
 					<a href="debugoptions.html#trace" class="tsd-kind-icon">trace</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="debugoptions.html#traceall" class="tsd-kind-icon">trace<wbr>All</a>
-				</li>
-				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 					<a href="debugoptions.html#warning" class="tsd-kind-icon">warning</a>
-				</li>
-				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="debugoptions.html#warningall" class="tsd-kind-icon">warning<wbr>All</a>
 				</li>
 			</ul>
 		</li>
@@ -954,6 +945,13 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>Defines debug options that write to the console when enabled.</p>
+				</div>
+			</div>
+		</section>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
@@ -964,15 +962,12 @@ img { max-width: 100%; }
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#all" class="tsd-kind-icon">all</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#data" class="tsd-kind-icon">data</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#error" class="tsd-kind-icon">error</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#errorall" class="tsd-kind-icon">error<wbr>All</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#info" class="tsd-kind-icon">info</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#mouseevents" class="tsd-kind-icon">mouse<wbr>Events</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#none" class="tsd-kind-icon">none</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#timing" class="tsd-kind-icon">timing</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#trace" class="tsd-kind-icon">trace</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#traceall" class="tsd-kind-icon">trace<wbr>All</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#warning" class="tsd-kind-icon">warning</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="debugoptions.html#warningall" class="tsd-kind-icon">warning<wbr>All</a></li>
 						</ul>
 					</section>
 				</div>
@@ -986,9 +981,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">all<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;~(~0 &lt;&lt; 7)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L200">types.ts:200</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L304">types.ts:304</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>All instrumented logging will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="data" class="tsd-anchor"></a>
@@ -996,9 +996,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 5</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L196">types.ts:196</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L294">types.ts:294</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Params and Blocks values will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="error" class="tsd-anchor"></a>
@@ -1006,19 +1011,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 2</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L186">types.ts:186</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L279">types.ts:279</a></li>
 					</ul>
 				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="errorall" class="tsd-anchor"></a>
-				<h3>error<wbr>All</h3>
-				<div class="tsd-signature tsd-kind-icon">error<wbr>All<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;~(~0 &lt;&lt; 2)</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L188">types.ts:188</a></li>
-					</ul>
-				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Critical errors are alway written the console. This option adds non-critical errors.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="info" class="tsd-anchor"></a>
@@ -1026,9 +1026,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 0</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L180">types.ts:180</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L269">types.ts:269</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Only general information will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="mouseevents" class="tsd-anchor"></a>
@@ -1036,9 +1041,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">mouse<wbr>Events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 6</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L198">types.ts:198</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L299">types.ts:299</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Selected mouse events will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="none" class="tsd-anchor"></a>
@@ -1046,9 +1056,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">none<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L178">types.ts:178</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L264">types.ts:264</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>No debug output will be written to the console except
+						for critical errors which will throw. This is the default.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="timing" class="tsd-anchor"></a>
@@ -1056,9 +1072,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">timing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 4</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L194">types.ts:194</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L289">types.ts:289</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Only frame timing will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="trace" class="tsd-anchor"></a>
@@ -1066,19 +1087,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">trace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 3</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L190">types.ts:190</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L284">types.ts:284</a></li>
 					</ul>
 				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="traceall" class="tsd-anchor"></a>
-				<h3>trace<wbr>All</h3>
-				<div class="tsd-signature tsd-kind-icon">trace<wbr>All<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;~(~0 &lt;&lt; 3)</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L192">types.ts:192</a></li>
-					</ul>
-				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Only instrumented trace information will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 				<a name="warning" class="tsd-anchor"></a>
@@ -1086,19 +1102,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">warning<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 1</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L182">types.ts:182</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/types.ts#L274">types.ts:274</a></li>
 					</ul>
 				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="warningall" class="tsd-anchor"></a>
-				<h3>warning<wbr>All</h3>
-				<div class="tsd-signature tsd-kind-icon">warning<wbr>All<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;~(~0 &lt;&lt; 1)</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/types.ts#L184">types.ts:184</a></li>
-					</ul>
-				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Only a warnings will be written to the console.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

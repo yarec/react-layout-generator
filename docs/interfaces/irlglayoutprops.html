@@ -924,9 +924,6 @@ img { max-width: 100%; }
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="irlglayoutprops.html#g" class="tsd-kind-icon">g</a>
 				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutprops.html#load" class="tsd-kind-icon">load</a>
-				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a href="irlglayoutprops.html#name" class="tsd-kind-icon">name</a>
 				</li>
@@ -938,9 +935,6 @@ img { max-width: 100%; }
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="irlglayoutprops.html#params" class="tsd-kind-icon">params</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutprops.html#save" class="tsd-kind-icon">save</a>
 				</li>
 			</ul>
 		</li>
@@ -979,12 +973,10 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#debug" class="tsd-kind-icon">debug</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#edit" class="tsd-kind-icon">edit</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#g" class="tsd-kind-icon">g</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#load" class="tsd-kind-icon">load</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="irlglayoutprops.html#name" class="tsd-kind-icon">name</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#overflowx" class="tsd-kind-icon">overflowX</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#overflowy" class="tsd-kind-icon">overflowY</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#params" class="tsd-kind-icon">params</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutprops.html#save" class="tsd-kind-icon">save</a></li>
 						</ul>
 					</section>
 				</div>
@@ -998,7 +990,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">containersize<span class="tsd-signature-symbol">:</span> <a href="isize.html" class="tsd-signature-type">ISize</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L170">RLGLayout.tsx:170</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L144">RLGLayout.tsx:144</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1008,9 +1000,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="../enums/debugoptions.html" class="tsd-signature-type">DebugOptions</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#debugoptionsarray" class="tsd-signature-type">DebugOptionsArray</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L171">RLGLayout.tsx:171</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L142">RLGLayout.tsx:142</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The default is DebugOptions.none. You may include more than one
+						of the options. Only the DebugOptions.all includes any other options.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="edit" class="tsd-anchor"></a>
@@ -1018,9 +1016,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">edit<span class="tsd-signature-symbol">:</span> <a href="../enums/editoptions.html" class="tsd-signature-type">EditOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L167">RLGLayout.tsx:167</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L137">RLGLayout.tsx:137</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The default is EditOptions.none. Set to EditOptions.all to edit.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="g" class="tsd-anchor"></a>
@@ -1028,17 +1031,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="igenerator.html" class="tsd-signature-type">IGenerator</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L172">RLGLayout.tsx:172</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="load" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> load</h3>
-				<div class="tsd-signature tsd-kind-icon">load<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L169">RLGLayout.tsx:169</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L143">RLGLayout.tsx:143</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1049,12 +1042,14 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Overrides AllHTMLAttributes.name</p>
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L166">RLGLayout.tsx:166</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L133">RLGLayout.tsx:133</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Name is required by <a href="#RLGDynamic">RLGDynamic</a> and useful when debugging even if you are not using dynamic rendering.</p>
+						<p>Name is required by <a href="#RLGDynamic">RLGDynamic</a> and
+							useful when debugging even if you are not using dynamic
+						rendering.</p>
 					</div>
 				</div>
 			</section>
@@ -1064,7 +1059,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">overflowX<span class="tsd-signature-symbol">:</span> <a href="../enums/overflowoptions.html" class="tsd-signature-type">OverflowOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L174">RLGLayout.tsx:174</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L146">RLGLayout.tsx:146</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1074,7 +1069,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">overflowY<span class="tsd-signature-symbol">:</span> <a href="../enums/overflowoptions.html" class="tsd-signature-type">OverflowOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L175">RLGLayout.tsx:175</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L147">RLGLayout.tsx:147</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1084,17 +1079,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#paramvalue" class="tsd-signature-type">ParamValue</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L173">RLGLayout.tsx:173</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="save" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> save</h3>
-				<div class="tsd-signature tsd-kind-icon">save<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e51d501/src/RLGLayout.tsx#L168">RLGLayout.tsx:168</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/RLGLayout.tsx#L145">RLGLayout.tsx:145</a></li>
 					</ul>
 				</aside>
 			</section>
