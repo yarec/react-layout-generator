@@ -1,4 +1,9 @@
 import { IRect, Rect, PositionRef } from '../types'
+
+/**
+ * internal use only
+ * @ignore
+ */
 export type ExtendElement = (
   rect: IRect,
   deltaX: number,

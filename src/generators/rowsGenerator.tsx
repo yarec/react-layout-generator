@@ -60,7 +60,6 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
     if (!p) {
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },

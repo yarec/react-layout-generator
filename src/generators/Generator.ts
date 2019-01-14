@@ -11,7 +11,11 @@ export interface IGeneratorFunctionArgs {
   editHelper?: EditHelper
 }
 
+/**
+ *
+ */
 export type IInit = (g: IGenerator) => Blocks
+
 export interface ICreate {
   name: string
   g: IGenerator

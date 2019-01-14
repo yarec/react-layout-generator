@@ -157,7 +157,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.unmanagedHeight },
+            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 75, y: 40 },
             size: { width: 250, height: 300 },
             editor: {

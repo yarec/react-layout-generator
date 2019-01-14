@@ -19,8 +19,10 @@ import {
 import { clone } from '../utils'
 
 export interface IAlign {
-  x: number
-  y: number
+  key: string | number
+  offset: IPoint
+  source: IOrigin
+  self: IOrigin
 }
 
 export interface IMenuItem {
@@ -61,16 +63,10 @@ export enum LayerOption {
 
 export interface IPosition {
   units: {
-    origin: IOrigin
     location: Unit
     size: Unit
   }
-  align?: {
-    key: string | number
-    offset: IPoint
-    source: IAlign
-    self: IAlign
-  }
+  align?: IAlign
   positionChildren?: PositionChildren
   editor?: {
     selectable?: boolean
@@ -79,6 +75,7 @@ export interface IPosition {
   }
   layer?: LayerOption
   handlers?: IHandlers
+  origin?: IOrigin
   location: IPoint
   size: ISize
 }
@@ -152,7 +149,6 @@ export class Block {
     } else {
       this.position = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -247,10 +243,11 @@ export class Block {
       this._position.location,
       this._position.units.location
     ) as IPoint
-    if (point.x === undefined) {
-      console.log('fromLocation ', point.x)
+
+    if (this._position.origin) {
+      return this.fromOrigin(point, this._position.origin, this.fromSize())
     }
-    return this.fromOrigin(point, this.position.units.origin, this.fromSize())
+    return point
   }
 
   /**
@@ -291,7 +288,7 @@ export class Block {
 
       const r1 = this.getConnectPoint(p1, s1, align.source)
 
-      const p = this.toOrigin(location, this._position.units.origin, itemSize)
+      const p = this.toOrigin(location, this._position.origin, itemSize)
       // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
       const s2 = this.inverseScale(itemSize, this._position.units.size) as ISize
 
@@ -306,7 +303,7 @@ export class Block {
       // Update align offset
       align.offset = offset
     } else {
-      const p = this.toOrigin(location, this._position.units.origin, itemSize)
+      const p = this.toOrigin(location, this._position.origin, itemSize)
       this._position.location = this.inverseScale(
         p,
         this._position.units.location
@@ -442,9 +439,8 @@ export class Block {
       // })
 
       if (p.units && isUnmanaged(p.units.location)) {
-        console.error(`Position ${namedUnit(p.units.location)} in ${
-          this.name
-        } is NOT supported
+        console.error(`Position ${namedUnit(p.units.location)} in 
+        ${this.name} is NOT supported
         for location. It is only supported for size.
         `)
       }
@@ -453,8 +449,10 @@ export class Block {
 
   public updatePosition(p: IPosition) {
     this.validate(p)
-    this._position.units.origin.x = p.units.origin.x * 0.01
-    this._position.units.origin.y = p.units.origin.y * 0.01
+    if (this._position.origin && p.origin) {
+      this._position.origin.x = p.origin.x * 0.01
+      this._position.origin.y = p.origin.y * 0.01
+    }
 
     // Convert percents to decimal
     const locUnit = this._position.units.location
@@ -564,7 +562,7 @@ export class Block {
     return ref
   }
 
-  private getConnectPoint(l: IPoint, s: ISize, a: IAlign) {
+  private getConnectPoint(l: IPoint, s: ISize, a: IOrigin) {
     return { x: l.x + s.width * a.x, y: l.y + s.height * a.y }
   }
 
@@ -685,11 +683,18 @@ export class Block {
   /**
    * reverses fromOrigin
    */
-  private toOrigin = (p: IPoint, origin: IPoint, s: ISize): IPoint => {
-    return {
-      x: p.x + origin.x * s.width,
-      y: p.y + origin.y * s.height
+  private toOrigin = (
+    p: IPoint,
+    origin: IPoint | undefined,
+    s: ISize
+  ): IPoint => {
+    if (origin) {
+      return {
+        x: p.x + origin.x * s.width,
+        y: p.y + origin.y * s.height
+      }
     }
+    return p
   }
 
   /**
@@ -698,10 +703,10 @@ export class Block {
    * position is (p.x - s.x / 2, p.y - s.y;)
    * Inverse of toAlign.
    */
-  private fromAlign = (p: IPoint, s: ISize, align: IAlign): IPoint => {
+  private fromAlign = (p: IPoint, s: ISize, origin: IOrigin): IPoint => {
     return {
-      x: p.x - align.x * s.width,
-      y: p.y - align.y * s.height
+      x: p.x - origin.x * s.width,
+      y: p.y - origin.y * s.height
     }
   }
 
@@ -712,7 +717,7 @@ export class Block {
    * (r.left + r.halfWidth, r.bottom;)
    *  Inverse of fromAlign.
    */
-  private toAlign = (p: IPoint, s: ISize, align: IAlign): IPoint => {
+  private toAlign = (p: IPoint, s: ISize, align: IOrigin): IPoint => {
     return {
       x: p.x + align.x * s.width,
       y: p.y + align.y * s.height

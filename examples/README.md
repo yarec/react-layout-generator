@@ -290,7 +290,6 @@ interface IPosition {
     size: IUnit
   }
   align?: {
-    origin: IOrigin;
     key: string | number,
     offset: IPoint,
     source: IAlign,

@@ -27,7 +27,6 @@ const g: IGenerator = new Generator('test', init, params, create)
 it('location #1 - default units', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -42,7 +41,6 @@ it('location #1 - default units', () => {
 it('location #2 - location in percent', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -56,7 +54,6 @@ it('location #2 - location in percent', () => {
 it('location #3', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -69,8 +66,8 @@ it('location #3', () => {
 
 it('location #4', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -84,7 +81,6 @@ it('location #4', () => {
 it('size #1', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -97,8 +93,8 @@ it('size #1', () => {
 
 it('size #2', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -111,8 +107,8 @@ it('size #2', () => {
 
 it('size #3', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -125,8 +121,8 @@ it('size #3', () => {
 
 it('size #4', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.percent
     },
@@ -140,7 +136,6 @@ it('size #4', () => {
 it('rect #1', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -153,8 +148,8 @@ it('rect #1', () => {
 
 it('rect #2', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -167,8 +162,8 @@ it('rect #2', () => {
 
 it('rect #3', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -181,8 +176,8 @@ it('rect #3', () => {
 
 it('rect #4', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.percent
     },
@@ -195,8 +190,8 @@ it('rect #4', () => {
 
 it('update #1', () => {
   const p = {
+    origin: { x: 50, y: 50 },
     units: {
-      origin: { x: 50, y: 50 },
       location: Unit.percent,
       size: Unit.percent
     },
@@ -212,7 +207,6 @@ it('update #1', () => {
 it('update #2', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -228,7 +222,6 @@ it('update #2', () => {
 it('update #3', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.percent,
       size: Unit.pixel
     },
@@ -243,13 +236,13 @@ it('update #3', () => {
 
 it('align #1', () => {
   const p = {
-    units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+    units: { location: Unit.pixel, size: Unit.pixel },
     location: { x: 100, y: 100 },
     size: { width: 100, height: 100 }
   }
 
   const pAlign = {
-    units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+    units: { location: Unit.pixel, size: Unit.pixel },
     location: { x: 0, y: 0 },
     size: { width: 100, height: 80 },
     align: {
@@ -275,7 +268,6 @@ it('align #1', () => {
 it('misc #1', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -294,7 +286,6 @@ it('misc #1', () => {
 it('misc #2', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.percent,
       size: Unit.pixel
     },

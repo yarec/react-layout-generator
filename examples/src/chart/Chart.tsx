@@ -88,7 +88,8 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
 
       // Self
       const self: IPosition = {
-        units: { origin: { x: 50, y: 0 }, location: Unit.percent, size: Unit.pixel },
+        origin: { x: 50, y: 0 }, 
+        units: { location: Unit.percent, size: Unit.pixel },
         location: aLocation ? aLocation : { x: 10, y: 10 },
         size: { width: 150, height: 100 },
         editor: {
@@ -107,7 +108,8 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
 
         node.children.forEach((name, i) => {
           const child: IPosition = {
-            units: { origin: { x: 50, y: 50 }, location: Unit.percent, size: Unit.pixel },
+            origin: { x: 50, y: 50 }, 
+            units: { location: Unit.percent, size: Unit.pixel },
             location: { x: 0, y: 0 },
             size: { width: 150, height: 100 },
             editor: {

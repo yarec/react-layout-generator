@@ -80,7 +80,6 @@ export function columnsGenerator(name: string, exParams?: Params) {
     if (!p) {
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },

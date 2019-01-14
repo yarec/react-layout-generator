@@ -42,7 +42,7 @@ describe('RLGLayout', () => {
         <div data-layout={{
           name: 'hello',
           position: {
-            units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+            units: { location: Unit.pixel, size: Unit.pixel },
             location: { x: 200, y: 50 },
             size: { width: 200, height: 200 }
           }

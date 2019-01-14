@@ -30,7 +30,6 @@ describe('RLGLayout', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     g.blocks().set('alpha', {
       units: {
-        origin: { x: 0, y: 0 },
         location: Unit.pixel, size: Unit.pixel
       },
       location: { x: 200, y: 50 },
@@ -41,7 +40,6 @@ describe('RLGLayout', () => {
         <div data-layout={{
           name: 'block',
           units: {
-            origin: { x: 0, y: 0 },
             location: Unit.pixel, size: Unit.pixel
           },
           location: { x: 200, y: 50 },
@@ -52,7 +50,6 @@ describe('RLGLayout', () => {
         <div data-layout={{ 
           name: 'block2',
           units: {
-            origin: { x: 0, y: 0 },
             location: Unit.pixel, size: Unit.pixel
           },
           location: { x: 200, y: 50 },

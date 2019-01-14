@@ -68,7 +68,8 @@ export enum Unit {
    * Preserve is similar percent except that it takes the shorter
    * axis to define the value of a 1% pixel and then applies that
    * to the other axis. This means that a perfect square will still
-   * be presented as a square.
+   * be presented as a square. Preserve is also similar to css's vw,
+   * vh, vmin, and vmax units.
    *
    * One option for layout is to use Preserve or Pixel for the size of
    * an element and Percent for the location to eliminate distortion
@@ -115,8 +116,13 @@ export function isUnmanaged(unit: Unit) {
   return unit >= Unit.unmanaged
 }
 
+/**
+ * stringToUnit parses a string for an unit.
+ * @param data
+ */
 export function stringToUnit(data: string) {
-  switch (data.charAt(data.length - 1)) {
+  const d = data.trim()
+  switch (d.charAt(d.length - 1)) {
     case 'x': {
       return Unit.pixel
     }
@@ -127,7 +133,7 @@ export function stringToUnit(data: string) {
       return Unit.unmanaged
     }
     case 'h': {
-      switch (data.charAt(data.length - 2)) {
+      switch (d.charAt(d.length - 2)) {
         case 'p': {
           return Unit.preserveHeight
         }
@@ -138,7 +144,7 @@ export function stringToUnit(data: string) {
       break
     }
     case 'w': {
-      switch (data.charAt(data.length - 2)) {
+      switch (d.charAt(d.length - 2)) {
         case 'p': {
           return Unit.preserveWidth
         }
@@ -152,9 +158,13 @@ export function stringToUnit(data: string) {
   return Unit.pixel
 }
 
-export function namedUnit(u: Unit) {
+/**
+ * namedUnit returns a printable name of a unit.
+ * @param unit
+ */
+export function namedUnit(unit: Unit) {
   let name = 'unknown'
-  switch (u) {
+  switch (unit) {
     case Unit.pixel: {
       name = 'pixel'
       break
@@ -192,27 +202,40 @@ export function namedUnit(u: Unit) {
   return name
 }
 
-export interface IOrigin {
-  x: number
-  y: number
-}
-
+/**
+ * PositionRef defines the location of 'drag' handle on an element's location and size.
+ * Drag handles provide a space where a user may point and hold to change its location.
+ */
 export enum PositionRef {
+  /** There is no drag handle which means that an element cannot be edited.*/
   none = 0,
+  /** The drag handle is the rect of the element. */
   position,
+  /** The drag handle is the top of the rect. */
   top,
+  /** The drag handle is the bottom of the rect. */
   bottom,
+  /** The drag handle is the left of the rect. */
   left,
+  /** The drag handle is the right of the rect. */
   right,
+  /** The drag handle is the left top of the rect. */
   leftTop,
+  /** The drag handle is the right top of the rect. */
   rightTop,
+  /** The drag handle is the left bottom of the rect. */
   leftBottom,
+  /** The drag handle is the right bottom of the rect. */
   rightBottom
 }
 
-export function namedPositionRef(pos: PositionRef) {
+/**
+ * namedPositionRef returns a printable name for a ref.
+ * @param ref
+ */
+export function namedPositionRef(ref: PositionRef) {
   let name = 'unknown'
-  switch (pos) {
+  switch (ref) {
     case PositionRef.position: {
       name = 'position'
       break
@@ -323,6 +346,9 @@ export enum EditOptions {
   all
 }
 
+/**
+ * IRect specifies the data that defines a rect in terms of its location and size.
+ */
 export interface IRect {
   x: number
   y: number
@@ -330,14 +356,25 @@ export interface IRect {
   height: number
 }
 
+/**
+ * rectSize returns the size of a rect.
+ * @param rect
+ */
 export function rectSize(rect: IRect): ISize {
   return { width: rect.width, height: rect.height }
 }
 
+/**
+ * rectPoint returns the location of a rect.
+ * @param rect
+ */
 export function rectPoint(rect: IRect): IPoint {
   return { x: rect.x, y: rect.y }
 }
 
+/**
+ * IAttrRect defines a rect in terms of the left top and right bottom.
+ */
 export interface IAttrRect {
   left: number
   top: number
@@ -371,6 +408,9 @@ export interface IAttrRect {
 //   return r.height;
 // }
 
+/**
+ * Rect defines a class of an IRect.
+ */
 export class Rect implements IRect {
   public y: number = 0
   public x: number = 0
@@ -455,6 +495,18 @@ export class Rect implements IRect {
     return { x: this.x, y: this.y }
   }
 
+  get rightTop(): IPoint {
+    return { x: this.x + this.width, y: this.y }
+  }
+
+  get leftBottom(): IPoint {
+    return { x: this.x, y: this.y + this.height }
+  }
+
+  get rightBottom(): IPoint {
+    return { x: this.x + this.width, y: this.y + this.height }
+  }
+
   public translate(point: IPoint): IRect {
     return {
       y: this.y + point.y,
@@ -481,11 +533,17 @@ export class Rect implements IRect {
   // }
 }
 
+/**
+ * IPoint defines a point in its element's local reference.
+ */
 export interface IPoint {
   x: number
   y: number
 }
 
+/**
+ * ISize defines the extent of a rectangle in {width, height}.
+ */
 export interface ISize {
   width: number
   height: number
@@ -499,14 +557,4 @@ export interface IArgsPoint {
 export interface IArgsSize {
   width?: number | string
   height?: number | string
-}
-
-// tslint:disable-next-line:max-classes-per-file
-export class Point implements IPoint {
-  public x: number = 0
-  public y: number = 0
-
-  public isEmpty = () => {
-    return this.x === 0 && this.y === 0
-  }
 }

@@ -80,7 +80,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       }
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -107,7 +106,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
 
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -140,7 +138,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       }
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -167,7 +164,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
 
     //   p = {
     //     units: {
-    //       origin: { x: 0, y: 0 },
     //       location: Unit.pixel,
     //       size: Unit.pixel
     //     },
@@ -205,7 +201,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       }
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -243,7 +238,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       }
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -273,7 +267,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       };
       p = {
         units: {
-          origin: { x: 0, y: 0 },
           location: Unit.pixel,
           size: Unit.pixel
         },

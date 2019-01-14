@@ -37,7 +37,6 @@ it('generator #3', () => {
 it('generator #4', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },

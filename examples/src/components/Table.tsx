@@ -101,7 +101,7 @@ export default class Table extends React.Component<ITableProps> {
     if (containersize) {
 
       const title: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+        units: {  location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: 0 },
         size: { width: containersize.width, height: titleHeight },
         editor: {
@@ -115,7 +115,7 @@ export default class Table extends React.Component<ITableProps> {
       blocks.set('title', title, g);
 
       const row: IPosition = {
-        units: { origin: { x: 0, y: 0 }, location: Unit.pixel, size: Unit.pixel },
+        units: {  location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: titleHeight },
         size: { width: containersize.width, height: rowHeight },
         positionChildren: this.positionRowChildren

@@ -184,7 +184,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
             data-layout={{
               name,
               position: {
-                units: { origin: { x: 0, y: 0 }, location: Unit.percent, size: Unit.percent },
+                units: {  location: Unit.percent, size: Unit.percent },
                 location: { x: i, y: 0 },
                 size: { width: 1, height: 100 }
               }

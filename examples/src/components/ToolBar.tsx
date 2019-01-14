@@ -127,7 +127,7 @@ export default class ToolBar extends React.Component<IToolBarProps, IToolBarStat
         const name1 = `separator${i}`;
         const p: IPosition = {
           units: {
-            origin: { x: 0, y: 0 },
+            
             location: Unit.pixel,
             size: Unit.pixel
           },

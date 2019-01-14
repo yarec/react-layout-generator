@@ -62,7 +62,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
 
       const p: IPosition = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -103,7 +103,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
 
       const p: IPosition = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -146,7 +146,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
 
       const p = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -186,7 +186,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
 
       const p = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -224,7 +224,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
       const p = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },
@@ -260,7 +260,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
 
       const p = {
         units: {
-          origin: { x: 0, y: 0 },
+          
           location: Unit.pixel,
           size: Unit.pixel
         },

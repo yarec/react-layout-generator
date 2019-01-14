@@ -33,7 +33,6 @@ const g: IGenerator = new Generator('test', init, params, create)
 it('updateParamLocation returns correct value', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -72,7 +71,6 @@ it('updateParamLocation returns correct value', () => {
 it('updateParamOffset returns correct value', () => {
   const p: IPosition = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -111,7 +109,6 @@ it('updateParamOffset returns correct value', () => {
 it('updateParamWidth returns correct value', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
@@ -147,7 +144,6 @@ it('updateParamWidth returns correct value', () => {
 it('updateParamHeight returns correct value', () => {
   const p = {
     units: {
-      origin: { x: 0, y: 0 },
       location: Unit.pixel,
       size: Unit.pixel
     },
