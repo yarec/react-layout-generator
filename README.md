@@ -14,7 +14,7 @@ Live examples (TODO)
 
 ## Documentation
 
-See [docs](https:www.cnn.html).
+See [docs](https://www.cnn.html).
 
 ## Install
 
