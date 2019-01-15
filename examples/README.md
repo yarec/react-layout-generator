@@ -284,11 +284,7 @@ These parameters are a per element configuration. For parameters that apply to a
 
 ```javascript
 interface IPosition {
-  units: {
-    origin: IOrigin,
-    location: IUnit,
-    size: IUnit
-  }
+  origin?: IOrigin,
   align?: {
     key: string | number,
     offset: IPoint,
@@ -297,8 +293,8 @@ interface IPosition {
   },
   edit?: IEdit[];
   handlers?: IHandlers;
-  location: IPoint;
-  size: ISize;
+  location: IPositionLocation;
+  size: IPositionSize;
 }
 ```
 
@@ -309,12 +305,8 @@ interface IPosition {
 Origin specifies the position within an element that location uses to position the element. Origin is expressed in percent of the width and height of an element. An origin of (0, 0) specifies the left top position of the element. An origin of (50,50) specifies the center of the element. Thus to position an element in the center of a container you would use:
 
 ```javascript
-  units: {
-    origin: {50, 50}
-    location: IUnit.percent
-    size: ...
-  }
-  location: {50, 50}
+  origin: {50, 50}
+  location: {50, 50, unit: Unit.percent}}
   size: ...
 ```
 

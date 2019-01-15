@@ -157,9 +157,8 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 75, y: 40 },
-            size: { width: 250, height: 300 },
+            location: { x: 75, y: 40, unit: Unit.percent },
+            size: { width: 250, height: 300, unit: Unit.unmanagedHeight },
             editor: {
               selectable: true
             }

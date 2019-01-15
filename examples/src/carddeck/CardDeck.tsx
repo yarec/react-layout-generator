@@ -94,8 +94,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         <button data-layout={{
           name: 'shuffle',
           position: {
-            units: {  location: Unit.percent, size: Unit.pixel },
-            location: { x: 80, y: 80 },
+            location: { x: 80, y: 80, unit: Unit.percent },
             size: { width: 100, height: 24 }
           }
         }}
@@ -106,8 +105,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         <Container data-layout={{
           name: 'instructions',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 70, y: 10 },
+            location: { x: 70, y: 10, unit: Unit.percent },
             size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
@@ -143,7 +141,6 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         data-layout={{
           name: card,
           position: {
-            units: {  location: Unit.pixel, size: Unit.pixel },
             location: { x: 25, y: 25 },
             editor: {
               edits: [{ ref: PositionRef.position }]

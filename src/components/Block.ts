@@ -67,17 +67,13 @@ export interface IPositionLocation extends IPoint {
   unit?: Unit
 }
 
-export interface IPositionSize extends ISize {
+export interface IPositionSize {
   width: number
   height: number
   unit?: Unit
 }
 
 export interface IPosition {
-  units: {
-    location: Unit
-    size: Unit
-  }
   align?: IAlign
   positionChildren?: PositionChildren
   editor?: {
@@ -106,9 +102,9 @@ export class Block {
     return this._position.editor
   }
 
-  get units() {
-    return this._position.units
-  }
+  // get units() {
+  //   return this._position.units
+  // }
 
   get location() {
     return this._position.location
@@ -160,10 +156,6 @@ export class Block {
       this._position = clone(p)
     } else {
       this.position = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         location: { x: 0, y: 0 },
         size: { width: 100, height: 100 }
       }
@@ -251,10 +243,7 @@ export class Block {
       }
     }
 
-    const point = this.scale(
-      this._position.location,
-      this._position.units.location
-    ) as IPoint
+    const point = this.scale(this._position.location) as IPositionLocation
 
     if (this._position.origin) {
       return this.fromOrigin(point, this._position.origin, this.fromSize())
@@ -267,7 +256,7 @@ export class Block {
    */
   public fromSize = () => {
     // console.log('size ' + this._position.size.width)
-    return this.scale(this._position.size, this._position.units.size) as ISize
+    return this.scale(this._position.size) as IPositionSize
   }
 
   public rect = (force?: boolean) => {
@@ -302,7 +291,7 @@ export class Block {
 
       const p = this.toOrigin(location, this._position.origin, itemSize)
       // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
-      const s2 = this.inverseScale(itemSize, this._position.units.size) as ISize
+      const s2 = this.inverseScale(itemSize) as ISize
 
       const r2 = this.getConnectPoint(p, s2, align.self)
 
@@ -316,24 +305,15 @@ export class Block {
       align.offset = offset
     } else {
       const p = this.toOrigin(location, this._position.origin, itemSize)
-      this._position.location = this.inverseScale(
-        p,
-        this._position.units.location
-      ) as IPoint
-      this._position.size = this.inverseScale(
-        itemSize,
-        this._position.units.size
-      ) as ISize
+      this._position.location = this.inverseScale(p) as IPoint
+      this._position.size = this.inverseScale(itemSize) as ISize
     }
     this.changed()
   }
 
-  public updateSize = (size: ISize) => {
+  public updateSize = (size: IPositionSize) => {
     // Takes in world coordinates
-    this._position.size = this.inverseScale(
-      size,
-      this._position.units.size
-    ) as ISize
+    this._position.size = this.inverseScale(size) as ISize
     this.changed()
   }
 
@@ -341,10 +321,9 @@ export class Block {
    * Take unit and convert to real world
    */
   public scale = (
-    input: IPoint | ISize,
-    unit: Unit | undefined
-  ): IPoint | ISize => {
-    switch (unit) {
+    input: IPositionLocation | IPositionSize
+  ): IPositionLocation | IPositionSize => {
+    switch (input.unit) {
       case Unit.percent: {
         const size = this._g.params().get('containersize') as ISize
         if ('x' in input) {
@@ -453,8 +432,8 @@ export class Block {
       //   }
       // })
 
-      if (p.units && isUnmanaged(p.units.location)) {
-        console.error(`Position ${namedUnit(p.units.location)} in 
+      if (isUnmanaged(p.location.unit)) {
+        console.error(`Position ${namedUnit(p.location.unit)} in 
         ${this.name} is NOT supported
         for location. It is only supported for size.
         `)
@@ -470,7 +449,7 @@ export class Block {
     }
 
     // Convert percents to decimal
-    const locUnit = this._position.units.location
+    const locUnit = this._position.location.unit
     if (
       locUnit === Unit.percent ||
       locUnit === Unit.preserve ||
@@ -487,13 +466,19 @@ export class Block {
       locUnit === Unit.unmanagedWidth ||
       locUnit === Unit.unmanagedHeight
     ) {
-      // TODO needed? only applies to size
+      console.error(
+        'Block.updatePosition unmanaged ignored. Not supported for Location'
+      )
+    } else if (locUnit === undefined) {
+      this._position.location.x = p.location.x
+      this._position.location.y = p.location.y
     } else {
       console.error('Block.updatePosition add support for new unit')
     }
 
     // Convert percents to decimal
-    const sizeUnit = this._position.units.size
+    const sizeUnit = this._position.size.unit
+
     if (
       sizeUnit === Unit.percent ||
       sizeUnit === Unit.preserve ||
@@ -505,12 +490,15 @@ export class Block {
     } else if (sizeUnit === Unit.pixel) {
       this._position.size.width = p.size.width
       this._position.size.height = p.size.height
-    } else if (
-      sizeUnit === Unit.unmanaged ||
-      sizeUnit === Unit.unmanagedWidth ||
-      sizeUnit === Unit.unmanagedHeight
-    ) {
-      // TODO needed? only applies to size
+    } else if (sizeUnit === Unit.unmanaged) {
+      // Nothing to do
+    } else if (sizeUnit === Unit.unmanagedWidth) {
+      this._position.size.height = p.size.height
+    } else if (sizeUnit === Unit.unmanagedHeight) {
+      this._position.size.width = p.size.width
+    } else if (sizeUnit === undefined) {
+      this._position.size.width = p.size.width
+      this._position.size.height = p.size.height
     } else {
       console.error('Block.updatePosition add support for new unit')
     }
@@ -585,10 +573,9 @@ export class Block {
    * Take pixels and convert to percent
    */
   private inverseScale = (
-    input: IPoint | ISize,
-    unit: Unit
-  ): IPoint | ISize => {
-    switch (unit) {
+    input: IPositionLocation | IPositionSize
+  ): IPositionLocation | IPositionSize => {
+    switch (input.unit) {
       case Unit.percent: {
         const size = this._g.params().get('containersize') as ISize
         if (size.width && size.height) {
@@ -688,7 +675,11 @@ export class Block {
    *  o: origin
    *  x: left top
    */
-  private fromOrigin = (p: IPoint, origin: IPoint, s: ISize): IPoint => {
+  private fromOrigin = (
+    p: IPositionLocation,
+    origin: IPoint,
+    s: ISize
+  ): IPoint => {
     return {
       x: p.x - origin.x * s.width,
       y: p.y - origin.y * s.height

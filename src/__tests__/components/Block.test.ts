@@ -26,10 +26,6 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 it('location #1 - default units', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -40,11 +36,7 @@ it('location #1 - default units', () => {
 
 it('location #2 - location in percent', () => {
   const p = {
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 50, y: 50 },
+    location: { x: 50, y: 50, unit: Unit.percent },
     size: { width: 10, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -53,11 +45,7 @@ it('location #2 - location in percent', () => {
 
 it('location #3', () => {
   const p = {
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 50, y: 50 },
+    location: { x: 50, y: 50, unit: Unit.percent },
     size: { width: 10, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -67,11 +55,7 @@ it('location #3', () => {
 it('location #4', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 50, y: 50 },
+    location: { x: 50, y: 50, unit: Unit.percent },
     size: { width: 10, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -80,10 +64,6 @@ it('location #4', () => {
 
 it('size #1', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -94,10 +74,6 @@ it('size #1', () => {
 it('size #2', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -108,11 +84,7 @@ it('size #2', () => {
 it('size #3', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 50, y: 50 },
+    location: { x: 50, y: 50, unit: Unit.percent },
     size: { width: 100, height: 100 }
   }
   const l = new Block('test', p, g)
@@ -122,12 +94,8 @@ it('size #3', () => {
 it('size #4', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.percent
-    },
-    location: { x: 50, y: 50 },
-    size: { width: 10, height: 10 }
+    location: { x: 50, y: 50, unit: Unit.percent },
+    size: { width: 10, height: 10, unit: Unit.percent }
   }
   const l = new Block('test', p, g)
   expect(l.fromSize()).toEqual({ width: 100, height: 100 })
@@ -135,10 +103,6 @@ it('size #4', () => {
 
 it('rect #1', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -149,10 +113,6 @@ it('rect #1', () => {
 it('rect #2', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 500, y: 500 },
     size: { width: 100, height: 10 }
   }
@@ -163,11 +123,7 @@ it('rect #2', () => {
 it('rect #3', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 50, y: 50 },
+    location: { x: 50, y: 50, unit: Unit.percent },
     size: { width: 100, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -177,12 +133,8 @@ it('rect #3', () => {
 it('rect #4', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.percent
-    },
-    location: { x: 50, y: 50 },
-    size: { width: 10, height: 5 }
+    location: { x: 50, y: 50, unit: Unit.percent },
+    size: { width: 10, height: 5, unit: Unit.percent }
   }
   const l = new Block('test', p, g)
   expect(l.rect()).toEqual({ x: 450, y: 475, width: 100, height: 50 })
@@ -191,12 +143,8 @@ it('rect #4', () => {
 it('update #1', () => {
   const p = {
     origin: { x: 50, y: 50 },
-    units: {
-      location: Unit.percent,
-      size: Unit.percent
-    },
-    location: { x: 50, y: 50 },
-    size: { width: 10, height: 5 }
+    location: { x: 50, y: 50, unit: Unit.percent },
+    size: { width: 10, height: 5, unit: Unit.percent }
   }
   const l = new Block('test', p, g)
   l.update({ x: 450, y: 475 }, { width: 100, height: 50 })
@@ -206,10 +154,6 @@ it('update #1', () => {
 
 it('update #2', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }
   }
@@ -221,11 +165,7 @@ it('update #2', () => {
 
 it('update #3', () => {
   const p = {
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 250, y: 250 },
+    location: { x: 250, y: 250, unit: Unit.percent },
     size: { width: 100, height: 50 }
   }
   const l = new Block('test', p, g)
@@ -236,13 +176,11 @@ it('update #3', () => {
 
 it('align #1', () => {
   const p = {
-    units: { location: Unit.pixel, size: Unit.pixel },
     location: { x: 100, y: 100 },
     size: { width: 100, height: 100 }
   }
 
   const pAlign = {
-    units: { location: Unit.pixel, size: Unit.pixel },
     location: { x: 0, y: 0 },
     size: { width: 100, height: 80 },
     align: {
@@ -267,10 +205,6 @@ it('align #1', () => {
 
 it('misc #1', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 250, y: 250 },
     size: { width: 100, height: 50 }
   }
@@ -285,11 +219,7 @@ it('misc #1', () => {
 
 it('misc #2', () => {
   const p = {
-    units: {
-      location: Unit.percent,
-      size: Unit.pixel
-    },
-    location: { x: 250, y: 250 },
+    location: { x: 250, y: 250, unit: Unit.percent },
     size: { width: 100, height: 50 }
   }
   const b = new Block('test', p, g)

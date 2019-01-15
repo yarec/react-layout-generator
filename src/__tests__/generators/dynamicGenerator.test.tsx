@@ -3,7 +3,7 @@ import * as React from 'react'
 import { dynamicGenerator } from '../../generators/dynamicGenerator'
 import { RLGLayout } from '../../RLGLayout';
 import { mount } from 'enzyme';
-import { DebugOptions, Unit } from '../../types';
+import { DebugOptions } from '../../types';
 
 const g = dynamicGenerator('dynamicGenerator')
 
@@ -29,9 +29,6 @@ describe('RLGLayout', () => {
   test('it should generate <div instance #2', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     g.blocks().set('alpha', {
-      units: {
-        location: Unit.pixel, size: Unit.pixel
-      },
       location: { x: 200, y: 50 },
       size: { width: 200, height: 200 }
     }, g)
@@ -39,9 +36,6 @@ describe('RLGLayout', () => {
       <RLGLayout name='instance#2' debug={DebugOptions.none} g={g} containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'block',
-          units: {
-            location: Unit.pixel, size: Unit.pixel
-          },
           location: { x: 200, y: 50 },
           size: { width: 200, height: 200 }
         }}>
@@ -49,9 +43,6 @@ describe('RLGLayout', () => {
         </div>
         <div data-layout={{ 
           name: 'block2',
-          units: {
-            location: Unit.pixel, size: Unit.pixel
-          },
           location: { x: 200, y: 50 },
           size: { width: 200, height: 200 }
          }}>

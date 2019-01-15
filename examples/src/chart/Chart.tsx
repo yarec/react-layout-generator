@@ -8,8 +8,8 @@ import {
   Generator,
   IEditHelperProps,
   IGenerator,
-  IPoint,
   IPosition,
+  IPositionLocation ,
   IRLGPanelArgs,
   ISize,
   Params,
@@ -71,7 +71,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
   public init = (g: IGenerator): Blocks => {
     const node = this._treeMap.lookup(this.state.node);
     const containersize = this._params.get('containersize') as ISize;
-    const aLocation = this._params.get('aLocation') as IPoint;
+    const aLocation = this._params.get('aLocation') as IPositionLocation;
 
     const blocks = g.blocks();
 
@@ -89,8 +89,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
       // Self
       const self: IPosition = {
         origin: { x: 50, y: 0 }, 
-        units: { location: Unit.percent, size: Unit.pixel },
-        location: aLocation ? aLocation : { x: 10, y: 10 },
+        location: aLocation ? aLocation : { x: 10, y: 10, unit: Unit.percent },
         size: { width: 150, height: 100 },
         editor: {
           edits: [
@@ -109,8 +108,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
         node.children.forEach((name, i) => {
           const child: IPosition = {
             origin: { x: 50, y: 50 }, 
-            units: { location: Unit.percent, size: Unit.pixel },
-            location: { x: 0, y: 0 },
+            location: { x: 0, y: 0, unit: Unit.percent },
             size: { width: 150, height: 100 },
             editor: {
               edits: [

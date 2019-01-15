@@ -122,8 +122,8 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
           data-layout={{
             name: 'New Game',
             position: {
-              units: { origin: { x: 50, y: 50 }, location: Unit.percent, size: Unit.pixel },
-              location: { x: 50, y: 90 },
+              origin: { x: 50, y: 50 },
+              location: { x: 50, y: 90, unit: Unit.percent },
               size: { width: 90, height: 24 }
             }
           }}
@@ -184,9 +184,8 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
             data-layout={{
               name,
               position: {
-                units: {  location: Unit.percent, size: Unit.percent },
-                location: { x: i, y: 0 },
-                size: { width: 1, height: 100 }
+                location: { x: i, y: 0, unit: Unit.percent },
+                size: { width: 1, height: 100, unit: Unit.percent }
               }
             }}
             style={{ backgroundColor: 'hsl(210,100%,80%)' }}

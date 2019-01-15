@@ -2,7 +2,7 @@ import { Block } from '../components/Block';
 import { Blocks } from '../components/Blocks';
 import { Params, ParamValue } from '../components/Params';
 import { Generator, ICreate, IGenerator } from '../generators/Generator';
-import { ISize, Unit } from '../types';
+import { ISize } from '../types';
 
 export function columnsGenerator(name: string, exParams?: Params) {
 
@@ -79,10 +79,6 @@ export function columnsGenerator(name: string, exParams?: Params) {
 
     if (!p) {
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         location: { x: 0, y: 0 },
         size: { width: itemSize.width, height: containersize.height }
       }

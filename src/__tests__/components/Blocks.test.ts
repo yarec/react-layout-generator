@@ -2,7 +2,7 @@ import { Block } from '../../components/Block'
 import { Blocks } from '../../components/Blocks'
 import { Params } from '../../components/Params'
 import { Generator, ICreate, IGenerator } from '../../generators/Generator'
-import { Unit } from '../../types'
+// import { Unit } from '../../types'
 
 const params = new Params({
   name: 'layoutTest',
@@ -29,10 +29,6 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 it('Layouts index returns the correct key value #1', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -43,10 +39,6 @@ it('Layouts index returns the correct key value #1', () => {
 
 it('Layouts index returns the correct key value #2', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -60,10 +52,6 @@ it('Layouts index returns the correct key value #2', () => {
 
 it('Layouts index returns the correct key value #3', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }
@@ -78,10 +66,6 @@ it('Layouts index returns the correct key value #3', () => {
 
 it('Layouts index returns the correct key value #4', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }

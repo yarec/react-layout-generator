@@ -10,6 +10,8 @@
 export { RLGLayout } from '../../src/RLGLayout'
 export { RLGPanel, IRLGPanelArgs } from '../../src/RLGPanel'
 
+export {IPositionLocation, IPositionSize} from '../../src/components/Block'
+
 export {
   Unit,
   DebugOptions,

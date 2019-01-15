@@ -2,7 +2,7 @@ import { Block, IPosition } from '../components/Block';
 import { Params, ParamValue } from '../components/Params';
 import { updateParamHeight, updateParamWidth } from '../editors/update';
 import { Generator, ICreate, IGenerator } from '../generators/Generator';
-import { IPoint, ISize, Unit, PositionRef } from '../types';
+import { IPoint, ISize, PositionRef } from '../types';
 
 export function desktopGenerator(name: string, exParams?: Params) {
 
@@ -79,10 +79,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
         };
       }
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
@@ -105,10 +101,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
       };
 
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         location,
         size
       };
@@ -137,10 +129,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
         };
       }
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
@@ -200,10 +188,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
         };
       }
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
@@ -237,10 +221,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
         };
       }
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             {
@@ -266,10 +246,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
         height: titleHeight
       };
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             {

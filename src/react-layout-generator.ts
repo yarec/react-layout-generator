@@ -5,6 +5,8 @@
 export { RLGLayout } from './RLGLayout'
 export { RLGPanel, IRLGPanelArgs } from './RLGPanel'
 
+export { IPositionLocation, IPositionSize } from './components/Block'
+
 export {
   Unit,
   DebugOptions,

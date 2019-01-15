@@ -15,7 +15,6 @@ import {
   PositionRef,
   RLGLayout, 
   RLGPanel, 
-  Unit,
   updateParamLocation,
 } from '../importRLG'
 
@@ -101,7 +100,6 @@ export default class Table extends React.Component<ITableProps> {
     if (containersize) {
 
       const title: IPosition = {
-        units: {  location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: 0 },
         size: { width: containersize.width, height: titleHeight },
         editor: {
@@ -115,7 +113,6 @@ export default class Table extends React.Component<ITableProps> {
       blocks.set('title', title, g);
 
       const row: IPosition = {
-        units: {  location: Unit.pixel, size: Unit.pixel },
         location: { x: 0, y: titleHeight },
         size: { width: containersize.width, height: rowHeight },
         positionChildren: this.positionRowChildren
@@ -136,7 +133,6 @@ export default class Table extends React.Component<ITableProps> {
 
     // These children get placed vertically based on index
     const child: IPosition = {
-      units: block.units,
       location: { x: 0, y: titleHeight + index * rowHeight },
       size: { width: containersize.width, height: rowHeight }
     };

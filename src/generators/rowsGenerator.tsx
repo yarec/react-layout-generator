@@ -2,7 +2,7 @@ import { Block } from '../components/Block';
 import { Blocks } from '../components/Blocks';
 import { Params, ParamValue } from '../components/Params';
 import { Generator, ICreate, IGenerator, IGeneratorFunctionArgs } from '../generators/Generator';
-import { IAttrRect, ISize, rectSize, Unit } from '../types';
+import { IAttrRect, ISize, rectSize } from '../types';
 
 export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
@@ -59,10 +59,6 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     if (!p) {
       p = {
-        units: {
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         location: { x: 0, y: 0 },
         size
       }

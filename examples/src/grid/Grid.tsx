@@ -113,9 +113,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'grid',
             position: {
-              units: {  location: Unit.percent, size: Unit.percent },
-              location: { x: 0, y: 0 },
-              size: { width: 100, height: 100 }
+              location: { x: 0, y: 0, unit: Unit.percent },
+              size: { width: 100, height: 100, unit: Unit.percent }
             }
           }}
           style={{ overflow: 'hidden' }}
@@ -134,7 +133,6 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square (pixel, pixel)',
             position: {
-              units: {  location: Unit.pixel, size: Unit.pixel },
               location: { x: 200, y: 50 },
               size: { width: 200, height: 200 }
             }
@@ -160,9 +158,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(percent, preserve)',
             position: {
-              units: {  location: Unit.percent, size: Unit.preserve },
-              location: { x: 30, y: 20 },
-              size: { width: 30, height: 30 }
+              location: { x: 30, y: 20, unit: Unit.percent },
+              size: { width: 30, height: 30, unit: Unit.preserve }
             }
           }}
 
@@ -180,9 +177,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(preserve, preserve)',
             position: {
-              units: {  location: Unit.preserve, size: Unit.preserve },
-              location: { x: 60, y: 60 },
-              size: { width: 20, height: 20 }
+              location: { x: 60, y: 60, unit: Unit.preserve },
+              size: { width: 20, height: 20, unit: Unit.preserve  }
             }
           }}
 
@@ -198,9 +194,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(percent, percent)',
             position: {
-              units: {  location: Unit.percent, size: Unit.percent },
-              location: { x: 50, y: 50 },
-              size: { width: 20, height: 20 }
+              location: { x: 50, y: 50, unit: Unit.percent  },
+              size: { width: 20, height: 20, unit: Unit.percent }
             }
           }}
 
@@ -219,9 +214,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'callout',
             position: {
-              units: {  location: Unit.percent, size: Unit.unmanaged },
-              location: { x: 40, y: 40 },
-              size: { width: 100, height: 80 },
+              location: { x: 40, y: 40, unit: Unit.percent },
+              size: { width: 100, height: 80, unit: Unit.unmanaged },
               align: {
                 key: 'square(percent, percent)',
                 offset: { x: 20, y: 0 },
@@ -252,9 +246,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         data-layout={{
           name: 'Legend',
           position: {
-            units: {  location: Unit.preserve, size: Unit.unmanaged },
-            location: { x: 5, y: 20 },
-            size: { width: 100, height: 80 },
+            location: { x: 5, y: 20, unit: Unit.preserve },
+            size: { width: 100, height: 80, unit: Unit.unmanaged},
           }
         }}
       >
@@ -285,8 +278,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Pixel',
             position: {
-              units: {  location: Unit.preserve, size: Unit.pixel },
-              location: { x: 5, y: 5 },
+              location: { x: 5, y: 5, unit: Unit.preserve },
               size: { width: 90, height: 24 }
             }
           }}
@@ -299,8 +291,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Percent',
             position: {
-              units: {  location: Unit.preserve, size: Unit.pixel },
-              location: { x: 5, y: 10 },
+              location: { x: 5, y: 10, unit: Unit.preserve },
               size: { width: 90, height: 24 }
             }
           }}
@@ -313,8 +304,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Preserve',
             position: {
-              units: {  location: Unit.preserve, size: Unit.pixel },
-              location: { x: 5, y: 15 },
+              location: { x: 5, y: 15, unit: Unit.preserve },
               size: { width: 90, height: 24 }
             }
           }}

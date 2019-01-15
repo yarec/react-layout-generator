@@ -112,8 +112,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                units: {  location: Unit.percent, size: Unit.pixel },
-                location: { x: 0, y: 0 },
+                location: { x: 0, y: 0, unit: Unit.percent },
                 size: { width: width ? width : 100, height: 20 }
               }
             }}>
@@ -134,8 +133,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                units: {  location: Unit.percent, size: Unit.pixel },
-                location: { x: 0, y: 0 },
+                location: { x: 0, y: 0, unit: Unit.percent },
                 size: { width: width ? width : 100, height: 20 }
               }
             }}>

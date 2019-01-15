@@ -3,7 +3,7 @@ import * as React from 'react'
 import { rowsGenerator } from '../../generators/rowsGenerator'
 import { RLGLayout } from '../../RLGLayout';
 import { mount } from 'enzyme';
-import { DebugOptions, Unit } from '../../types';
+import { DebugOptions } from '../../types';
 
 const g = rowsGenerator({name: 'rowsGenerator'})
 
@@ -16,7 +16,6 @@ describe('RLGLayout', () => {
         <div data-layout={{
           name: 'hello',
           position: {
-            units: { location: Unit.pixel, size: Unit.pixel },
             location: { x: 200, y: 50 },
             size: { width: 200, height: 200 }
           }

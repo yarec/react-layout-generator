@@ -60,7 +60,7 @@ function tileStyle(
   y: number,
   width: number,
   height: number,
-  unit: Unit,
+  unit: Unit | undefined,
   selected: boolean,
   zIndex: number
 ): React.CSSProperties {
@@ -70,22 +70,24 @@ function tileStyle(
     height: `${height}px`,
     width: `${width}px`,
   }
-  switch (unit) {
-    case Unit.unmanaged: {
-      size = {};
-      break;
-    }
-    case Unit.unmanagedHeight: {
-      size = {
-        width: `${width}px`
-      };
-      break;
-    }
-    case Unit.unmanagedWidth: {
-      size = {
-        height: `${height}px`
-      };
-      break;
+  if (unit) {
+    switch (unit) {
+      case Unit.unmanaged: {
+        size = {};
+        break;
+      }
+      case Unit.unmanagedHeight: {
+        size = {
+          width: `${width}px`
+        };
+        break;
+      }
+      case Unit.unmanagedWidth: {
+        size = {
+          height: `${height}px`
+        };
+        break;
+      }
     }
   }
 
@@ -135,10 +137,10 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    * The default is EditOptions.none. Set to EditOptions.all to edit.
    */
   edit?: EditOptions;
-   /** 
-   * The default is DebugOptions.none. You may include more than one
-   * of the options. Only the DebugOptions.all includes any other options.
-   */
+  /** 
+  * The default is DebugOptions.none. You may include more than one
+  * of the options. Only the DebugOptions.all includes any other options.
+  */
   debug?: DebugOptions | DebugOptionsArray;
   g: IGenerator;
   containersize?: ISize;
@@ -489,13 +491,13 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         console.log(`updatePositionedElement ${name} position:`, b.position);
       }
 
-      if (((rect.width) && (rect.height)) || isUnmanaged(b.units.size)) {
+      if (((rect.width) && (rect.height)) || isUnmanaged(b.size.unit)) {
         const style = tileStyle(child.props.style,
           rect.x + (offset ? offset.x : 0),
           rect.y + (offset ? offset.y : 0),
           rect.width,
           rect.height,
-          b.units.size,
+          b.size.unit,
           this._select ? this._select.selected(name) : false,
           b.layer(this._zIndex)
         );
@@ -542,7 +544,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             setSize(w: number, h: number) {
               if (w && h) {
                 if (this._s.width !== w || this._s.height != h) {
-                  const sizeUnit = this._b.position.units.size
+                  const sizeUnit = this._b.position.size.unit
                   const r = this._b.rect()
                   if (sizeUnit === Unit.unmanaged) {
                     this._b.updateSize({ width: w, height: h });
@@ -1049,7 +1051,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           nestedRect.y,
           nestedRect.width,
           nestedRect.height,
-          b.units.size,
+          b.size.unit,
           this._select ? this._select.selected(name) : false,
           b.layer(this._zIndex)
         );
@@ -1118,12 +1120,12 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         let allow = true;
         b.editor.edits.forEach((item, i) => {
           // filter unmanaged edits
-          if (b.units.size === Unit.unmanagedWidth &&
+          if (b.size.unit === Unit.unmanagedWidth &&
             (item.ref === PositionRef.bottom || item.ref === PositionRef.top)
           ) {
             allow = false;
           }
-          if (b.units.size === Unit.unmanagedHeight &&
+          if (b.size.unit === Unit.unmanagedHeight &&
             (item.ref === PositionRef.left || item.ref === PositionRef.right)
           ) {
             allow = false;
@@ -1144,7 +1146,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           } else {
             console.error(`Cannot edit ${namedPositionRef(item.ref)} for block 
             ${name} when size is set to 
-            ${namedUnit(b.units.size)}`
+            ${namedUnit(b.size.unit)}`
             )
           }
         });

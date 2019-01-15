@@ -1,6 +1,5 @@
 import { Params } from '../../components/Params'
 import { Generator } from '../../generators/Generator'
-import { Unit } from '../../types'
 
 const params = new Params({
   name: 'generatorTest',
@@ -36,10 +35,6 @@ it('generator #3', () => {
 
 it('generator #4', () => {
   const p = {
-    units: {
-      location: Unit.pixel,
-      size: Unit.pixel
-    },
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 }
   }

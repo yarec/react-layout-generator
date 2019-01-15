@@ -100,9 +100,8 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
         <div data-layout={{
           name: 'hello',
           position: {
-            units: { location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 10, y: 10 },
-            size: { width: 150, height: 250 }
+            location: { x: 10, y: 10, unit: Unit.percent},
+            size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
           }
         }}
         >

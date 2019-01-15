@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, Unit, EditOptions } from '../types'
+import { DebugOptions, EditOptions } from '../types'
 // import ReactResizeDetector from 'react-resize-detector'
 
 import * as Enzyme from 'enzyme';
@@ -42,7 +42,6 @@ describe('RLGLayout', () => {
         <div data-layout={{
           name: 'hello',
           position: {
-            units: { location: Unit.pixel, size: Unit.pixel },
             location: { x: 200, y: 50 },
             size: { width: 200, height: 200 }
           }

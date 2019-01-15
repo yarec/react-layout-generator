@@ -69,9 +69,8 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature1',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 10, y: 10 },
-            size: { width: 150, height: 250 }
+            location: { x: 10, y: 10, unit: Unit.percent },
+            size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
           }
         }}
         >
@@ -83,9 +82,8 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature2',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 25, y: 30 },
-            size: { width: 250, height: 350 }
+            location: { x: 25, y: 30, unit: Unit.percent},
+            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
         >
@@ -97,9 +95,8 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature3',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 50, y: 10 },
-            size: { width: 250, height: 350 }
+            location: { x: 50, y: 10, unit: Unit.percent },
+            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
         >
@@ -111,9 +108,8 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         <div data-layout={{
           name: 'introFeature4',
           position: {
-            units: {  location: Unit.percent, size: Unit.unmanagedHeight },
-            location: { x: 50, y: 50 },
-            size: { width: 250, height: 350 }
+            location: { x: 50, y: 50, unit: Unit.percent },
+            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
         >

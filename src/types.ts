@@ -109,11 +109,26 @@ export enum Unit {
 }
 
 /**
- * isUnmanaged returns true if the unit is one of the Unmanaged options.
+ * isUnitUnmanaged returns true if the unit is one of the Unmanaged options.
  * @param unit
  */
-export function isUnmanaged(unit: Unit) {
-  return unit >= Unit.unmanaged
+export function isUnmanaged(unit: Unit | undefined) {
+  return unit ? unit >= Unit.unmanaged : false
+}
+
+/**
+ * unitFactor
+ * @param unit
+ */
+export function unitFactor(unit: Unit | undefined) {
+  let factor = 1
+  if (
+    unit &&
+    (Unit.percent || Unit.preserve || Unit.preserveHeight || Unit.preserveWidth)
+  ) {
+    factor = 100
+  }
+  return factor
 }
 
 /**
@@ -162,7 +177,7 @@ export function stringToUnit(data: string) {
  * namedUnit returns a printable name of a unit.
  * @param unit
  */
-export function namedUnit(unit: Unit) {
+export function namedUnit(unit: Unit | undefined) {
   let name = 'unknown'
   switch (unit) {
     case Unit.pixel: {

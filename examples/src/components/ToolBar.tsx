@@ -15,7 +15,6 @@ import {
   RLGLayout,
   rowsGenerator,
   Status, 
-  Unit,
 } from '../importRLG'
 
 import cssColor from '../assets/colors';
@@ -126,11 +125,6 @@ export default class ToolBar extends React.Component<IToolBarProps, IToolBarStat
       } else {
         const name1 = `separator${i}`;
         const p: IPosition = {
-          units: {
-            
-            location: Unit.pixel,
-            size: Unit.pixel
-          },
           location: { x: 0, y: 0 },
           size: { width: fontSize, height: fontSize / 2 }
         }

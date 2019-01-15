@@ -8,7 +8,6 @@ import {
   ISize,
   Params,
   PositionRef,
-  Unit,
   updateParamHeight,
   updateParamWidth
 } from '../importRLG'
@@ -61,11 +60,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
 
       const p: IPosition = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
@@ -102,11 +96,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
 
       const p: IPosition = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         editor: {
           edits: [
             { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
@@ -145,11 +134,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
 
       const p = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         edit: [
           { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
         ],
@@ -185,11 +169,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
 
       const p = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         edit: [
           { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
         ],
@@ -223,11 +202,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         }
       }
       const p = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         location,
         size
       }
@@ -259,11 +233,6 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
       }
 
       const p = {
-        units: {
-          
-          location: Unit.pixel,
-          size: Unit.pixel
-        },
         edit: [
           { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
         ],
