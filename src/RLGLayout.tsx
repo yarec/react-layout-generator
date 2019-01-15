@@ -542,7 +542,6 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             setSize(w: number, h: number) {
               if (w && h) {
                 if (this._s.width !== w || this._s.height != h) {
-                  console.log('Local setSize', w, h)
                   const sizeUnit = this._b.position.units.size
                   const r = this._b.rect()
                   if (sizeUnit === Unit.unmanaged) {

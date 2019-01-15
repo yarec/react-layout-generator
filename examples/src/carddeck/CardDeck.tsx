@@ -108,7 +108,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
           position: {
             units: {  location: Unit.percent, size: Unit.unmanagedHeight },
             location: { x: 70, y: 10 },
-            size: { width: 200, height: 350 }
+            size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
         >

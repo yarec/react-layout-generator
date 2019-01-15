@@ -29,7 +29,7 @@ function editStyle(args: IEditHandleProps): React.CSSProperties {
     height: `${args.handle.height}px`,
     position: 'absolute' as 'absolute',
     cursor: `${args.cursor}`,
-    background: 'rgba(0, 0, 0, 0.0)',
+    background: 'rgba(0, 0, 0, 0)',
     zIndex: args.zIndex,
     borderWidth: '4px',
     outline: 'none'
@@ -68,7 +68,7 @@ export class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutStat
     this._menuLocation = { x: 0, y: 0 };
     this.state = { activateDrag: false, contextMenu: false };
 
-    this._handle = {x: 0, y: 0, width: 0, height: 0}
+    this._handle = { x: 0, y: 0, width: 0, height: 0 }
     if (this.props.edit.updateHandle) {
       const r = props.block.rect();
       this._handle = this.props.edit.updateHandle(r);
@@ -77,13 +77,6 @@ export class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutStat
     if (props.debug) {
       this._debug = props.debug;
     }
-  }
-
-  public shouldComponentUpdate(nextProps: IEditorProps, nextState: IEditLayoutState) {
-    if (this.props.handle.x - nextProps.handle.x || this.props.handle.y - nextProps.handle.y) {
-      return true;
-    }
-    return false;
   }
 
   public render = () => {
@@ -109,6 +102,7 @@ export class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutStat
     const r = this.props.block.rect();
     this._handle = this.props.edit.updateHandle!(r);
     this._startRect = clone(this.props.handle);
+    console.log(`initUpdate ${r.y + r.height} ${this._handle.y}`);
   }
 
   public hideMenu = () => {

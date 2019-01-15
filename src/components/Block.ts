@@ -61,6 +61,18 @@ export enum LayerOption {
   moveDown
 }
 
+export interface IPositionLocation extends IPoint {
+  x: number
+  y: number
+  unit?: Unit
+}
+
+export interface IPositionSize extends ISize {
+  width: number
+  height: number
+  unit?: Unit
+}
+
 export interface IPosition {
   units: {
     location: Unit
@@ -76,8 +88,8 @@ export interface IPosition {
   layer?: LayerOption
   handlers?: IHandlers
   origin?: IOrigin
-  location: IPoint
-  size: ISize
+  location: IPositionLocation
+  size: IPositionSize
 }
 
 /**
@@ -328,7 +340,10 @@ export class Block {
   /**
    * Take unit and convert to real world
    */
-  public scale = (input: IPoint | ISize, unit: Unit): IPoint | ISize => {
+  public scale = (
+    input: IPoint | ISize,
+    unit: Unit | undefined
+  ): IPoint | ISize => {
     switch (unit) {
       case Unit.percent: {
         const size = this._g.params().get('containersize') as ISize
