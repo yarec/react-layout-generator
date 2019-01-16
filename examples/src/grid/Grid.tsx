@@ -8,7 +8,7 @@ import {
   EditOptions,
   IEditHelperProps,
   IPoint,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   ISize,
   rectSize,
   RLGLayout, 
@@ -119,7 +119,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           }}
           style={{ overflow: 'hidden' }}
         >
-          {(args: IRLGPanelArgs) => {
+          {(args: IRLGMetaDataArgs) => {
             return (
             <canvas
               ref={(element: HTMLCanvasElement) => { this.setGrid(args, element) }}
@@ -139,7 +139,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           }}
           style={{ backgroundColor: 'tan' }}
         >
-          {(args: IRLGPanelArgs) => {
+          {(args: IRLGMetaDataArgs) => {
             return (
               <Table
                 name={args.block.name}
@@ -165,7 +165,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
           style={{ backgroundColor: 'LightSkyBlue' }}
         >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
             <span>Square (percent, preserve) </span> <br/><br/><br/>
             <span>Use Alt-click to change grids when editing</span>
@@ -184,7 +184,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
           style={{ backgroundColor: 'lime' }}
         >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <span>Square (preserve, preserve) </span>
           )}
 
@@ -201,7 +201,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
           style={{ backgroundColor: 'gold' }}
         >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
             <span>Square (percent, percent) </span> <br/><br/><br/>
             <span>Click the edit button to edit. </span> <br/>
@@ -215,12 +215,12 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
             name: 'callout',
             position: {
               location: { x: 40, y: 40, unit: Unit.percent },
-              size: { width: 100, height: 80, unit: Unit.unmanaged },
+              size: { width: 100, height: 80, unit: Unit.unmanagedHeight },
               align: {
                 key: 'square(percent, percent)',
-                offset: { x: 20, y: 0 },
-                source: { x: 100, y: 0 },
-                self: { x: 0, y: 50 }
+                offset: { x: 20, y: 10 },
+                source: { x: 100, y: 100 },
+                self: { x: 0, y: 0 }
               }
             }
           }}
@@ -444,7 +444,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     canvas.width = w;
   }
 
-  private setGrid = (args: IRLGPanelArgs, element: HTMLCanvasElement) => {
+  private setGrid = (args: IRLGMetaDataArgs, element: HTMLCanvasElement) => {
 
     if (this._grid !== element && element) {
       this._grid = element;

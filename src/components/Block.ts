@@ -1,11 +1,8 @@
-// import * as React from 'react'
-
 import { cursor } from '../editors/cursor'
 import { getExtendElement, ExtendElement } from '../editors/extendElement'
 import { getUpdateHandle, UpdateHandle } from '../editors/updateHandle'
 import { UpdateParam } from '../editors/updateParam'
 import { IGenerator } from '../generators/Generator'
-import { flowLayoutLayer } from '../generators/utils'
 import {
   IPoint,
   IOrigin,
@@ -18,17 +15,96 @@ import {
 } from '../types'
 import { clone } from '../utils'
 
+/**
+ * IDataLayout is the property that you use when defining children of RLGLayout. It
+ * applies to both HTML elements and React Components. It's purpose is to
+ * specify the rules and data needed to create a Block and optionally its children.
+ * When specified on a child use the css friendly name 'data-layout'. If the Block
+ * is already defined in a generator you just need the name in a child.
+ */
+export interface IDataLayout {
+  /**
+   * The name of the block. It must be unique within each RLGLayout. Failure
+   * to be unique will result in children of RLGLayout overwriting each other.
+   */
+  name: string
+  /**
+   * IPosition includes the rules and data needed to create a Block. If the
+   * Block already exists then that block will be used. Position must be defined
+   * either in a generator or when used with a child of RLGLayout.
+   */
+  position?: IPosition
+}
+
+/**
+ * The purpose of this interface is to allow specification of links between blocks. It lets
+ * you link 'self' block to 'source' block by name and offset. The link means that the 'self' block
+ * location is computed based on the location and size of the 'source' block.
+ *
+ * ```
+ * ┌────────┐
+ * │ source │
+ * └────────o  (X: 100, y: 100)
+ *          │
+ *          │
+ *          └─> t──────┐ (x: 0, y: 0)
+ *              │ self │
+ *              └──────┘
+ * ```
+ * In the diagram above 'self' block is linked to 'source' block
+ * with the offset from 'o' to 't'.
+ *
+ * ```ts
+ *  align: {
+ *    key: 'source'
+ *    offset: {x: 20, y: 30}
+ *    source: {x: 100, y: 100}
+ *    self: {x: 0, y: 0}
+ *  }
+ * ```
+ */
 export interface IAlign {
+  /**
+   * This is the name of 'source' Block (same as the name in data-layout={name: 'someName', ...)
+   */
   key: string | number
+  /**
+   * Offset describes the x offset and y offset from the
+   * handle on 'source'' block to the handle on 'self' block.
+   * It goes from the connection handle on the 'source' block to
+   * the connection handle on 'self' block so if the 'source' block
+   * moves the 'self' block also moves.
+   *
+   * Note that align can be used to place 'self' block over/behind
+   * 'source' block.
+   */
   offset: IPoint
+  /**
+   * This defines the location of the connection handle on the 'source' block.
+   * The units are in percent of the block size starting at the left top of the
+   * block.
+   */
   source: IOrigin
+  /**
+   * This defines the location of the connection handle on 'self'' block.
+   */
   self: IOrigin
 }
 
+/**
+ * IMenuItem describes a command in a menu.
+ */
 export interface IMenuItem {
+  /**
+   * This is the name of the item. If it is empty then a menu separator
+   * will be displayed.
+   */
   name: string
+  /** If true then draw the item disabled. */
   disabled?: boolean
+  /** If checked then draw the item 'on' */
   checked?: boolean
+  /** This is the command to be executed when the item is selected.  */
   command?: () => void
 }
 
@@ -42,6 +118,68 @@ export interface IEdit {
   contextMenu?: IMenuItem[]
 }
 
+/**
+ * IEditor defines the edit options for a Block.
+ */
+export interface IEditor {
+  /**
+   * If set to false then the Block will not be selectable. The default is true.
+   * Note that this option only allows or prevents selection, it does not effect other edit options.
+   * To prevent an element from being selected or edited define this as:
+   *
+   * ```ts
+   * editor: {
+   *  selectable: false
+   * }
+   * ```
+   *
+   * The default editor allows both selection and movement of a block.
+   */
+  selectable?: boolean
+  /**
+   * This option adds custom commands to the context menu for this block.
+   */
+  contextMenu?: IMenuItem[]
+  /**
+   * IEdit lets you specify editors for a block.
+   *
+   * ```ts
+   * edits: [
+   *  {
+   *    ref: PositionRef.top,
+   *    variable: 'footerHeight',
+   *    updateParam: updateParamHeight
+   *  }
+   * ]
+   * ```
+   */
+  edits?: IEdit[]
+}
+
+/**
+ * This is a user supplied function that defines a child of a block.
+ *
+ * The following example places the children horizontally. This implementation
+ * is used in the solitaire game to distribute up to 3 cards in the 'waste'.
+ *
+ * ```ts
+ * function positionWasteChildren(block: Block, g: Generator, index: number) {
+ *  // Return a Block relative to parent block starting at position at (0, 0)
+ *
+ *  const cardSize = g.params().get('cardSize') as ISize;
+ *  const computedCardSpacing = g.params().get('computedCardSpacing') as IPoint;
+ *
+ *  // These children get placed horizontally based on index
+ *  const child: IPosition = {
+ *   location: { x: index * computedCardSpacing.x, y: 0 },
+ *   size: cardSize
+ *  };
+ *
+ *  // This block is temp and will not be stored in blocks
+ *  return new Block('temp', child, g);
+ * }
+ * ```
+ */
 export type PositionChildren = (
   block: Block,
   g: IGenerator,
@@ -50,15 +188,6 @@ export type PositionChildren = (
 
 export interface IHandlers {
   onMouseDown?: () => void
-}
-
-export type Layer = (zIndex: number) => number
-export enum LayerOption {
-  normal = 0,
-  moveToBack,
-  moveToFront,
-  moveUp,
-  moveDown
 }
 
 export interface IPositionLocation extends IPoint {
@@ -73,16 +202,26 @@ export interface IPositionSize {
   unit?: Unit
 }
 
+/**
+ * IPosition defines the positioning, layer, and editor rules for elements in RLG.
+ */
 export interface IPosition {
+  /**
+   *  align defines the other element that this one is attached to.
+   */
   align?: IAlign
+  /**
+   * This user supplied function will calculate the Position data for 'children'.
+   * It will be supplied with the index of the child and it should compute the
+   * child's position returning a new Block. The child should be jsx.
+   */
   positionChildren?: PositionChildren
-  editor?: {
-    selectable?: boolean
-    contextMenu?: IMenuItem[]
-    edits?: IEdit[]
-  }
-  layer?: LayerOption
-  handlers?: IHandlers
+  /**
+   * This defines the editor that will be available to the user when [RLGLayout
+   * edit](irlglayoutprops.html) property is not set the EditOptions.none.
+   */
+  editor?: IEditor
+  layer?: number
   origin?: IOrigin
   location: IPositionLocation
   size: IPositionSize
@@ -145,7 +284,7 @@ export class Block {
   private _cached: Rect
   private _g: IGenerator
   private _positionChildren: PositionChildren | undefined
-  private _layer: Layer = flowLayoutLayer
+  private _layer: number
   private _onMouseDown: (e: React.MouseEvent) => void
   private _onClick: (e: React.MouseEvent) => void
 
@@ -195,8 +334,8 @@ export class Block {
     this._onClick = fn
   }
 
-  public layer(zIndex: number) {
-    return this._layer(zIndex)
+  public layer() {
+    return this._layer
   }
 
   public connectionHandles = () => {
@@ -262,7 +401,13 @@ export class Block {
   public rect = (force?: boolean) => {
     if (this._changed || force) {
       this._changed = false
-      this._cached.update({ ...this.fromLocation(), ...this.fromSize() })
+      const value = { ...this.fromLocation(), ...this.fromSize() }
+      this._cached.update({
+        x: value.x,
+        y: value.y,
+        width: value.width,
+        height: value.height
+      })
     }
     return this._cached.data
   }
@@ -417,12 +562,11 @@ export class Block {
     }
   }
 
-  public updateLayer(layer?: LayerOption) {
+  public updateLayer(layer?: number) {
     if (layer === undefined) {
       return
     }
-    switch (layer) {
-    }
+    this._layer = layer
   }
 
   public validate(p: IPosition) {

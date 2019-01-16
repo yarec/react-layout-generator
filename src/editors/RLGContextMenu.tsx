@@ -63,9 +63,11 @@ export class RLGContextMenu extends React.Component<IContextMenuProps> {
           )
         } else {
           if (c.disabled) {
-            jsx.push(
-              <div key={c.name} className='disabled'>{c.name}</div>
-            )
+           
+              jsx.push(
+                <div key={c.name} className='disabled'>{c.checked ? '√' + c.name : ' ' + c.name}</div>
+              )
+            
           } else {
             // onMouseDown needed to stopPropagation so that onClick works
             // otherwise onParentMouseDown gets called which results
@@ -77,7 +79,7 @@ export class RLGContextMenu extends React.Component<IContextMenuProps> {
                 onMouseDown={this._onMouseDown}
                 onClick={this._onClick(c.command)}
               >
-                {c.name}
+                {c.checked ? '√' + c.name : ' ' + c.name}
               </a>
             )
           }

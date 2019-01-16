@@ -9,7 +9,7 @@ import {
   ICreate, 
   IGenerator,
   IPosition,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   ISize,
   Params,
   PositionRef,
@@ -66,7 +66,7 @@ export default class Table extends React.Component<ITableProps> {
         containersize={this.props.containersize}
       >
         <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'black' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
               <>
                 <Title>{this.props.name}</Title>
                 {this.createRows()}

@@ -8,7 +8,7 @@ import {
   EditOptions,
   IEditHelperProps,
   IGenerator,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   ISize,
   loadFromLocalStorage,
   Params,
@@ -135,7 +135,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <EditableText
               edit={args.edit}
               debug={args.debug}
@@ -149,7 +149,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,10%)' }} />
 
         <RLGPanel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(220,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <div />
           )}
         </RLGPanel>

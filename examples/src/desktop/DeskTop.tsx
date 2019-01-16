@@ -6,7 +6,7 @@ import {
   desktopGenerator,
   EditOptions,
   IEditHelperProps,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   ISize,
   Params,
   ParamValue,
@@ -116,7 +116,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
               <span>LeftSide</span>
               {args.edit ? (this.closeButton(rectSize(args.container), 'leftSideWidth')) : null}
@@ -125,7 +125,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
               <span>Header</span>
               {args.edit ? (this.closeButton(rectSize(args.container), 'headerHeight')) : null}
@@ -134,7 +134,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'footer' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
               <span>Footer</span>
               {args.edit ? (this.closeButton(rectSize(args.container), 'footerHeight')) : null}
@@ -143,7 +143,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)', overflow: 'hidden' }}>
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
               <span>Desktop Content</span>
               <List containersize={rectSize(args.container)}>
@@ -172,7 +172,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
         </RLGPanel>
 
         <RLGPanel data-layout={{ name: 'rightSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <>
               <span>RightSide</span>
               {args.edit ? (this.closeButton(rectSize(args.container), 'rightSideWidth')) : null}

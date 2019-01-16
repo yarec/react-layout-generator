@@ -69,7 +69,7 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ### RLGLayout
 
-Use RLGLayout as a parent element followed by one or more elements with a data-layout property.
+Use RLGLayout as a parent element followed by one or more elements with a [data-layout](interfaces/idatalayout.html) property.
 
 ```ts
 <RLGLayout name='layoutName' ... />
@@ -91,7 +91,7 @@ Do not use generic React components with a data-layout property as direct childr
 
 A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [RLGPanel](#RLGPanel) and/or Unit.unmanaged)
 
-You can only use react components as direct children that apply the style property in their render method.
+You can only use react components as direct children that apply the style property in their render method like this:
 
 ```ts
   render() {
@@ -110,13 +110,13 @@ Use [RLGPanel](classes/rlgpanel.html) as a direct child of RLGLayout when its ch
 
 ```ts
   <RLGPanel data-layout={{ name: 'content' }}>
-    {(args: IRLGPanelArgs) => (
+    {(args: IRLGMetaDataArgs) => (
        ...
     )}
   </RLGPanel>
 ```
 
-The function (args: [IRLGPanelArgs](interfaces/irlgpanelargs.html)) => () makes its args available to all the jsx included. These args are updated by RLGLayout on every render pass allowing elements to respond to changes including animation.
+The function (args: [IRLGMetaDataArgs](interfaces/IRLGMetaDataArgs.html)) => () makes its args available to all the jsx included. These args are updated by RLGLayout on every render pass allowing elements to respond to changes including animation.
 
 One way to utilize these args is to use Styled-components with a Style defined like this:
 

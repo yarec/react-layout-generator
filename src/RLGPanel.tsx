@@ -4,7 +4,7 @@ import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
 import { DebugOptions, EditOptions, IRect } from './types';
 
-export interface IRLGPanelArgs {
+export interface IRLGMetaDataArgs {
   container: IRect;
   block: Block;
   edit: EditOptions;
@@ -55,7 +55,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
   }
 
   public render() {
-    const args: IRLGPanelArgs = {
+    const args: IRLGMetaDataArgs = {
       container: this.state.rect,
       block: this.props.block!,
       edit: this.props.edit!,
@@ -69,7 +69,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
 
     return (
       <div style={this.props.style}>
-        {(this.props.children as (args: IRLGPanelArgs) => JSX.Element)(
+        {(this.props.children as (args: IRLGMetaDataArgs) => JSX.Element)(
           args)}
       </div>
     );

@@ -1,14 +1,6 @@
 import { ParamValue } from '../components/Params'
 
 /**
- * Layers
- */
-
-export function flowLayoutLayer(zIndex: number) {
-  return zIndex
-}
-
-/**
  * Store params in localStorage
  */
 

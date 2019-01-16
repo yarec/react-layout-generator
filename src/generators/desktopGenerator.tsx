@@ -249,7 +249,7 @@ export function desktopGenerator(name: string, exParams?: Params) {
         editor: {
           edits: [
             {
-              ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight,
+              ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight
             }
           ]
         },

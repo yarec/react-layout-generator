@@ -6,7 +6,7 @@ import { RLGLayout } from '../RLGLayout'
 import { DebugOptions, EditOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
-import { RLGPanel, IRLGPanelArgs } from '../RLGPanel';
+import { RLGPanel, IRLGMetaDataArgs } from '../RLGPanel';
 
 const { mount } = Enzyme
 
@@ -44,7 +44,7 @@ describe('RLGLayout', () => {
           key={'a'}
           data-layout={{ name: 'a' }}
         >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <div>
               <span >Panel</span>
             </div>

@@ -8,7 +8,7 @@
 
  
 export { RLGLayout } from '../../src/RLGLayout'
-export { RLGPanel, IRLGPanelArgs } from '../../src/RLGPanel'
+export { RLGPanel, IRLGMetaDataArgs } from '../../src/RLGPanel'
 
 export {IPositionLocation, IPositionSize} from '../../src/components/Block'
 
@@ -73,7 +73,7 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   IGenerator,
 //   IPoint,
 //   IPosition,
-//   IRLGPanelArgs,
+//   IRLGMetaDataArgs,
 //   ISize,
 //   IRect,
 //   loadFromLocalStorage,

@@ -10,7 +10,7 @@ import {
   IGenerator,
   IPosition,
   IPositionLocation ,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   ISize,
   Params,
   PositionRef,
@@ -58,7 +58,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
           data-layout={{ name: this.state.node }}
           style={{ backgroundColor: 'hsl(200,100%,80%)' }}
         >
-          {(args: IRLGPanelArgs) => (
+          {(args: IRLGMetaDataArgs) => (
             <div>
               <span >{this.state.node}</span>
             </div>

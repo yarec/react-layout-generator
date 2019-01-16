@@ -13,7 +13,7 @@ import {
   EditHelper,
   EditOptions,
   IGenerator,
-  IRLGPanelArgs,
+  IRLGMetaDataArgs,
   RLGLayout,
   RLGPanel
 } from './importRLG'
@@ -102,7 +102,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
           g={this.g}
         >
           <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
-            {(args: IRLGPanelArgs) => (
+            {(args: IRLGMetaDataArgs) => (
               <Title>React Layout Generator Examples</Title>
             )}
           </RLGPanel>

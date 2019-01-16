@@ -50,11 +50,6 @@ export enum Unit {
    * devices, 1px is one device pixel (dot) of the display. For
    * printers and high resolution screens 1px implies multiple
    * device pixels.
-   *
-   * Pixels are not generally recommended because screen sizes
-   * vary so much. However, since RLG is doing computational
-   * positioning they do not present as much of a problem.
-   * Still we recommend using one of the other options.
    */
   pixel = 1, // px
   /**
@@ -70,10 +65,6 @@ export enum Unit {
    * to the other axis. This means that a perfect square will still
    * be presented as a square. Preserve is also similar to css's vw,
    * vh, vmin, and vmax units.
-   *
-   * One option for layout is to use Preserve or Pixel for the size of
-   * an element and Percent for the location to eliminate distortion
-   * due to scaling.
    */
   preserve, // %p
   /**
@@ -117,7 +108,7 @@ export function isUnmanaged(unit: Unit | undefined) {
 }
 
 /**
- * unitFactor
+ * unitFactor returns the multiplication factor of 100 to convert to/from percent. Otherwise it returns 1.
  * @param unit
  */
 export function unitFactor(unit: Unit | undefined) {

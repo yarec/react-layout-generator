@@ -913,10 +913,16 @@ img { max-width: 100%; }
 			<a href="ialign.html" class="tsd-kind-icon">IAlign</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ialign.html#x" class="tsd-kind-icon">x</a>
+					<a href="ialign.html#key" class="tsd-kind-icon">key</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ialign.html#y" class="tsd-kind-icon">y</a>
+					<a href="ialign.html#offset" class="tsd-kind-icon">offset</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ialign.html#self" class="tsd-kind-icon">self</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ialign.html#source" class="tsd-kind-icon">source</a>
 				</li>
 			</ul>
 		</li>
@@ -924,6 +930,30 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>The purpose of this interface is to allow specification of links between blocks. It lets
+						you link &#39;self&#39; block to &#39;source&#39; block by name and offset. The link means that the &#39;self&#39; block
+					location is computed based on the location and size of the &#39;source&#39; block.</p>
+				</div>
+				<pre><code>┌────────┐
+│ <span class="hljs-selector-tag">source</span> │
+└────────<span class="hljs-selector-tag">o</span>  (<span class="hljs-attribute">X</span>: <span class="hljs-number">100</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">100</span>)
+         │
+         │
+         └─&gt; <span class="hljs-selector-tag">t</span>──────┐ (<span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>)
+             │ <span class="hljs-selector-tag">self</span> │
+             └──────┘</code></pre><p>In the diagram above &#39;self&#39; block is linked to &#39;source&#39; block
+				with the offset from &#39;o&#39; to &#39;t&#39;.</p>
+				<pre><code class="language-ts"> align: {
+   key: <span class="hljs-string">'source'</span>
+   offset: {x: <span class="hljs-number">20</span>, y: <span class="hljs-number">30</span>}
+   source: {x: <span class="hljs-number">100</span>, y: <span class="hljs-number">100</span>}
+   self: {x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>}
+ }</code></pre>
+			</div>
+		</section>
 		<section class="tsd-panel tsd-hierarchy">
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
@@ -939,8 +969,10 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#x" class="tsd-kind-icon">x</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#y" class="tsd-kind-icon">y</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#key" class="tsd-kind-icon">key</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#offset" class="tsd-kind-icon">offset</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#self" class="tsd-kind-icon">self</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#source" class="tsd-kind-icon">source</a></li>
 						</ul>
 					</section>
 				</div>
@@ -949,24 +981,72 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="x" class="tsd-anchor"></a>
-				<h3>x</h3>
-				<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<a name="key" class="tsd-anchor"></a>
+				<h3>key</h3>
+				<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/components/Block.ts#L22">components/Block.ts:22</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ac7ee12/src/components/Block.ts#L70">components/Block.ts:70</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is the name of &#39;source&#39; Block (same as the name in data-layout={name: &#39;someName&#39;, ...)</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="y" class="tsd-anchor"></a>
-				<h3>y</h3>
-				<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<a name="offset" class="tsd-anchor"></a>
+				<h3>offset</h3>
+				<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/55ee0bb/src/components/Block.ts#L23">components/Block.ts:23</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ac7ee12/src/components/Block.ts#L81">components/Block.ts:81</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Offset describes the x offset and y offset from the
+							handle on &#39;source&#39;&#39; block to the handle on &#39;self&#39; block.
+							It goes from the connection handle on the &#39;source&#39; block to
+							the connection handle on &#39;self&#39; block so if the &#39;source&#39; block
+						moves the &#39;self&#39; block also moves.</p>
+					</div>
+					<p>Note that align can be used to place &#39;self&#39; block over/behind
+					&#39;source&#39; block.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="self" class="tsd-anchor"></a>
+				<h3>self</h3>
+				<div class="tsd-signature tsd-kind-icon">self<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ac7ee12/src/components/Block.ts#L91">components/Block.ts:91</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This defines the location of the connection handle on &#39;self&#39;&#39; block.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="source" class="tsd-anchor"></a>
+				<h3>source</h3>
+				<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ac7ee12/src/components/Block.ts#L87">components/Block.ts:87</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This defines the location of the connection handle on the &#39;source&#39; block.
+							The units are in percent of the block size starting at the left top of the
+						block.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">
