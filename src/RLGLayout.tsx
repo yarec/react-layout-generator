@@ -31,9 +31,10 @@ import {
 
 /**
  * internal use only
+ * Draw a bounding box around a rect.
  * @ignore
  */
-export function blockSelectedStyle(rect: IRect) {
+export function blockSelectedStyle(rect: IRect, zIndex: number) {
   const offset = 3;
   const x = rect.x - offset;
   const y = rect.y - offset;
@@ -47,6 +48,7 @@ export function blockSelectedStyle(rect: IRect) {
     borderStyle: 'dotted',
     borderWidth: '2px',
     borderColor: 'gray',
+    zIndex: zIndex
   }
 }
 
@@ -544,7 +546,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             }
 
             selectedStyle() {
-              return blockSelectedStyle(this._b.rect());
+              return blockSelectedStyle(this._b.rect(), this._b.layer());
             }
           }
 
@@ -592,16 +594,16 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.layout && p.name) {
-        const ancestor = gLayouts.get(p.layout);
-        if (ancestor) {
-          return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
-        }
-      } else
+      // if (p.layout && p.name) {
+      //   const ancestor = gLayouts.get(p.layout);
+      //   if (ancestor) {
+      //     return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
+      //   }
+      // } else
 
-        if (p.name) {
-          return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
-        }
+      if (p.name) {
+        return this.createPositionedElement(child, index, count, p.name, p.position, p.context);
+      }
     }
 
     return null;
@@ -611,24 +613,24 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     const p = child.props['data-layout'];
 
     if (p) {
-      if (p.layout && p.name) {
-        const ancestor = gLayouts.get(p.layout);
-        if (ancestor) {
-          const location = this.getBoundingLeftTop();
-          const ancestorLocation = ancestor.getBoundingLeftTop();
-          const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
-      
-          return ancestor.updatePositionedElement(
-            child, index, count, p.name, p.position, p.context, offset
-          );
-        }
-      } else
+      // if (p.layout && p.name) {
+      //   const ancestor = gLayouts.get(p.layout);
+      //   if (ancestor) {
+      //     const location = this.getBoundingLeftTop();
+      //     const ancestorLocation = ancestor.getBoundingLeftTop();
+      //     const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
 
-        if (p.name) {
-          return this.updatePositionedElement(
-            child, index, count, p.name, p.position, p.context
-          );
-        }
+      //     return ancestor.updatePositionedElement(
+      //       child, index, count, p.name, p.position, p.context, offset
+      //     );
+      //   }
+      // } else
+
+      if (p.name) {
+        return this.updatePositionedElement(
+          child, index, count, p.name, p.position, p.context
+        );
+      }
     }
 
     return React.cloneElement(child,
@@ -919,12 +921,12 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         let allow = true;
         b.editor.edits.forEach((item, i) => {
           // filter unmanaged edits
-          if (b.size.unit === Unit.unmanagedWidth &&
+          if ((b.size.unit === Unit.unmanaged || b.size.unit === Unit.unmanagedWidth) &&
             (item.ref === PositionRef.bottom || item.ref === PositionRef.top)
           ) {
             allow = false;
           }
-          if (b.size.unit === Unit.unmanagedHeight &&
+          if ((b.size.unit === Unit.unmanaged || b.size.unit === Unit.unmanagedHeight) &&
             (item.ref === PositionRef.left || item.ref === PositionRef.right)
           ) {
             allow = false;
@@ -950,6 +952,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           }
         });
       } else {
+        // Add default position
         const edit = { ref: PositionRef.position };
         b.setEditDefaults(edit);
         editors.push(

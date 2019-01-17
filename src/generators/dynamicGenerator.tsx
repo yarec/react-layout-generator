@@ -31,7 +31,8 @@ export function dynamicGenerator(
   function create(args: ICreate): Block {
 
     if (!args.position) {
-      console.error(`TODO use default position ${args.name}`)
+      console.error(`You need to pass a position (IPosition) object 
+      for ${args.name} in generator ${args.g.name()}`)
     }
 
     return args.g.blocks().set(args.name, args.position, args.g);

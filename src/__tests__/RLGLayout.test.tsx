@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, EditOptions } from '../types'
+import { DebugOptions, EditOptions, Unit, OverflowOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
 
@@ -32,7 +32,106 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
   test('it should allow props to be set #1', () => {
-    const wrapper = mount(<RLGLayout name='test#1' debug={DebugOptions.all} g={g} />)
+    const wrapper = mount(
+      <RLGLayout name='test#1' debug={DebugOptions.info} g={g} overflowX={OverflowOptions.hidden}>
+        <div data-layout={{
+          name: 'a', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanaged }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'b', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'c', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+      </RLGLayout>
+    )
+    expect(wrapper.props().debug).toEqual(DebugOptions.info);
+  });
+
+  test('it should allow props to be set #2', () => {
+    const wrapper = mount(
+      <RLGLayout name='test#1' debug={DebugOptions.mouseEvents} g={g} overflowY={OverflowOptions.hidden}>
+        <div data-layout={{
+          name: 'a', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanaged }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'b', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'c', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+      </RLGLayout>
+    )
+    expect(wrapper.props().debug).toEqual(DebugOptions.mouseEvents);
+  });
+
+  test('it should allow props to be set #3', () => {
+    const wrapper = mount(
+      <RLGLayout name='test#1' debug={DebugOptions.all} g={g} overflowY={OverflowOptions.scroll}>
+        <div data-layout={{
+          name: 'a', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanaged }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'b', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+          }
+        }}>
+          <span>A test</span>
+        </div>
+
+        <div data-layout={{
+          name: 'c', position: {
+            location: { x: 0, y: 0 },
+            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+          }
+        }}>
+          <>
+            <span>A test</span>
+          </>
+        </div>
+      </RLGLayout>
+    )
     expect(wrapper.props().debug).toEqual(DebugOptions.all);
   });
 

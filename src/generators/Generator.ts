@@ -3,6 +3,7 @@ import { Blocks } from '../components/Blocks'
 import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
 import { RLGSelect } from '../editors/RLGSelect'
+import { Layers } from '../components/Layers'
 import { ISize } from '../types'
 
 export interface IGeneratorFunctionArgs {
@@ -30,6 +31,7 @@ export interface IGenerator {
   name: () => string
   params: () => Params
   blocks: () => Blocks
+  layers: () => Layers
   reset: () => void
   // next: () => Block | undefined
   lookup: (name: string) => Block | undefined
@@ -47,6 +49,7 @@ export class Generator implements IGenerator {
   private _editHelper: EditHelper | undefined
   private _params: Params
   private _blocks: Blocks
+  private _layers: Layers
   private _select: RLGSelect
   // private _blocksIterator: IterableIterator<Block> | undefined
   private _init: IInit
@@ -67,6 +70,8 @@ export class Generator implements IGenerator {
     // this._blocksIterator = this._blocks.values()
     // this.state = this.start
     this._params = params
+
+    this._layers = new Layers({ name, params })
   }
 
   public name = () => {
@@ -83,6 +88,10 @@ export class Generator implements IGenerator {
 
   public blocks = (): Blocks => {
     return this._blocks
+  }
+
+  public layers = (): Layers => {
+    return this._layers
   }
 
   public select = (): RLGSelect => {

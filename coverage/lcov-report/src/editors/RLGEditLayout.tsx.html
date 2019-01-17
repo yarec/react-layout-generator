@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">28.48% </span>
+        <span class="strong">28.38% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>43/151</span>
+        <span class='fraction'>42/148</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">5.62% </span>
+        <span class="strong">5.88% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>5/89</span>
+        <span class='fraction'>5/85</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.18% </span>
+        <span class="strong">19.05% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/22</span>
+        <span class='fraction'>4/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.52% </span>
+        <span class="strong">27.4% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>41/149</span>
+        <span class='fraction'>40/146</span>
       </div>
     </div>
   </div>
@@ -388,17 +388,11 @@
 343
 344
 345
-346
-347
-348
-349
-350
-351
-352</td><td class="line-coverage quiet"><span class="cline-any cline-yes">8x</span>
+346</td><td class="line-coverage quiet"><span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -445,7 +439,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -473,13 +467,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -500,7 +487,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -511,7 +499,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -745,7 +733,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+<span class="cline-any cline-yes">9x</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
 &nbsp;
 // import Layout from 'src/components/Block';
 import { DebugOptions, IPoint, IRect } from '../types';
@@ -776,7 +764,7 @@ function editStyle(args: IEditHandleProps): React.CSSProperties {
     height: `${args.handle.height}px`,
     position: 'absolute' as 'absolute',
     cursor: `${args.cursor}`,
-    background: 'rgba(0, 0, 0, 0.0)',
+    background: 'rgba(0, 0, 0, 0)',
     zIndex: args.zIndex,
     borderWidth: '4px',
     outline: 'none'
@@ -815,7 +803,7 @@ export class RLGEditLayout extends React.Component&lt;IEditorProps, IEditLayoutS
     this._menuLocation = { x: 0, y: 0 };
     this.state = { activateDrag: false, contextMenu: false };
 &nbsp;
-    this._handle = {x: 0, y: 0, width: 0, height: 0}
+    this._handle = { x: 0, y: 0, width: 0, height: 0 }
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this.props.edit.updateHandle) {
       const r = props.block.rect();
       this._handle = this.props.edit.updateHandle(r);
@@ -824,13 +812,6 @@ export class RLGEditLayout extends React.Component&lt;IEditorProps, IEditLayoutS
     <span class="missing-if-branch" title="else path not taken" >E</span>if (props.debug) {
       this._debug = props.debug;
     }
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  public shouldComponentUpdate(</span>nextProps: IEditorProps, nextState: IEditLayoutState) {
-<span class="cstat-no" title="statement not covered" >    if (this.props.handle.x - nextProps.handle.x || this.props.handle.y - nextProps.handle.y) {</span>
-<span class="cstat-no" title="statement not covered" >      return true;</span>
-    }
-<span class="cstat-no" title="statement not covered" >    return false;</span>
   }
 &nbsp;
   public render = () =&gt; {
@@ -856,6 +837,7 @@ export class RLGEditLayout extends React.Component&lt;IEditorProps, IEditLayoutS
     const r = <span class="cstat-no" title="statement not covered" >this.props.block.rect();</span>
 <span class="cstat-no" title="statement not covered" >    this._handle = this.props.edit.updateHandle!(r);</span>
 <span class="cstat-no" title="statement not covered" >    this._startRect = clone(this.props.handle);</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`initUpdate ${r.y + r.height} ${this._handle.y}`);</span>
   }
 &nbsp;
   public hideMenu = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
@@ -1102,7 +1084,7 @@ export class RLGEditLayout extends React.Component&lt;IEditorProps, IEditLayoutS
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 19:23:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 16 2019 22:42:18 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

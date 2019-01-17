@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/Layers.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/components</a> Layers.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">66.67% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>32/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>13/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65.96% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>31/47</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span></td><td class="text"><pre class="prettyprint lang-js">import { Params } from "./Params";
+import { Block } from "./Block";
+&nbsp;
+export interface ILayersProps {
+  name: string
+  params: Params
+}
+&nbsp;
+export class Layers {
+  private _params: Params
+&nbsp;
+  constructor(props: ILayersProps) {
+    this._params = props.params
+  }
+&nbsp;
+  public bringForward(block: Block) {
+    const current = block.layer()
+    let currentFront = Number.MAX_SAFE_INTEGER
+    let max = Number.MIN_SAFE_INTEGER
+&nbsp;
+    block.generator.blocks().map.forEach((block: Block) =&gt; {
+      if (block.layer() &gt; current) {
+        currentFront = block.layer()
+      }
+      if (block.layer() &gt; max ) {
+        max = block.layer()
+      }
+    })
+    
+    const value = currentFront &lt; Number.MAX_SAFE_INTEGER 
+      ? currentFront + 1
+      : (<span class="branch-1 cbranch-no" title="branch not covered" >max === Number.MIN_SAFE_INTEGER ? block.layer() : max + 1)</span>
+&nbsp;
+    this._params.set(`${block.name}ZIndex`, value)
+    block.updateLayer(value)
+&nbsp;
+    return value
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public bringFront(</span>block: Block) {
+    let max = <span class="cstat-no" title="statement not covered" >Number.MIN_SAFE_INTEGER</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    block.generator.blocks().map.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (block.layer() &gt; max ) {</span>
+<span class="cstat-no" title="statement not covered" >        max = block.layer()</span>
+      }
+    })
+    
+    const value = <span class="cstat-no" title="statement not covered" >max + 1</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._params.set(`${block.name}ZIndex`, value)</span>
+<span class="cstat-no" title="statement not covered" >    block.updateLayer(value)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return value</span>
+  }
+  
+  
+  public sendBackward(block: Block) {
+    const current = block.layer()
+    let currentBack = Number.MIN_SAFE_INTEGER
+    let min = Number.MAX_SAFE_INTEGER
+&nbsp;
+    block.generator.blocks().map.forEach((block: Block) =&gt; {
+      if (block.layer() &lt; current) {
+        currentBack = block.layer()
+      }
+      if (block.layer() &lt; min ) {
+        min = block.layer()
+      }
+    })
+    
+    const value = currentBack &gt; Number.MIN_SAFE_INTEGER 
+      ? currentBack - 1
+      : (min === Number.MAX_SAFE_INTEGER ? block.layer() : min - 1)
+&nbsp;
+    this._params.set(`${block.name}ZIndex`, value)
+    block.updateLayer(value)
+&nbsp;
+    return value
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public sendBack(</span>block: Block) {
+    let min = <span class="cstat-no" title="statement not covered" >Number.MAX_SAFE_INTEGER</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    block.generator.blocks().map.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (block.layer() &lt; min ) {</span>
+<span class="cstat-no" title="statement not covered" >        min = block.layer()</span>
+      }
+    })
+    
+    const value = <span class="cstat-no" title="statement not covered" >min - 1</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._params.set(`${block.name}ZIndex`, value)</span>
+<span class="cstat-no" title="statement not covered" >    block.updateLayer(value)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return value</span>
+  }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 16 2019 22:42:18 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

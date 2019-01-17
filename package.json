@@ -79,7 +79,6 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/test/",
       "/dist/",
       ".rpt2_cache",
       "/src/react-layout-generator.ts"

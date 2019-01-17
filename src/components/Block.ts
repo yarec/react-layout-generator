@@ -299,11 +299,11 @@ export class Block {
         size: { width: 100, height: 100 }
       }
     }
+    this._g = g
     this.updatePosition(this._position)
     this.updateLayer(this._position.layer)
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._changed = true
-    this._g = g
     this._positionChildren = this._position.positionChildren
     this._onMouseDown = this.noop
     this._onClick = this.noop
@@ -335,7 +335,7 @@ export class Block {
   }
 
   public layer() {
-    return this._layer
+    return this._layer ? this._layer : 0
   }
 
   public connectionHandles = () => {
@@ -563,10 +563,13 @@ export class Block {
   }
 
   public updateLayer(layer?: number) {
-    if (layer === undefined) {
-      return
+    const params = this._g.params()
+    const zIndex = params.get(`${this._name}ZIndex`) as number
+    if (zIndex) {
+      this._layer = zIndex
+    } else {
+      this._layer = layer ? layer : 0
     }
-    this._layer = layer
   }
 
   public validate(p: IPosition) {

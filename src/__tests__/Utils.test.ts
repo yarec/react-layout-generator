@@ -28,6 +28,22 @@ it('convert toPixel #3', () => {
   expect(p).toEqual({ x: 250, y: 250 })
 })
 
+it('convert toPixel #4', () => {
+  const p = toPixel(
+    { value: { x: 50, y: 50 }, unit: Unit.preserveHeight },
+    containersize
+  ) as IPoint
+  expect(p).toEqual({ x: 250, y: 250 })
+})
+
+it('convert toPixel #5', () => {
+  const p = toPixel(
+    { value: { x: 50, y: 50 }, unit: Unit.preserveWidth },
+    containersize
+  ) as IPoint
+  expect(p).toEqual({ x: 500, y: 500 })
+})
+
 // it('saves params to localStorage', () => {
 //   saveToLocalStorage('test', 'param', { x: 0, y: 0 })
 //   const v = loadFromLocalStorage('test', 'param')

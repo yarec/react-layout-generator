@@ -47,18 +47,6 @@ type IUndoRedo = ISavedPosition[];
  * internal use only
  * @ignore
  */
-export interface IMenuItem {
-  name: string;
-  disabled?: boolean;
-  checked?: boolean;
-  command?: () => void;
-
-}
-
-/**
- * internal use only
- * @ignore
- */
 class Command implements ICommand {
   
   public name: string;
@@ -131,17 +119,24 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public get commands() {
 
     const disabled = this._selected.size > 1 ? false : true;
+    const disabled2 = this._selected.size > 0 ? false : true;
+
     const menuCommands: IMenuItem[] = [
       { name: 'undo', disabled: this._undo.length ? false : true, command: this.undo },
       { name: 'redo', disabled: this._redo.length ? false : true, command: this.redo },
       { name: '' },
-      { name: 'alignLeft', disabled, command: this.alignLeft },
-      { name: 'alignCenter', disabled, command: this.alignCenter },
-      { name: 'alignRight', disabled, command: this.alignRight },
+      { name: 'align left', disabled, command: this.alignLeft },
+      { name: 'align center', disabled, command: this.alignCenter },
+      { name: 'align right', disabled, command: this.alignRight },
       { name: '' },
-      { name: 'alignTop', disabled, command: this.alignTop },
-      { name: 'alignMiddle', disabled, command: this.alignMiddle },
-      { name: 'alignBottom', disabled, command: this.alignBottom },
+      { name: 'align top', disabled, command: this.alignTop },
+      { name: 'align middle', disabled, command: this.alignMiddle },
+      { name: 'align bottom', disabled, command: this.alignBottom },
+      { name: '' },
+      { name: 'bring forward',  disabled: disabled2, command: this.bringForward },
+      { name: 'send backward',  disabled: disabled2, command: this.sendBackward },
+      { name: 'bring front',  disabled: disabled2, command: this.bringFront },
+      { name: 'send back',  disabled: disabled2, command: this.sendBack },
     ];
 
     return menuCommands;
@@ -213,7 +208,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.props.onUpdate();
   }
 
-  public pushState = () => {
+  public pushRectState = () => {
     const data: IUndoRedo = []
     this._selected.forEach((block: Block) => {
       // save a clone of block.rect
@@ -225,7 +220,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignCenter = () => {
     let center: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -243,7 +238,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignMiddle = () => {
     let middle: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -261,7 +256,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignTop = () => {
     let top: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -278,7 +273,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignLeft = () => {
     let left: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -295,7 +290,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignBottom = () => {
     let bottom: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -312,7 +307,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public alignRight = () => {
     let right: number;
 
-    this.pushState();
+    this.pushRectState();
 
     this._selected.forEach((block: Block) => {
       const r = block.rect();
@@ -320,6 +315,50 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
         right = r.x + r.width;
       }
       block.update({ x: right - r.width, y: r.y }, { width: r.width, height: r.height })
+    });
+    if (this._selected.size) {
+      this.props.onUpdate();
+    }
+  }
+
+  public bringForward = () => {
+    const layers = this.props.g.layers();
+
+    this._selected.forEach((block: Block) => {
+      layers.bringForward(block)
+    });
+    if (this._selected.size) {
+      this.props.onUpdate();
+    }
+  }
+
+  public sendBackward = () => {
+    const layers = this.props.g.layers();
+
+    this._selected.forEach((block: Block) => {
+      layers.sendBackward(block)
+    });
+    if (this._selected.size) {
+      this.props.onUpdate();
+    }
+  }
+
+  public bringFront = () => {
+    const layers = this.props.g.layers();
+
+    this._selected.forEach((block: Block) => {
+      layers.bringFront(block)
+    });
+    if (this._selected.size) {
+      this.props.onUpdate();
+    }
+  }
+
+  public sendBack = () => {
+    const layers = this.props.g.layers();
+
+    this._selected.forEach((block: Block) => {
+      layers.sendBack(block)
     });
     if (this._selected.size) {
       this.props.onUpdate();

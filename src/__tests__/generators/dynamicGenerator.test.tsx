@@ -13,7 +13,12 @@ describe('RLGLayout', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     const wrapper = mount(
       <RLGLayout name='instance#1' debug={DebugOptions.none} g={g} containersize={{ width: 1000, height: 1000 }}>
-        <div data-layout={{ name: 'header' }}>
+        <div data-layout={{
+          name: 'header', position: {
+            location: { x: 200, y: 50 },
+            size: { width: 200, height: 200 }
+          }
+        }}>
           <span>A test</span>
         </div>
       </RLGLayout>
@@ -36,16 +41,20 @@ describe('RLGLayout', () => {
       <RLGLayout name='instance#2' debug={DebugOptions.none} g={g} containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'block',
-          location: { x: 200, y: 50 },
-          size: { width: 200, height: 200 }
+          position: {
+            location: { x: 200, y: 50 },
+            size: { width: 200, height: 200 }
+          }
         }}>
           <span>A test</span>
         </div>
-        <div data-layout={{ 
+        <div data-layout={{
           name: 'block2',
-          location: { x: 200, y: 50 },
-          size: { width: 200, height: 200 }
-         }}>
+          position: {
+            location: { x: 200, y: 50 },
+            size: { width: 200, height: 200 }
+          }
+        }}>
           <span>A test 2</span>
         </div>
       </RLGLayout>
