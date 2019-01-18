@@ -256,3 +256,11 @@ function dynamicGenerator(name: string): IGenerator {
 ```
 
 Note that generators do not have to be packaged as a function. It is easy to implement a generator as part of a class.
+
+## FAQ
+
+### Why not build a system based on React refs
+
+That could work for specific cases but there is more to a layout system than just manipulating the underlying html elements. You need a way to serialize, edit, and present a layout with content. The hard part of a non-linear layout system is the placement of the elements. In a linear system each element just comes after another element. In a non-linear system the author has to decide on each placement. That makes a design time editor and template support quite convenient.
+
+RLG does use refs internally but only to get information. Placement of elements is done using React properties in a top down flow.

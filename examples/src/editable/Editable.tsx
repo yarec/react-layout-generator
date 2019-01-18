@@ -131,7 +131,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
       <RLGLayout
         name={'RLGLayout.ETemplate.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
-        debug={[DebugOptions.none]}
+        debug={[DebugOptions.timing]} 
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >

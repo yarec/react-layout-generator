@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import {
+  DebugOptions,
   desktopGenerator,
   EditOptions,
   IEditHelperProps,
@@ -113,6 +114,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
       <RLGLayout
         name={'RLGLayout.desktop.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
+        debug={DebugOptions.timing}
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >

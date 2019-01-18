@@ -93,6 +93,26 @@ export interface IAlign {
 
 /**
  * IMenuItem describes a command in a menu.
+ *
+ * ```ts
+ * const menuCommands: IMenuItem[] = [
+ *     { name: 'undo', disabled: true, command: this.undo },
+ *      ...
+ *     { name: 'bring forward', disabled: false, command: this.bringForward }
+ *  ]
+ *
+ * ...
+ *
+ * public bringForward = () => {
+ *    const layers = this.props.g.layers();
+ *    this._selected.forEach((block: Block) => {
+ *      layers.bringForward(block)
+ *    });
+ *    if (this._selected.size) {
+ *      this.props.onUpdate();
+ *    }
+ * }
+ * ```
  */
 export interface IMenuItem {
   /**
@@ -109,12 +129,44 @@ export interface IMenuItem {
 }
 
 export interface IEdit {
+  /**
+   * PositionRef specifies the part of a rectangle that can be edited.
+   */
   ref: PositionRef
+  /**
+   * This is the name of the variable that will be stored in [Params](classes/params.html).
+   * If this is not specified then edit changes will not be saved.
+   */
   variable?: string
+  /**
+   * Optional name of a cursor. If not specified then the default cursor for this
+   * PositionRef will be used.
+   */
   cursor?: string
+  /**
+   * Optional updateHandle used to update the hit area for editing a PositionRef block.
+   * If not specified then the default will be used.
+   */
   updateHandle?: UpdateHandle
+  /**
+   * Optional extendElement used to compute the update for a block.
+   * If not specified then the default will be used.
+   */
   extendElement?: ExtendElement
+  /**
+   * If defined this function computes the data that should be stored
+   * persistent storage. See [updateParamLocation](../globals.html#updateParamLocation),
+   * [updateParamOffset](../globals.html#updateParamOffset),
+   * [updateParamWidth](../globals.html#updateParamWidth), and
+   * [updateParamHeight](../globals.html#updateParamHeight).
+   *
+   * If necessary you can use a custom function. If not defined then no data
+   * will be stored.
+   */
   updateParam?: UpdateParam
+  /**
+   * This is an array of custom editing options for a block.
+   */
   contextMenu?: IMenuItem[]
 }
 
@@ -204,6 +256,14 @@ export interface IPositionSize {
 
 /**
  * IPosition defines the positioning, layer, and editor rules for elements in RLG.
+ *
+ * A minimal definition is:
+ * ```ts
+ *  position: {
+ *    location: { x: 0, y: 0 },
+ *    size: { width: 100, height: 100 }
+ *  }
+ * ```
  */
 export interface IPosition {
   /**
@@ -221,9 +281,27 @@ export interface IPosition {
    * edit](irlglayoutprops.html) property is not set the EditOptions.none.
    */
   editor?: IEditor
+  /**
+   * A layer is the same as css z-index. The default is 0.
+   *
+   * If you use the editor to change the layer it will be stored in Params
+   * using the key `${block.name}ZIndex`.
+   */
   layer?: number
+  /**
+   * Origin defines the point that the location will use when positioning a
+   * block. For example an origin of { x: 50, y: 50 } will center the block
+   * at the specified location.
+   */
   origin?: IOrigin
+  /**
+   * Location is position of the block relative to the origin. With a default
+   * origin `{x: 0, y: 0}`, the location is the `(left top)` of the rect.
+   */
   location: IPositionLocation
+  /**
+   * Size specifies the width and height of a blocks rect.
+   */
   size: IPositionSize
 }
 
@@ -240,10 +318,6 @@ export class Block {
   get editor() {
     return this._position.editor
   }
-
-  // get units() {
-  //   return this._position.units
-  // }
 
   get location() {
     return this._position.location
@@ -694,6 +768,9 @@ export class Block {
     })
   }
 
+  /**
+   * Returns the block that is linked to this block
+   */
   private getRef = () => {
     let ref
     if (this._position.align) {

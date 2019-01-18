@@ -86,7 +86,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
       <RLGLayout
         name={'example.cardDeck'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
-        debug={DebugOptions.none}
+        debug={DebugOptions.timing}
         g={this._g}
       >
         {this.createElements()}

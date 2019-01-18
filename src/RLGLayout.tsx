@@ -1,6 +1,8 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
+const now = require( 'performance-now');
+
 import {
   Block,
   IMenuItem,
@@ -184,7 +186,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
   private _edit: EditOptions = EditOptions.none;
   private _debug: DebugOptions = DebugOptions.none;
-  private _startRendering: number = Date.now();
+  private _startRendering: number = now();
 
   private _count: number = 0;
   private _select: RLGSelect | undefined = undefined;
@@ -240,6 +242,10 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       leftTop.y = r.top;
     }
     return leftTop;
+  }
+
+  public get root() {
+    return this._root
   }
 
 
@@ -735,14 +741,15 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   }
 
   private frameStart = () => {
-    this._startRendering = Date.now();
+    this._startRendering = now()
     return null;
   }
 
   private frameEnd = () => {
     // tslint:disable-next-line:no-bitwise
     if (this._debug & DebugOptions.timing) {
-      console.log('frameTime: ', (Date.now() - this._startRendering) + ' ms');
+      const difference = now() - this._startRendering
+      console.log(`frameTime: ${difference.toFixed(2)}ms`);
     }
     return null;
   }

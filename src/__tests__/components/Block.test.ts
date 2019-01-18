@@ -229,3 +229,5 @@ it('misc #2', () => {
   expect(b.connectionHandles()).toBeTruthy()
   expect(b.touch()).toEqual(undefined)
 })
+
+// Test align, connection points

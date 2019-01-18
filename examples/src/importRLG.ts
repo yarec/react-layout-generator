@@ -25,7 +25,7 @@ export {
   rectPoint,
   rectSize
 } from '../../src/types'
-export { PixelPoint, toPixel, toPercent } from '../../src/utils'
+export { toPixel, toPercent } from '../../src/utils'
 
 export { EditHelper, IEditTool, IEditHelperProps, Status } from '../../src/editors/EditHelper'
 export { columnsGenerator } from '../../src/generators/columnsGenerator'

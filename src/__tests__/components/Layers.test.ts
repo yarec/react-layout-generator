@@ -151,3 +151,73 @@ it('Layers #5', () => {
   const block = blocks.set('c', p, g)
   expect(layers.bringForward(block)).toBe(11)
 })
+
+it('Layers #6', () => {
+  const params = new Params({
+    name: 'layersTest',
+    initialValues: [['containersize', { width: 1000, height: 1000 }]]
+  })
+
+  const g: IGenerator = new Generator('test', init, params)
+  const blocks = g.blocks()
+
+  const pa = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 10
+  }
+  blocks.set('a', pa, g)
+
+  const pb = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 5
+  }
+  blocks.set('b', pb, g)
+
+  const layers = g.layers()
+
+  const p = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 7
+  }
+
+  const block = blocks.set('c', p, g)
+  expect(layers.bringFront(block)).toBe(11)
+})
+
+it('Layers #7', () => {
+  const params = new Params({
+    name: 'layersTest',
+    initialValues: [['containersize', { width: 1000, height: 1000 }]]
+  })
+
+  const g: IGenerator = new Generator('test', init, params)
+  const blocks = g.blocks()
+
+  const pa = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 10
+  }
+  blocks.set('a', pa, g)
+
+  const pb = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 5
+  }
+  blocks.set('b', pb, g)
+
+  const layers = g.layers()
+
+  const p = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 },
+    layer: 7
+  }
+
+  const block = blocks.set('c', p, g)
+  expect(layers.sendBack(block)).toBe(4)
+})

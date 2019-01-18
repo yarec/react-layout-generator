@@ -40,7 +40,7 @@ describe('RLGPromise', () => {
 
   test('RLGPromise test #1', () => {
     const wrapper = mount(
-      <RLGLayout name='promiseTest#1' edit={EditOptions.all} g={g} >
+      <RLGLayout name='promiseTest#2' edit={EditOptions.all} g={g} >
         <RLGPromise
           name='promiseTest'
           key={'a'}
@@ -48,7 +48,7 @@ describe('RLGPromise', () => {
         />
 
         <RLGPromiseResolve
-          name='promiseTest#1'
+          name='promiseTest#2'
           jsx={[
            'abc'
           ]}

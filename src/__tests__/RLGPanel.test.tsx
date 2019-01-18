@@ -39,7 +39,7 @@ describe('RLGLayout', () => {
 
   test('RLGPanel test #1', () => {
     const wrapper = mount(
-      <RLGLayout name='panelTest#1' edit={EditOptions.all} g={g} >
+      <RLGLayout name='panelTest#2' edit={EditOptions.all} g={g} >
         <RLGPanel
           key={'a'}
           data-layout={{ name: 'a' }}

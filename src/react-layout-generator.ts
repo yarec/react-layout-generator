@@ -20,7 +20,7 @@ export {
   rectPoint,
   rectSize
 } from './types'
-export { PixelPoint, toPixel, toPercent } from './utils'
+export { toPixel, toPercent } from './utils'
 
 export {
   EditHelper,

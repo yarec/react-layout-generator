@@ -2,8 +2,7 @@ import { Block, IEdit } from '../components/Block'
 import { IRect, unitFactor } from '../types'
 
 /**
- * internal use only
- * @ignore
+ * UpdateParamLocation computes the [location](interfaces/ipositionlocation.html) update.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.position.size.unit)
@@ -11,15 +10,16 @@ export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
     name: edit.variable!,
     value: {
       x: block.position.location.x * factor,
-      y: block.position.location.y * factor
+      y: block.position.location.y * factor,
+      unit: block.position.size.unit
     }
   }
 }
 
 /**
- * internal use only
- * @ignore
+ * updateParamOffset computes the [offset](interfaces/ialign.html) update.
  */
+
 export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.position.size.unit)
   let r = {
@@ -42,8 +42,8 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
 }
 
 /**
- * internal use only
- * @ignore
+ * updateParamWidth computes the width update. Only use this UpdateParam if
+ * a generator directly uses the width in computing a layout.
  */
 export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.position.size.unit)
@@ -54,8 +54,8 @@ export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
 }
 
 /**
- * internal use only
- * @ignore
+ * updateParamWidth computes the height update. Only use this UpdateParam if
+ * a generator directly uses the height in computing a layout.
  */
 export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.position.size.unit)

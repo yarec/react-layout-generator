@@ -20,26 +20,10 @@ export interface IValue {
   value: IPoint | ISize
 }
 
-export class PixelPoint {
-  private _p: IPoint
-
-  constructor(p: IPoint) {
-    this._p = p
-  }
-
-  public toPercent(containersize: ISize) {
-    return {
-      x: this._p.x / containersize.width,
-      y: this._p.y / containersize.height
-    }
-  }
-}
-
 export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
   switch (v.unit) {
     case Unit.pixel: {
       return v.value
-      break
     }
     case Unit.percent: {
       if ('x' in v.value) {
@@ -51,11 +35,10 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       } else {
         const s = v.value as ISize
         return {
-          x: (s.width / 100) * containersize.width,
-          y: (s.height / 100) * containersize.height
+          width: (s.width / 100) * containersize.width,
+          height: (s.height / 100) * containersize.height
         }
       }
-      break
     }
     case Unit.preserve: {
       const factor =
@@ -71,11 +54,10 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       } else {
         const s = v.value as ISize
         return {
-          x: (s.width / 100) * factor,
-          y: (s.height / 100) * factor
+          width: (s.width / 100) * factor,
+          height: (s.height / 100) * factor
         }
       }
-      break
     }
     case Unit.preserveWidth: {
       const factor = containersize.width
@@ -88,11 +70,10 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       } else {
         const s = v.value as ISize
         return {
-          x: (s.width / 100) * factor,
-          y: (s.height / 100) * factor
+          width: (s.width / 100) * factor,
+          height: (s.height / 100) * factor
         }
       }
-      break
     }
     case Unit.preserveHeight: {
       const factor = containersize.height
@@ -105,17 +86,15 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
       } else {
         const s = v.value as ISize
         return {
-          x: (s.width / 100) * factor,
-          y: (s.height / 100) * factor
+          width: (s.width / 100) * factor,
+          height: (s.height / 100) * factor
         }
       }
-      break
     }
     case Unit.unmanaged:
     case Unit.unmanagedWidth:
     case Unit.unmanagedHeight: {
       return v.value
-      break
     }
   }
   return v.value
@@ -123,6 +102,9 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
 
 export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
   switch (v.unit) {
+    case Unit.unmanaged:
+    case Unit.unmanagedWidth:
+    case Unit.unmanagedHeight:
     case Unit.pixel: {
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -133,75 +115,22 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
       } else {
         const s = v.value as ISize
         return {
-          x: (s.width / containersize.width) * 100,
-          y: (s.height / containersize.height) * 100
+          width: (s.width / containersize.width) * 100,
+          height: (s.height / containersize.height) * 100
         }
       }
-      break
     }
     case Unit.percent: {
       return v.value
-      break
     }
     case Unit.preserve: {
-      const factor =
-        containersize.height < containersize.width
-          ? containersize.height
-          : containersize.width
-      if ('x' in v.value) {
-        const p = v.value as IPoint
-        return {
-          x: (p.x / factor) * 100,
-          y: (p.y / factor) * 100
-        }
-      } else {
-        const s = v.value as ISize
-        return {
-          x: (s.width / factor) * 100,
-          y: (s.height / factor) * 100
-        }
-      }
-      break
+      return v.value
     }
     case Unit.preserveWidth: {
-      const factor = containersize.width
-      if ('x' in v.value) {
-        const p = v.value as IPoint
-        return {
-          x: (p.x / factor) * 100,
-          y: (p.y / factor) * 100
-        }
-      } else {
-        const s = v.value as ISize
-        return {
-          x: (s.width / factor) * 100,
-          y: (s.height / factor) * 100
-        }
-      }
-      break
+      return v.value
     }
     case Unit.preserveHeight: {
-      const factor = containersize.height
-      if ('x' in v.value) {
-        const p = v.value as IPoint
-        return {
-          x: (p.x / factor) * 100,
-          y: (p.y / factor) * 100
-        }
-      } else {
-        const s = v.value as ISize
-        return {
-          x: (s.width / factor) * 100,
-          y: (s.height / factor) * 100
-        }
-      }
-      break
-    }
-    case Unit.unmanaged:
-    case Unit.unmanagedWidth:
-    case Unit.unmanagedHeight: {
       return v.value
-      break
     }
   }
   return v.value
