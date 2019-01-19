@@ -1,10 +1,10 @@
-# React Layout Generator
+# React Layout Generator Examples
 
-*This document is a work in progress. In the meantime see the source code for details.*
-
-React Layout Generator (RLG) is a [Layout in React](https://github.com/chetmurphy/react-layout-generator/blob/master/LayoutInRect.md) component for dynamic and responsive layout. It is ideal for laying out both html and svg components and allows precise and continuous control for responsive layouts.
+React Layout Generator (RLG) is a Layout in React component for dynamic and responsive layout. It is general purpose, supports both html and svg*, and allows precise and continuous control for responsive layouts. Major features include template support, animation support including custom engines, persistance support, built-in editor with position and size editing, fine grain responsiveness, top down design, and overlay support. 
 
 This component was inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
+
+\* For SVG to be really useful in React it needs to know its position and size. RLG makes this easy.
 
 ## Install
 
@@ -12,19 +12,13 @@ For the time being, you will need to clone or fork the project to evaluate.
 
 ## TODO
 
-* 
-* Update intro to use both RLGRow and RLGColumn
-* Finish implementing editor
-* Add left and right align to RLGColumn
-* Implement RLGRow
+* Add features to editor
 * Touch
-* Serialization - should be possible now by saving/restoring params and layouts
-* Breakpoints
 * Additional generators
 * More tests
 * Upload component to npm
 * Host website on Github
-* Alpha version - current release is early pre-alpha
+* Alpha version - current release is pre-alpha
 
 ### Bugs
 

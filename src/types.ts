@@ -10,7 +10,7 @@ export interface IAnimateProps {
    * The number of milliseconds between frames. A value of
    * zero will let the animation run continuously.
    */
-  throttleTime: number
+  throttleTime?: number
 }
 
 /**

@@ -143,8 +143,8 @@
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "raf": "^3.4.1",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.8.0-alpha.0",
+    "react-dom": "^16.8.0-alpha.0",
     "react-resize-detector": "^3.4.0",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",
@@ -166,5 +166,8 @@
     "typedoc-plugin-no-inherit": "^1.1.1",
     "typescript": "^3.0.3",
     "underscore": "^1.9.1"
+  },
+  "dependencies": {
+    "markdown-include": "^0.4.3"
   }
 }

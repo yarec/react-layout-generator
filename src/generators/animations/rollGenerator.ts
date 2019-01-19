@@ -4,10 +4,7 @@ import { Params, ParamValue } from '../../components/Params'
 import { Generator, ICreate, IGenerator } from '../Generator'
 import { ISize } from '../../types'
 
-export function contentSlideGenerator(
-  name: string,
-  exParams?: Params
-): IGenerator {
+export function rollGenerator(name: string, exParams?: Params): IGenerator {
   const values: Array<[string, ParamValue]> = [
     ['containersize', { width: 0, height: 0 }],
     ['animationStart', 0],
@@ -33,6 +30,12 @@ export function contentSlideGenerator(
     const animate = params.get('animate') as number
 
     let containersize = params.get('containersize') as ISize
+
+    if (params.changed()) {
+      blocks.map.forEach((block: Block) => {
+        block.touch()
+      })
+    }
 
     if (containersize.width && containersize.height) {
       let frameHeight = params.get('frameHeight') as number

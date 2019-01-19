@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { OverflowOptions } from '../../../src/types';
+import { DebugOptions, OverflowOptions } from '../../../src/types';
 import {
-  contentSlideGenerator,
   EditOptions,
   IEditHelperProps,
   RLGLayout,
+  rollGenerator,
   Status,
   Unit
 } from '../importRLG'
@@ -14,10 +14,12 @@ import {
 // const Title = styled.h2`
 // `
 
-const Description = styled.p`
+const Description = styled.div`
   word-break: normal;
   white-space: normal;
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
 `
 
 interface IIntroState {
@@ -26,7 +28,7 @@ interface IIntroState {
 
 export default class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
-  private _g = contentSlideGenerator('rlg.intro');
+  private _g = rollGenerator('rlg.intro');
   private _edit: EditOptions = EditOptions.none;
 
   constructor(props: IEditHelperProps) {
@@ -64,120 +66,92 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
       <RLGLayout
         name={'RLGLayout.intro.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
-        // debug={[DebugOptions.data, DebugOptions.mouseEvents, DebugOptions.error]}
+        debug={DebugOptions.data}
         params={[
           ['velocity', .1] // 100px per second
         ]}
-        animate={{ active: true, throttleTime: 10 }} // 100 ms
+        animate={{ active: true }}
         g={this._g}
         overflowX={OverflowOptions.hidden}
         overflowY={OverflowOptions.hidden}
       >
-        <div data-layout={{
-          name: 'feature1',
-          position: {
-            location: { x: 10, y: 10, unit: Unit.percent },
-            size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            Layout in React.
-          </Description>
-        </div>
-
-        <div data-layout={{
-          name: 'feature2',
-          position: {
-            location: { x: 25, y: 30, unit: Unit.percent },
-            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            These examples only use react-layout-generator.
-          </Description>
-        </div>
-
-        <div data-layout={{
-          name: 'feature3',
-          position: {
-            location: { x: 50, y: 10, unit: Unit.percent },
-            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            Ideal for laying out svg.
-          </Description>
-        </div>
-
-        <div data-layout={{
-          name: 'feature4',
-          position: {
-            location: { x: 50, y: 50, unit: Unit.percent },
-            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            Animation support.
-          </Description>
-        </div>
-
-        <div data-layout={{
-          name: 'feature5',
-          position: {
-            location: { x: 10, y: 50, unit: Unit.percent },
-            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            Template support.
-          </Description>
-        </div>
-
-        <div data-layout={{
-          name: 'feature6',
-          position: {
-            location: { x: 10, y: 70, unit: Unit.percent },
-            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
-          }
-        }}
-        >
-          <Description>
-            Template support.
-          </Description>
-        </div>
-
-        {this.test()}
-
+        {this.content()}
       </RLGLayout>
     );
   }
 
-  public test = () => {
+  public content = () => {
+
+    let index = 1000
+    const features: any[] = [
+      <div key={`${++index}`}>Template Support.</div>,
+      <div key={`${++index}`}>Dashboard</div>,
+      <div key={`${++index}`}>Examples built with RLG</div>,
+      <div key={`${++index}`}>Animation Support</div>,
+      <div key={`${++index}`}>Typescript</div>,
+      <div key={`${++index}`}>Core Editor Support</div>,
+      <div key={`${++index}`}>Design and Runtime</div>,
+      <div key={`${++index}`}>Serialization Support</div>,
+      <div key={`${++index}`}>Animation Roll Generator</div>,
+      <div key={`${++index}`}>Responsive Desktop Generator</div>,
+      <div key={`${++index}`}>HTML and SVG</div>,
+      <div key={`${++index}`}>Games</div>,
+      <div key={`${++index}`}>Sample Solitaire Game</div>,
+      <div key={`${++index}`}>Text Editing</div>,
+      <div key={`${++index}`}>Ideal for SVG</div>,
+      <div key={`${++index}`}>Games</div>,
+      <div key={`${++index}`}>Columns Generator</div>,
+      <div key={`${++index}`}>Position and Size Editing</div>,
+      <div key={`${++index}`}>Layout in React</div>,
+      <div key={`${++index}`}>Diagrams</div>,
+      <div key={`${++index}`}>Fine Grain Responsive</div>,
+      <div key={`${++index}`}>Fit Text to Container</div>,
+      <div key={`${++index}`}>Animation: You're looking at one now</div>,
+      <div key={`${++index}`}>Rows Generator</div>,
+      <div key={`${++index}`}>Sample Editor</div>,
+      <div key={`${++index}`}>Dynamic Generator</div>,
+      <div key={`${++index}`}>Layer Support with Editing</div>,
+      <div key={`${++index}`}>Bring Forward, Send to Back, ...</div>,
+      <div key={`${++index}`}>Context Menu</div>,
+      <div key={`${++index}`}>ToolBar in Editor</div>,
+      <div key={`${++index}`}>Align Left, Top, Center, ... </div>,
+      <div key={`${++index}`}>Linked Elements</div>,
+      <div key={`${++index}`}>Persistance Options</div>,
+      <div key={`${++index}`}>Custom Animation Behavior</div>,
+      <div key={`${++index}`}>Physics Engine Capable</div>,
+      <div key={`${++index}`}>Debug Options</div>,
+      <div key={`${++index}`}>Overlay Support</div>,
+    ]
     const jsx = []
-    for (let i = 0; i < 100; i++) {
-      const name = `test${i}`
+    let i = 0
+    let j = 0
+    while (i < features.length) {
+      const name = `${i++}`
+      let col = 25
+      if (j === 1) {col = 75}
+      if (j === 2) {col = 50}
       jsx.push(
         <div
           key={name}
+          
           data-layout={{
             name,
             position: {
-              location: { x: 10, y: 100 + i*15, unit: Unit.percent },
-              size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+              origin: {x: 50, y: 50},
+              location: { x: col, y: i * 15, unit: Unit.percent },
+              size: { width: 250, height: 100, unit: Unit.unmanagedHeight }
             }
           }}
         >
           <Description>
-            {name}
-        </Description>
+            {features[i]}
+          </Description>
         </div>
       )
+      j += 1
+      if (j > 2) {j = 0}
     }
+
     return jsx
   }
 }

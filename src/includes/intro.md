@@ -1,6 +1,6 @@
 # React Layout Generator
 
-*React-layout-generator (RLG) is a project that is exploring a layout system that uses React to compute the layouts directly when arranging elements.*
+*React-layout-generator (RLG) is a project that is exploring a layout system that uses React to compute the layouts directly.*
 
 RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
@@ -32,7 +32,6 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## TODO
 
-- Implement layers, bring forward, ...
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar
 - Add arrange group to toolBar (align, layers,
@@ -185,8 +184,6 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 </RLGLayout>
 ```
 
-
-
 ### Generator
 
 *See columnsGenerator, desktopGenerator, and dynamicGenerator for examples.*
@@ -236,7 +233,7 @@ function dynamicGenerator(name: string): IGenerator {
     if (params.changed()) {
       // update Layout for each update
       layouts.map.forEach((layout) => {
-        layout.touch();
+        layout.touch(true);
       });
     }
     return layouts;
@@ -254,6 +251,32 @@ function dynamicGenerator(name: string): IGenerator {
   return new Generator(name, init, _params, create);
 }
 ```
+
+#### Animations
+
+Generators can also be used for animations if they compute the layout blocks as a function of time. Here is an example of an [animation](globals.html#rollgenerator) that scrolls up all the children of a RLGLayout in an endless loop.
+
+```ts
+function init (...) {
+  ...
+  let rect = block.rect()
+  let velocity = ...
+  ...
+  if (animate) {
+    blocks.map.forEach((block: Block) => {
+    const rect = block.rect()
+    let location = { x: rect.x, y: rect.y - velocity * deltaTime }
+    if (location.y + rect.height < 0) {
+      // This creates the endless scroll
+      location.y += frameHeight
+    }
+    block.update(location, { width: rect.width, height: rect.height })
+  })
+}
+
+To activate animation behavior in RLGLayout just pass the optional [animate](interfaces/ianimateprops) property and use a generator that is animation aware.
+
+#### Notes
 
 Note that generators do not have to be packaged as a function. It is easy to implement a generator as part of a class.
 
