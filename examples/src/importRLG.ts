@@ -38,6 +38,7 @@ export {
   IGeneratorFunctionArgs
 } from '../../src/generators/Generator'
 export { rowsGenerator } from '../../src/generators/rowsGenerator'
+export { contentSlideGenerator } from '../../src/generators/animations/contentSlideGenerator'
 
 export { saveToLocalStorage, loadFromLocalStorage } from '../../src/generators/utils'
 

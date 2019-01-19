@@ -1,4 +1,19 @@
 /**
+ * IAnimateProps configures an animation.
+ */
+export interface IAnimateProps {
+  /**
+   * Switch to stop start animation
+   */
+  active: boolean
+  /**
+   * The number of milliseconds between frames. A value of
+   * zero will let the animation run continuously.
+   */
+  throttleTime: number
+}
+
+/**
  * This defines the overflow property that are passed to css.
  * The options have the same meaning as the css overflow options.
  * These options only apply to RLGLayout.

@@ -20,25 +20,9 @@ export function columnsGenerator(name: string, exParams?: Params) {
   });
 
   function init(g: IGenerator): Blocks {
-    // const params = g.params();
-    // const blocks = g.blocks();
-
-    // const align = params.get('align') as number;
-
-    // if (params.changed()) {
-
-    // update Layout for each update
-    // if (align === 0) {
-    //   centerColumns(blocks, params);
-
-    // blocks.map.forEach((block) => {
-    //   console.log(`centerColumns ${block.name} ${block.rect().x}`)
-    // });
     return new Blocks([]);
   }
-  // }
-
-
+ 
   /**
    * Align items in center
    */

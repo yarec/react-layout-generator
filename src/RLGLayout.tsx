@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-const now = require( 'performance-now');
+const now = require('performance-now');
 
 import {
   Block,
@@ -29,7 +29,10 @@ import {
   OverflowOptions,
   isUnmanaged,
   rectSize,
+  IAnimateProps,
 } from './types';
+
+const raf = require( 'raf');
 
 /**
  * internal use only
@@ -143,14 +146,33 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   edit?: EditOptions;
   /** 
   * The default is DebugOptions.none. You may include more than one
-  * of the options. Only the DebugOptions.all includes any other options.
+  * of the options as an array. Only the DebugOptions.all includes any other options.
   */
   debug?: DebugOptions | DebugOptionsArray;
+  /**
+   * 
+   */
   g: IGenerator;
+  /**
+   * 
+   */
   containersize?: ISize;
+  /**
+   * 
+   */
   params?: Array<[string, ParamValue]>;
+  /**
+   * 
+   */
   overflowX?: OverflowOptions;
+  /**
+   * 
+   */
   overflowY?: OverflowOptions;
+  /**
+   * 
+   */
+  animate?: IAnimateProps;
 }
 
 export interface IRLGLayoutState {
@@ -163,12 +185,13 @@ export interface IRLGLayoutState {
 }
 
 /**
- * This class is required in order to use RLG.
- * 
+ * RLGLayout manages a layout. See [IRLGLayoutProps](interfaces/irlglayoutprops.html)
+ * for detail properties.
  * Usage:
- * ```jsx
+ * ```ts
  *  <RLGLayout
- *    name={}
+ *    name={'Layout Name'}
+ *    g={ generator }
  *  >
  *    { content }
  *  </RLGLayout>
@@ -176,6 +199,7 @@ export interface IRLGLayoutState {
  * @noInheritDoc
  */
 export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
+  
 
   get select() {
     return this._select;
@@ -192,6 +216,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   private _select: RLGSelect | undefined = undefined;
   private _menuLocation: IPoint = { x: 0, y: 0 };
   private _zIndex: number = 0;
+  private _rafId: number = 0;
+  private _lastAnimationFrame: number = 0;
 
   constructor(props: IRLGLayoutProps) {
     super(props);
@@ -222,6 +248,11 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   public componentWillUnmount() {
     gLayouts.delete(this.props.name);
     window.removeEventListener('resize', this.onWindowResize);
+
+    if (this._rafId) {
+      raf.cancel(this._rafId);
+      this._rafId = 0;
+    }
   }
 
   public componentWillReceiveProps(props: IRLGLayoutProps) {
@@ -271,8 +302,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this.initLayout();
 
     const style = (this.props.overflowX || this.props.overflowY) ?
-      { width: '100%', height: '100%', overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}` } :
-      { width: '100%', height: '100%' }
+      { position: 'absolute' as 'absolute', width: '100%', height: '100%', overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}` } :
+      { position: 'absolute' as 'absolute', width: '100%', height: '100%' }
 
     if (this.props.edit) {
       this.frameStart();
@@ -317,21 +348,10 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
   private onRootRef = (elt: HTMLDivElement) => {
     if (elt) {
       this._root = elt;
-      // const r = elt.getBoundingClientRect();
-
-      // // tslint:disable-next-line:no-bitwise
-      // if (this._debug && (this._debug & DebugOptions.info)) {
-      //   // const browserZoomLevel = window.devicePixelRatio * 100;
-      //   // console.log(`window size ${window.innerWidth} ${window.innerHeight} zoom ${browserZoomLevel.toFixed(2)}% `);
-      //   // console.log(`screen size ${screen.width} ${screen.height} `);
-      //   console.log('\nonRootRef', this.props.name, r.right - r.left, r.bottom - r.top);
-      // }
-      // // this._root = elt;
     }
   }
 
   private initProps(props: IRLGLayoutProps) {
-
 
     this._edit = props.edit ? props.edit : EditOptions.none;
     this._debug = DebugOptions.none;
@@ -353,6 +373,39 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       this.props.params.forEach((value: [string, ParamValue]) => {
         params.set(value[0], value[1]);
       });
+    }
+
+    if (props.animate) {
+      if (props.animate.active && !this._rafId) {
+        this._rafId = raf(this.animationLoop)
+      }
+    }
+  }
+
+  private animationLoop = (time: number) => {
+    if (this.props.animate) {
+      const { active, throttleTime } = this.props.animate
+      const params = this._g.params();
+      if (active) {
+        
+        const { } = this.props.animate
+        const hasTimeElapsed = !throttleTime || time - this._lastAnimationFrame >= throttleTime;
+
+        if (hasTimeElapsed) {
+          params.set('deltaTime', time - this._lastAnimationFrame)
+          params.set('animate', this.props.animate.active ? 1 : 0)
+          this.setState(this.state)
+          this._lastAnimationFrame = time;
+        }
+
+        this._rafId = raf(this.animationLoop);
+      } else {
+        if (this._rafId) {
+          raf.cancel(this._rafId);
+          this._rafId = 0;
+        }
+      }
+
     }
   }
 
@@ -388,8 +441,6 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       this.setState({ width: w, height: h });
     }
   }
-
-
 
   private initLayout = () => {
     const p = this._g.params();

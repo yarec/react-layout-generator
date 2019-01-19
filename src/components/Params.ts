@@ -19,6 +19,7 @@ export type ParamValue =
   | IPositionLocation
   | IPositionSize
   | IEditableTextData
+
 export type Save = (prefix: string, key: string, value: ParamValue) => void
 export type Load = (prefix: string, key: string) => ParamValue | undefined
 

@@ -22,6 +22,7 @@ import {
 } from '../importRLG'
 
 import EditableText from '../components/EditableText';
+import { OverflowOptions } from '../../../src/types';
 
 // tslint:disable-next-line:variable-name
 export const T = styled.div`
@@ -132,6 +133,8 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         name={'RLGLayout.ETemplate.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
         debug={[DebugOptions.timing]} 
+        overflowX={OverflowOptions.hidden}
+        overflowY={OverflowOptions.hidden}
         g={this.g}
       >
         <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
@@ -157,7 +160,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            location: { x: 75, y: 40, unit: Unit.percent },
+            location: { x: 70, y: 60, unit: Unit.percent },
             size: { width: 250, height: 300, unit: Unit.unmanagedHeight },
             editor: {
               selectable: true

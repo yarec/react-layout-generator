@@ -39,6 +39,9 @@ export {
 } from './generators/Generator'
 
 export { rowsGenerator } from './generators/rowsGenerator'
+export {
+  contentSlideGenerator
+} from './generators/animations/contentSlideGenerator'
 
 export { saveToLocalStorage, loadFromLocalStorage } from './generators/utils'
 

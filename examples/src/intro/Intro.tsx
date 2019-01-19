@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { 
-  dynamicGenerator,
+import { OverflowOptions } from '../../../src/types';
+import {
+  contentSlideGenerator,
   EditOptions,
   IEditHelperProps,
-  RLGLayout, 
-  Status, 
+  RLGLayout,
+  Status,
   Unit
 } from '../importRLG'
 
@@ -25,7 +26,7 @@ interface IIntroState {
 
 export default class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
-  private _g = dynamicGenerator('rlg.intro');
+  private _g = contentSlideGenerator('rlg.intro');
   private _edit: EditOptions = EditOptions.none;
 
   constructor(props: IEditHelperProps) {
@@ -64,10 +65,16 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         name={'RLGLayout.intro.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
         // debug={[DebugOptions.data, DebugOptions.mouseEvents, DebugOptions.error]}
+        params={[
+          ['velocity', .1] // 100px per second
+        ]}
+        animate={{ active: true, throttleTime: 10 }} // 100 ms
         g={this._g}
+        overflowX={OverflowOptions.hidden}
+        overflowY={OverflowOptions.hidden}
       >
         <div data-layout={{
-          name: 'introFeature1',
+          name: 'feature1',
           position: {
             location: { x: 10, y: 10, unit: Unit.percent },
             size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
@@ -75,25 +82,25 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         }}
         >
           <Description>
-            A typescript library with a small runtime (~50K).
+            Layout in React.
           </Description>
         </div>
 
         <div data-layout={{
-          name: 'introFeature2',
+          name: 'feature2',
           position: {
-            location: { x: 25, y: 30, unit: Unit.percent},
+            location: { x: 25, y: 30, unit: Unit.percent },
             size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
           }
         }}
         >
           <Description>
-            These examples are all laid out using only react-layout-generator.
+            These examples only use react-layout-generator.
           </Description>
         </div>
 
         <div data-layout={{
-          name: 'introFeature3',
+          name: 'feature3',
           position: {
             location: { x: 50, y: 10, unit: Unit.percent },
             size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
@@ -106,7 +113,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         </div>
 
         <div data-layout={{
-          name: 'introFeature4',
+          name: 'feature4',
           position: {
             location: { x: 50, y: 50, unit: Unit.percent },
             size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
@@ -114,11 +121,63 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         }}
         >
           <Description>
-            Supports scaling css.
+            Animation support.
           </Description>
         </div>
 
+        <div data-layout={{
+          name: 'feature5',
+          position: {
+            location: { x: 10, y: 50, unit: Unit.percent },
+            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
+          }
+        }}
+        >
+          <Description>
+            Template support.
+          </Description>
+        </div>
+
+        <div data-layout={{
+          name: 'feature6',
+          position: {
+            location: { x: 10, y: 70, unit: Unit.percent },
+            size: { width: 250, height: 350, unit: Unit.unmanagedHeight }
+          }
+        }}
+        >
+          <Description>
+            Template support.
+          </Description>
+        </div>
+
+        {this.test()}
+
       </RLGLayout>
     );
+  }
+
+  public test = () => {
+    const jsx = []
+    for (let i = 0; i < 100; i++) {
+      const name = `test${i}`
+      jsx.push(
+        <div
+          key={name}
+          data-layout={{
+            name,
+            position: {
+              location: { x: 10, y: 100 + i*15, unit: Unit.percent },
+              size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+            }
+          }}
+        >
+          <Description>
+            {name}
+        </Description>
+        </div>
+      )
+    }
+    return jsx
   }
 }

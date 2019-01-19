@@ -8,6 +8,7 @@
 /lib
 /dist
 /examples/dist
+/examples/lib
 
 # for rollup
 /.rpt2_cache
