@@ -35,6 +35,7 @@ import Solitaire from './solitaire/Solitaire';
 import { FaRegEdit, FaRegSave } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { MdContentCopy, MdContentCut, MdContentPaste, MdRedo, MdUndo } from 'react-icons/md'
+import { OverflowOptions } from '../../src/types';
 
 
 // tslint:disable-next-line:variable-name
@@ -47,6 +48,9 @@ const Title = styled.h2`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  white-space: nowrap;
+  overflow: 'hidden';
+  word-break: keep-all;
 `
 
 // function RLGDivElement(n: string) {
@@ -100,6 +104,8 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
           debug={DebugOptions.none}
           edit={EditOptions.none}
           g={this.g}
+          overflowX={OverflowOptions.hidden}
+          overflowY={OverflowOptions.hidden}
         >
           <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
             {(args: IRLGMetaDataArgs) => (

@@ -23,7 +23,7 @@ interface IEditHandleProps {
 function editStyle(args: IEditHandleProps): React.CSSProperties {
   return {
     boxSizing: 'border-box' as 'border-box',
-    transformOrigin: 0,
+    // transformOrigin: 0,
     transform: `translate(${args.handle.x}px, ${args.handle.y}px)`,
     width: `${args.handle.width}px`,
     height: `${args.handle.height}px`,
@@ -326,14 +326,14 @@ export class RLGEditLayout extends React.Component<IEditorProps, IEditLayoutStat
   }
 
   public onKeyDown = (event: KeyboardEvent) => {
-    if (event && event.ctrlKey) {
-      this.setState({ activateDrag: true })
+    if (event ) {
+
     }
   }
 
   public onKeyUp = (event: KeyboardEvent) => {
-    if (event && event.ctrlKey) {
-      this.setState({ activateDrag: false })
+    if (event) {
+      
     }
   }
 

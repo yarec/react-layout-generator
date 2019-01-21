@@ -6,6 +6,34 @@ RLG is focused on layout and editing of both html and svg components. By taking 
 
 This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
+<!-- TOC -->
+
+- [React Layout Generator](#react-layout-generator)
+  - [Install](#install)
+    - [Contributing](#contributing)
+  - [TODO](#todo)
+  - [Features](#features)
+  - [Applications](#applications)
+  - [Usage](#usage)
+    - [RLGLayout](#rlglayout)
+      - [Note](#note)
+    - [RLGPanel](#rlgpanel)
+    - [Responsive Layout](#responsive-layout)
+    - [Responsive Desktop Layout](#responsive-desktop-layout)
+    - [Generator](#generator)
+      - [Animations](#animations)
+      - [Notes](#notes)
+    - [Editor](#editor)
+      - [Edit commands (in examples)](#edit-commands-in-examples)
+      - [Keyboard controls](#keyboard-controls)
+  - [FAQ](#faq)
+    - [Why not build a system based on React refs](#why-not-build-a-system-based-on-react-refs)
+    - [Why is the page flashing](#why-is-the-page-flashing)
+    - [How can I right align blocks](#how-can-i-right-align-blocks)
+    - [How can I persist the Params for distribution](#how-can-i-persist-the-params-for-distribution)
+
+<!-- /TOC -->
+
 ## Install
 
 Coming soon on npm.
@@ -42,10 +70,6 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 - Add Touch support in editor.
 - Upload component to npm
 - Host website on Github
-
-## Bugs
-
-- Fix flickering when making the browser window smaller/larger.
 
 ## Features
 
@@ -273,6 +297,7 @@ function init (...) {
     block.update(location, { width: rect.width, height: rect.height })
   })
 }
+```
 
 To activate animation behavior in RLGLayout just pass the optional [animate](interfaces/ianimateprops) property and use a generator that is animation aware.
 
@@ -280,14 +305,153 @@ To activate animation behavior in RLGLayout just pass the optional [animate](int
 
 Note that generators do not have to be packaged as a function. It is easy to implement a generator as part of a class.
 
+### Editor
+
+#### Edit commands (in examples)
+
+** This implementation is a work in progress. Not all commands are currently wired for all pages. A production editor will need many more function. This is just a proof of concept editor. **
+
+The toolbar on the left provides common commands. There is also a context menu which has commands for undo, redo, align, and layer commands.
+
+Before you can edit any of the pages you need to first make sure that the editor is on. This is the topmost command in the toolbar. Just click to toggle on and off. Note that if the data is not persisted then turning the editor off will reset the Layout to it previous state.
+
+
+
+#### Keyboard controls
+
+- Constrain dragging to horizontal or vertical. Hold down the ctrl key while dragging.
+
+- Dump params [ctrl + alt + p]. This command dumps the values of the params in a JSON format to the debug console that is suitable for persisting. It can also just be used in debugging.
+
+An example is implemented in the examples sub-folder in Intro.tsx. The persisted data is stored in the params.json file in the assets folder. It is imported in Intro.tsx using `import * as data from '../assets/data/params.json'` and then added to the `params` prop of RLGLayout.
+
+- Select blocks is done by using [shift + click].
+
 ## FAQ
 
 ### Why not build a system based on React refs
 
-That could work for specific cases but there is more to a layout system than just manipulating the underlying html elements. You need a way to serialize, edit, and present a layout with content. The hard part of a non-linear layout system is the placement of the elements. In a linear system each element just comes after another element. In a non-linear system the author has to decide on each placement. That makes a design time editor and template support quite convenient.
+That could work for specific cases but there is more to a layout system than just manipulating the underlying html elements. You need a way to serialize, edit, and present a layout with content. The hard part of a non-linear layout system is the placement of the elements. In a linear system each element just comes after another element. In a non-linear system the author has to decide on each placement. It's the same problem faced by graphic editors. Trying to design a complex React app using only linear flow programming tools involves time consuming steps including a lot of trial and error to get the layout correct.
 
 RLG does use refs internally but only to get information. Placement of elements is done using React properties in a top down flow.
 
 ### Why is the page flashing
 
 This can occur when any element extends beyond the borders. Finding those elements changing their size and or location will fix the problem. Another choice is the add overflowX and overflowY hidden property  to the appropriate RLGLayout.
+
+### How can I right align blocks
+
+One way is to set a block [origin]() of {x: 100, y: 0} with the the same x location in all the blocks you wish to have right aligned. A second way is to use the align property. A third way is to use the editor with the align right command. Then persist the Params.
+
+  First way:
+
+```ts
+data-layout={{
+  name: 'block 1',
+  position: {
+    origin: {x: 100, y: 0},
+    location: { x: 90, y: 10, unit: Unit.percent },
+    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+  }
+}}
+
+data-layout={{
+  name: 'block 2',
+  position: {
+    origin: {x: 100, y: 0},
+    location: { x: 90, y: 10, unit: Unit.percent },
+    size: { width: 200, height: 350 }
+  }
+}}
+
+```
+
+ Second way:
+
+```ts
+data-layout={{
+  name: 'block 1',
+  position: {
+    location: { x: 90, y: 10, unit: Unit.percent },
+    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+  }
+}}
+
+data-layout={{
+  name: 'block 2',
+  position: {
+    align: {
+      key: 'block 1',
+      offset: { x: 0, y: 10 },
+      source: { x: 100, y: 100 },
+      self: { x: 100, y: 0 }
+    }
+    location: { x: 90, y: 10, unit: Unit.percent },
+    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+  }
+}}
+```
+
+Block 2 will be linked to Block 1 and be 10 units below Block 1 and right aligned.
+
+```
+ ┌────────┐
+ │ 1      │
+ └────────o Offset: {X: 100, y: 100}
+          │
+    ┌─────┐ Offset: {x: 100, y: 0}
+    │ 2   │
+    └─────┘
+```
+
+### How can I persist the Params for distribution
+
+It's currently a manual process because you cannot write to local files. Here are the steps for persisting the params for the Home page in the examples.
+
+1. Go to Home page in the examples. Turn edit on (the topmost toolbar icon). Then use the keyboard and type ctrl + alt + p. This will list the params in the debug console.
+
+2. Open the params.json file in the assets folder in the examples sub-project.
+
+3. Copy the listed parameters from the debug console. Paste into the params.json file.
+
+It should look like this:
+
+```ts
+{
+  "rlg.intro": [
+     ["containersize", {"width":1434,"height":714}],
+     ["animationStart", 0],
+     ["animationTime", 0],
+     ["animationLast", 0],
+     ["velocity", 0.1],
+     ["update", 0],
+     ["frameHeight", 3917.1],
+     ["deltaTime", 16.73699999999735],
+     ["animate", 1]
+  ]
+}
+```
+
+4. Now import the params.json in the page:
+
+```ts
+import * as data from '../assets/data/params.json'
+```
+
+5. and add the imported params to the params property as follows (look for the → → →):
+
+```ts
+public render() {
+    return (
+      <RLGLayout
+        name={'RLGLayout.intro.example'}
+        edit={this._edit ? EditOptions.all : EditOptions.none}
+        debug={DebugOptions.none}
+        params={[
+→ → →     ...data['rlg.intro'] as Array<[string,ParamValue]>,
+          ['velocity', 0.05]
+        ]}
+        ...
+```
+
+Note that this example is in typescript and that the cast is necessary to tell typescript the type of data.

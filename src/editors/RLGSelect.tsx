@@ -5,6 +5,7 @@ import { IGenerator } from '../generators/Generator';
 import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
 import {EditHelper, ICommand, Status} from './EditHelper';
+import { ParamValue } from '../components/Params';
 // import RLGContextMenu from './RLGContextMenu';
 
 /**
@@ -104,6 +105,22 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.state = { contextMenu: false };
   }
 
+  public addEventListeners = () => {
+    document.addEventListener('keydown', this.onKeyDown);
+    // // document.addEventListener('keyup', this.onKeyUp);
+    // document.addEventListener('mouseup', this.onHtmlMouseUp);
+    // document.addEventListener('mousemove', this.onHtmlMouseMove);
+    // document.addEventListener('touchmove', this.onHtmlTouchMove);
+  }
+
+  public removeEventListeners = () => {
+    document.removeEventListener('keydown', this.onKeyDown);
+    // document.removeEventListener('keyup', this.onKeyUp);
+    // document.removeEventListener('mouseup', this.onHtmlMouseUp);
+    // document.removeEventListener('mousemove', this.onHtmlMouseMove);
+    // document.removeEventListener('touchmove', this.onHtmlTouchMove);
+  }
+
   public componentDidMount() {
     if (this._editHelper) {
       const commands: ICommand[] = [];
@@ -114,6 +131,36 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
       });
       this._editHelper.load(commands);
     }
+
+    this.addEventListeners();
+  }
+
+  public componentWillUnmount() {
+    this.removeEventListeners();
+  }
+
+  public onKeyDown = (event: KeyboardEvent) => {
+    if (event ) {
+      switch(event.key) {
+        case 'p': {
+          if (event.altKey && event.ctrlKey) {
+            this.dumpParams();
+          }
+        }
+      } 
+    }
+  }
+
+  public dumpParams() {
+    const params = this.props.g.params();
+
+    console.log(`Params ------------------------------------`)
+    console.log(`"${this.props.g.name()}": [`)
+    params.map.forEach((value: ParamValue, key: string) => {
+      console.log(` ["${key}", ${JSON.stringify(value)}],`)
+    })
+    console.log(`]`)
+    console.log(`End Params --------------------------------`)
   }
 
   public get commands() {

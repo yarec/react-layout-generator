@@ -21,8 +21,8 @@ import {
   Unit
 } from '../importRLG'
 
-import EditableText from '../components/EditableText';
 import { OverflowOptions } from '../../../src/types';
+import EditableText from '../components/EditableText';
 
 // tslint:disable-next-line:variable-name
 export const T = styled.div`

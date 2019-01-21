@@ -5,11 +5,14 @@ import { DebugOptions, OverflowOptions } from '../../../src/types';
 import {
   EditOptions,
   IEditHelperProps,
+  ParamValue,
   RLGLayout,
   rollGenerator,
   Status,
   Unit
 } from '../importRLG'
+
+import * as data from '../assets/data/params.json'
 
 // const Title = styled.h2`
 // `
@@ -66,9 +69,10 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
       <RLGLayout
         name={'RLGLayout.intro.example'}
         edit={this._edit ? EditOptions.all : EditOptions.none}
-        debug={DebugOptions.data}
+        debug={DebugOptions.none}
         params={[
-          ['velocity', .1] // 100px per second
+          ...data['rlg.intro'] as Array<[string, ParamValue]>,
+          ['velocity', 0.05]
         ]}
         animate={{ active: true }}
         g={this._g}
@@ -76,7 +80,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         overflowY={OverflowOptions.hidden}
       >
         {this.content()}
-      </RLGLayout>
+      </RLGLayout >
     );
   }
 
@@ -128,16 +132,16 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
     while (i < features.length) {
       const name = `${i++}`
       let col = 25
-      if (j === 1) {col = 75}
-      if (j === 2) {col = 50}
+      if (j === 1) { col = 75 }
+      if (j === 2) { col = 50 }
       jsx.push(
         <div
           key={name}
-          
+
           data-layout={{
             name,
             position: {
-              origin: {x: 50, y: 50},
+              origin: { x: 50, y: 50 },
               location: { x: col, y: i * 15, unit: Unit.percent },
               size: { width: 250, height: 100, unit: Unit.unmanagedHeight }
             }
@@ -149,7 +153,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         </div>
       )
       j += 1
-      if (j > 2) {j = 0}
+      if (j > 2) { j = 0 }
     }
 
     return jsx

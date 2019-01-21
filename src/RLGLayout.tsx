@@ -32,7 +32,7 @@ import {
   IAnimateProps,
 } from './types';
 
-const raf = require( 'raf');
+const raf = require('raf');
 
 /**
  * internal use only
@@ -49,7 +49,7 @@ export function blockSelectedStyle(rect: IRect, zIndex: number) {
     height: rect.height + offset + offset,
     position: 'absolute' as 'absolute',
     transform: `translate(${x}px, ${y}px)`,
-    transformOrigin: 0,
+    // transformOrigin: 0,
     borderStyle: 'dotted',
     borderWidth: '2px',
     borderColor: 'gray',
@@ -103,7 +103,8 @@ function blockStyle(
     ...size,
     position: 'absolute' as 'absolute',
     transform: `translate(${x}px, ${y}px)`,
-    transformOrigin: 0,
+ 
+    // transformOrigin: 0,
     // overflow: 'hidden',
     zIndex,
     // ...border,
@@ -121,7 +122,7 @@ export let gInProgress: number = 0;
  * internal use only
  * @ignore
  */
-export const gLayouts: Map<string, RLGLayout> = new Map();
+let gRoot: RLGLayout
 
 /**
  * internal use only
@@ -199,7 +200,7 @@ export interface IRLGLayoutState {
  * @noInheritDoc
  */
 export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState> {
-  
+
 
   get select() {
     return this._select;
@@ -235,18 +236,21 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     this.initProps(props);
   }
 
+  public componentWillMount() {
+    if (!gRoot) {gRoot = this}
+  }
+
   public componentDidMount() {
-    if (gLayouts.get(this.props.name) !== undefined) {
-      console.error(`
-      Did you reuse the name ${this.props.name}?. Each RLGLayout name must be unique.
-      `)
-    }
-    gLayouts.set(this.props.name, this);
+    // if (gLayouts.get(this.props.name) !== undefined) {
+    //   console.error(`
+    //   Did you reuse the name ${this.props.name}?. Each RLGLayout name must be unique.
+    //   `)
+    // }
+
     window.addEventListener('resize', this.onWindowResize);
   }
 
   public componentWillUnmount() {
-    gLayouts.delete(this.props.name);
     window.removeEventListener('resize', this.onWindowResize);
 
     if (this._rafId) {
@@ -279,6 +283,19 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     return this._root
   }
 
+  private frameStart = () => {
+    this._startRendering = now()
+    return null;
+  }
+
+  private frameEnd = () => {
+    // tslint:disable-next-line:no-bitwise
+    if (this._debug & DebugOptions.timing) {
+      const difference = now() - this._startRendering
+      console.log(`frameTime: ${difference.toFixed(2)}ms`);
+    }
+    return null;
+  }
 
   public render(): React.ReactNode {
 
@@ -301,9 +318,30 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
 
     this.initLayout();
 
-    const style = (this.props.overflowX || this.props.overflowY) ?
-      { position: 'absolute' as 'absolute', width: '100%', height: '100%', overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}` } :
-      { position: 'absolute' as 'absolute', width: '100%', height: '100%' }
+    let style: React.CSSProperties =
+    {
+      position: 'absolute' as 'absolute',
+      width: '100%',
+      height: '100%',
+      overflow: 'visible'
+    }
+
+     if (this.props.overflowX || this.props.overflowY) {
+      if (window.devicePixelRatio !== this.state.devicePixelRatio && gRoot === this) {
+        style = {
+          position: 'absolute' as 'absolute',
+          width: `${this.state.width * this.state.devicePixelRatio / window.devicePixelRatio}`,
+          height: `${this.state.height * this.state.devicePixelRatio / window.devicePixelRatio}`,
+          overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}`
+        }
+      }
+      style = {
+        position: 'absolute' as 'absolute',
+        width: '100%',
+        height: '100%',
+        overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(this.props.overflowY)}`,
+      }
+    }
 
     if (this.props.edit) {
       this.frameStart();
@@ -318,8 +356,8 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         >
           {this.content()}
 
-          {(this.state.contextMenuActive) ?
-            <RLGContextMenu
+          {(this.state.contextMenuActive)
+            ? <RLGContextMenu
               commands={this.generateContextMenu(this.state.contextMenu)}
               location={this._menuLocation}
               bounds={{ width: this.state.width, height: this.state.height }}
@@ -387,25 +425,49 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       const { active, throttleTime } = this.props.animate
       const params = this._g.params();
       if (active) {
-        
+
         const { } = this.props.animate
         const hasTimeElapsed = !throttleTime || time - this._lastAnimationFrame >= throttleTime;
 
         if (hasTimeElapsed) {
-          params.set('deltaTime', time - this._lastAnimationFrame)
-          params.set('animate', this.props.animate.active ? 1 : 0)
-          this.setState(this.state)
-          this._lastAnimationFrame = time;
+          let cont = true
+          if (this._root) {
+            const r = this._root.getBoundingClientRect();
+            const w = r.right - r.left
+            const h = r.bottom - r.top
+            if (this.state.width != w || this.state.height != h) {
+              params.set('containersize', { width: w, height: h })
+              this.setState({ width: w, height: h })
+              cont = false
+            }
+          }
+
+          if (cont) {
+            params.set('deltaTime', time - this._lastAnimationFrame)
+            params.set('animate', this.props.animate.active ? 1 : 0)
+
+            this.setState(this.state)
+            this._lastAnimationFrame = time;
+          } else {
+            const blocks = this._g.blocks();
+            if (blocks) {
+              blocks.map.forEach((block) => {
+                block.touch();
+                block.rect();
+              });
+            }
+
+          }
+
+          this._rafId = raf(this.animationLoop);
+        } else {
+          if (this._rafId) {
+            raf.cancel(this._rafId);
+            this._rafId = 0;
+          }
         }
 
-        this._rafId = raf(this.animationLoop);
-      } else {
-        if (this._rafId) {
-          raf.cancel(this._rafId);
-          this._rafId = 0;
-        }
       }
-
     }
   }
 
@@ -416,29 +478,32 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         const browserZoomLevel = window.devicePixelRatio * 100;
         console.log(`window resize zoom ${browserZoomLevel.toFixed(2)}% `);
       }
-      this.setState({ devicePixelRatio: window.devicePixelRatio });
+      // this.setState({ devicePixelRatio: window.devicePixelRatio });
     }
   }
 
   private onResize = (width: number, height: number) => {
 
-    const w = Math.floor(width * window.devicePixelRatio / this.state.devicePixelRatio);
-    const h = Math.floor(height * window.devicePixelRatio / this.state.devicePixelRatio);
+    if (this.state.devicePixelRatio === window.devicePixelRatio) {
+      // Not zooming
+      const w = Math.floor(width /* *this.state.devicePixelRatio / window.devicePixelRatio */);
+      const h = Math.floor(height /* * this.state.devicePixelRatio / window.devicePixelRatio */);
 
-    // tslint:disable-next-line:no-bitwise
-    if (this._debug && (this._debug & DebugOptions.info)) {
-      // const browserZoomLevel = window.devicePixelRatio * 100;
-      // console.log(`window size ${window.innerWidth} ${window.innerHeight} zoom ${browserZoomLevel.toFixed(2)}% `);
-      // console.log(`screen size ${screen.width} ${screen.height} `);
-      console.log('\nonResize', this.props.name, w, h);
+      // tslint:disable-next-line:no-bitwise
+      if (this._debug && (this._debug & DebugOptions.info)) {
+        // const browserZoomLevel = window.devicePixelRatio * 100;
+        // console.log(`window size ${window.innerWidth} ${window.innerHeight} zoom ${browserZoomLevel.toFixed(2)}% `);
+        // console.log(`screen size ${screen.width} ${screen.height} `);
+        console.log('\nonResize', this.props.name, w, h);
 
-      // Same size as ReactResize except ReactResize notifies of changes
-      // const r = this._root.getBoundingClientRect();
-      // console.log('\nroot', this.props.name, r.right - r.left, r.bottom - r.top);
-    }
+        // Same size as ReactResize except ReactResize notifies of changes
+        // const r = this._root.getBoundingClientRect();
+        // console.log('\nroot', this.props.name, r.right - r.left, r.bottom - r.top);
+      }
 
-    if (this.state.width !== w || this.state.height !== h) {
-      this.setState({ width: w, height: h });
+      if (this.state.width !== w || this.state.height !== h) {
+        this.setState({ width: w, height: h });
+      }
     }
   }
 
@@ -482,7 +547,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         console.log('blocks (computed position rects)');
         blocks.map.forEach((value, key) => {
           const r = value.rect();
-          console.log(`  ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`);
+          console.log(`name: ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`);
         });
 
         this._count += 1;
@@ -789,20 +854,6 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
     } else {
       this.setState({ update: this.state.update + 1 });
     }
-  }
-
-  private frameStart = () => {
-    this._startRendering = now()
-    return null;
-  }
-
-  private frameEnd = () => {
-    // tslint:disable-next-line:no-bitwise
-    if (this._debug & DebugOptions.timing) {
-      const difference = now() - this._startRendering
-      console.log(`frameTime: ${difference.toFixed(2)}ms`);
-    }
-    return null;
   }
 
   private content = () => {

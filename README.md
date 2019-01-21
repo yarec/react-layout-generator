@@ -45,11 +45,6 @@ We're really glad you're reading this, because we need volunteer developers to h
 * Finish Chart example.
 * Wire up Editor to new commands.
 
-## Bugs
-
-* Does not work smoothly with browser magnification +/*.
-* Fix flickering when making the browser window smaller/larger.
-
 ## Features
 
 * Top down design of websites

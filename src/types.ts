@@ -45,10 +45,85 @@ export enum OverflowOptions {
 
 /**
  * IOrigin specifies the position within an element that location
- * uses to position the element. IOrigin is expressed in percent
- * of the width and height of an element. An origin of (0, 0)
- * specifies the left top position of the element. An origin of
- * (50,50) specifies the center of the element.
+ * uses to position the element. What this says is that if you place
+ * a block at (10,10) then it is the origin that is placed at (10,10).
+ * For example all the blocks below are placed at (100,100):
+ *
+ *  ┌───────────────────────────────┐
+ *  │  A: origin: (x: 0, y: 0)      │
+ *  │                               │
+ *  │                               │
+ *  │              o───────┐        │
+ *  │              │       │        │
+ *  │              │       │        │
+ *  │              │       │        │
+ *  │              └───────┘        │
+ *  │                               │
+ *  │                               │
+ *  └───────────────────────────────┘
+ *
+ *  ┌───────────────────────────────┐
+ *  │  B: origin: (x: 100, y: 0)    │
+ *  │                               │
+ *  │                               │
+ *  │      ┌───────o                │
+ *  │      │       │                │
+ *  │      │       │                │
+ *  │      │       │                │
+ *  │      └───────┘                │
+ *  │                               │
+ *  │                               │
+ *  └───────────────────────────────┘
+ *
+ *  ┌───────────────────────────────┐
+ *  │   C: origin: (x: 50, y: 50)   │
+ *  │          ┌───────┐            │
+ *  │          │       │            │
+ *  │          │   o   │            │
+ *  │          │       │            │
+ *  │          └───────┘            │
+ *  │                               │
+ *  │                               │
+ *  │                               │
+ *  │                               │
+ *  └───────────────────────────────┘
+ *
+ * IOrigin is expressed in percent of the width and height of
+ * an element. An origin of (0, 0) specifies the left top
+ * position of the element. An origin of (50,50) specifies
+ * the center of the element.
+ *
+ * Generally origins are between 0 and 100 for each axis, but values
+ * outside of the 0 to 100 range are allowed. (This will also be useful
+ * when other tranformations are used other than just x and y.
+ *
+ *  ```
+ * origin: (x: 0, y: 0) - left top, the default
+ *     o───────┐
+ *     │       │
+ *     └───────┘
+ *
+ * origin: {X: 100, y: 100} - right bottom
+ *     ┌───────┐
+ *     │       │
+ *     └───────o
+ *
+ * origin: (x: 100, y: 0) - right top
+ *     ┌───────o
+ *     │       │
+ *     └───────┘
+ *
+ *  origin: (x: 50, y: 50) - center center
+ *     ┌───────┐
+ *     │   o   │
+ *     └───────┘
+ *
+ *  origin: (x: -20, y: 50) - (-20) center, outside of block
+ *     ┌───────┐
+ *  o  │       │
+ *     └───────┘
+ *
+ *```
  */
 export interface IOrigin {
   x: number

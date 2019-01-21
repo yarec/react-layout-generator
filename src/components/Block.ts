@@ -238,16 +238,22 @@ export type PositionChildren = (
   index: number
 ) => Block | undefined
 
-export interface IHandlers {
-  onMouseDown?: () => void
-}
+// export interface IHandlers {
+//   onMouseDown?: () => void
+// }
 
+/**
+ * Extends IPoint to add optional unit
+ */
 export interface IPositionLocation extends IPoint {
   x: number
   y: number
   unit?: Unit
 }
 
+/**
+ * Extends ISize to add optional unit
+ */
 export interface IPositionSize {
   width: number
   height: number
@@ -383,6 +389,9 @@ export class Block {
     this._onClick = this.noop
   }
 
+  /**
+   * Noop handler used for initialization.
+   */
   public noop = () => {
     console.error('Event handler not defined')
   }
@@ -497,7 +506,15 @@ export class Block {
     // Takes in world coordinates
     // console.log(`Position update x: ${location.x} y: ${location.y}`)
 
-    const itemSize = size ? size : this.fromSize()
+    const _location: IPositionLocation = {
+      ...location,
+      unit: this._position.location.unit
+    }
+
+    const _itemSize: IPositionSize = {
+      ...(size ? size : this.fromSize()),
+      unit: this._position.size.unit
+    }
 
     if (this._position.align && this.getRef()) {
       const align = this._position.align
@@ -508,9 +525,9 @@ export class Block {
 
       const r1 = this.getConnectPoint(p1, s1, align.source)
 
-      const p = this.toOrigin(location, this._position.origin, itemSize)
+      const p = this.toOrigin(_location, this._position.origin, _itemSize)
       // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
-      const s2 = this.inverseScale(itemSize) as ISize
+      const s2 = this.inverseScale(_itemSize) as ISize
 
       const r2 = this.getConnectPoint(p, s2, align.self)
 
@@ -523,10 +540,11 @@ export class Block {
       // Update align offset
       align.offset = offset
     } else {
-      const p = this.toOrigin(location, this._position.origin, itemSize)
-      this._position.location = this.inverseScale(p) as IPoint
-      this._position.size = this.inverseScale(itemSize) as ISize
+      const p = this.toOrigin(_location, this._position.origin, _itemSize)
+      this._position.location = this.inverseScale(p) as IPositionLocation
+      this._position.size = this.inverseScale(_itemSize) as IPositionSize
     }
+
     this.changed()
   }
 
@@ -670,7 +688,8 @@ export class Block {
     }
 
     // Convert percents to decimal
-    const locUnit = this._position.location.unit
+
+    const locUnit = (this._position.location.unit = p.location.unit)
     if (
       locUnit === Unit.percent ||
       locUnit === Unit.preserve ||
@@ -698,7 +717,7 @@ export class Block {
     }
 
     // Convert percents to decimal
-    const sizeUnit = this._position.size.unit
+    const sizeUnit = (this._position.size.unit = p.size.unit)
 
     if (
       sizeUnit === Unit.percent ||
@@ -804,16 +823,18 @@ export class Block {
         const size = this._g.params().get('containersize') as ISize
         if (size.width && size.height) {
           if ('x' in input) {
-            const p = input as IPoint
+            const p = input as IPositionLocation
             return {
               x: p.x / size.width,
-              y: p.y / size.height
+              y: p.y / size.height,
+              unit: p.unit
             }
           } else {
-            const s = input as ISize
+            const s = input as IPositionSize
             return {
               width: s.width / size.width,
-              height: s.height / size.height
+              height: s.height / size.height,
+              unit: s.unit
             }
           }
         }
@@ -825,16 +846,18 @@ export class Block {
         const minWidth = size.width < size.height ? size.width : size.height
         if (minWidth) {
           if ('x' in input) {
-            const p = input as IPoint
+            const p = input as IPositionLocation
             return {
               x: p.x / minWidth,
-              y: p.y / minWidth
+              y: p.y / minWidth,
+              unit: p.unit
             }
           } else {
-            const s = input as ISize
+            const s = input as IPositionSize
             return {
               width: s.width / minWidth,
-              height: s.height / minWidth
+              height: s.height / minWidth,
+              unit: s.unit
             }
           }
         }
@@ -845,16 +868,18 @@ export class Block {
         const factor = size.width
         if (factor) {
           if ('x' in input) {
-            const p = input as IPoint
+            const p = input as IPositionLocation
             return {
               x: p.x / factor,
-              y: p.y / factor
+              y: p.y / factor,
+              unit: p.unit
             }
           } else {
-            const s = input as ISize
+            const s = input as IPositionSize
             return {
               width: s.width / factor,
-              height: s.height / factor
+              height: s.height / factor,
+              unit: s.unit
             }
           }
         }
@@ -865,16 +890,18 @@ export class Block {
         const factor = size.height
         if (factor) {
           if ('x' in input) {
-            const p = input as IPoint
+            const p = input as IPositionLocation
             return {
               x: p.x / factor,
-              y: p.y / factor
+              y: p.y / factor,
+              unit: p.unit
             }
           } else {
-            const s = input as ISize
+            const s = input as IPositionSize
             return {
               width: s.width / factor,
-              height: s.height / factor
+              height: s.height / factor,
+              unit: s.unit
             }
           }
         }
@@ -903,10 +930,11 @@ export class Block {
     p: IPositionLocation,
     origin: IPoint,
     s: ISize
-  ): IPoint => {
+  ): IPositionLocation => {
     return {
       x: p.x - origin.x * s.width,
-      y: p.y - origin.y * s.height
+      y: p.y - origin.y * s.height,
+      unit: p.unit
     }
   }
 
@@ -914,14 +942,15 @@ export class Block {
    * reverses fromOrigin
    */
   private toOrigin = (
-    p: IPoint,
+    p: IPositionLocation,
     origin: IPoint | undefined,
     s: ISize
-  ): IPoint => {
+  ): IPositionLocation => {
     if (origin) {
       return {
         x: p.x + origin.x * s.width,
-        y: p.y + origin.y * s.height
+        y: p.y + origin.y * s.height,
+        unit: p.unit
       }
     }
     return p

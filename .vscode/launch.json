@@ -10,7 +10,7 @@
       "request": "launch",
       "name": "Launch Chrome",
       "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}/examples"
     },
     {
       "type": "chrome",
