@@ -34,11 +34,17 @@ function create(args: ICreate) {
 const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
-  
+
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     const wrapper = mount(
-      <RLGLayout name='instance#3' edit={EditOptions.all} debug={DebugOptions.all} g={g} containersize={{ width: 1000, height: 500 }}>
+      <RLGLayout
+        name='instance#3'
+        edit={EditOptions.all}
+        debug={DebugOptions.all}
+        g={g}
+        containersize={{ width: 1000, height: 500 }}
+      >
         <div data-layout={{
           name: 'hello',
           position: {

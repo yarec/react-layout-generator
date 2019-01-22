@@ -193,6 +193,15 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     return this._selected.get(name) !== undefined;
   }
 
+  public select = (name: string) => {
+    const block = this.props.g.blocks().get(name);
+    if (block) {
+      this._selected.set(name, block)
+      return block
+    }
+    return undefined
+  }
+
   public undo = () => {
     if (this._undo.length) {
       const data = this._undo.pop() as IUndoRedo;
@@ -393,9 +402,10 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   public bringFront = () => {
     const layers = this.props.g.layers();
 
-    this._selected.forEach((block: Block) => {
-      layers.bringFront(block)
-    });
+    layers.bringFront(this.selectedBlocks())
+    if (this._selected.size) {
+      this.props.onUpdate();
+    }
     if (this._selected.size) {
       this.props.onUpdate();
     }
@@ -403,10 +413,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
 
   public sendBack = () => {
     const layers = this.props.g.layers();
-
-    this._selected.forEach((block: Block) => {
-      layers.sendBack(block)
-    });
+    layers.sendBack(this.selectedBlocks())
     if (this._selected.size) {
       this.props.onUpdate();
     }
@@ -426,4 +433,28 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     );
 
   }
+
+  private selectedBlocks() {
+    const b: Block[] = []
+    this._selected.forEach((value) => {
+      b.push(value)
+    })
+    return b;
+  }
+
+  // public minMax() {
+  //   let min = Number.MAX_SAFE_INTEGER
+  //   let max = Number.MIN_SAFE_INTEGER
+
+  //   this.props.g.blocks().map.forEach((block: Block) => {
+  //     if (block.layer < min) {
+  //       min = block.layer
+  //     }
+  //     if (block.layer > max) {
+  //       max = block.layer
+  //     }
+  //   })
+
+  //   return {min, max}
+  // }
 }

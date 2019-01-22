@@ -69,7 +69,7 @@ export class Generator implements IGenerator {
     // this.state = this.start
     this._params = params
 
-    this._layers = new Layers({ name, params })
+    this._layers = new Layers({ name, params, blocks: this._blocks })
   }
 
   public name = () => {
@@ -123,6 +123,6 @@ export class Generator implements IGenerator {
   }
 
   public clear = () => {
-    this._blocks = new Blocks([])
+    this._blocks.map.clear()
   }
 }

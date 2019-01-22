@@ -39,10 +39,17 @@ describe('RLGLayout', () => {
 
   test('RLGPanel test #1', () => {
     const wrapper = mount(
-      <RLGLayout name='panelTest#2' edit={EditOptions.all} g={g} >
+      <RLGLayout
+        name='panelTest#2'
+        edit={EditOptions.all}
+        g={g}
+        containersize={{ width: 1000, height: 1000 }}
+      >
         <RLGPanel
           key={'a'}
-          data-layout={{ name: 'a' }}
+          data-layout={{
+            name: 'a',
+          }}
         >
           {(args: IRLGMetaDataArgs) => (
             <div>
@@ -52,6 +59,10 @@ describe('RLGLayout', () => {
         </RLGPanel>
       </RLGLayout>
     )
+
+    const panel = wrapper.find(RLGPanel).at(0).instance() as RLGPanel
+
+    expect(panel.props['data-layout'].name).toEqual('a');
     expect(wrapper.props().edit).toEqual(EditOptions.all);
   });
 })

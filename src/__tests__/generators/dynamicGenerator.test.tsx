@@ -38,7 +38,12 @@ describe('RLGLayout', () => {
       size: { width: 200, height: 200 }
     }, g)
     const wrapper = mount(
-      <RLGLayout name='instance#2' debug={DebugOptions.none} g={g} containersize={{ width: 1000, height: 1000 }}>
+      <RLGLayout
+        name='instance#2'
+        debug={DebugOptions.none}
+        g={g}
+        containersize={{ width: 1000, height: 1000 }}
+      >
         <div data-layout={{
           name: 'block',
           position: {

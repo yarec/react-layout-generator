@@ -230,4 +230,16 @@ it('misc #2', () => {
   expect(b.touch()).toEqual(undefined)
 })
 
+it('transform #1', () => {
+  const p = {
+    location: { x: 250, y: 250, unit: Unit.percent },
+    size: { width: 100, height: 50 },
+    transform: [{ rotate: 10, origin: { x: 50, y: 50 } }]
+  }
+  const b = new Block('test', p, g)
+
+  expect(b.reactTransform).toEqual(` rotate(${10}deg)`)
+  expect(b.reactTransformOrigin).toEqual(`transformOrigin: ${50} ${50}`)
+})
+
 // Test align, connection points

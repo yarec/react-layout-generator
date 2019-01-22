@@ -96,11 +96,12 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
         edit={this._edit ? EditOptions.all : EditOptions.none}
         // debug={[DebugOptions.data, DebugOptions.mouseEvents, DebugOptions.error]}
         g={this._g}
+        containersize={{ width: 1000, height: 1000 }}
       >
         <div data-layout={{
           name: 'hello',
           position: {
-            location: { x: 10, y: 10, unit: Unit.percent},
+            location: { x: 10, y: 10, unit: Unit.percent },
             size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
           }
         }}

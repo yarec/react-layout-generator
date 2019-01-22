@@ -143,7 +143,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
             position: {
               origin: { x: 50, y: 50 },
               location: { x: col, y: i * 15, unit: Unit.percent },
-              size: { width: 250, height: 100, unit: Unit.unmanagedHeight }
+              size: { width: 250, height: 100, unit: Unit.unmanagedHeight },
             }
           }}
         >

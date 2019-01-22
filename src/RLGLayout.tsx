@@ -69,7 +69,9 @@ function blockStyle(
   height: number,
   unit: Unit | undefined,
   selected: boolean,
-  zIndex: number
+  zIndex: number,
+  transform: string,
+  transformOrigin: string
 ): React.CSSProperties {
 
   // For unmanaged elements
@@ -98,13 +100,15 @@ function blockStyle(
     }
   }
 
+  const v = `translate(${x}px, ${y}px) ${transform}` 
+
   return {
     boxSizing: 'border-box' as 'border-box',
     ...size,
     position: 'absolute' as 'absolute',
-    transform: `translate(${x}px, ${y}px)`,
+    transform: v,
  
-    // transformOrigin: 0,
+    transformOrigin,
     // overflow: 'hidden',
     zIndex,
     // ...border,
@@ -231,7 +235,10 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       devicePixelRatio: window.devicePixelRatio
     }
 
-    this._g = props.g;
+    if (props.g && props.g.blocks().size !== 0) {
+      console.error(`RLGLayout: Did you intend on reusing this generator in ${props.name}? 
+      If so you should clear it first by calling g.clear()`)
+    }
 
     this.initProps(props);
   }
@@ -406,6 +413,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
       }
     }
     this._g = this.props.g;
+
     if (this.props.params) {
       const params = this._g.params();
       this.props.params.forEach((value: [string, ParamValue]) => {
@@ -573,6 +581,10 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
         g: this._g,
         position
       });
+
+      if (!b) {
+        throw(new Error(`The component ${name} in layout ${this.props.name} could not be created`))
+      }
     }
 
     this._zIndex += 1;
@@ -614,7 +626,9 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           rect.height,
           b.size.unit,
           this._select ? this._select.selected(name) : false,
-          b.layer()
+          b.layer,
+          b.reactTransform,
+          b.reactTransformOrigin
         );
 
         const editors = this.createEditors(child, b, rect);
@@ -668,7 +682,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             }
 
             selectedStyle() {
-              return blockSelectedStyle(this._b.rect(), this._b.layer());
+              return blockSelectedStyle(this._b.rect(), this._b.layer);
             }
           }
 
@@ -963,7 +977,9 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
           nestedRect.height,
           b.size.unit,
           this._select ? this._select.selected(name) : false,
-          b.layer()
+          b.layer,
+          b.reactTransform,
+          b.reactTransformOrigin
         );
         const nArgs: IRLGMetaDataArgs = {
           container: nestedRect,
@@ -1051,7 +1067,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
                 handle={rect}
                 boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
                 onUpdate={this.onUpdate}
-                zIndex={b.layer()}
+                zIndex={b.layer}
               />);
           } else {
             console.error(`Cannot edit ${namedPositionRef(item.ref)} for block 
@@ -1074,7 +1090,7 @@ export class RLGLayout extends React.Component<IRLGLayoutProps, IRLGLayoutState>
             handle={rect}
             boundary={{ x: 0, y: 0, width: this.state.width, height: this.state.height }}
             onUpdate={this.onUpdate}
-            zIndex={b.layer()}
+            zIndex={b.layer}
           />);
       }
     }

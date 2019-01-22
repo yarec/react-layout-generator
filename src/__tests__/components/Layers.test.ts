@@ -184,7 +184,8 @@ it('Layers #6', () => {
   }
 
   const block = blocks.set('c', p, g)
-  expect(layers.bringFront(block)).toBe(11)
+  layers.bringFront(block)
+  expect(block.layer).toBe(11)
 })
 
 it('Layers #7', () => {
@@ -219,5 +220,6 @@ it('Layers #7', () => {
   }
 
   const block = blocks.set('c', p, g)
-  expect(layers.sendBack(block)).toBe(4)
+  layers.sendBack(block)
+  expect(block.layer).toBe(4)
 })

@@ -260,6 +260,21 @@ export interface IPositionSize {
   unit?: Unit
 }
 
+export interface IRotate {
+  origin: IOrigin
+  rotate: number | IPoint
+}
+
+export interface IScale {
+  scale: number | IPoint
+}
+
+export interface ISkew {
+  skew: number | IPoint
+}
+
+export type Transform = IRotate | IScale | ISkew
+
 /**
  * IPosition defines the positioning, layer, and editor rules for elements in RLG.
  *
@@ -309,6 +324,13 @@ export interface IPosition {
    * Size specifies the width and height of a blocks rect.
    */
   size: IPositionSize
+  /**
+   * Additional transforms to add to this block. Note that you can also transform
+   * the contents of a block separately. Warning do not include any transforms in
+   * the style property for this block. This feature is experimental and subject
+   * to change.
+   */
+  transform?: Transform[]
 }
 
 /**
@@ -357,6 +379,23 @@ export class Block {
     this._siblings.set(key, true)
   }
 
+  get transform(): Transform[] | undefined {
+    return this._position.transform
+  }
+
+  set transform(transform: Transform[] | undefined) {
+    this._position.transform = transform
+    this.transformToReactCss()
+  }
+
+  get reactTransform() {
+    return this._transform
+  }
+
+  get reactTransformOrigin() {
+    return this._transformOrigin
+  }
+
   private _siblings: Map<string, boolean> = new Map()
   private _name: string
   private _position: IPosition
@@ -365,6 +404,8 @@ export class Block {
   private _g: IGenerator
   private _positionChildren: PositionChildren | undefined
   private _layer: number
+  private _transform: string = ''
+  private _transformOrigin: string = ''
   private _onMouseDown: (e: React.MouseEvent) => void
   private _onClick: (e: React.MouseEvent) => void
 
@@ -381,7 +422,9 @@ export class Block {
     }
     this._g = g
     this.updatePosition(this._position)
-    this.updateLayer(this._position.layer)
+    if (this._position.layer) {
+      this.layer = this._position.layer
+    }
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._changed = true
     this._positionChildren = this._position.positionChildren
@@ -417,8 +460,18 @@ export class Block {
     this._onClick = fn
   }
 
-  public layer() {
+  public get layer() {
     return this._layer ? this._layer : 0
+  }
+
+  public set layer(layer: number) {
+    const params = this._g.params()
+    const zIndex = params.get(`${this._name}ZIndex`) as number
+    if (zIndex) {
+      this._layer = zIndex
+    } else {
+      this._layer = layer ? layer : 0
+    }
   }
 
   public connectionHandles = () => {
@@ -654,16 +707,6 @@ export class Block {
     }
   }
 
-  public updateLayer(layer?: number) {
-    const params = this._g.params()
-    const zIndex = params.get(`${this._name}ZIndex`) as number
-    if (zIndex) {
-      this._layer = zIndex
-    } else {
-      this._layer = layer ? layer : 0
-    }
-  }
-
   public validate(p: IPosition) {
     if (p.editor && p.editor.edits) {
       // p.editor.edits.forEach((edit) => {
@@ -761,6 +804,8 @@ export class Block {
       }
     }
 
+    this.transformToReactCss()
+
     // console.log('Layout updatePosition', this._name, this._position);
     this.changed()
   }
@@ -774,6 +819,38 @@ export class Block {
     }
     if (!edit.extendElement) {
       edit.extendElement = getExtendElement(edit.ref)
+    }
+  }
+
+  private transformToReactCss() {
+    this._transform = ''
+    this._transformOrigin = ''
+    if (this._position.transform) {
+      this._position.transform.forEach((t: IRotate | IScale | ISkew) => {
+        if ('rotate' in t) {
+          const i = t as IRotate
+          this._transform += ` rotate(${i.rotate}deg)`
+          this._transformOrigin = `transformOrigin: ${t.origin.x} ${t.origin.y}`
+        }
+        if ('scale' in t) {
+          const i = t as IScale
+          if (i.scale['x']) {
+            this._transform += ` scaleX(${i.scale['x']}) scaleY(${
+              i.scale['y']
+            })`
+          } else {
+            this._transform += ` scale(${i.scale as number})`
+          }
+        }
+        if ('skew' in t) {
+          const i = t as ISkew
+          if (i.skew['x']) {
+            this._transform += ` scaleX(${i.skew['x']}) scaleY(${i.skew['y']})`
+          } else {
+            this._transform += ` scale(${i.skew as number})`
+          }
+        }
+      })
     }
   }
 

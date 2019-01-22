@@ -91,6 +91,8 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
         origin: { x: 50, y: 0 }, 
         location: aLocation ? aLocation : { x: 10, y: 10, unit: Unit.percent },
         size: { width: 150, height: 100 },
+        
+        transform: [{rotate: 10, origin: {x: 50, y: 50}}],
         editor: {
           edits: [
             { ref: PositionRef.position, variable: `${node.name}Location`, updateParam: updateParamLocation }

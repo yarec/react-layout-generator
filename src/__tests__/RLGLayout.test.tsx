@@ -34,7 +34,13 @@ const g: IGenerator = new Generator('test', init, params, create)
 describe('RLGLayout', () => {
   test('it should allow props to be set #1', () => {
     const wrapper = mount(
-      <RLGLayout name='test#1' debug={DebugOptions.info} g={g} overflowX={OverflowOptions.hidden}>
+      <RLGLayout
+        name='test#1'
+        debug={DebugOptions.info}
+        g={g}
+        overflowX={OverflowOptions.hidden}
+        containersize={{ width: 1000, height: 1000 }}
+      >
         <div data-layout={{
           name: 'a', position: {
             location: { x: 0, y: 0 },
@@ -68,7 +74,13 @@ describe('RLGLayout', () => {
 
   test('it should allow props to be set #2', () => {
     const wrapper = mount(
-      <RLGLayout name='test#2' debug={DebugOptions.mouseEvents} g={g} overflowY={OverflowOptions.hidden}>
+      <RLGLayout
+        name='test#2'
+        debug={DebugOptions.mouseEvents}
+        g={g}
+        overflowY={OverflowOptions.hidden}
+        containersize={{ width: 1000, height: 1000 }}
+      >
         <div data-layout={{
           name: 'a', position: {
             location: { x: 0, y: 0 },
@@ -102,7 +114,13 @@ describe('RLGLayout', () => {
 
   test('it should allow props to be set #3', () => {
     const wrapper = mount(
-      <RLGLayout name='test#3' debug={DebugOptions.all} g={g} overflowY={OverflowOptions.scroll}>
+      <RLGLayout
+        name='test#3'
+        debug={DebugOptions.all}
+        g={g}
+        overflowY={OverflowOptions.scroll}
+        containersize={{ width: 1000, height: 1000 }}
+      >
         <div data-layout={{
           name: 'a', position: {
             location: { x: 0, y: 0 },
@@ -181,7 +199,12 @@ describe('RLGLayout', () => {
 
 
   test('it should allow props to be set #2', () => {
-    const wrapper = mount(<RLGLayout name='test#3' edit={EditOptions.all} g={g} />)
+    const wrapper = mount(<RLGLayout
+      name='test#3'
+      edit={EditOptions.all}
+      g={g}
+      containersize={{ width: 1000, height: 1000 }}
+    />)
     expect(wrapper.props().edit).toEqual(EditOptions.all);
   });
 
@@ -209,11 +232,11 @@ describe('RLGLayout', () => {
       }}>
         <span>Hello</span>
       </div>
-    </RLGLayout> )
+    </RLGLayout>)
     const element: RLGLayout = wrapper.instance() as RLGLayout
     if (element.root) {
       expect(element.getBoundingLeftTop()).toEqual({ x: 0, y: 0 })
-      ReactTestUtils.Simulate.mouseDown(element.root, {button: 2});
+      ReactTestUtils.Simulate.mouseDown(element.root, { button: 2 });
       ReactTestUtils.Simulate.mouseDown(element.root);
       ReactTestUtils.Simulate.mouseUp(element.root);
       ReactTestUtils.Simulate.contextMenu(element.root);
@@ -238,11 +261,11 @@ describe('RLGLayout', () => {
       }}>
         <span>Hello</span>
       </div>
-    </RLGLayout> )
+    </RLGLayout>)
     const element: RLGLayout = wrapper.instance() as RLGLayout
-    if (element.select ) {
+    if (element.select) {
       // element.select.
-      
+
     }
     expect(wrapper.props().edit).toEqual(EditOptions.all);
   })

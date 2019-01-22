@@ -1,10 +1,10 @@
 # React Layout Generator
 
-*React-layout-generator (RLG) is a project that is exploring a layout system that uses React to compute the layouts directly.*
+*React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.*
 
 RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
-This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
+This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
 <!-- TOC -->
 
