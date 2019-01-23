@@ -4,7 +4,6 @@ import * as React from 'react';
 import { DebugOptions, IPoint, IRect } from '../types';
 import { clone } from '../utils';
 import { IEditor, IEditorProps, IUndo } from './Editor';
-// import RLGContextMenu from './RLGContextMenu';
 
 /**
  * internal use only

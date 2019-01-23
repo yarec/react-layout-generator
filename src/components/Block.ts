@@ -830,7 +830,7 @@ export class Block {
         if ('rotate' in t) {
           const i = t as IRotate
           this._transform += ` rotate(${i.rotate}deg)`
-          this._transformOrigin = `transformOrigin: ${t.origin.x} ${t.origin.y}`
+          this._transformOrigin = `${t.origin.x} ${t.origin.y}`
         }
         if ('scale' in t) {
           const i = t as IScale

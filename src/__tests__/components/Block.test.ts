@@ -239,7 +239,7 @@ it('transform #1', () => {
   const b = new Block('test', p, g)
 
   expect(b.reactTransform).toEqual(` rotate(${10}deg)`)
-  expect(b.reactTransformOrigin).toEqual(`transformOrigin: ${50} ${50}`)
+  expect(b.reactTransformOrigin).toEqual(`${50} ${50}`)
 })
 
 // Test align, connection points

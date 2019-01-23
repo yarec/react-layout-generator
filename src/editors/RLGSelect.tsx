@@ -6,7 +6,6 @@ import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
 import {EditHelper, ICommand, Status} from './EditHelper';
 import { ParamValue } from '../components/Params';
-// import RLGContextMenu from './RLGContextMenu';
 
 /**
  * internal use only
