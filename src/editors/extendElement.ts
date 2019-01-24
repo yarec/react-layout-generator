@@ -75,10 +75,10 @@ export function getExtendElement(ref: PositionRef): ExtendElement {
     case PositionRef.leftTop: {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
         return {
-          x: r.x - deltaX,
-          y: r.y - deltaY,
-          width: r.width + deltaX,
-          height: r.height + deltaY
+          x: r.x + deltaX,
+          y: r.y + deltaY,
+          width: r.width - deltaX,
+          height: r.height - deltaY
         }
       }
       break
@@ -87,9 +87,9 @@ export function getExtendElement(ref: PositionRef): ExtendElement {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
         return {
           x: r.x,
-          y: r.y - deltaY,
+          y: r.y + deltaY,
           width: r.width + deltaX,
-          height: r.height + deltaY
+          height: r.height - deltaY
         }
       }
       break
@@ -97,9 +97,9 @@ export function getExtendElement(ref: PositionRef): ExtendElement {
     case PositionRef.leftBottom: {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
         return {
-          x: r.x - deltaX,
+          x: r.x + deltaX,
           y: r.y,
-          width: r.width + deltaX,
+          width: r.width - deltaX,
           height: r.height + deltaY
         }
       }
@@ -109,7 +109,7 @@ export function getExtendElement(ref: PositionRef): ExtendElement {
       extendElement = (r: Rect, deltaX: number, deltaY: number) => {
         return {
           x: r.x,
-          y: r.y - deltaY,
+          y: r.y,
           width: r.width + deltaX,
           height: r.height + deltaY
         }

@@ -75,7 +75,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
   function create(args: ICreate): Block {
     if (!args.position) {
       console.error(`You need to pass a position (IPosition) object 
-      for ${args.name} in generator ${args.g.name()}`)
+      for ${args.name} in generator rollGenerator ${args.g.name()}`)
     }
 
     args.g.params().set('update', 1)

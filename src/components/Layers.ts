@@ -74,7 +74,7 @@ export class Layers {
         ? currentBack - 1
         : min === Number.MAX_SAFE_INTEGER
         ? block.layer
-        : min - 1
+        : Math.max(0, min - 1)
 
     this._params.set(`${block.name}ZIndex`, value)
     block.layer = value
@@ -86,10 +86,10 @@ export class Layers {
     const { min } = this.minMax()
     if (Array.isArray(blocks)) {
       blocks.forEach((block: Block) => {
-        block.layer = min - 1
+        block.layer = Math.max(0, min - 1)
       })
     } else {
-      blocks.layer = min - 1
+      blocks.layer = Math.max(0, min - 1)
     }
   }
 

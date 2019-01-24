@@ -53,8 +53,8 @@ describe('RLGSelect', () => {
 
     select!.sendBack()
 
-    expect(one.layer).toEqual(Math.min(z1, z2) - 1)
-    expect(two.layer).toEqual(Math.min(z1, z2) - 1)
+    expect(one.layer).toEqual(Math.max(0, Math.min(z1, z2) - 1))
+    expect(two.layer).toEqual(Math.max(0, Math.min(z1, z2) - 1))
   })
   test('RLGSelect #2', () => {
     g.clear()

@@ -4,6 +4,7 @@
   "description": "A layout/editor in React",
   "keywords": [
     "react",
+    "reactjs",
     "layout",
     "editor",
     "dashboard",
@@ -11,6 +12,9 @@
     "games",
     "topdown",
     "design",
+    "typescript",
+    "javascript",
+		"react-component",
     ""
   ],
   "main": "dist/react-layout-generator.umd.js",
@@ -24,6 +28,9 @@
     "type": "git",
     "url": "git+https://github.com/chetmurphy/react-layout-generator.git"
   },
+  "bugs": {
+		"url": "https://github.com/chetmurphy/react-layout-generator/issues"
+	},
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0"

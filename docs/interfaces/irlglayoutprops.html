@@ -950,6 +950,8 @@ img { max-width: 100%; }
 				<div class="lead">
 					<p>Props for RLGLayout.</p>
 				</div>
+				<p>Note that you can add a separate style property that will be merged
+				internally for the root element.</p>
 			</div>
 		</section>
 		<section class="tsd-panel tsd-hierarchy">
@@ -994,9 +996,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">animate<span class="tsd-signature-symbol">:</span> <a href="ianimateprops.html" class="tsd-signature-type">IAnimateProps</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L180">RLGLayout.tsx:180</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L265">RLGLayout.tsx:265</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Controls the animation behavior of the Layout.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="containersize" class="tsd-anchor"></a>
@@ -1004,9 +1011,30 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">containersize<span class="tsd-signature-symbol">:</span> <a href="isize.html" class="tsd-signature-type">ISize</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L164">RLGLayout.tsx:164</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L226">RLGLayout.tsx:226</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines the size of the container for this Layout. The default size of the
+							Layout is computed internally, but if this property is set then it will be
+						used for the size of the Layout.</p>
+					</div>
+					<p>One use of this property is to specify the container size for nested Layouts.
+					It is also useful for tests.</p>
+					<pre><code class="language-ts"> &lt;RLGLayout
+   ... &gt;
+   &lt;RLGPanel
+     ... &gt;
+     {<span class="hljs-function">(<span class="hljs-params">args: IRLGMetaDataArgs</span>) =&gt;</span> (
+       &lt;RLGLayout
+         ...
+         containersize={{width: args.container.width, height: args.container.height}}
+       &gt;</code></pre>
+					<p>Note: The computation of the container size internally requires one render
+						of the Layout where the containersize will be {width: 0, height: 0} so setting
+					this property results in a slight performance gain.</p>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="debug" class="tsd-anchor"></a>
@@ -1014,7 +1042,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="../enums/debugoptions.html" class="tsd-signature-type">DebugOptions</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#debugoptionsarray" class="tsd-signature-type">DebugOptionsArray</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L156">RLGLayout.tsx:156</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L169">RLGLayout.tsx:169</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1030,7 +1058,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">edit<span class="tsd-signature-symbol">:</span> <a href="../enums/editoptions.html" class="tsd-signature-type">EditOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L151">RLGLayout.tsx:151</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L164">RLGLayout.tsx:164</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1045,9 +1073,38 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="igenerator.html" class="tsd-signature-type">IGenerator</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L160">RLGLayout.tsx:160</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L201">RLGLayout.tsx:201</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The generator is required and should be unique for each Layout. Reusing
+						generators is possible but not recommended.</p>
+					</div>
+					<p>Generally you will want to use a generator function to define its value,
+						but you can also define init and create methods in a class and then use
+					those to create an instance of the generator.</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">class</span> MyClass
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    ...
+    <span class="hljs-keyword">this</span>._g = <span class="hljs-keyword">new</span> Generator(
+       <span class="hljs-string">'name'</span>,
+       <span class="hljs-keyword">this</span>.init.bind(<span class="hljs-keyword">this</span>),
+       <span class="hljs-keyword">this</span>._params,
+       <span class="hljs-keyword">this</span>.create.bind(<span class="hljs-keyword">this</span>)
+     );
+  }
+
+  <span class="hljs-keyword">private</span> init = (g: IGenerator): <span class="hljs-function"><span class="hljs-params">Blocks</span> =&gt;</span> {
+    ...
+  }
+
+  <span class="hljs-keyword">private</span> create = (args: ICreate): Block | <span class="hljs-function"><span class="hljs-params">undefined</span> =&gt;</span> {
+    ...
+  }
+}</code></pre>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 				<a name="name" class="tsd-anchor"></a>
@@ -1056,7 +1113,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Overrides AllHTMLAttributes.name</p>
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L147">RLGLayout.tsx:147</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L160">RLGLayout.tsx:160</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1073,9 +1130,16 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">overflowX<span class="tsd-signature-symbol">:</span> <a href="../enums/overflowoptions.html" class="tsd-signature-type">OverflowOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L172">RLGLayout.tsx:172</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L254">RLGLayout.tsx:254</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is the same as the css overflow settings.</p>
+					</div>
+					<p>We do not recommend that you override this setting with
+					the style property since this setting is applied dynamically.</p>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="overflowy" class="tsd-anchor"></a>
@@ -1083,9 +1147,16 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">overflowY<span class="tsd-signature-symbol">:</span> <a href="../enums/overflowoptions.html" class="tsd-signature-type">OverflowOptions</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L176">RLGLayout.tsx:176</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L261">RLGLayout.tsx:261</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is the same as the css overflow settings.</p>
+					</div>
+					<p>We do not recommend that you override this setting with
+					the style property since this setting is applied dynamically.</p>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="params" class="tsd-anchor"></a>
@@ -1093,9 +1164,27 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#paramvalue" class="tsd-signature-type">ParamValue</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ca09091/src/RLGLayout.tsx#L168">RLGLayout.tsx:168</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L247">RLGLayout.tsx:247</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Sets initial params for this Layout.</p>
+					</div>
+					<p>The values are an array of [string, ParamValue]. The following example
+					appends a new value to an existing array defined in params.json:</p>
+					<pre><code class="language-ts"> <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> data <span class="hljs-keyword">from</span> <span class="hljs-string">'../assets/data/params.json'</span>
+
+ ...
+
+ &lt;RLGLayout
+   ...
+   params={[
+     ...data[<span class="hljs-string">'rlg.intro'</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">Array</span>&lt;[<span class="hljs-built_in">string</span>, ParamValue]&gt;,
+     [<span class="hljs-string">'velocity'</span>, <span class="hljs-number">0.05</span>]
+   ]}
+ &gt;</code></pre>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

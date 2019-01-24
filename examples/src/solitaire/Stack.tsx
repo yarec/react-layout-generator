@@ -19,6 +19,7 @@ export default class Stack {
   private _allowDrop: IAllowDrop | undefined;
   private _allowDragAndDrop: boolean = true;
 
+
   constructor(drag: boolean, drop: boolean, update: () => void, allowDrop?: IAllowDrop) {
     this._drag = drag;
     this._drop = drop;
