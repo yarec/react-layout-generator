@@ -4,6 +4,12 @@
 
 RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
+___
+A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
+
+Of course, this also means that the author needs to know how the content will fit into the allocated space. We'll add notes on how we are dealing with this as we continue with the development of RLG. Note that it is not always a problem that needs solving.
+___
+
 This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
 <!-- TOC -->
@@ -36,7 +42,13 @@ This project was initially inspired by [react-grid-layout](https://www.npmjs.com
 
 ## Install
 
-Coming soon on npm.
+Use either npm or yarn to install
+
+```js
+yarn add react-layout-generator
+```
+
+For typescript user, type definitions are not needed since they are included.
 
 ### Contributing
 
@@ -445,7 +457,7 @@ public render() {
     return (
       <RLGLayout
         name={'RLGLayout.intro.example'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.none}
         params={[
 → → →     ...data['rlg.intro'] as Array<[string,ParamValue]>,

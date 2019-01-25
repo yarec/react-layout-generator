@@ -4,11 +4,10 @@ import styled from 'styled-components';
 
 import {
   DebugOptions,
-  EditOptions,
   IEditableTextData,
   IOrigin,
   ISize,
-  Params,
+  Params
 } from '../importRLG'
 
 interface IProps {
@@ -36,7 +35,7 @@ export const NotEditable = styled.div<IProps>`
 
 interface IEditableTextProps extends React.Props<HTMLDivElement> {
   params: Params;
-  edit: EditOptions;
+  edit: boolean;
   debug: DebugOptions;
   variable: string;
   containersize: ISize;

@@ -4,7 +4,6 @@ import {
   Block,
   Blocks, 
   DebugOptions,
-  EditOptions,
   Generator,
   IEditHelperProps,
   IGenerator,
@@ -16,6 +15,7 @@ import {
   PositionRef,
   RLGLayout, 
   RLGPanel, 
+  ServiceOptions,
   Unit,
   updateParamLocation,
   updateParamOffset
@@ -49,7 +49,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
     return (
       <RLGLayout
         name='example.Chart'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={this._g}
       >

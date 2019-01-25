@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import {
   DebugOptions,
   dynamicGenerator,
-  EditOptions,
   IEditHelperProps,
   PositionRef,
   RLGLayout,
@@ -12,6 +11,7 @@ import {
   Unit
 } from '../importRLG'
 
+import { ServiceOptions } from '../../../src/types';
 import Deck from '../algos/Deck';
 // import cssColor from '../assets/colors';
 // import Note from '../components/Note';
@@ -51,7 +51,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
 
   private _g = dynamicGenerator('example.CardDeck');
   private _deck = new Deck();
-  private _edit: EditOptions = EditOptions.all;
+  private _edit: boolean = true;
 
   constructor(props: IEditHelperProps) {
     super(props)
@@ -68,10 +68,10 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     // this.grid(this._gridUnit)
@@ -85,7 +85,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
     return (
       <RLGLayout
         name={'example.cardDeck'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.timing}
         g={this._g}
       >

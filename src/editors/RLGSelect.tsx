@@ -422,6 +422,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     return (
       <div
         key={'select'}
+        id={'select'}
         style={{
           background: 'transparent',
           position: 'absolute',

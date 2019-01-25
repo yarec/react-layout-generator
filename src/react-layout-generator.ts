@@ -10,7 +10,7 @@ export { IPositionLocation, IPositionSize } from './components/Block'
 export {
   Unit,
   DebugOptions,
-  EditOptions,
+  ServiceOptions,
   ISize,
   IPoint,
   IOrigin,

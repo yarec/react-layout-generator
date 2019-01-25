@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, EditOptions } from '../types'
+import { DebugOptions, ServiceOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
 import { RLGPanel, IRLGMetaDataArgs } from '../RLGPanel';
@@ -33,7 +33,7 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
   test('it should allow props to be set #1', () => {
-    const wrapper = mount(<RLGLayout name='test#1' edit={EditOptions.all} debug={DebugOptions.all} g={g} />)
+    const wrapper = mount(<RLGLayout name='test#1' service={ServiceOptions.edit} debug={DebugOptions.all} g={g} />)
     expect(wrapper.props().debug).toEqual(DebugOptions.all);
   });
 
@@ -41,7 +41,7 @@ describe('RLGLayout', () => {
     const wrapper = mount(
       <RLGLayout
         name='panelTest#2'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         g={g}
         containersize={{ width: 1000, height: 1000 }}
       >
@@ -63,6 +63,6 @@ describe('RLGLayout', () => {
     const panel = wrapper.find(RLGPanel).at(0).instance() as RLGPanel
 
     expect(panel.props['data-layout'].name).toEqual('a');
-    expect(wrapper.props().edit).toEqual(EditOptions.all);
+    expect(wrapper.props().service).toEqual(ServiceOptions.edit);
   });
 })

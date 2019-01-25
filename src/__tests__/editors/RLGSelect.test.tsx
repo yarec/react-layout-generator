@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as Enzyme from 'enzyme';
 
 import { RLGLayout } from '../../RLGLayout';
-import { DebugOptions, EditOptions } from '../../types';
+import { DebugOptions, ServiceOptions } from '../../types';
 import { dynamicGenerator, Block } from '../../react-layout-generator';
 import { RLGSelect } from '../../editors/RLGSelect';
 
@@ -16,7 +16,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}>
@@ -61,7 +61,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}>
@@ -106,7 +106,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}>
@@ -148,7 +148,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}>
@@ -190,7 +190,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}>
@@ -232,7 +232,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='RLGSelect#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}

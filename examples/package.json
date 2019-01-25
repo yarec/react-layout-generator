@@ -68,7 +68,8 @@
     "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
-    "@types/webpack": "^4.4.20"
+    "@types/webpack": "^4.4.20",
+    "yarn": "^1.13.0"
   },
   "jest": {
     "transform": {

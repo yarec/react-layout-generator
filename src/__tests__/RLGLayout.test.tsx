@@ -4,7 +4,7 @@ import * as ReactTestUtils from 'react-dom/test-utils'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, EditOptions, Unit, OverflowOptions } from '../types'
+import { DebugOptions, ServiceOptions, Unit, OverflowOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
 
@@ -201,15 +201,15 @@ describe('RLGLayout', () => {
   test('it should allow props to be set #2', () => {
     const wrapper = mount(<RLGLayout
       name='test#3'
-      edit={EditOptions.all}
+      service={ServiceOptions.edit}
       g={g}
       containersize={{ width: 1000, height: 1000 }}
     />)
-    expect(wrapper.props().edit).toEqual(EditOptions.all);
+    expect(wrapper.props().service).toEqual(ServiceOptions.edit);
   });
 
   test('methods #1', () => {
-    const layout = new RLGLayout({ name: 'methods #1', edit: EditOptions.all, g })
+    const layout = new RLGLayout({ name: 'methods #1', service: ServiceOptions.edit, g })
 
     expect(layout.select).toEqual(undefined)
     expect(layout.getBoundingLeftTop()).toEqual({ x: 0, y: 0 })
@@ -218,7 +218,7 @@ describe('RLGLayout', () => {
   test('methods #2', () => {
     const wrapper = mount(<RLGLayout
       name='test#5'
-      edit={EditOptions.all}
+      service={ServiceOptions.edit}
       debug={DebugOptions.all}
       g={g}
       containersize={{ width: 1000, height: 500 }}
@@ -241,13 +241,13 @@ describe('RLGLayout', () => {
       ReactTestUtils.Simulate.mouseUp(element.root);
       ReactTestUtils.Simulate.contextMenu(element.root);
     }
-    expect(wrapper.props().edit).toEqual(EditOptions.all);
+    expect(wrapper.props().service).toEqual(ServiceOptions.edit);
   })
 
   test('methods #3', () => {
     const wrapper = mount(<RLGLayout
       name='test#5'
-      edit={EditOptions.all}
+      service={ServiceOptions.edit}
       debug={DebugOptions.all}
       g={g}
       containersize={{ width: 1000, height: 500 }}
@@ -267,6 +267,6 @@ describe('RLGLayout', () => {
       // element.select.
 
     }
-    expect(wrapper.props().edit).toEqual(EditOptions.all);
+    expect(wrapper.props().service).toEqual(ServiceOptions.edit);
   })
 })

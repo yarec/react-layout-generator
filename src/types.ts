@@ -428,18 +428,20 @@ export enum DebugOptions {
  */
 export type DebugOptionsArray = DebugOptions[]
 
-/**
- * Defines edit options that allow editing of layouts.
- */
-export enum EditOptions {
+/** Enables optional services */
+export enum ServiceOptions {
   /**
-   * Editing will not be enabled. This is the default.
+   * No services will be enabled. This is the default.
    */
   none = 0,
   /**
-   * Editing will be enabled.
+   * Enable editor
    */
-  all
+  edit,
+  /**
+   * Enable drag and drop
+   */
+  dnd
 }
 
 /**

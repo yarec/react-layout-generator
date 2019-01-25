@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
-import { DebugOptions, EditOptions, IRect } from './types';
+import { DebugOptions, IRect } from './types';
 
 export interface IRLGMetaDataArgs {
   container: IRect;
   block: Block;
-  edit: EditOptions;
+  edit: boolean;
   debug: DebugOptions;
   g: IGenerator;
   context: Map<string, any>;
@@ -18,7 +18,7 @@ export interface IRLGMetaDataArgs {
 interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   container?: IRect;
   block?: Block;
-  edit?: EditOptions;
+  edit?: boolean;
   debug?: DebugOptions;
   g?: IGenerator;
   context?: Map<string, any>;

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
-import { DebugOptions, EditOptions } from '../types'
+import { DebugOptions, ServiceOptions } from '../types'
 // import ReactResizeDetector from 'react-resize-detector'
 
 import * as Enzyme from 'enzyme';
@@ -40,7 +40,7 @@ describe('RLGLayout', () => {
     const wrapper = mount(
       <RLGLayout
         name='instance#3'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.all}
         g={g}
         containersize={{ width: 1000, height: 500 }}

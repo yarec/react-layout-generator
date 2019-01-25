@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { 
   DebugOptions,
   dynamicGenerator,
-  EditOptions,
   IEditHelperProps,
   IPoint,
   IRLGMetaDataArgs,
@@ -13,8 +12,9 @@ import {
   rectSize,
   RLGLayout, 
   RLGPanel, 
-  Status,
-  toPixel, 
+  ServiceOptions,
+  Status, 
+  toPixel,
   Unit
 } from '../importRLG'
 
@@ -50,7 +50,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
   private _gridUnitSquare = { x: 0, y: 0 };
   private _gridUnit = Unit.pixel;
   private _units = '1%';
-  private _edit = EditOptions.none;
+  private _edit = false;
 
   constructor(props: IEditHelperProps) {
     super(props);
@@ -88,10 +88,10 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     // this.grid(this._gridUnit)
@@ -106,7 +106,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
       <RLGLayout
         name='example.Grid'
         debug={[DebugOptions.none]}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         g={this._g}
       >
         <RLGPanel

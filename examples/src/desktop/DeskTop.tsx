@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   DebugOptions,
   desktopGenerator,
-  EditOptions,
   IEditHelperProps,
   IRLGMetaDataArgs,
   ISize,
@@ -14,6 +13,7 @@ import {
   rectSize, 
   RLGLayout, 
   RLGPanel,
+  ServiceOptions,
   Status
 } from '../importRLG'
 
@@ -72,7 +72,7 @@ const gDesktopParams = new Params({ name: 'desktop', initialValues: values });
 export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopState> {
 
   private g = desktopGenerator('rlg.desktop.example', gDesktopParams);
-  private _edit: EditOptions = EditOptions.none;
+  private _edit: boolean = false;
 
   constructor(props: IEditHelperProps) {
     super(props);
@@ -89,10 +89,10 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     // this.grid(this._gridUnit)
@@ -113,7 +113,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
     return (
       <RLGLayout
         name={'RLGLayout.desktop.example'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.timing}
         g={this.g}
       >

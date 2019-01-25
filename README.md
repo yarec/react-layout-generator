@@ -6,7 +6,7 @@ This release should be considered pre-alpha.
 
 This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
-\* For SVG to be really useful in React it needs to know its position and size. RLG makes this easy.
+\* For SVG to be more than an icon generator in React it needs to know its position and size. RLG makes this easy.
 
 ## Examples
 
@@ -18,7 +18,17 @@ See [docs](https://chetmurphy.github.io/react-layout-generator/).
 
 ## Install
 
-For the time being, you will need to clone or fork the project to evaluate. To run locally follow these steps: 1) cd to the \<directory\> where you installed RLG, 2) run npm install or yarn, 3) cd to the examples directory, 4) run npm install or yarn, and 4) run start (to build the examples).
+Use either npm or yarn to install. 
+
+```ts
+yarn add react-layout-generator
+
+or 
+
+npm install react-layout-generator
+```
+
+You can also clone or fork the project to evaluate. To run locally follow these steps: 1) cd to the \<directory\> where you installed RLG, 2) run npm install or yarn, 3) cd to the examples directory, 4) run npm install or yarn, and 4) run start (to build the examples).
 
 ### Contributing
 

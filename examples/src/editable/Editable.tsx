@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   DebugOptions,
   desktopGenerator,
-  EditOptions,
   IEditHelperProps,
   IGenerator,
   IRLGMetaDataArgs,
@@ -17,6 +16,7 @@ import {
   RLGLayout,
   RLGPanel,
   saveToLocalStorage,
+  ServiceOptions,
   Status,
   Unit
 } from '../importRLG'
@@ -70,7 +70,7 @@ const gEditableParams = new Params({
 export default class Editable extends React.Component<IEditHelperProps, IDeskTopState> {
 
   private g: IGenerator;
-  private _edit: EditOptions = EditOptions.all;
+  private _edit: boolean = true;
   private _save: boolean = true;
 
   constructor(props: IEditHelperProps) {
@@ -83,7 +83,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
   public componentDidMount() {
     if (this._save) {
       const edit = loadFromLocalStorage('rlg.eTemplate.example', 'edit');
-      this._edit = edit === 1 ? EditOptions.all : EditOptions.none;
+      this._edit = edit === 1 ? true : false;
       this.setState({ update: this.state.update + 1 })
     }
 
@@ -96,14 +96,14 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       // save before turning edit off
       if (this._save) {
         saveToLocalStorage('rlg.eTemplate.example', 'edit', this._edit ? 1 : 0)
       }
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     this.setState({ update: this.state.update + 1 })
@@ -112,7 +112,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
   }
 
   public editState = () => {
-    return this._edit === EditOptions.all ? Status.up : Status.down;
+    return this._edit === true ? Status.up : Status.down;
   }
 
   public setSave = (status: Status) => {
@@ -131,7 +131,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
     return (
       <RLGLayout
         name={'RLGLayout.ETemplate.example'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={[DebugOptions.timing]} 
         overflowX={OverflowOptions.hidden}
         overflowY={OverflowOptions.hidden}

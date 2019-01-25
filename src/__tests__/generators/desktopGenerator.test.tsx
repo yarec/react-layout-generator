@@ -3,7 +3,7 @@ import * as React from 'react'
 import { desktopGenerator } from '../../generators/desktopGenerator'
 import { RLGLayout } from '../../RLGLayout';
 import { mount } from 'enzyme';
-import { DebugOptions, EditOptions } from '../../types';
+import { DebugOptions, ServiceOptions } from '../../types';
 
 const g = desktopGenerator('desktopGenerator')
 
@@ -13,7 +13,7 @@ describe('RLGSelect', () => {
     const wrapper = mount(
       <RLGLayout
         name='instance#1'
-        edit={EditOptions.all}
+        service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
         containersize={{ width: 1000, height: 1000 }}

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   Block,
   DebugOptions,
-  EditOptions,
   IGenerator,
   IPoint,
   IRect
@@ -23,7 +22,7 @@ const Container = styled.div`
 interface INoteProps {
   container?: IRect;
   block?: Block;
-  edit?: EditOptions;
+  edit?: boolean;
   debug?: DebugOptions;
   g?: IGenerator;
   context?: Map<string, any>;

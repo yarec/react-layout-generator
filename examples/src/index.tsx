@@ -11,11 +11,11 @@ import {
   DebugOptions,
   desktopGenerator,
   EditHelper,
-  EditOptions,
   IGenerator,
   IRLGMetaDataArgs,
   RLGLayout,
-  RLGPanel
+  RLGPanel,
+  ServiceOptions
 } from './importRLG'
 
 // Examples
@@ -30,6 +30,7 @@ import Editable from './editable/Editable';
 import Grid from './grid/Grid';
 import Intro from './intro/Intro';
 import Solitaire from './solitaire/Solitaire';
+import Solitaire2 from './solitaire2/Solitaire';
 
 // Icons
 import { FaRegEdit, FaRegSave } from 'react-icons/fa';
@@ -102,7 +103,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
         <RLGLayout
           name='framework'
           debug={DebugOptions.none}
-          edit={EditOptions.none}
+          service={ServiceOptions.none}
           g={this.g}
           overflowX={OverflowOptions.hidden}
           overflowY={OverflowOptions.hidden}
@@ -120,6 +121,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
               { component: <DeskTop editHelper={this.getEditHelper} />, name: 'DeskTop' },
               { component: <CardDeck editHelper={this.getEditHelper} />, name: 'CardDeck' },
               { component: <Solitaire editHelper={this.getEditHelper} />, name: 'Solitaire' },
+              { component: <Solitaire2 editHelper={this.getEditHelper} />, name: 'Solitaire2' },
               { component: <Grid editHelper={this.getEditHelper} />, name: 'Grid' },
               { component: <Chart editHelper={this.getEditHelper} />, name: 'Chart' },
               { component: <Editable editHelper={this.getEditHelper} />, name: 'Editable' },

@@ -4,7 +4,7 @@ import { EditHelper, IEditHelperProps, Status } from '../../editors/EditHelper'
 import * as Enzyme from 'enzyme';
 import { Params } from '../../components/Params';
 import { IGenerator, ICreate, Generator } from '../../generators/Generator';
-import { dynamicGenerator, EditOptions, RLGLayout, Unit } from '../../react-layout-generator';
+import { dynamicGenerator, ServiceOptions, RLGLayout, Unit } from '../../react-layout-generator';
 // import { RLGSelect } from '../editors/RLGSelect';
 
 const { mount } = Enzyme
@@ -57,7 +57,7 @@ interface IIntroState {
 class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
   private _g = dynamicGenerator('rlg.intro');
-  private _edit: EditOptions = EditOptions.none;
+  private _edit: boolean = false;
 
   constructor(props: IEditHelperProps) {
     super(props);
@@ -76,10 +76,10 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     // this.grid(this._gridUnit)
@@ -93,7 +93,7 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
     return (
       <RLGLayout
         name={'RLGLayout.intro.example'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         // debug={[DebugOptions.data, DebugOptions.mouseEvents, DebugOptions.error]}
         g={this._g}
         containersize={{ width: 1000, height: 1000 }}

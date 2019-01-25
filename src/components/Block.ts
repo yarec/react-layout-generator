@@ -299,7 +299,7 @@ export interface IPosition {
   positionChildren?: PositionChildren
   /**
    * This defines the editor that will be available to the user when [RLGLayout
-   * edit](irlglayoutprops.html) property is not set the EditOptions.none.
+   * service](irlglayoutprops.html) property is set the ServiceOptions.edit.
    */
   editor?: IEditor
   /**
@@ -394,6 +394,16 @@ export class Block {
 
   get reactTransformOrigin() {
     return this._transformOrigin
+  }
+
+  get x() {
+    this.updateRect()
+    return this._cached.x
+  }
+
+  get y() {
+    this.updateRect()
+    return this._cached.y
   }
 
   private _siblings: Map<string, boolean> = new Map()
@@ -535,16 +545,7 @@ export class Block {
   }
 
   public rect = (force?: boolean) => {
-    if (this._changed || force) {
-      this._changed = false
-      const value = { ...this.fromLocation(), ...this.fromSize() }
-      this._cached.update({
-        x: value.x,
-        y: value.y,
-        width: value.width,
-        height: value.height
-      })
-    }
+    this.updateRect(force)
     return this._cached.data
   }
 
@@ -704,6 +705,19 @@ export class Block {
       this._position.size.width = width
       this._position.size.height = height
       this.changed()
+    }
+  }
+
+  private updateRect(force: boolean = false) {
+    if (this._changed || force) {
+      this._changed = false
+      const value = { ...this.fromLocation(), ...this.fromSize() }
+      this._cached.update({
+        x: value.x,
+        y: value.y,
+        width: value.width,
+        height: value.height
+      })
     }
   }
 

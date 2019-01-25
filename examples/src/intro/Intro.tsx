@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { DebugOptions, OverflowOptions } from '../../../src/types';
 import {
-  EditOptions,
   IEditHelperProps,
   ParamValue,
   RLGLayout,
   rollGenerator,
+  ServiceOptions,
   Status,
   Unit
 } from '../importRLG'
@@ -32,7 +32,7 @@ interface IIntroState {
 export default class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
   private _g = rollGenerator('rlg.intro');
-  private _edit: EditOptions = EditOptions.none;
+  private _edit: boolean = false;
 
   constructor(props: IEditHelperProps) {
     super(props);
@@ -51,10 +51,10 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
   public setEdit = (status: Status) => {
     if (status === Status.down) {
       status = Status.up;
-      this._edit = EditOptions.all
+      this._edit = true
     } else {
       status = Status.down;
-      this._edit = EditOptions.none
+      this._edit = false
     }
 
     // this.grid(this._gridUnit)
@@ -68,7 +68,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
     return (
       <RLGLayout
         name={'RLGLayout.intro.example'}
-        edit={this._edit ? EditOptions.all : EditOptions.none}
+        service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.none}
         params={[
           ...data['rlg.intro'] as Array<[string, ParamValue]>,

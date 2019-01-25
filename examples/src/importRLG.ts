@@ -15,7 +15,7 @@ export {IPositionLocation, IPositionSize} from '../../src/components/Block'
 export {
   Unit,
   DebugOptions,
-  EditOptions,
+  ServiceOptions,
   ISize,
   IPoint,
   IOrigin,
@@ -66,7 +66,7 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   desktopGenerator,
 //   dynamicGenerator,
 //   EditHelper,
-//   EditOptions,
+//   ServiceOptions,
 //   Generator,
 //   ICreate,
 //   IEditTool,
