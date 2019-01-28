@@ -14,12 +14,13 @@ import solitaireGenerator from './solitaireGenerator';
 import Stock from './Stock';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
+// import {allowFoundationDrop} from './Stack'
 
 /**
  * Names of blocks are based on position not on the card names.
  */
 
-export interface ISolitaireProps {
+export interface ISolitaireProps extends IEditHelperProps {
   name?: string;
 }
 
@@ -39,13 +40,13 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
   constructor(props: IEditHelperProps) {
     super(props);
 
-    this._stock = new Stock(this.update);
-    this._waste = new Waste(this.update);
+    this._stock = new Stock(this.update, this._g);
+    this._waste = new Waste(this.update, this._g);
     for (let i = 0; i < 4; i++) {
-      this._foundation.push(new FoundationStack(this.update));
+      this._foundation.push(new FoundationStack(this.update, this._g));
     }
     for (let i = 0; i < 7; i++) {
-      this._tableau.push(new TableauStack(this.update))
+      this._tableau.push(new TableauStack(this.update, this._g))
     }
 
     this.state = { update: 0 };
@@ -96,7 +97,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
         name='example.Solitaire'
         g={this._g}
         service={ServiceOptions.dnd}
-        debug={[DebugOptions.info, DebugOptions.data, DebugOptions.mouseEvents]}
+        debug={[DebugOptions.info, DebugOptions.mouseEvents]}
       >
         <div
           key='stock'
@@ -142,6 +143,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
 
   protected foundations = () => {
     const jsx = [];
+
     for (let i = 0; i < 4; i++) {
       const name = `foundation${i + 1}`;
       jsx.push(
@@ -160,6 +162,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
 
   protected tableaus = () => {
     const jsx = [];
+
     for (let i = 0; i < 7; i++) {
       const name = `tableau${i + 1}`;
       jsx.push(
@@ -168,6 +171,8 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
           data-layout={{
             name
           }}
+
+          
         >
           {this._tableau[i].cards()}
         </div>

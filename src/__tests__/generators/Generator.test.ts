@@ -21,11 +21,11 @@ it('generator #1', () => {
   expect(g.blocks()).toBeTruthy()
 })
 
-it('generator #2', () => {
-  const g = new Generator('test', init, params)
-  expect(g.containersize('x')).toEqual({ width: 0, height: 0 })
-  expect(g.select()).toBe(undefined)
-})
+// it('generator #2', () => {
+//   const g = new Generator('test', init, params)
+//   expect(g.containersize('x')).toEqual({ width: 0, height: 0 })
+//   expect(g.select()).toBe(undefined)
+// })
 
 it('generator #3', () => {
   const g = new Generator('test', init, params)

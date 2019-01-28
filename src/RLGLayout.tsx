@@ -32,7 +32,7 @@ import {
   rectSize,
   IAnimateProps
 } from './types'
-import { RLGDragDrop } from './services/RLGDragDrop';
+import { DragDropService } from './services/DragDropService'
 
 const raf = require('raf')
 
@@ -160,7 +160,7 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    */
   name: string
   /**
-   * The default is ServiceOptions.none. 
+   * The default is ServiceOptions.none.
    */
   service?: ServiceOptions
   /**
@@ -358,7 +358,10 @@ export class RLGLayout extends React.Component<
   }
 
   public componentWillReceiveProps(props: IRLGLayoutProps) {
-    if (this.props.debug !== props.debug || this.props.service !== props.service) {
+    if (
+      this.props.debug !== props.debug ||
+      this.props.service !== props.service
+    ) {
       this.props.g.clear()
       this.initProps(props)
     }
@@ -515,7 +518,7 @@ export class RLGLayout extends React.Component<
       }
     }
 
-    this._edit = (props.service === ServiceOptions.edit)
+    this._edit = props.service === ServiceOptions.edit
   }
 
   private animationLoop = (time: number) => {
@@ -612,6 +615,14 @@ export class RLGLayout extends React.Component<
     const e = p.get('editOptions') as number
     if (e) {
       this._edit = e ? true : false
+    }
+
+    if (this._root) {
+      const r = this._root.getBoundingClientRect()
+      p.set('containerlefttop', {
+        x: r.left,
+        y: r.top
+      })
     }
 
     const v = p.set('containersize', {
@@ -743,14 +754,14 @@ export class RLGLayout extends React.Component<
         } else {
           const editProps = this._edit
             ? {
-                edit: this._edit,
+                edit: this._edit ? 1 : 0,
                 g: this.props.g
               }
             : {}
-          const args: IRLGMetaDataArgs = {
+          const metaDataArgs: IRLGMetaDataArgs = {
             container: rect,
             block: b,
-            edit: this._edit,
+            service: this._edit ? ServiceOptions.edit : this.props.service!,
             debug: this._debug,
             g: this.props.g,
             context: gContext
@@ -792,6 +803,8 @@ export class RLGLayout extends React.Component<
           }
 
           const local = new Local(b)
+
+          const args = typeof child.type === 'string' ? {} : metaDataArgs
 
           const cc = React.cloneElement(
             child,
@@ -894,18 +907,21 @@ export class RLGLayout extends React.Component<
       }
     }
 
+
+    const args = typeof child.type === 'string' ? {} : {
+        service: this._edit ? ServiceOptions.edit : this.props.service,
+        debug: this._debug,
+        context: gContext,
+        g: this.props.g,
+        style: child.props.style
+      }
+
     return React.cloneElement(
       child,
       {
+        id: `${p.name}`,
         ...child.props,
-        ...{
-          edit: this._edit,
-          debug: this._debug,
-          context: gContext,
-          g: this.props.g,
-
-          style: child.props.style
-        }
+        ...args
       },
       child.props.children
     )
@@ -923,8 +939,10 @@ export class RLGLayout extends React.Component<
       this._select.clear()
     }
 
-    event.stopPropagation()
-    this.handleContextMenu(event)
+    if (event.button === 2) {
+      event.stopPropagation()
+      this.handleContextMenu(event)
+    }
   }
 
   private onParentContextMenu = (block?: Block) => {
@@ -1048,9 +1066,9 @@ export class RLGLayout extends React.Component<
       return null
     })
 
-    if (elements && this._edit) {
+    if (elements && this.props.service === ServiceOptions.dnd) {
       elements.unshift(
-        <RLGDragDrop
+        <DragDropService
           name={`dnd-${name}`}
           key={`dnd-${name}`}
           debug={this._debug}
@@ -1060,6 +1078,7 @@ export class RLGLayout extends React.Component<
             width: this.state.width,
             height: this.state.height
           }}
+          leftTop={this.getBoundingLeftTop()}
           onUpdate={this.onUpdate}
           g={this._g}
         />
@@ -1121,14 +1140,14 @@ export class RLGLayout extends React.Component<
     style: React.CSSProperties
   ) {
     const editProps = {
-      edit: this._edit,
+      edit: this._edit ? 1 : 0,
       g: this.props.g
     }
 
     const nestedChildren = React.Children.map(
       child.props.children,
       (nestedChild, i) => {
-        const nestedLayout = b.positionChildren!(b, b.generator, i)
+        const nestedLayout = b.positionChildren!(b, b.generator, i, nestedChild.props)
         if (nestedLayout) {
           // const blocks = this._g.blocks();
           // blocks.set(nestedLayout.name, nestedLayout.position, nestedLayout.generator);
@@ -1146,24 +1165,26 @@ export class RLGLayout extends React.Component<
             b.reactTransform,
             b.reactTransformOrigin
           )
-          const nArgs: IRLGMetaDataArgs = {
+
+          const args = typeof nestedChild.type === 'string' ? {} : {
             container: nestedRect,
             block: b,
-            edit: this._edit,
+            service: this._edit ? ServiceOptions.edit : this.props.service!,
             debug: this._debug,
             g: this.props.g,
             context: gContext
             // update: this.onUpdate
           }
+
           return React.cloneElement(
             nestedChild,
             {
               ...nestedChild.props,
               ...{
-                key: `${nestedChild.key}`,
-                id: `${nestedChild.key}`,
+                key: `${nestedChild.props.id}`,
+                id: `${nestedChild.props.id}`,
 
-                ...nArgs,
+                ...args,
 
                 ...editProps,
                 style: {
@@ -1179,15 +1200,17 @@ export class RLGLayout extends React.Component<
         return null
       }
     )
-    const args: IRLGMetaDataArgs = {
+
+    const args = typeof child.type === 'string' ? {} : {
       container: rect,
       block: b,
-      edit: this._edit,
+      service: this._edit ? ServiceOptions.edit : this.props.service!,
       debug: this._debug,
       g: this.props.g,
       context: gContext
       // update: this.onUpdate
     }
+
     return React.cloneElement(
       child,
       {

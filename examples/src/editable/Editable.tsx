@@ -10,6 +10,7 @@ import {
   IRLGMetaDataArgs,
   ISize,
   loadFromLocalStorage,
+  OverflowOptions,
   Params,
   ParamValue,
   rectSize,
@@ -21,7 +22,6 @@ import {
   Unit
 } from '../importRLG'
 
-import { OverflowOptions } from '../../../src/types';
 import EditableText from '../components/EditableText';
 
 // tslint:disable-next-line:variable-name
@@ -140,7 +140,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
           {(args: IRLGMetaDataArgs) => (
             <EditableText
-              edit={args.edit}
+              edit={args.service === ServiceOptions.edit}
               debug={args.debug}
               params={args.g.params()}
               variable={'title'}
@@ -160,7 +160,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            location: { x: 70, y: 60, unit: Unit.percent },
+            location: { x: 70, y: 50, unit: Unit.percent },
             size: { width: 250, height: 300, unit: Unit.unmanagedHeight },
             editor: {
               selectable: true
@@ -168,10 +168,11 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
           }
         }}
         >
+          <p>Experiment to test HTML content editing and auto fitting of text.</p>
           <p>To edit the text, first active edit (in the toolbar) and then click on the text.</p>
-          <p>Save state enabled and currently can not be disabled.</p>
           <p>Change size of title panel to change font size by dragging the top of the black drag bar.</p>
           <p>The editable text widget does not allow line breaks.</p>
+          <p>Save state enabled and currently can not be disabled.</p>
         </div>
       </RLGLayout>
     );

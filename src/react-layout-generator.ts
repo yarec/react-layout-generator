@@ -4,6 +4,8 @@
 
 export { RLGLayout } from './RLGLayout'
 export { RLGPanel, IRLGMetaDataArgs } from './RLGPanel'
+export { Draggable, IDraggableProps } from './Draggable'
+export { Droppable, IDroppableProps } from './Droppable'
 
 export { IPositionLocation, IPositionSize } from './components/Block'
 

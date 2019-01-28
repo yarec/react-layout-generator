@@ -1,3 +1,7 @@
+export interface Props {
+  [key: string]: any
+}
+
 /**
  * IAnimateProps configures an animation.
  */

@@ -16,6 +16,7 @@ import {
   RLGLayout, 
   RLGPanel, 
   updateParamLocation,
+  Props,
 } from '../importRLG'
 
 import cssColor from '../assets/colors';
@@ -124,7 +125,7 @@ export default class Table extends React.Component<ITableProps> {
     return blocks;
   }
 
-  private positionRowChildren = (block: Block, g: IGenerator, index: number) => {
+  private positionRowChildren = (block: Block, g: IGenerator, index: number, props: Props) => {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const rowHeight = this._params.get('rowHeight') as number;

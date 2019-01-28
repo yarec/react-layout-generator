@@ -121,7 +121,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
           {(args: IRLGMetaDataArgs) => (
             <>
               <span>LeftSide</span>
-              {args.edit ? (this.closeButton(rectSize(args.container), 'leftSideWidth')) : null}
+              {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'leftSideWidth')) : null}
             </>
           )}
         </RLGPanel>
@@ -130,7 +130,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
           {(args: IRLGMetaDataArgs) => (
             <>
               <span>Header</span>
-              {args.edit ? (this.closeButton(rectSize(args.container), 'headerHeight')) : null}
+              {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'headerHeight')) : null}
             </>
           )}
         </RLGPanel>
@@ -139,7 +139,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
           {(args: IRLGMetaDataArgs) => (
             <>
               <span>Footer</span>
-              {args.edit ? (this.closeButton(rectSize(args.container), 'footerHeight')) : null}
+              {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'footerHeight')) : null}
             </>
           )}
         </RLGPanel>
@@ -177,7 +177,7 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
           {(args: IRLGMetaDataArgs) => (
             <>
               <span>RightSide</span>
-              {args.edit ? (this.closeButton(rectSize(args.container), 'rightSideWidth')) : null}
+              {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'rightSideWidth')) : null}
             </>
           )}
         </RLGPanel>

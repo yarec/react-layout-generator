@@ -10,6 +10,7 @@ import {
   ISize,
   Params, 
   ParamValue,
+  Props,
 } from '../importRLG'
 
 export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
@@ -60,7 +61,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     params.set('cardSize', cardSize);
     params.set('computedCardSpacing', { x: cardSpacingRatio.x * cardSize.width, y: cardSpacingRatio.y * cardSize.height })
 
-    const blocks = new Blocks([]);
+    const blocks = g.blocks() // new Blocks([]);
 
     // Make layout responsive
     // Adjust number of columns if smaller containersize
@@ -125,7 +126,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return block;
   }
 
-  function positionStockChildren(block: Block, g: Generator, index: number) {
+  function positionStockChildren(block: Block, g: Generator, index: number, props: Props) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -136,27 +137,35 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
       size: cardSize
     };
 
-    // This block is temporary and will not be stored in blocks
-    return new Block('temp', child, g);
-  }
-
-  function positionFoundationChildren(block: Block, g: IGenerator, index: number) {
-    // Return a Layout relative to block starting at position at (0, 0)
-
-    const cardSize = g.params().get('cardSize') as ISize;
-
-    // These children get placed on top of each other
-
-    const child: IPosition = {
-      location: { x: 0, y: 0 },
-      size: cardSize
-    };
+    if ( props.id) {
+      return g.blocks().set(props.id, child, g, block)
+    }
 
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g);
+    return new Block('temp', child, g, block);
   }
 
-  function positionTableauChildren(block: Block, g: IGenerator, index: number) {
+  function positionFoundationChildren(block: Block, g: IGenerator, index: number, props: Props) {
+    // Return a Layout relative to block starting at position at (0, 0)
+
+    const cardSize = g.params().get('cardSize') as ISize;
+
+    // These children get placed on top of each other
+
+    const child: IPosition = {
+      location: { x: 0, y: 0 },
+      size: cardSize
+    };
+
+    if (props['data-dnd'] && props.id) {
+      return g.blocks().set(props.id, child, g, block)
+    }
+
+    // This block is temp and will not be stored in blocks
+    return new Block('temp', child, g, block);
+  }
+
+  function positionTableauChildren(block: Block, g: IGenerator, index: number, props: Props) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -168,11 +177,15 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
       size: cardSize
     };
 
+    if (props.id) {
+      return g.blocks().set(props.id, child, g, block)
+    }
+
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g);
+    return new Block('temp', child, g, block);
   }
 
-  function positionWasteChildren(block: Block, g: Generator, index: number) {
+  function positionWasteChildren(block: Block, g: Generator, index: number, props: Props) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -184,8 +197,12 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
       size: cardSize
     };
 
+    if (props.id) {
+      return g.blocks().set(props.id, child, g, block)
+    }
+
     // This block is temp and will not be stored in blocks
-    return new Block(`${block.name}${index}`, child, g);
+    return new Block('temp', child, g, block);
   }
 
   return new Generator(name, init, _params, create, gArgs.editHelper);

@@ -1,3 +1,4 @@
+import { IGenerator } from 'src/importRLG';
 import Stack from './Stack';
 import Stock from './Stock';
 
@@ -6,8 +7,8 @@ export default class Waste {
   private _waste: Stack;
   private _update: () => void;
 
-  constructor(update: ()=>void) {
-    this._waste = new Stack(true, true, update);
+  constructor(update: ()=>void, g: IGenerator) {
+    this._waste = new Stack(true, true, update, g);
     this._update = update;
   }
 

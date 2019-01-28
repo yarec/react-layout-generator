@@ -1,12 +1,10 @@
 # React Layout Generator
 
-React Layout Generator (RLG) is a Layout in React component for dynamic and responsive layout. It is general purpose, supports both html and svg*, and allows precise and continuous control for responsive layouts. Major features include template support, animation support including custom engines, persistance support, built-in editor with position and size editing, fine grain responsiveness, top down design, and overlay support.
+*React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.*
 
-This release should be considered pre-alpha.
+RLG allows both dynamic and responsive layout. It is general purpose, supports both html and svg*, and allows precise and continuous control for responsive layouts. Major features include template support, animation support including custom engines, persistance support, built-in editor with position and size editing, fine grain responsiveness, top down design, and overlay support.
 
-This component was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
-
-\* For SVG to be more than an icon generator in React it needs to know its position and size. RLG makes this easy.
+\* For SVG to be more than an icon generator or canvas in React it needs to know position and size along with relationships. RLG makes this easy. For example to use svg to generate a line connecting two react components requires access to the layout details of both components. It also needs to assume that it and the two components layout will not change. This can be done in React but small changes in layout can easily break the assumption. In RLG you just link the two components.
 
 ## Examples
 
@@ -38,14 +36,12 @@ We're really glad you're reading this, because we need volunteer developers to h
 
 ### Library
 
-* Improve documentation.
 * Add React PropTypes for non typescript users.
 * Implement nudge with arrow keys.
 * Implement current select commands.
 * Add cut, copy, and paste commands.
 * Add options to align columnsGenerator and rowsGenerator.
 * Add Touch support in core editor.
-* Upload component to npm.
 
 ### Example App
 
@@ -57,8 +53,7 @@ We're really glad you're reading this, because we need volunteer developers to h
 
 ## Features
 
-* Top down design of websites
-* Lightweight
+* Top down design of pages
 * Edit and runtime support
 * Persistence
 * Template support

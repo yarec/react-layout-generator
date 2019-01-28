@@ -5,7 +5,10 @@ import { Unit } from '../../types'
 
 const params = new Params({
   name: 'layoutTest',
-  initialValues: [['containersize', { width: 1000, height: 1000 }]]
+  initialValues: [
+    ['containersize', { width: 1000, height: 1000 }],
+    ['containerlefttop', { x: 100, y: 50 }]
+  ]
 })
 
 function init(_g: IGenerator) {
@@ -240,6 +243,39 @@ it('transform #1', () => {
 
   expect(b.reactTransform).toEqual(` rotate(${10}deg)`)
   expect(b.reactTransformOrigin).toEqual(`${50} ${50}`)
+})
+
+it('local coordinate #1', () => {
+  const p = {
+    location: { x: 250, y: 150, unit: Unit.pixel },
+    size: { width: 100, height: 50 },
+    transform: [{ rotate: 10, origin: { x: 50, y: 50 } }]
+  }
+  const b = new Block('test', p, g)
+
+  expect(b.minX).toEqual(350)
+  expect(b.minY).toEqual(200)
+  expect(b.maxX).toEqual(450)
+  expect(b.maxY).toEqual(250)
+})
+
+it('local coordinate #2', () => {
+  const p0 = {
+    location: { x: 50, y: 25, unit: Unit.pixel },
+    size: { width: 500, height: 500 }
+  }
+  const b0 = new Block('test', p0, g)
+
+  const p = {
+    location: { x: 250, y: 150, unit: Unit.pixel },
+    size: { width: 100, height: 50 }
+  }
+  const b = new Block('test', p, g, b0)
+
+  expect(b.minX).toEqual(400)
+  expect(b.minY).toEqual(225)
+  expect(b.maxX).toEqual(500)
+  expect(b.maxY).toEqual(275)
 })
 
 // Test align, connection points

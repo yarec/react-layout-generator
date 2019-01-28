@@ -11,7 +11,8 @@ import {
   PositionRef,
   Rect,
   isUnmanaged,
-  namedUnit
+  namedUnit,
+  Props
 } from '../types'
 import { clone } from '../utils'
 
@@ -235,7 +236,8 @@ export interface IEditor {
 export type PositionChildren = (
   block: Block,
   g: IGenerator,
-  index: number
+  index: number,
+  props: Props
 ) => Block | undefined
 
 // export interface IHandlers {
@@ -406,20 +408,91 @@ export class Block {
     return this._cached.y
   }
 
+  get localParent() {
+    return this._localParent
+  }
+
+  /**
+   * Returns the local left coordinate in Layout space
+   */
+  get minX() {
+    this.updateRect()
+    const leftTop = this._g.params().get('containerlefttop') as IPoint
+    let x = this._cached.x + leftTop.x
+    let p = this._localParent
+    while (p) {
+      x += p.x
+      p = p._localParent
+    }
+    return x
+  }
+  /**
+   * Returns the local top coordinate in Layout space
+   */
+  get minY() {
+    this.updateRect()
+    const leftTop = this._g.params().get('containerlefttop') as IPoint
+    let y = this._cached.y + leftTop.y
+    let p = this._localParent
+    while (p) {
+      y += p.y
+      p = p._localParent
+    }
+    return y
+  }
+  /**
+   * Returns the local right coordinate in Layout space
+   */
+  get maxX() {
+    this.updateRect()
+    const leftTop = this._g.params().get('containerlefttop') as IPoint
+    let r = this._cached.right + leftTop.x
+    let p = this._localParent
+    while (p) {
+      r += p._cached.left
+      p = p._localParent
+    }
+    return r
+  }
+  /**
+   * Returns the local bottom coordinate in Layout space
+   */
+  get maxY() {
+    this.updateRect()
+    const leftTop = this._g.params().get('containerlefttop') as IPoint
+    let b = this._cached.bottom + leftTop.y
+    let p = this._localParent
+    while (p) {
+      b += p._cached.top
+      p = p._localParent
+    }
+    return b
+  }
+
+  public setHandler(name: string, value: any) {
+    this._handlers.set(name, value)
+  }
+
+  public getHandler(name: string) {
+    return this._handlers.get(name)
+  }
+
   private _siblings: Map<string, boolean> = new Map()
   private _name: string
   private _position: IPosition
   private _changed: boolean
   private _cached: Rect
   private _g: IGenerator
+  private _localParent: Block | undefined
   private _positionChildren: PositionChildren | undefined
   private _layer: number
   private _transform: string = ''
   private _transformOrigin: string = ''
+  private _handlers: Map<string, any> = new Map()
   private _onMouseDown: (e: React.MouseEvent) => void
   private _onClick: (e: React.MouseEvent) => void
 
-  constructor(name: string, p: IPosition, g: IGenerator) {
+  constructor(name: string, p: IPosition, g: IGenerator, localParent?: Block) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
     if (p) {
@@ -431,6 +504,7 @@ export class Block {
       }
     }
     this._g = g
+    this._localParent = localParent
     this.updatePosition(this._position)
     if (this._position.layer) {
       this.layer = this._position.layer

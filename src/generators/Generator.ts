@@ -4,7 +4,6 @@ import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
 import { RLGSelect } from '../editors/RLGSelect'
 import { Layers } from '../components/Layers'
-import { ISize } from '../types'
 
 export interface IGeneratorFunctionArgs {
   name: string
@@ -35,7 +34,7 @@ export interface IGenerator {
   reset: () => void
   // next: () => Block | undefined
   lookup: (name: string) => Block | undefined
-  containersize: (name: string) => ISize | undefined
+  // containersize: (name: string) => ISize | undefined
   clear: () => void
   create?: Create
   editor?: () => EditHelper | undefined
@@ -100,16 +99,16 @@ export class Generator implements IGenerator {
     return this._blocks.get(name)
   }
 
-  public containersize = (name: string): ISize => {
-    const l = this._blocks.get(name)
-    if (l) {
-      const r = l.rect()
+  // public containersize = (name: string): ISize => {
+  //   const l = this._blocks.get(name)
+  //   if (l) {
+  //     const r = l.rect()
 
-      return { width: r.width, height: r.height }
-    }
+  //     return { width: r.width, height: r.height }
+  //   }
 
-    return { width: 0, height: 0 }
-  }
+  //   return { width: 0, height: 0 }
+  // }
 
   public create = (args: ICreate): Block | undefined => {
     if (this._create) {

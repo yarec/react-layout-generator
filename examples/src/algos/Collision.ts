@@ -26,7 +26,13 @@ export class CollisionDetection {
         .extent([[-1, -1], [100 + 1, 100 + 1]])
         .addAll(data)
 
-    // const x = this._quadtree.find(40,40)
+    const x = this._quadtree.find(40,40)
+
+    if (x) {
+      this._quadtree.remove(x)
+    }
+
+
         
             
          

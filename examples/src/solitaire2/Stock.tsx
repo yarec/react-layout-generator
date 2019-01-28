@@ -1,3 +1,4 @@
+import { IGenerator } from 'src/importRLG';
 import Deck from '../algos/Deck';
 import Card, { Face } from './Card'
 import Stack from './Stack';
@@ -6,8 +7,8 @@ export default class Stock {
   private _deck: Deck = new Deck();
   private _stack: Stack;
 
-  constructor(update: () => void) {
-    this._stack = new Stack(false, false, update);
+  constructor(update: () => void, g: IGenerator) {
+    this._stack = new Stack(false, false, update, g);
     this._deck.reset();
     this._deck.shuffle();
   }

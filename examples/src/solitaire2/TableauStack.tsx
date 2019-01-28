@@ -1,11 +1,12 @@
+import { IGenerator } from 'src/importRLG';
 import Stack, { allowTableauDrop } from './Stack'
 import Stock from './Stock';
 
 export default class TableauStack {
   private _stack: Stack;
 
-  constructor(update: () => void) {
-    this._stack = new Stack(true, true, update, allowTableauDrop)
+  constructor(update: () => void, g: IGenerator) {
+    this._stack = new Stack(true, true, update, g, allowTableauDrop)
   }
 
   public clear = () => {

@@ -1,4 +1,4 @@
-import { IRect } from '../types';
+import { IRect, IPoint } from '../types';
 import { DebugOptions } from '../types';
 import { IGenerator } from '../generators/Generator';
 
@@ -28,6 +28,7 @@ export interface IService {
 export interface IServiceProps extends React.HTMLProps<HTMLDivElement> {
   key: string;
   boundary: IRect;
+  leftTop: IPoint;
   debug?: DebugOptions;
   onUpdate: (reset?: boolean) => void;
   g: IGenerator;
