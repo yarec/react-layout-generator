@@ -4,7 +4,9 @@ import * as rbush from 'rbush'
 import { DebugOptions, IPoint, IRect } from '../types'
 import { IService, IServiceProps, IUndo } from './Service'
 import { Block } from '../components/Block'
+// import { Control } from '../Control'
 
+const gLayer = 10000
 /**
  * internal use only
  * @ignore
@@ -56,7 +58,6 @@ export class DragDropService
   }
 
   componentDidMount() {
-    // document.addEventListener('mousedown', this.onHtmlMouseDown)
   }
 
   private loadDropContainers() {
@@ -66,11 +67,10 @@ export class DragDropService
     blocks.map.forEach(block => {
       if (block.getHandler('canDrop')) {
         items.push(block)
-      }
-      // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
+        // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
+      } 
     })
     this._rbush.load(items)
-    // console.log('rbush', this._rbush.toJSON())
   }
 
   public componentWillUnmount() {
@@ -90,15 +90,15 @@ export class DragDropService
   }
 
   public render = () => {
-    console.log(`render x: ${this.state.leftTop.x} y: ${this.state.leftTop.y}`)
+    // console.log(`DragDrop render x: ${this.state.leftTop.x} y: ${this.state.leftTop.y}`)
     const style = {
       boxSizing: 'border-box' as 'border-box',
       transform: `translate(${
         this.state.leftTop.x}px, ${
         this.state.leftTop.y}px)`,
       position: 'absolute' as 'absolute',
-      background: 'rgba(50, 50, 50, .3)',
-      zIndex: 20000
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      /* zIndex: gLayer */
     }
     return (
       <div
@@ -109,10 +109,11 @@ export class DragDropService
           position: 'absolute',
           width: this.props.boundary.width,
           height: this.props.boundary.height,
-          zIndex: 20000
+          zIndex: gLayer
         }}
         onMouseDown={this.onMouseDown}
       >
+        {/* <Control name={'$newGame'} g={this.props.g} /> */}
         <div style={style}>{this._jsx}</div>
       </div>
     )
@@ -124,67 +125,6 @@ export class DragDropService
 
   public initUpdate(x: number, y: number) {
     this._startOrigin = { x, y }
-  }
-
-  public moveUpdate(x: number, y: number) {
-    let deltaX = x - this._startOrigin.x
-    let deltaY = y - this._startOrigin.y
-
-    console.log(`moveUpdate ${deltaX} ${deltaY}`)
-
-    if (this._ctrlKey) {
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        deltaY = 0
-      } else {
-        deltaX = 0
-      }
-    }
-
-    if (deltaX || deltaY) {
-      // 1 Extend
-
-      const ur: IRect = {
-        x: this._startRect.x + deltaX,
-        y: this._startRect.y + deltaY,
-        width: this._startRect.width,
-        height: this._startRect.height
-      }
-
-      // 2 Pin
-      if (ur.x < this.props.boundary.x) {
-        ur.x = this.props.boundary.x
-      }
-
-      if (ur.x + ur.width > this.props.boundary.x + this.props.boundary.width) {
-        ur.x = this.props.boundary.x + this.props.boundary.width - ur.width
-      }
-
-      if (ur.y < this.props.boundary.y) {
-        ur.y = this.props.boundary.y
-      }
-
-      if (
-        ur.y + ur.height >
-        this.props.boundary.y + this.props.boundary.height
-      ) {
-        ur.y = this.props.boundary.y + this.props.boundary.height - ur.height
-      }
-
-      // 3 Make live
-
-      // tslint:disable-next-line:no-bitwise
-      if (this.props.debug && this.props.debug & DebugOptions.trace) {
-        console.log(`DragDrop update location (x: ${ur.x} y: ${ur.y})`)
-      }
-
-      // 4 Update handle
-      this.setState({
-        leftTop: {
-          x: this._startRect.x + deltaX,
-          y: this._startRect.y + deltaY
-        }
-      })
-    }
   }
 
   public redo = () => {
@@ -203,8 +143,6 @@ export class DragDropService
     return { editor: this }
   }
 
-  public blockFromPoint(x: number, y: number) {}
-
   public onMouseDown = (event: React.MouseEvent) => {
     if (this._debug & DebugOptions.mouseEvents && event.target) {
       // tslint:disable-next-line:no-bitwise
@@ -219,7 +157,7 @@ export class DragDropService
     // Get target and corresponding Block
     let block: Block | undefined = undefined
     if (this._root && this._root.current) {
-      this._root.current.style.zIndex = '0'
+      this._root.current.style.zIndex = '-1'
 
       let element = document.elementFromPoint(event.clientX, event.clientY)
       if (element) {
@@ -240,7 +178,7 @@ export class DragDropService
         }
       }
 
-      this._root.current.style.zIndex = '20000'
+      this._root.current.style.zIndex = `${gLayer}`
     }
 
     if (!block) {
@@ -309,6 +247,72 @@ export class DragDropService
         // block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height })
       }
       this.props.onUpdate(true)
+    }
+  }
+
+  public moveUpdate(x: number, y: number) {
+    let deltaX = x - this._startOrigin.x
+    let deltaY = y - this._startOrigin.y
+
+    // console.log(`moveUpdate ${deltaX} ${deltaY}`)
+
+    if (this._ctrlKey) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        deltaY = 0
+      } else {
+        deltaX = 0
+      }
+    }
+
+    if (deltaX || deltaY) {
+      // 1 Extend
+
+      const ur: IRect = {
+        x: this._startRect.x + deltaX,
+        y: this._startRect.y + deltaY,
+        width: this._startRect.width,
+        height: this._startRect.height
+      }
+
+      // 2 Pin
+      if (ur.x < this.props.boundary.x) {
+        ur.x = this.props.boundary.x
+      }
+
+      if (ur.x + ur.width > this.props.boundary.x + this.props.boundary.width) {
+        ur.x = this.props.boundary.x + this.props.boundary.width - ur.width
+      }
+
+      if (ur.y < this.props.boundary.y) {
+        ur.y = this.props.boundary.y
+      }
+
+      if (
+        ur.y + ur.height >
+        this.props.boundary.y + this.props.boundary.height
+      ) {
+        ur.y = this.props.boundary.y + this.props.boundary.height - ur.height
+      }
+
+      // 3 CanDrop
+
+      const blocks = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
+      blocks.forEach((block) => {
+        console.log(`can drop ${block.name}`)
+      })
+  
+      // tslint:disable-next-line:no-bitwise
+      if (this.props.debug && this.props.debug & DebugOptions.trace) {
+        console.log(`DragDrop update location (x: ${ur.x} y: ${ur.y})`)
+      }
+
+      // 4 Update handle
+      this.setState({
+        leftTop: {
+          x: this._startRect.x + deltaX,
+          y: this._startRect.y + deltaY
+        }
+      })
     }
   }
 }

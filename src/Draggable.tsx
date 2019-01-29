@@ -35,8 +35,7 @@ export class Draggable extends React.Component<IDraggableProps> {
     return React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child as React.ReactElement<any>, {
         width: this.props.style!.width,
-        height: this.props.style!.height,
-        background: `rgba(0, 0, 0, ${transparent})`,
+        height: this.props.style!.height
       }, null);
     });
   }

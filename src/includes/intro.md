@@ -26,6 +26,8 @@ This project was initially inspired by [react-grid-layout](https://www.npmjs.com
     - [RLGPanel](#rlgpanel)
     - [Responsive Layout](#responsive-layout)
     - [Responsive Desktop Layout](#responsive-desktop-layout)
+    - [Drag and Drop](#drag-and-drop)
+      - [Draggable](#draggable)
     - [Generator](#generator)
       - [Animations](#animations)
       - [Notes](#notes)
@@ -219,6 +221,62 @@ An example of a responsive generator is defined by the [desktopGenerator](global
   </div>
 </RLGLayout>
 ```
+
+### Drag and Drop
+
+RLG has its own drag and drop implementation. To activate add the ServiceOptions.dnd to the service property of RLGLayout like this:
+
+```ts
+      <RLGLayout
+        name='example.Solitaire'
+        service={ServiceOptions.dnd}
+        ...
+```
+
+Items in a layout need to use Draggable for items that can be dragged, and DragDrop containers for source and or destination containers. This process is one of moving content from one container to another.
+
+For controls to work set their layer property to topmost (currently set the layer to 10000) so that they are active.
+
+The implementation follows this logic:
+
+1. mouse down
+  
+    a. start if a draggable component is found
+
+2. drag start
+
+    a. [optional] get DragDrop container
+
+    b. [optional] calls container.dragStart(id: string) => ids: string[]
+
+    c. default is Draggable id
+
+3. get drop image
+
+    a. [optional] calls container.getDragJSX(ids: string[]) => JSX
+
+    b. default is Draggable content
+
+4. drag
+
+    a. look for containers
+
+    b. calls container.canDrop(ids: string[]) => boolean
+
+    c. [optional] calls container.dragEnter(ids: string[]) => void
+
+    d. [optional] alls container.dragLeave(ids: string[]) => void
+
+5. release mouse
+
+    a. calls container.drop(ids: string[]) => void
+
+    b. calls container.endDrop(ids: string[]) => void
+
+
+#### Draggable
+
+
 
 ### Generator
 

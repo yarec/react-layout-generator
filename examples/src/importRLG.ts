@@ -10,7 +10,7 @@
 export { RLGLayout } from '../../src/RLGLayout'
 export { RLGPanel, IRLGMetaDataArgs } from '../../src/RLGPanel'
 export { Draggable } from '../../src/Draggable'
-export { Droppable } from '../../src/Droppable'
+export { DragDrop } from '../../src/DragDrop'
 
 export {IPositionLocation, IPositionSize} from '../../src/components/Block'
 

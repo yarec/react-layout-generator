@@ -57,7 +57,7 @@ export function blockSelectedStyle(rect: IRect, zIndex: number) {
     borderStyle: 'dotted',
     borderWidth: '2px',
     borderColor: 'gray',
-    zIndex: zIndex
+    zIndex: zIndex === 0 ? 'auto' : zIndex
   })
 }
 
@@ -112,7 +112,7 @@ function blockStyle(
       position: 'absolute' as 'absolute',
       transform: v,
       transformOrigin: transformOrigin,
-      zIndex,
+      zIndex: zIndex === 0 ? 'auto' : zIndex,
       ...style
     })
   } else {
@@ -121,7 +121,7 @@ function blockStyle(
       ...size,
       position: 'absolute' as 'absolute',
       transform: v,
-      zIndex,
+      zIndex: zIndex === 0 ? 'auto' : zIndex,
       ...style
     })
   }
@@ -1067,7 +1067,7 @@ export class RLGLayout extends React.Component<
     })
 
     if (elements && this.props.service === ServiceOptions.dnd) {
-      elements.unshift(
+      elements.push(
         <DragDropService
           name={`dnd-${name}`}
           key={`dnd-${name}`}

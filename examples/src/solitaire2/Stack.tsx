@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Draggable, IGenerator } from '../importRLG'
-import Card, { Face } from './Card'
+import Card from './Card'
 
 export type IAllowDrop = (
   cards: Card,
@@ -13,15 +13,15 @@ export type IAllowDrop = (
  * The workaround is to use a global data to capture the data being transferred.
  */
 
-let gDataTransfer: Card[] = []
+// let gDataTransfer: Card[] = []
 
 export default class Stack {
   private _stack: Card[] = []
-  private _update: () => void
+  // private _update: () => void
   private _drag: boolean
   private _drop: boolean
-  private _allowDrop: IAllowDrop | undefined
-  private _allowDragAndDrop: boolean = true
+  // private _allowDrop: IAllowDrop | undefined
+  // private _allowDragAndDrop: boolean = true
   private _g: IGenerator
 
   constructor(
@@ -33,13 +33,13 @@ export default class Stack {
   ) {
     this._drag = drag
     this._drop = drop
-    this._update = update
-    this._allowDrop = allowDrop
+    // this._update = update
+    // this._allowDrop = allowDrop
     this._g = g
   }
 
   public allowDragAndDrop = (enable: boolean) => {
-    this._allowDragAndDrop = enable
+    // this._allowDragAndDrop = enable
   }
 
   public clear = () => {
@@ -138,20 +138,20 @@ export default class Stack {
           borderRadius: 3,
           backgroundColor: '#FBF8EF'
         }}
-        onDragOver={this.onDragOver}
-        onDrop={this.onDrop}
+        /* onDragOver={this.onDragOver}
+        onDrop={this.onDrop} */
       />
     )
   }
 
-  public onDrop = (e: React.DragEvent) => {
-    const cards = gDataTransfer
-    if (cards) {
-      cards.map(card => {
-        this._stack.push(card)
-      })
-    }
-  }
+  // public onDrop = (e: React.DragEvent) => {
+  //   const cards = gDataTransfer
+  //   if (cards) {
+  //     cards.map(card => {
+  //       this._stack.push(card)
+  //     })
+  //   }
+  // }
 
   public pauseEvent(e: React.DragEvent) {
     e.stopPropagation()
@@ -159,86 +159,86 @@ export default class Stack {
     return false
   }
 
-  public onDragStart = (e: React.DragEvent) => {
-    if (!this._allowDragAndDrop) {
-      this.pauseEvent(e)
-    }
+  // public onDragStart = (e: React.DragEvent) => {
+  //   if (!this._allowDragAndDrop) {
+  //     this.pauseEvent(e)
+  //   }
 
-    if (this._drag) {
-      // tslint:disable-next-line:no-string-literal
-      const id = e.target['id']
-      gDataTransfer = this.getCardsToDrag(id)
+  //   if (this._drag) {
+  //     // tslint:disable-next-line:no-string-literal
+  //     const id = e.target['id']
+  //     gDataTransfer = this.getCardsToDrag(id)
 
-      const r = (e.target as HTMLElement).getBoundingClientRect()
-      console.log(`Solitaire2 Stack bounding rect ${id} ${r.left} ${r.top}`)
+  //     const r = (e.target as HTMLElement).getBoundingClientRect()
+  //     console.log(`Solitaire2 Stack bounding rect ${id} ${r.left} ${r.top}`)
 
-      if (gDataTransfer.length) {
-        // tslint:disable-next-line:no-string-literal
-        e.dataTransfer.setData('text/plain', id)
-      }
-    }
-  }
+  //     if (gDataTransfer.length) {
+  //       // tslint:disable-next-line:no-string-literal
+  //       e.dataTransfer.setData('text/plain', id)
+  //     }
+  //   }
+  // }
 
-  public onDragOver = (e: React.DragEvent) => {
-    if (!this._allowDragAndDrop) {
-      this.pauseEvent(e)
-    }
+  // public onDragOver = (e: React.DragEvent) => {
+  //   if (!this._allowDragAndDrop) {
+  //     this.pauseEvent(e)
+  //   }
 
-    const t = gDataTransfer[0]
-    if (this._drop) {
-      if (
-        this._stack.length === 0 &&
-        this._allowDrop &&
-        this._allowDrop(t, undefined)
-      ) {
-        e.preventDefault()
-      } else {
-        if (gDataTransfer) {
-          const top = this._stack[this._stack.length - 1]
-          if (this._allowDrop && this._allowDrop(t, top)) {
-            e.preventDefault()
-          }
-        }
-      }
-    }
-  }
+  //   const t = gDataTransfer[0]
+  //   if (this._drop) {
+  //     if (
+  //       this._stack.length === 0 &&
+  //       this._allowDrop &&
+  //       this._allowDrop(t, undefined)
+  //     ) {
+  //       e.preventDefault()
+  //     } else {
+  //       if (gDataTransfer) {
+  //         const top = this._stack[this._stack.length - 1]
+  //         if (this._allowDrop && this._allowDrop(t, top)) {
+  //           e.preventDefault()
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
-  public onDragEnd = (e: React.DragEvent) => {
-    if (!this._allowDragAndDrop) {
-      this.pauseEvent(e)
-    }
+  // public onDragEnd = (e: React.DragEvent) => {
+  //   if (!this._allowDragAndDrop) {
+  //     this.pauseEvent(e)
+  //   }
 
-    if (e.dataTransfer.dropEffect === 'move') {
-      // Remove
-      gDataTransfer.forEach(card => {
-        if (this._stack.length) {
-          this._stack.pop()
-        }
-      })
+  //   if (e.dataTransfer.dropEffect === 'move') {
+  //     // Remove
+  //     gDataTransfer.forEach(card => {
+  //       if (this._stack.length) {
+  //         this._stack.pop()
+  //       }
+  //     })
 
-      const top = this.top()
-      if (top && top.face === Face.down) {
-        top.flip()
-      }
+  //     const top = this.top()
+  //     if (top && top.face === Face.down) {
+  //       top.flip()
+  //     }
 
-      // Update
-      this._update()
-    }
-  }
+  //     // Update
+  //     this._update()
+  //   }
+  // }
 
-  private getCardsToDrag(id: string) {
-    const cards: Card[] = []
-    let found = false
-    this._stack.forEach(card => {
-      if (!found && card.name === id && card.face === Face.up) {
-        found = true
-      }
-      if (found) {
-        cards.push(card)
-      }
-    })
-    return cards
-  }
+//   private getCardsToDrag(id: string) {
+//     const cards: Card[] = []
+//     let found = false
+//     this._stack.forEach(card => {
+//       if (!found && card.name === id && card.face === Face.up) {
+//         found = true
+//       }
+//       if (found) {
+//         cards.push(card)
+//       }
+//     })
+//     return cards
+//   }
 }
 
 export function isRedSuite(suite: string) {

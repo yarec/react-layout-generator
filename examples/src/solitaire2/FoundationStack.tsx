@@ -16,4 +16,19 @@ export default class FoundationStack {
   public cards() {
     return this._stack.cards();
   }
+
+  public canDrop = (data: string[]) => {
+    console.log(`canDrop ${this._stack.cards.name} `)
+    return false
+  }
+
+  public drop = (data: string[]) => {
+    console.log(`drop ${this._stack.cards.name} `)
+    return false
+  }
+
+  public endDrop = (data: string[]) => {
+    console.log(`endDrop ${this._stack.cards.name} `)
+    return false
+  }
 }
