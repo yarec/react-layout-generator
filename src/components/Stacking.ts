@@ -8,7 +8,7 @@ export interface ILayersArgs {
   blocks: Blocks
 }
 
-export class Layers {
+export class Stacking {
   private _params: Params
   private _blocks: Blocks
 
@@ -18,16 +18,16 @@ export class Layers {
   }
 
   public bringForward(block: Block) {
-    const current = block.layer
+    const current = block.zIndex
     let currentFront = Number.MAX_SAFE_INTEGER
     let max = Number.MIN_SAFE_INTEGER
 
     block.generator.blocks().map.forEach((block: Block) => {
-      if (block.layer > current) {
-        currentFront = block.layer
+      if (block.zIndex > current) {
+        currentFront = block.zIndex
       }
-      if (block.layer > max) {
-        max = block.layer
+      if (block.zIndex > max) {
+        max = block.zIndex
       }
     })
 
@@ -35,11 +35,11 @@ export class Layers {
       currentFront < Number.MAX_SAFE_INTEGER
         ? currentFront + 1
         : max === Number.MIN_SAFE_INTEGER
-        ? block.layer
+        ? block.zIndex
         : max + 1
 
     this._params.set(`${block.name}ZIndex`, value)
-    block.layer = value
+    block.zIndex = value
 
     return value
   }
@@ -48,24 +48,24 @@ export class Layers {
     const { max } = this.minMax()
     if (Array.isArray(blocks)) {
       blocks.forEach((block: Block) => {
-        block.layer = max + 1
+        block.zIndex = max + 1
       })
     } else {
-      blocks.layer = max + 1
+      blocks.zIndex = max + 1
     }
   }
 
   public sendBackward(block: Block) {
-    const current = block.layer
+    const current = block.zIndex
     let currentBack = Number.MIN_SAFE_INTEGER
     let min = Number.MAX_SAFE_INTEGER
 
     block.generator.blocks().map.forEach((block: Block) => {
-      if (block.layer < current) {
-        currentBack = block.layer
+      if (block.zIndex < current) {
+        currentBack = block.zIndex
       }
-      if (block.layer < min) {
-        min = block.layer
+      if (block.zIndex < min) {
+        min = block.zIndex
       }
     })
 
@@ -73,11 +73,11 @@ export class Layers {
       currentBack > Number.MIN_SAFE_INTEGER
         ? currentBack - 1
         : min === Number.MAX_SAFE_INTEGER
-        ? block.layer
+        ? block.zIndex
         : Math.max(0, min - 1)
 
     this._params.set(`${block.name}ZIndex`, value)
-    block.layer = value
+    block.zIndex = value
 
     return value
   }
@@ -86,10 +86,10 @@ export class Layers {
     const { min } = this.minMax()
     if (Array.isArray(blocks)) {
       blocks.forEach((block: Block) => {
-        block.layer = Math.max(0, min - 1)
+        block.zIndex = Math.max(0, min - 1)
       })
     } else {
-      blocks.layer = Math.max(0, min - 1)
+      blocks.zIndex = Math.max(0, min - 1)
     }
   }
 
@@ -98,11 +98,11 @@ export class Layers {
     let max = Number.MIN_SAFE_INTEGER
 
     this._blocks.map.forEach((block: Block) => {
-      if (block.layer < min) {
-        min = block.layer
+      if (block.zIndex < min) {
+        min = block.zIndex
       }
-      if (block.layer > max) {
-        max = block.layer
+      if (block.zIndex > max) {
+        max = block.zIndex
       }
     })
 

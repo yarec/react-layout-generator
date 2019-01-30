@@ -48,13 +48,13 @@ describe('RLGSelect', () => {
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
 
-    const z1 = one.layer
-    const z2 = two.layer
+    const z1 = one.zIndex
+    const z2 = two.zIndex
 
     select!.sendBack()
 
-    expect(one.layer).toEqual(Math.max(0, Math.min(z1, z2) - 1))
-    expect(two.layer).toEqual(Math.max(0, Math.min(z1, z2) - 1))
+    expect(one.zIndex).toEqual(Math.max(0, Math.min(z1, z2) - 1))
+    expect(two.zIndex).toEqual(Math.max(0, Math.min(z1, z2) - 1))
   })
   test('RLGSelect #2', () => {
     g.clear()
@@ -93,13 +93,13 @@ describe('RLGSelect', () => {
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
 
-    const z1 = one.layer
-    const z2 = two.layer
+    const z1 = one.zIndex
+    const z2 = two.zIndex
 
     select!.bringFront()
 
-    expect(one.layer).toEqual(Math.max(z1, z2) + 1)
-    expect(two.layer).toEqual(Math.max(z1, z2) + 1)
+    expect(one.zIndex).toEqual(Math.max(z1, z2) + 1)
+    expect(two.zIndex).toEqual(Math.max(z1, z2) + 1)
   })
   test('RLGSelect #3', () => {
     g.clear()

@@ -2,14 +2,42 @@ import * as React from 'react'
 import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
 
+
+/**
+ * 
+ */
 export interface IDragDropProps extends React.HTMLProps<HTMLButtonElement>{
   name: string
+  /**
+   * Performs the transfer of the data to a new container. Returns true if
+   * successful.
+   */
   drop: (data: string[]) => boolean
+  /**
+   * Test to see if this container can accept this data. Returns true if 
+   * droppable.
+   */
   canDrop: (data: string[]) => boolean
+  /**
+   * Calls the source container to notify it that the data has been 
+   * transferred to another container.
+   */
   endDrop: (data: string[]) => void
+  /**
+   * 
+   */
   dragStart?: (id: string) => string[]
+  /**
+   * 
+   */
   getDragJSX?: (data: string[]) => JSX.Element
+  /**
+   * 
+   */
   dragEnter?: (data: string[]) => void
+  /**
+   * 
+   */
   dragLeave?: (data: string[]) => void
   g: IGenerator
 }

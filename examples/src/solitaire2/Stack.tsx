@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Draggable, IGenerator } from '../importRLG'
 import Card from './Card'
 
-export type IAllowDrop = (
+export type ICanDrop = (
   cards: Card,
   topCard: Card | undefined
 ) => boolean | undefined
@@ -16,11 +16,12 @@ export type IAllowDrop = (
 // let gDataTransfer: Card[] = []
 
 export default class Stack {
+  protected _canDrop: ICanDrop | undefined
   private _stack: Card[] = []
   // private _update: () => void
   private _drag: boolean
   private _drop: boolean
-  // private _allowDrop: IAllowDrop | undefined
+  
   // private _allowDragAndDrop: boolean = true
   private _g: IGenerator
 
@@ -29,12 +30,12 @@ export default class Stack {
     drop: boolean,
     update: () => void,
     g: IGenerator,
-    allowDrop?: IAllowDrop,
+    allowDrop?: ICanDrop,
   ) {
     this._drag = drag
     this._drop = drop
     // this._update = update
-    // this._allowDrop = allowDrop
+    this._canDrop = allowDrop
     this._g = g
   }
 
@@ -127,8 +128,8 @@ export default class Stack {
               id={card.name}
               key={card.name}
               data-draggable={'1'}
-              draggable={false}
-              onDragStart={this.noop}
+              // draggable={false}
+              // onDragStart={this.noop}
               // data-onDragStart={this.onDragStart}
               src={card.path}
               style={style}
@@ -141,8 +142,8 @@ export default class Stack {
               id={card.name}
               key={card.name}
               src={card.path}
-              draggable={false}
-              onDragStart={this.noop}
+              // draggable={false}
+              // onDragStart={this.noop}
               style={style}
             />
           )

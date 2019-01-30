@@ -377,10 +377,10 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   }
 
   public bringForward = () => {
-    const layers = this.props.g.layers();
+    const stacking = this.props.g.stacking();
 
     this._selected.forEach((block: Block) => {
-      layers.bringForward(block)
+      stacking.bringForward(block)
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -388,10 +388,10 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   }
 
   public sendBackward = () => {
-    const layers = this.props.g.layers();
+    const stacking = this.props.g.stacking();
 
     this._selected.forEach((block: Block) => {
-      layers.sendBackward(block)
+      stacking.sendBackward(block)
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -399,9 +399,9 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   }
 
   public bringFront = () => {
-    const layers = this.props.g.layers();
+    const stacking = this.props.g.stacking();
 
-    layers.bringFront(this.selectedBlocks())
+    stacking.bringFront(this.selectedBlocks())
     if (this._selected.size) {
       this.props.onUpdate();
     }
@@ -411,8 +411,8 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
   }
 
   public sendBack = () => {
-    const layers = this.props.g.layers();
-    layers.sendBack(this.selectedBlocks())
+    const stacking = this.props.g.stacking();
+    stacking.sendBack(this.selectedBlocks())
     if (this._selected.size) {
       this.props.onUpdate();
     }

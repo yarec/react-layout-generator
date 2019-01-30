@@ -1,5 +1,5 @@
-import { IGenerator } from 'src/importRLG';
 import Deck from '../algos/Deck';
+import { IGenerator } from '../importRLG';
 import Card, { Face } from './Card'
 import Stack from './Stack';
 

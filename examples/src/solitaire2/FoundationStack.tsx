@@ -1,4 +1,4 @@
-import { IGenerator } from 'src/importRLG';
+import { IGenerator } from '../importRLG';
 import Stack, {allowFoundationDrop} from './Stack'
 
 export default class FoundationStack {
@@ -18,17 +18,18 @@ export default class FoundationStack {
   }
 
   public canDrop = (data: string[]) => {
-    console.log(`foundatation stack canDrop ${data} `)
+ 
+    console.log(`foundation canDrop ${data} `)
     return false
   }
 
   public drop = (data: string[]) => {
-    console.log(`drop ${this._stack.cards.name} `)
+    console.log(`foundation drop ${this._stack.cards.name} `)
     return false
   }
 
   public endDrop = (data: string[]) => {
-    console.log(`endDrop ${this._stack.cards.name} `)
+    console.log(`foundation endDrop ${this._stack.cards.name} `)
     return false
   }
 }

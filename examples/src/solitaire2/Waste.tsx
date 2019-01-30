@@ -1,4 +1,4 @@
-import { IGenerator } from 'src/importRLG';
+import { IGenerator } from '../importRLG';
 import Stack from './Stack';
 import Stock from './Stock';
 

@@ -37,7 +37,7 @@ export class DragDropService
 
   private _rbush: rbush.RBush<Block>
   private _root: React.RefObject<HTMLDivElement>
-  private _dragData: any
+  private _dragData: string[]
 
   constructor(props: IServiceProps) {
     super(props)
@@ -85,6 +85,7 @@ export class DragDropService
 
   public endDrag = () => {
     this._jsx = undefined
+    this._dragData = []
     document.removeEventListener('mouseup', this.onHtmlMouseUp)
     document.removeEventListener('mousemove', this.onHtmlMouseMove)
   }
@@ -199,9 +200,13 @@ export class DragDropService
       if (dragData) {
         this._dragData = dragData(block)
       }
-    } else {
-      this._dragData = block.name
+    } 
+    
+    if (!this._dragData) {
+      this._dragData = [block.name]
     }
+
+    console.log(`dnd dragData ${this._dragData}`)
 
     // get drag image as JSX
     if (localParent) {

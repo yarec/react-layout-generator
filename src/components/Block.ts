@@ -333,6 +333,8 @@ export interface IPosition {
    * to change.
    */
   transform?: Transform[]
+
+  dragDrop?: any
 }
 
 /**
@@ -485,7 +487,7 @@ export class Block {
   private _g: IGenerator
   private _localParent: Block | undefined
   private _positionChildren: PositionChildren | undefined
-  private _layer: number
+  private _zIndex: number
   private _transform: string = ''
   private _transformOrigin: string = ''
   private _handlers: Map<string, any> = new Map()
@@ -507,7 +509,7 @@ export class Block {
     this._localParent = localParent
     this.updatePosition(this._position)
     if (this._position.layer) {
-      this.layer = this._position.layer
+      this.zIndex = this._position.layer
     }
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._changed = true
@@ -544,17 +546,17 @@ export class Block {
     this._onClick = fn
   }
 
-  public get layer() {
-    return this._layer ? this._layer : 0
+  public get zIndex() {
+    return this._zIndex ? this._zIndex : 0
   }
 
-  public set layer(layer: number) {
+  public set zIndex(layer: number) {
     const params = this._g.params()
     const zIndex = params.get(`${this._name}ZIndex`) as number
     if (zIndex) {
-      this._layer = zIndex
+      this._zIndex = zIndex
     } else {
-      this._layer = layer ? layer : 0
+      this._zIndex = layer ? layer : 0
     }
   }
 

@@ -913,13 +913,13 @@ img { max-width: 100%; }
 			<a href="enums/debugoptions.html" class="tsd-kind-icon">Debug<wbr>Options</a>
 		</li>
 		<li class=" tsd-kind-enum">
-			<a href="enums/editoptions.html" class="tsd-kind-icon">Edit<wbr>Options</a>
-		</li>
-		<li class=" tsd-kind-enum">
 			<a href="enums/overflowoptions.html" class="tsd-kind-icon">Overflow<wbr>Options</a>
 		</li>
 		<li class=" tsd-kind-enum">
 			<a href="enums/positionref.html" class="tsd-kind-icon">Position<wbr>Ref</a>
+		</li>
+		<li class=" tsd-kind-enum">
+			<a href="enums/serviceoptions.html" class="tsd-kind-icon">Service<wbr>Options</a>
 		</li>
 		<li class=" tsd-kind-enum">
 			<a href="enums/status.html" class="tsd-kind-icon">Status</a>
@@ -933,6 +933,15 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-class">
 			<a href="classes/blocks.html" class="tsd-kind-icon">Blocks</a>
 		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter">
+			<a href="classes/control.html" class="tsd-kind-icon">Control</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter">
+			<a href="classes/dragdrop.html" class="tsd-kind-icon">Drag<wbr>Drop</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter">
+			<a href="classes/draggable.html" class="tsd-kind-icon">Draggable</a>
+		</li>
 		<li class=" tsd-kind-class">
 			<a href="classes/edithelper.html" class="tsd-kind-icon">Edit<wbr>Helper</a>
 		</li>
@@ -941,9 +950,6 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-not-exported">
 			<a href="classes/intro.html" class="tsd-kind-icon">Intro</a>
-		</li>
-		<li class=" tsd-kind-class">
-			<a href="classes/layers.html" class="tsd-kind-icon">Layers</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="classes/params.html" class="tsd-kind-icon">Params</a>
@@ -956,6 +962,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="classes/rect.html" class="tsd-kind-icon">Rect</a>
+		</li>
+		<li class=" tsd-kind-class">
+			<a href="classes/stacking.html" class="tsd-kind-icon">Stacking</a>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/ialign.html" class="tsd-kind-icon">IAlign</a>
@@ -976,10 +985,19 @@ img { max-width: 100%; }
 			<a href="interfaces/icommand.html" class="tsd-kind-icon">ICommand</a>
 		</li>
 		<li class=" tsd-kind-interface">
+			<a href="interfaces/icontrolprops.html" class="tsd-kind-icon">IControl<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface">
 			<a href="interfaces/icreate.html" class="tsd-kind-icon">ICreate</a>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/idatalayout.html" class="tsd-kind-icon">IData<wbr>Layout</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/idragdropprops.html" class="tsd-kind-icon">IDrag<wbr>Drop<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/idraggableprops.html" class="tsd-kind-icon">IDraggable<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/iedit.html" class="tsd-kind-icon">IEdit</a>
@@ -1001,6 +1019,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-interface tsd-is-not-exported">
 			<a href="interfaces/iintrostate.html" class="tsd-kind-icon">IIntro<wbr>State</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/ilayermapper.html" class="tsd-kind-icon">ILayer<wbr>Mapper</a>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/ilayersargs.html" class="tsd-kind-icon">ILayers<wbr>Args</a>
@@ -1059,6 +1080,9 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-interface">
 			<a href="interfaces/ivalue.html" class="tsd-kind-icon">IValue</a>
 		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/props.html" class="tsd-kind-icon">Props</a>
+		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#create" class="tsd-kind-icon">Create</a>
 		</li>
@@ -1091,6 +1115,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
 			<a href="globals.html#g" class="tsd-kind-icon">g</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-is-not-exported">
+			<a href="globals.html#glayer" class="tsd-kind-icon">g<wbr>Layer</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
 			<a href="globals.html#mount" class="tsd-kind-icon">mount</a>
@@ -1190,6 +1217,10 @@ img { max-width: 100%; }
 			<h1 id="react-layout-generator">React Layout Generator</h1>
 			<p><em>React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.</em></p>
 			<p>RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You&#39;re no longer limited to just css and the linear flow of elements.</p>
+			<hr>
+			<p>A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.</p>
+			<p>Of course, this also means that the author needs to know how the content will fit into the allocated space. We&#39;ll add notes on how we are dealing with this as we continue with the development of RLG. Note that it is not always a problem that needs solving.</p>
+			<hr>
 			<p>This project was initially inspired by <a href="https://www.npmjs.com/package/react-grid-layout">react-grid-layout</a>.</p>
 			<!-- TOC -->
 			<ul>
@@ -1209,6 +1240,11 @@ img { max-width: 100%; }
 								<li><a href="#rlgpanel">RLGPanel</a></li>
 								<li><a href="#responsive-layout">Responsive Layout</a></li>
 								<li><a href="#responsive-desktop-layout">Responsive Desktop Layout</a></li>
+								<li><a href="#layers">Layers</a></li>
+								<li><a href="#drag-and-drop">Drag and Drop</a><ul>
+										<li><a href="#draggable">Draggable</a></li>
+									</ul>
+								</li>
 								<li><a href="#generator">Generator</a><ul>
 										<li><a href="#animations">Animations</a></li>
 										<li><a href="#notes">Notes</a></li>
@@ -1233,7 +1269,9 @@ img { max-width: 100%; }
 			</ul>
 			<!-- /TOC -->
 			<h2 id="install">Install</h2>
-			<p>Coming soon on npm.</p>
+			<p>Use either npm or yarn to install</p>
+			<pre><code class="language-js">yarn add react-layout-generator</code></pre>
+			<p>For typescript user, type definitions are not needed since they are included.</p>
 			<h3 id="contributing">Contributing</h3>
 			<p>We&#39;re really glad you&#39;re reading this, because we need volunteer developers to help this project come to fruition. In particular we need components that are designed to use RLG.</p>
 			<p>These steps will guide you through contributing to this project:</p>
@@ -1249,6 +1287,7 @@ img { max-width: 100%; }
 			<p>Finally send a <a href="https://github.com/chetmurphy/react-layout-generator/compare?expand=1">GitHub Pull Request</a> with a clear list of what you&#39;ve done (read more <a href="https://help.github.com/articles/about-pull-requests/">about pull requests</a>). Make sure all of your commits are atomic (one feature per commit).</p>
 			<h2 id="todo">TODO</h2>
 			<ul>
+				<li>Place each layer in its own group so that <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context">z-index</a> will only have effect in that layer.</li>
 				<li>Add React PropTypes for non typescript users.</li>
 				<li>Add grid command as option to toolBar</li>
 				<li>Add arrange group to toolBar (align, layers,</li>
@@ -1257,7 +1296,6 @@ img { max-width: 100%; }
 				<li>Add cut, copy, and paste commands.</li>
 				<li>Add options to align columnsGenerator and rowsGenerator.</li>
 				<li>Add Touch support in editor.</li>
-				<li>Upload component to npm</li>
 				<li>Host website on Github</li>
 			</ul>
 			<h2 id="features">Features</h2>
@@ -1359,6 +1397,75 @@ img { max-width: 100%; }
     &lt;span&gt;Footer content&lt;/span&gt;
   &lt;/div&gt;
 &lt;/RLGLayout&gt;</code></pre>
+			<h3 id="layers">Layers</h3>
+			<p>RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. The last layer is the control layer that sets on top any services activated.</p>
+			<p>Note: Layers are NOT related to z-index. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to help control the layer&#39;s stacking context.</p>
+			<p>Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.</p>
+			<p>To specify the layer of a block and all its content add the data-layer property to component.</p>
+			<pre><code class="language-ts">&lt;div
+  key={name}
+  data-layout={{
+    name
+  }}
+  data-layer={<span class="hljs-number">2</span>}
+&gt;</code></pre>
+			<p>To manage the layers add a layers property in RLGLayout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.</p>
+			<pre><code class="language-ts">&lt;RLGLayout
+        name=<span class="hljs-string">'name'</span>
+        ...
+        layers={{
+          maximum: <span class="hljs-number">5</span>,
+          service: <span class="hljs-number">4</span>,
+          mapper: <span class="hljs-function">(<span class="hljs-params">layer: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
+            <span class="hljs-keyword">if</span> (layer === <span class="hljs-number">3</span>) {
+              <span class="hljs-comment">// hide layer 3</span>
+              <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>
+            }
+            <span class="hljs-keyword">if</span> (layer &gt; <span class="hljs-number">4</span>) {
+              <span class="hljs-comment">// combine all layers greater than 5</span>
+              <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>
+            }
+            <span class="hljs-keyword">return</span> layer
+          }
+        }}
+        ...</code></pre>
+			<p>In this example any services specified will use layer 4. All layers above 4 will be treated as a control layer.</p>
+			<p>To animate a layer you just collect all the blocks that will participate in the layer animation in a <a href="#generator">generator</a>. Other animations can be running on other layers.</p>
+			<p>The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers. </p>
+			<h3 id="drag-and-drop">Drag and Drop</h3>
+			<p>RLG has its own drag and drop implementation. To activate add the ServiceOptions.dnd to the service property of RLGLayout like this:</p>
+			<pre><code class="language-ts">      &lt;RLGLayout
+        name=<span class="hljs-string">'example.Solitaire'</span>
+        service={ServiceOptions.dnd}
+        ...</code></pre>
+			<p>Items in a layout need to use Draggable for items that can be dragged, and DragDrop containers for source and or destination containers. This process is one of moving content from one container to another.</p>
+			<p>For controls to work set their layer property to topmost (currently set the layer to 10000) so that they are active.</p>
+			<p>The implementation follows this logic:</p>
+			<ol>
+				<li><p>mouse down</p>
+					<p> a. start if a draggable component is found</p>
+				</li>
+				<li><p>drag start</p>
+					<p> a. [optional] get DragDrop container</p>
+					<p> b. [optional] calls container.dragStart(id: string) =&gt; ids: string[]</p>
+					<p> c. default is Draggable id</p>
+				</li>
+				<li><p>get drop image</p>
+					<p> a. [optional] calls container.getDragJSX(ids: string[]) =&gt; JSX</p>
+					<p> b. default is Draggable content</p>
+				</li>
+				<li><p>drag</p>
+					<p> a. look for containers</p>
+					<p> b. calls container.canDrop(ids: string[]) =&gt; boolean</p>
+					<p> c. [optional] calls container.dragEnter(ids: string[]) =&gt; void</p>
+					<p> d. [optional] alls container.dragLeave(ids: string[]) =&gt; void</p>
+				</li>
+				<li><p>release mouse</p>
+					<p> a. calls container.drop(ids: string[]) =&gt; void</p>
+					<p> b. calls container.endDrop(ids: string[]) =&gt; void</p>
+				</li>
+			</ol>
+			<h4 id="draggable">Draggable</h4>
 			<h3 id="generator">Generator</h3>
 			<p><em>See columnsGenerator, desktopGenerator, and dynamicGenerator for examples.</em></p>
 			<p>A generator is just a function that returns an instance of Generator. A generator function must define its parameter storage, contain an init function and an optional create function. Here is a minimal Empty generator:</p>
@@ -1544,7 +1651,7 @@ data-layout={{
     <span class="hljs-keyword">return</span> (
       &lt;RLGLayout
         name={<span class="hljs-string">'RLGLayout.intro.example'</span>}
-        edit={<span class="hljs-keyword">this</span>._edit ? EditOptions.all : EditOptions.none}
+        service={<span class="hljs-keyword">this</span>._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.none}
         params={[
 → → →     ...data[<span class="hljs-string">'rlg.intro'</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">Array</span>&lt;[<span class="hljs-built_in">string</span>,ParamValue]&gt;,
@@ -1561,9 +1668,9 @@ data-layout={{
 						<h3>Enumerations</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-enum"><a href="enums/debugoptions.html" class="tsd-kind-icon">Debug<wbr>Options</a></li>
-							<li class="tsd-kind-enum"><a href="enums/editoptions.html" class="tsd-kind-icon">Edit<wbr>Options</a></li>
 							<li class="tsd-kind-enum"><a href="enums/overflowoptions.html" class="tsd-kind-icon">Overflow<wbr>Options</a></li>
 							<li class="tsd-kind-enum"><a href="enums/positionref.html" class="tsd-kind-icon">Position<wbr>Ref</a></li>
+							<li class="tsd-kind-enum"><a href="enums/serviceoptions.html" class="tsd-kind-icon">Service<wbr>Options</a></li>
 							<li class="tsd-kind-enum"><a href="enums/status.html" class="tsd-kind-icon">Status</a></li>
 							<li class="tsd-kind-enum"><a href="enums/unit.html" class="tsd-kind-icon">Unit</a></li>
 						</ul>
@@ -1573,14 +1680,17 @@ data-layout={{
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-class"><a href="classes/block.html" class="tsd-kind-icon">Block</a></li>
 							<li class="tsd-kind-class"><a href="classes/blocks.html" class="tsd-kind-icon">Blocks</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/control.html" class="tsd-kind-icon">Control</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/dragdrop.html" class="tsd-kind-icon">Drag<wbr>Drop</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/draggable.html" class="tsd-kind-icon">Draggable</a></li>
 							<li class="tsd-kind-class"><a href="classes/edithelper.html" class="tsd-kind-icon">Edit<wbr>Helper</a></li>
 							<li class="tsd-kind-class"><a href="classes/generator.html" class="tsd-kind-icon">Generator</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-not-exported"><a href="classes/intro.html" class="tsd-kind-icon">Intro</a></li>
-							<li class="tsd-kind-class"><a href="classes/layers.html" class="tsd-kind-icon">Layers</a></li>
 							<li class="tsd-kind-class"><a href="classes/params.html" class="tsd-kind-icon">Params</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/rlglayout.html" class="tsd-kind-icon">RLGLayout</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/rlgpanel.html" class="tsd-kind-icon">RLGPanel</a></li>
 							<li class="tsd-kind-class"><a href="classes/rect.html" class="tsd-kind-icon">Rect</a></li>
+							<li class="tsd-kind-class"><a href="classes/stacking.html" class="tsd-kind-icon">Stacking</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
@@ -1592,8 +1702,11 @@ data-layout={{
 							<li class="tsd-kind-interface"><a href="interfaces/iargssize.html" class="tsd-kind-icon">IArgs<wbr>Size</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iattrrect.html" class="tsd-kind-icon">IAttr<wbr>Rect</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/icommand.html" class="tsd-kind-icon">ICommand</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/icontrolprops.html" class="tsd-kind-icon">IControl<wbr>Props</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/icreate.html" class="tsd-kind-icon">ICreate</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/idatalayout.html" class="tsd-kind-icon">IData<wbr>Layout</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/idragdropprops.html" class="tsd-kind-icon">IDrag<wbr>Drop<wbr>Props</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/idraggableprops.html" class="tsd-kind-icon">IDraggable<wbr>Props</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iedit.html" class="tsd-kind-icon">IEdit</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iedithelperprops.html" class="tsd-kind-icon">IEdit<wbr>Helper<wbr>Props</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iedittool.html" class="tsd-kind-icon">IEdit<wbr>Tool</a></li>
@@ -1601,6 +1714,7 @@ data-layout={{
 							<li class="tsd-kind-interface"><a href="interfaces/igenerator.html" class="tsd-kind-icon">IGenerator</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/igeneratorfunctionargs.html" class="tsd-kind-icon">IGenerator<wbr>Function<wbr>Args</a></li>
 							<li class="tsd-kind-interface tsd-is-not-exported"><a href="interfaces/iintrostate.html" class="tsd-kind-icon">IIntro<wbr>State</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/ilayermapper.html" class="tsd-kind-icon">ILayer<wbr>Mapper</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/ilayersargs.html" class="tsd-kind-icon">ILayers<wbr>Args</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/imenuitem.html" class="tsd-kind-icon">IMenu<wbr>Item</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iorigin.html" class="tsd-kind-icon">IOrigin</a></li>
@@ -1620,6 +1734,7 @@ data-layout={{
 							<li class="tsd-kind-interface"><a href="interfaces/isize.html" class="tsd-kind-icon">ISize</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iskew.html" class="tsd-kind-icon">ISkew</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/ivalue.html" class="tsd-kind-icon">IValue</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/props.html" class="tsd-kind-icon">Props</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
@@ -1641,6 +1756,7 @@ data-layout={{
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#deepequal" class="tsd-kind-icon">deep<wbr>Equal</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#g" class="tsd-kind-icon">g</a></li>
+							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#glayer" class="tsd-kind-icon">g<wbr>Layer</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#mount" class="tsd-kind-icon">mount</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#now" class="tsd-kind-icon">now</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#params" class="tsd-kind-icon">params</a></li>
@@ -1694,7 +1810,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/Generator.ts#L28">generators/Generator.ts:28</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/Generator.ts#L27">generators/Generator.ts:27</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1728,7 +1844,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Debug<wbr>Options<wbr>Array<span class="tsd-signature-symbol">:</span> <a href="enums/debugoptions.html" class="tsd-signature-type">DebugOptions</a><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L429">types.ts:429</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L455">types.ts:455</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1743,7 +1859,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">IInit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/Generator.ts#L18">generators/Generator.ts:18</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/Generator.ts#L17">generators/Generator.ts:17</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1774,7 +1890,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Load<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Params.ts#L24">components/Params.ts:24</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Params.ts#L24">components/Params.ts:24</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1811,7 +1927,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Param<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ipoint.html" class="tsd-signature-type">IPoint</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/isize.html" class="tsd-signature-type">ISize</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/irect.html" class="tsd-signature-type">IRect</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iattrrect.html" class="tsd-signature-type">IAttrRect</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ipositionlocation.html" class="tsd-signature-type">IPositionLocation</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ipositionsize.html" class="tsd-signature-type">IPositionSize</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ieditabletextdata.html" class="tsd-signature-type">IEditableTextData</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Params.ts#L13">components/Params.ts:13</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Params.ts#L13">components/Params.ts:13</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1821,7 +1937,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Position<wbr>Children<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Block.ts#L235">components/Block.ts:235</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L236">components/Block.ts:236</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1851,7 +1967,7 @@ data-layout={{
 					<ul class="tsd-parameters">
 						<li class="tsd-parameter-siganture">
 							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>block<span class="tsd-signature-symbol">: </span><a href="classes/block.html" class="tsd-signature-type">Block</a>, g<span class="tsd-signature-symbol">: </span><a href="interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>block<span class="tsd-signature-symbol">: </span><a href="classes/block.html" class="tsd-signature-type">Block</a>, g<span class="tsd-signature-symbol">: </span><a href="interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, props<span class="tsd-signature-symbol">: </span><a href="interfaces/props.html" class="tsd-signature-type">Props</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
@@ -1865,6 +1981,9 @@ data-layout={{
 										</li>
 										<li>
 											<h5>index: <span class="tsd-signature-type">number</span></h5>
+										</li>
+										<li>
+											<h5>props: <a href="interfaces/props.html" class="tsd-signature-type">Props</a></h5>
 										</li>
 									</ul>
 									<h4 class="tsd-returns-title">Returns <a href="classes/block.html" class="tsd-signature-type">Block</a>
@@ -1883,7 +2002,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Save<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Params.ts#L23">components/Params.ts:23</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Params.ts#L23">components/Params.ts:23</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1920,7 +2039,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Transform<span class="tsd-signature-symbol">:</span> <a href="interfaces/irotate.html" class="tsd-signature-type">IRotate</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iscale.html" class="tsd-signature-type">IScale</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/iskew.html" class="tsd-signature-type">ISkew</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Block.ts#L276">components/Block.ts:276</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L278">components/Block.ts:278</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1930,7 +2049,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">Update<wbr>Handle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/updateHandle.ts#L3">editors/updateHandle.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/updateHandle.ts#L3">editors/updateHandle.ts:3</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1964,7 +2083,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">deep<wbr>Equal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;deep-equal&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/components/Params.ts#L4">components/Params.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Params.ts#L4">components/Params.ts:4</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1974,19 +2093,29 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a><span class="tsd-signature-symbol"> =&nbsp;new Generator(&#x27;test&#x27;, init, params, create)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Block.test.ts#L25">__tests__/components/Block.test.ts:25</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Blocks.test.ts#L28">__tests__/components/Blocks.test.ts:28</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/editHelper.test.tsx#L31">__tests__/editors/editHelper.test.tsx:31</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/RLGSelect.test.tsx#L11">__tests__/editors/RLGSelect.test.tsx:11</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/update.test.ts#L31">__tests__/editors/update.test.ts:31</a></li>
-						<li>Defined in __tests__/generators/animations/rollGenerator.test.tsx:8</li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/generators/columnsGenerator.test.tsx#L8">__tests__/generators/columnsGenerator.test.tsx:8</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/generators/desktopGenerator.test.tsx#L8">__tests__/generators/desktopGenerator.test.tsx:8</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/generators/dynamicGenerator.test.tsx#L8">__tests__/generators/dynamicGenerator.test.tsx:8</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/generators/rowsGenerator.test.tsx#L8">__tests__/generators/rowsGenerator.test.tsx:8</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayout.test.tsx#L32">__tests__/RLGLayout.test.tsx:32</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayoutInstance.test.tsx#L34">__tests__/RLGLayoutInstance.test.tsx:34</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGPanel.test.tsx#L32">__tests__/RLGPanel.test.tsx:32</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Block.test.ts#L28">__tests__/components/Block.test.ts:28</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Blocks.test.ts#L28">__tests__/components/Blocks.test.ts:28</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/editHelper.test.tsx#L31">__tests__/editors/editHelper.test.tsx:31</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/RLGSelect.test.tsx#L11">__tests__/editors/RLGSelect.test.tsx:11</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/update.test.ts#L31">__tests__/editors/update.test.ts:31</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/animations/rollGenerator.test.tsx#L8">__tests__/generators/animations/rollGenerator.test.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/columnsGenerator.test.tsx#L8">__tests__/generators/columnsGenerator.test.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/desktopGenerator.test.tsx#L8">__tests__/generators/desktopGenerator.test.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/dynamicGenerator.test.tsx#L8">__tests__/generators/dynamicGenerator.test.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/rowsGenerator.test.tsx#L8">__tests__/generators/rowsGenerator.test.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayout.test.tsx#L32">__tests__/RLGLayout.test.tsx:32</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayoutInstance.test.tsx#L34">__tests__/RLGLayoutInstance.test.tsx:34</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGPanel.test.tsx#L32">__tests__/RLGPanel.test.tsx:32</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+				<a name="glayer" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> g<wbr>Layer</h3>
+				<div class="tsd-signature tsd-kind-icon">g<wbr>Layer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">10000</span><span class="tsd-signature-symbol"> =&nbsp;10000</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/services/DragDropService.tsx#L9">services/DragDropService.tsx:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1996,11 +2125,11 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">mount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">mount</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/editHelper.test.tsx#L10">__tests__/editors/editHelper.test.tsx:10</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/RLGSelect.test.tsx#L9">__tests__/editors/RLGSelect.test.tsx:9</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayout.test.tsx#L11">__tests__/RLGLayout.test.tsx:11</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayoutInstance.test.tsx#L13">__tests__/RLGLayoutInstance.test.tsx:13</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGPanel.test.tsx#L11">__tests__/RLGPanel.test.tsx:11</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/editHelper.test.tsx#L10">__tests__/editors/editHelper.test.tsx:10</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/RLGSelect.test.tsx#L9">__tests__/editors/RLGSelect.test.tsx:9</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayout.test.tsx#L11">__tests__/RLGLayout.test.tsx:11</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayoutInstance.test.tsx#L13">__tests__/RLGLayoutInstance.test.tsx:13</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGPanel.test.tsx#L11">__tests__/RLGPanel.test.tsx:11</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2010,7 +2139,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">now<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;performance-now&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L5">RLGLayout.tsx:5</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/RLGLayout.tsx#L5">RLGLayout.tsx:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2020,14 +2149,14 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="classes/params.html" class="tsd-signature-type">Params</a><span class="tsd-signature-symbol"> =&nbsp;new Params({name: &#x27;layoutTest&#x27;,initialValues: [[&#x27;containersize&#x27;, { width: 1000, height: 1000 }]]})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Block.test.ts#L6">__tests__/components/Block.test.ts:6</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Blocks.test.ts#L7">__tests__/components/Blocks.test.ts:7</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/editHelper.test.tsx#L12">__tests__/editors/editHelper.test.tsx:12</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/update.test.ts#L12">__tests__/editors/update.test.ts:12</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/generators/Generator.test.ts#L4">__tests__/generators/Generator.test.ts:4</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayout.test.tsx#L13">__tests__/RLGLayout.test.tsx:13</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGLayoutInstance.test.tsx#L15">__tests__/RLGLayoutInstance.test.tsx:15</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/RLGPanel.test.tsx#L13">__tests__/RLGPanel.test.tsx:13</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Block.test.ts#L6">__tests__/components/Block.test.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Blocks.test.ts#L7">__tests__/components/Blocks.test.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/editHelper.test.tsx#L12">__tests__/editors/editHelper.test.tsx:12</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/update.test.ts#L12">__tests__/editors/update.test.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/generators/Generator.test.ts#L4">__tests__/generators/Generator.test.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayout.test.tsx#L13">__tests__/RLGLayout.test.tsx:13</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGLayoutInstance.test.tsx#L15">__tests__/RLGLayoutInstance.test.tsx:15</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/RLGPanel.test.tsx#L13">__tests__/RLGPanel.test.tsx:13</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2037,8 +2166,8 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;react-prefixer&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/RLGEditLayout.tsx#L8">editors/RLGEditLayout.tsx:8</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L4">RLGLayout.tsx:4</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/RLGEditLayout.tsx#L8">editors/RLGEditLayout.tsx:8</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/RLGLayout.tsx#L4">RLGLayout.tsx:4</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2048,7 +2177,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">raf<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;raf&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/RLGLayout.tsx#L36">RLGLayout.tsx:36</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/RLGLayout.tsx#L38">RLGLayout.tsx:38</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2065,7 +2194,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/utils.ts#L3">utils.ts:3</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/utils.ts#L3">utils.ts:3</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2088,7 +2217,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/columnsGenerator.tsx#L7">generators/columnsGenerator.tsx:7</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/columnsGenerator.tsx#L7">generators/columnsGenerator.tsx:7</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2114,7 +2243,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Block.test.ts#L15">__tests__/components/Block.test.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Block.test.ts#L18">__tests__/components/Block.test.ts:18</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2140,7 +2269,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/desktopGenerator.tsx#L7">generators/desktopGenerator.tsx:7</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/desktopGenerator.tsx#L7">generators/desktopGenerator.tsx:7</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2166,7 +2295,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/dynamicGenerator.tsx#L6">generators/dynamicGenerator.tsx:6</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/dynamicGenerator.tsx#L6">generators/dynamicGenerator.tsx:6</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2192,7 +2321,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/editors/editHelper.test.tsx#L33">__tests__/editors/editHelper.test.tsx:33</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/editors/editHelper.test.tsx#L33">__tests__/editors/editHelper.test.tsx:33</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="classes/edithelper.html" class="tsd-signature-type">EditHelper</a></h4>
@@ -2209,7 +2338,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/components/Block.test.ts#L11">__tests__/components/Block.test.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/components/Block.test.ts#L14">__tests__/components/Block.test.ts:14</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2232,7 +2361,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L196">types.ts:196</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L222">types.ts:222</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2262,7 +2391,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/utils.ts#L8">generators/utils.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/utils.ts#L8">generators/utils.ts:8</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2293,7 +2422,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L332">types.ts:332</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L358">types.ts:358</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2323,7 +2452,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L261">types.ts:261</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L287">types.ts:287</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2353,7 +2482,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L467">types.ts:467</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L495">types.ts:495</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2383,7 +2512,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L459">types.ts:459</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L487">types.ts:487</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2413,7 +2542,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/animations/rollGenerator.ts#L7">generators/animations/rollGenerator.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/animations/rollGenerator.ts#L7">generators/animations/rollGenerator.ts:7</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2439,7 +2568,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/rowsGenerator.tsx#L7">generators/rowsGenerator.tsx:7</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/rowsGenerator.tsx#L7">generators/rowsGenerator.tsx:7</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2462,7 +2591,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/generators/utils.ts#L17">generators/utils.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/generators/utils.ts#L17">generators/utils.ts:17</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2491,7 +2620,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L219">types.ts:219</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L245">types.ts:245</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2532,7 +2661,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/utils.ts#L103">utils.ts:103</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/utils.ts#L103">utils.ts:103</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2561,7 +2690,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/utils.ts#L23">utils.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/utils.ts#L23">utils.ts:23</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2590,7 +2719,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/types.ts#L204">types.ts:204</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L230">types.ts:230</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2620,7 +2749,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/update.ts#L60">editors/update.ts:60</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/update.ts#L60">editors/update.ts:60</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2663,7 +2792,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/update.ts#L7">editors/update.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/update.ts#L7">editors/update.ts:7</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2716,7 +2845,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/update.ts#L23">editors/update.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/update.ts#L23">editors/update.ts:23</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2766,7 +2895,7 @@ data-layout={{
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/editors/update.ts#L48">editors/update.ts:48</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/editors/update.ts#L48">editors/update.ts:48</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2808,7 +2937,7 @@ data-layout={{
 				<div class="tsd-signature tsd-kind-icon">containersize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -2817,7 +2946,7 @@ data-layout={{
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;500</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2827,7 +2956,7 @@ data-layout={{
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/85305a6/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/__tests__/Utils.test.ts#L4">__tests__/Utils.test.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>

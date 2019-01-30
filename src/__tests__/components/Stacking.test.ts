@@ -6,15 +6,15 @@ function init(g: IGenerator) {
   return g.blocks()
 }
 
-it('Layers #1', () => {
+it('Stacking #1', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'StackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
   const g: IGenerator = new Generator('test', init, params)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -23,17 +23,17 @@ it('Layers #1', () => {
   }
 
   const block = new Block('b', p, g)
-  expect(layers.sendBackward(block)).toBe(10)
+  expect(stacking.sendBackward(block)).toBe(10)
 })
 
-it('Layers #2', () => {
+it('Stacking #2', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
   const g: IGenerator = new Generator('test', init, params)
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const pb = {
     location: { x: 0, y: 10 },
@@ -51,12 +51,12 @@ it('Layers #2', () => {
   }
 
   const block = blocks.set('a', p, g)
-  expect(layers.sendBackward(block)).toBe(4)
+  expect(stacking.sendBackward(block)).toBe(4)
 })
 
-it('Layers #3', () => {
+it('Stacking #3', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
@@ -70,7 +70,7 @@ it('Layers #3', () => {
   }
   blocks.set('a', pa, g)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -79,12 +79,12 @@ it('Layers #3', () => {
   }
 
   const block = blocks.set('b', p, g)
-  expect(layers.sendBackward(block)).toBe(9)
+  expect(stacking.sendBackward(block)).toBe(9)
 })
 
-it('Layers #4', () => {
+it('Stacking #4', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
@@ -105,7 +105,7 @@ it('Layers #4', () => {
   }
   blocks.set('b', pb, g)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -114,12 +114,12 @@ it('Layers #4', () => {
   }
 
   const block = blocks.set('c', p, g)
-  expect(layers.sendBackward(block)).toBe(4)
+  expect(stacking.sendBackward(block)).toBe(4)
 })
 
-it('Layers #5', () => {
+it('Stacking #5', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
@@ -140,7 +140,7 @@ it('Layers #5', () => {
   }
   blocks.set('b', pb, g)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -149,12 +149,12 @@ it('Layers #5', () => {
   }
 
   const block = blocks.set('c', p, g)
-  expect(layers.bringForward(block)).toBe(11)
+  expect(stacking.bringForward(block)).toBe(11)
 })
 
-it('Layers #6', () => {
+it('Stacking #6', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
@@ -175,7 +175,7 @@ it('Layers #6', () => {
   }
   blocks.set('b', pb, g)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -184,13 +184,13 @@ it('Layers #6', () => {
   }
 
   const block = blocks.set('c', p, g)
-  layers.bringFront(block)
-  expect(block.layer).toBe(11)
+  stacking.bringFront(block)
+  expect(block.zIndex).toBe(11)
 })
 
-it('Layers #7', () => {
+it('Stacking #7', () => {
   const params = new Params({
-    name: 'layersTest',
+    name: 'stackingTest',
     initialValues: [['containersize', { width: 1000, height: 1000 }]]
   })
 
@@ -211,7 +211,7 @@ it('Layers #7', () => {
   }
   blocks.set('b', pb, g)
 
-  const layers = g.layers()
+  const stacking = g.stacking()
 
   const p = {
     location: { x: 0, y: 10 },
@@ -220,6 +220,6 @@ it('Layers #7', () => {
   }
 
   const block = blocks.set('c', p, g)
-  layers.sendBack(block)
-  expect(block.layer).toBe(4)
+  stacking.sendBack(block)
+  expect(block.zIndex).toBe(4)
 })

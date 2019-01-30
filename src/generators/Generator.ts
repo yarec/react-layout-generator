@@ -3,7 +3,7 @@ import { Blocks } from '../components/Blocks'
 import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
 import { RLGSelect } from '../editors/RLGSelect'
-import { Layers } from '../components/Layers'
+import { Stacking } from '../components/Stacking'
 
 export interface IGeneratorFunctionArgs {
   name: string
@@ -30,7 +30,7 @@ export interface IGenerator {
   name: () => string
   params: () => Params
   blocks: () => Blocks
-  layers: () => Layers
+  stacking: () => Stacking
   reset: () => void
   // next: () => Block | undefined
   lookup: (name: string) => Block | undefined
@@ -47,7 +47,7 @@ export class Generator implements IGenerator {
   private _editHelper: EditHelper | undefined
   private _params: Params
   private _blocks: Blocks
-  private _layers: Layers
+  private _stacking: Stacking
   private _select: RLGSelect
   private _init: IInit
   private _create: Create | undefined
@@ -68,7 +68,7 @@ export class Generator implements IGenerator {
     // this.state = this.start
     this._params = params
 
-    this._layers = new Layers({ name, params, blocks: this._blocks })
+    this._stacking = new Stacking({ name, params, blocks: this._blocks })
   }
 
   public name = () => {
@@ -87,8 +87,8 @@ export class Generator implements IGenerator {
     return this._blocks
   }
 
-  public layers = (): Layers => {
-    return this._layers
+  public stacking = (): Stacking => {
+    return this._stacking
   }
 
   public select = (): RLGSelect => {

@@ -75,6 +75,7 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## TODO
 
+- Place each layer in its own group so that [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) will only have effect in that layer.
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar
 - Add arrange group to toolBar (align, layers,
@@ -83,7 +84,6 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 - Add cut, copy, and paste commands.
 - Add options to align columnsGenerator and rowsGenerator.
 - Add Touch support in editor.
-- Upload component to npm
 - Host website on Github
 
 ## Features
@@ -227,21 +227,23 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 
 RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. The last layer is the control layer that sets on top any services activated.
 
+Note: Layers are NOT related to z-index. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to help control the layer's stacking context.
+
 Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
 
-To specify the layer of a block and all its content you just set the layer of the block. This can be done using the data-layout specification or can be done by setting the layer using javascript. Here is how its done using data-layout:
+To specify the layer of a block and all its content add the data-layer property to component.
 
 ```ts
+<div
+  key={name}
   data-layout={{
-      name: 'name',
-      position: {
-        ...
-        layer: 9
-      }
-    }}
+    name
+  }}
+  data-layer={2}
+>
 ```
 
-To manage the layers you add a layers property in RLGLayout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
+To manage the layers add a layers property in RLGLayout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
 
 ```ts
 <RLGLayout
@@ -269,9 +271,7 @@ In this example any services specified will use layer 4. All layers above 4 will
 
 To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator](#generator). Other animations can be running on other layers.
 
-The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers.
-
-Each layer is placed in its own group so that z-index will only effect that layer.
+The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers. 
 
 ### Drag and Drop
 

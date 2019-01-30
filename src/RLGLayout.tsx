@@ -790,7 +790,7 @@ export class RLGLayout extends React.Component<
           rect.height,
           b.size.unit,
           this._select ? this._select.selected(name) : false,
-          b.layer,
+          b.zIndex,
           b.reactTransform,
           b.reactTransformOrigin
         )
@@ -848,7 +848,7 @@ export class RLGLayout extends React.Component<
             }
 
             selectedStyle() {
-              return blockSelectedStyle(this._b.rect(), this._b.layer)
+              return blockSelectedStyle(this._b.rect(), this._b.zIndex)
             }
           }
 
@@ -1100,7 +1100,18 @@ export class RLGLayout extends React.Component<
       }
     })
 
-    // const mainStyle = this.mainStyle()
+    // Bug: The idea is to put each layer into its own div to form a 
+    // stacking context. So far this is not working. Even though
+    // React has the correct hierarchy, the browser arranges it
+    // into a different hierarchy. 
+
+    // const layerStyle = {
+    //   position: 'absolute' as 'absolute',
+    //   left: 0,
+    //   top: 0,
+    //   right: 0,
+    //   bottom: 0
+    // }
 
     const layers = this.getLayers()
     const serviceLayer = 1
@@ -1117,11 +1128,11 @@ export class RLGLayout extends React.Component<
       // } else {
         elements.push(
           children
-          // <div key={`layer#${i}`} id={`layer#${i}`} style={mainStyle}>
+          // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
           //   {children}
           // </div>
         )
-      // }
+      //}
     }
 
     if (elements && this.props.service === ServiceOptions.dnd) {
@@ -1148,7 +1159,7 @@ export class RLGLayout extends React.Component<
       const children = this.processLayout(layer, count)
       elements.push(
         children
-        // <div key={`layer#${i}`} id={`layer#${i}`} style={mainStyle}>
+        // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
         //   {children}
         // </div>
       )
@@ -1254,7 +1265,7 @@ export class RLGLayout extends React.Component<
             nestedRect.height,
             b.size.unit,
             this._select ? this._select.selected(name) : false,
-            b.layer,
+            b.zIndex,
             b.reactTransform,
             b.reactTransformOrigin
           )
@@ -1380,7 +1391,7 @@ export class RLGLayout extends React.Component<
                   height: this.state.height
                 }}
                 onUpdate={this.onUpdate}
-                zIndex={b.layer}
+                zIndex={b.zIndex}
               />
             )
           } else {
@@ -1408,7 +1419,7 @@ export class RLGLayout extends React.Component<
               height: this.state.height
             }}
             onUpdate={this.onUpdate}
-            zIndex={b.layer}
+            zIndex={b.zIndex}
           />
         )
       }
