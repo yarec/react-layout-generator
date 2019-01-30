@@ -298,7 +298,10 @@ export class DragDropService
 
       const blocks = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
       blocks.forEach((block) => {
-        console.log(`can drop ${block.name}`)
+        const canDrop = block.getHandler('canDrop')
+        if (canDrop(this._dragData)) {
+          console.log(`can drop ${block.name}`)
+        }
       })
   
       // tslint:disable-next-line:no-bitwise

@@ -30,7 +30,8 @@ import {
   OverflowOptions,
   isUnmanaged,
   rectSize,
-  IAnimateProps
+  IAnimateProps,
+  ILayerMapper
 } from './types'
 import { DragDropService } from './services/DragDropService'
 
@@ -264,6 +265,8 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    * Controls the animation behavior of the Layout.
    */
   animate?: IAnimateProps
+
+  layers?: ILayerMapper
 }
 
 export interface IRLGLayoutState {
@@ -395,59 +398,49 @@ export class RLGLayout extends React.Component<
     return null
   }
 
-  public render(): React.ReactNode {
-    function overflowFn(options: OverflowOptions | undefined) {
-      let v = 'visible'
+  getLayers(): React.ReactChild[][] {
+    const jsx: React.ReactChild[][] = []
 
-      if (options) {
-        if (options === OverflowOptions.auto) {
-          v = 'auto'
-        }
-        if (options === OverflowOptions.hidden) {
-          v = 'hidden'
-        }
-        if (options === OverflowOptions.scroll) {
-          v = 'scroll'
-        }
-      }
-      return v
+    function push(layer: number, child: React.ReactChild) {
+      jsx[layer].push(child)
     }
 
+    const maxLayer = this.props.layers ? this.props.layers.maximum : 1
+    const mapper =
+      this.props.layers && this.props.layers.mapper
+        ? this.props.layers.mapper
+        : (layer: number) => {
+            return layer
+          }
+
+    for (let i = 0; i <= maxLayer; i++) {
+      jsx[i] = []
+    }
+
+    React.Children.map(this.props.children, child => {
+      const c = child as React.ReactElement<any>
+      if (c) {
+        const layer = c.props['data-layer']
+        if (!layer) {
+          push(0, child)
+        } else {
+          const _layer = mapper(layer)
+          if (_layer && _layer > 0 && _layer < maxLayer) {
+            push(layer, child)
+          } else {
+            push(maxLayer, child)
+          }
+        }
+      }
+    })
+
+    return jsx
+  }
+
+  public render(): React.ReactNode {
     this.initLayout()
 
-    let style: React.CSSProperties = {
-      position: 'absolute' as 'absolute',
-      width: '100%',
-      height: '100%',
-      overflow: 'visible'
-    }
-
-    if (this.props.overflowX || this.props.overflowY) {
-      if (
-        window.devicePixelRatio !== this.state.devicePixelRatio &&
-        gRoot === this
-      ) {
-        style = {
-          position: 'absolute' as 'absolute',
-          width: `${(this.state.width * this.state.devicePixelRatio) /
-            window.devicePixelRatio}`,
-          height: `${(this.state.height * this.state.devicePixelRatio) /
-            window.devicePixelRatio}`,
-          overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(
-            this.props.overflowY
-          )}`
-        }
-      }
-      style = {
-        position: 'absolute' as 'absolute',
-        width: '100%',
-        height: '100%',
-        overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(
-          this.props.overflowY
-        )}`,
-        ...this.props.style
-      }
-    }
+    let mainStyle: React.CSSProperties = this.mainStyle()
 
     if (this._edit) {
       this.frameStart()
@@ -456,7 +449,7 @@ export class RLGLayout extends React.Component<
         <div
           id={'main'}
           ref={this.onRootRef}
-          style={prefix(style)}
+          style={prefix(mainStyle)}
           onMouseDown={this.onParentMouseDown}
           onContextMenu={this.onParentContextMenu()}
         >
@@ -478,7 +471,7 @@ export class RLGLayout extends React.Component<
       )
     }
     return (
-      <div id={'main'} ref={this.onRootRef} style={prefix(style)}>
+      <div id={'main'} ref={this.onRootRef} style={prefix(mainStyle)}>
         {this.content()}
       </div>
     )
@@ -488,6 +481,63 @@ export class RLGLayout extends React.Component<
     if (elt) {
       this._root = elt
     }
+  }
+
+  private mainStyle(): React.CSSProperties {
+    function overflowFn(options: OverflowOptions | undefined) {
+      let v = 'visible'
+
+      if (options) {
+        if (options === OverflowOptions.auto) {
+          v = 'auto'
+        }
+        if (options === OverflowOptions.hidden) {
+          v = 'hidden'
+        }
+        if (options === OverflowOptions.scroll) {
+          v = 'scroll'
+        }
+      }
+      return v
+    }
+
+    let mainStyle: React.CSSProperties = {
+      position: 'absolute' as 'absolute',
+      left: 0,
+      top: 0,
+      width: '100%',
+      height: '100%',
+      overflow: 'visible'
+    }
+    if (this.props.overflowX || this.props.overflowY) {
+      if (
+        window.devicePixelRatio !== this.state.devicePixelRatio &&
+        gRoot === this
+      ) {
+        mainStyle = {
+          position: 'absolute' as 'absolute',
+          width: `${(this.state.width * this.state.devicePixelRatio) /
+            window.devicePixelRatio}`,
+          height: `${(this.state.height * this.state.devicePixelRatio) /
+            window.devicePixelRatio}`,
+          overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(
+            this.props.overflowY
+          )}`
+        }
+      }
+      mainStyle = {
+        position: 'absolute' as 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%',
+        overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(
+          this.props.overflowY
+        )}`,
+        ...this.props.style
+      }
+    }
+    return mainStyle
   }
 
   private initProps(props: IRLGLayoutProps) {
@@ -907,14 +957,16 @@ export class RLGLayout extends React.Component<
       }
     }
 
-
-    const args = typeof child.type === 'string' ? {} : {
-        service: this._edit ? ServiceOptions.edit : this.props.service,
-        debug: this._debug,
-        context: gContext,
-        g: this.props.g,
-        style: child.props.style
-      }
+    const args =
+      typeof child.type === 'string'
+        ? {}
+        : {
+            service: this._edit ? ServiceOptions.edit : this.props.service,
+            debug: this._debug,
+            context: gContext,
+            g: this.props.g,
+            style: child.props.style
+          }
 
     return React.cloneElement(
       child,
@@ -1048,23 +1100,29 @@ export class RLGLayout extends React.Component<
       }
     })
 
+    // const mainStyle = this.mainStyle()
+
+    const layers = this.getLayers()
+    const serviceLayer = 1
+    const elements: React.ReactNode[] = []
+
     // Phase II update
-    const elements = React.Children.map(this.props.children, (child, i) => {
-      const c = child as React.ReactElement<any>
-      if (c) {
-        if (c.type === React.Fragment) {
-          return React.Children.map(c.props.children, (nChild, ni) => {
-            const nc = nChild as React.ReactElement<any>
-            const nCount = React.Children.count(nc.props.children)
-            return this.updateElement(nc, ni, nCount)
-          })
-        } else {
-          // tslint:disable-next-line:no-any
-          return this.updateElement(child as React.ReactElement<any>, i, count)
-        }
-      }
-      return null
-    })
+    let i = 0
+    for (; i < serviceLayer && i < layers.length; i++) {
+      const layer = layers[i]
+      const children = this.processLayout(layer, count)
+      // if (i === 0) {
+      //   // Layer#0 is the default
+      //   elements.push(children)
+      // } else {
+        elements.push(
+          children
+          // <div key={`layer#${i}`} id={`layer#${i}`} style={mainStyle}>
+          //   {children}
+          // </div>
+        )
+      // }
+    }
 
     if (elements && this.props.service === ServiceOptions.dnd) {
       elements.push(
@@ -1082,6 +1140,17 @@ export class RLGLayout extends React.Component<
           onUpdate={this.onUpdate}
           g={this._g}
         />
+      )
+    }
+
+    for (let i = serviceLayer; i < layers.length; i++) {
+      const layer = layers[i]
+      const children = this.processLayout(layer, count)
+      elements.push(
+        children
+        // <div key={`layer#${i}`} id={`layer#${i}`} style={mainStyle}>
+        //   {children}
+        // </div>
       )
     }
 
@@ -1118,6 +1187,25 @@ export class RLGLayout extends React.Component<
     return elements
   }
 
+  private processLayout(layer: React.ReactChild[], count: number) {
+    return React.Children.map(layer, (child, i) => {
+      const c = child as React.ReactElement<any>
+      if (c) {
+        if (c.type === React.Fragment) {
+          return React.Children.map(c.props.children, (nChild, ni) => {
+            const nc = nChild as React.ReactElement<any>
+            const nCount = React.Children.count(nc.props.children)
+            return this.updateElement(nc, ni, nCount)
+          })
+        } else {
+          // tslint:disable-next-line:no-any
+          return this.updateElement(child as React.ReactElement<any>, i, count)
+        }
+      }
+      return null
+    })
+  }
+
   private handleContextMenu(event: React.MouseEvent<Element>) {
     if (event.button === 2) {
       // Right click
@@ -1147,8 +1235,13 @@ export class RLGLayout extends React.Component<
     const nestedChildren = React.Children.map(
       child.props.children,
       (nestedChild, i) => {
-        const nestedLayout = b.positionChildren!(b, b.generator, i, nestedChild.props)
-        if (nestedLayout) {
+        const nestedLayout = b.positionChildren!(
+          b,
+          b.generator,
+          i,
+          nestedChild.props
+        )
+        if (nestedLayout && nestedChild.props) {
           // const blocks = this._g.blocks();
           // blocks.set(nestedLayout.name, nestedLayout.position, nestedLayout.generator);
 
@@ -1166,15 +1259,20 @@ export class RLGLayout extends React.Component<
             b.reactTransformOrigin
           )
 
-          const args = typeof nestedChild.type === 'string' ? {} : {
-            container: nestedRect,
-            block: b,
-            service: this._edit ? ServiceOptions.edit : this.props.service!,
-            debug: this._debug,
-            g: this.props.g,
-            context: gContext
-            // update: this.onUpdate
-          }
+          const args =
+            typeof nestedChild.type === 'string'
+              ? {}
+              : {
+                  container: nestedRect,
+                  block: b,
+                  service: this._edit
+                    ? ServiceOptions.edit
+                    : this.props.service!,
+                  debug: this._debug,
+                  g: this.props.g,
+                  context: gContext
+                  // update: this.onUpdate
+                }
 
           return React.cloneElement(
             nestedChild,
@@ -1201,15 +1299,18 @@ export class RLGLayout extends React.Component<
       }
     )
 
-    const args = typeof child.type === 'string' ? {} : {
-      container: rect,
-      block: b,
-      service: this._edit ? ServiceOptions.edit : this.props.service!,
-      debug: this._debug,
-      g: this.props.g,
-      context: gContext
-      // update: this.onUpdate
-    }
+    const args =
+      typeof child.type === 'string'
+        ? {}
+        : {
+            container: rect,
+            block: b,
+            service: this._edit ? ServiceOptions.edit : this.props.service!,
+            debug: this._debug,
+            g: this.props.g,
+            context: gContext
+            // update: this.onUpdate
+          }
 
     return React.cloneElement(
       child,

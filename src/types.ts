@@ -3,6 +3,28 @@ export interface Props {
 }
 
 /**
+ * Layers specification for controlling layers. The default is to
+ * ignore layer values and render all children as specified. To access the specification
+ * use the layers property attached to the [generator](#generator).
+ */
+export interface ILayerMapper {
+  /**
+   * The maximum layer
+   */
+  maximum: number
+  /**
+   * The service layer
+   */
+  service: number
+  /**
+   * A mapper lets you merge, reorder, and/or hide layers. It simply maps one layer to another.
+   * If it returns undefined then nothing will be rendered. The default is to use the specified
+   * layers in blocks directly only trimming values below 0 and above the maximum layer.
+   */
+  mapper?: (layer: number) => number | undefined
+}
+
+/**
  * IAnimateProps configures an animation.
  */
 export interface IAnimateProps {

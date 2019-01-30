@@ -28,10 +28,11 @@ export interface ISolitaireProps extends IEditHelperProps {
 
 interface ISolitaireState {
   update: number
+
 }
 
 export default class Solitaire extends React.Component<
-  IEditHelperProps,
+  ISolitaireProps,
   ISolitaireState
 > {
   private _g: IGenerator = solitaireGenerator({ name: 'example.solitaire' })
@@ -41,7 +42,7 @@ export default class Solitaire extends React.Component<
   private _foundation: FoundationStack[] = []
   private _tableau: TableauStack[] = []
 
-  constructor(props: IEditHelperProps) {
+  constructor(props: ISolitaireProps) {
     super(props)
 
     this._stock = new Stock(this.update, this._g)
@@ -92,7 +93,7 @@ export default class Solitaire extends React.Component<
    * Moves the top (3) cards to the waste pushing any
    * existing cards to the stock when the stock is touched or clicked.
    */
-  public onPopulateWaste = (event: React.MouseEvent<HTMLDivElement>) => {
+  public onPopulateWaste = (event: React.MouseEvent) => {
     if (this._stock && this._waste) {
       if (this._stock.length) {
         this._waste.populate(this._stock)
@@ -101,22 +102,37 @@ export default class Solitaire extends React.Component<
     }
   }
 
+  public noop = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    
+  }
+
+
+
   public render() {
     return (
       <RLGLayout
-        name="example.Solitaire"
+        name='example.Solitaire'
         g={this._g}
         service={ServiceOptions.dnd}
+        layers={{
+          maximum: 3,
+          service: 2 
+        }}
         debug={[DebugOptions.info, DebugOptions.mouseEvents]}
       >
         <div
-          key="stock"
+          key='stock'
           data-layout={{
             name: 'stock'
           }}
+          data-layer={3}>
           onClick={this.onPopulateWaste}
         >
           {this._stock.cards()}
+          <button onMouseDown={this.noop}>Test</button>
         </div>
 
         <div
@@ -124,6 +140,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name: 'waste'
           }}
+          data-layer={1}
         >
           {this._waste.cards()}
         </div>
@@ -140,7 +157,8 @@ export default class Solitaire extends React.Component<
                 size: { width: 90, height: 24 },
                 layer: 10000
               }
-            }}>
+            }}
+            data-layer={3}>
           <button
             key={'New Game'}
             onClick={this.newGame}
@@ -167,6 +185,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name
           }}
+          data-layer={2}
           g={this._g}
         >
           {this._foundation[i].cards()}
@@ -187,6 +206,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name
           }}
+          data-layer={2}
         >
           {this._tableau[i].cards()}
         </div>

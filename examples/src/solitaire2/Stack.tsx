@@ -74,7 +74,21 @@ export default class Stack {
     return this._stack.length
   }
 
+  public handleMouseDown = (event: React.MouseEvent) => {
+    console.log('card mouse down')
+  }
+
   public cards = () => {
+
+ 
+      const style: React.CSSProperties = {
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        msUserSelect: 'none',
+        MozUserSelect: 'none',
+        // pointerEvents: 'none'
+      }
+    
     if (this._stack.length) {
       return this._stack.map((card, i) => {
         if (this._drag && this._drop) {
@@ -89,12 +103,15 @@ export default class Stack {
                 id={card.name}
                 key={card.name}
                 data-draggable={'1'}
+                onDragStart={this.noop}
+                
                 // draggable={true}
                 // data-onDragEnd={this.onDragEnd}
                 // data-onDragOver={this.onDragOver}
                 // data-onDragStart={this.onDragStart}
                 // data-onDrop={this.onDrop}
                 src={card.path}
+                style={style}
               />
             </Draggable>
           )
@@ -110,8 +127,11 @@ export default class Stack {
               id={card.name}
               key={card.name}
               data-draggable={'1'}
+              draggable={false}
+              onDragStart={this.noop}
               // data-onDragStart={this.onDragStart}
               src={card.path}
+              style={style}
             />
             </Draggable>
           )
@@ -121,6 +141,9 @@ export default class Stack {
               id={card.name}
               key={card.name}
               src={card.path}
+              draggable={false}
+              onDragStart={this.noop}
+              style={style}
             />
           )
         } else {
@@ -142,6 +165,11 @@ export default class Stack {
         onDrop={this.onDrop} */
       />
     )
+  }
+
+  public noop = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
   }
 
   // public onDrop = (e: React.DragEvent) => {

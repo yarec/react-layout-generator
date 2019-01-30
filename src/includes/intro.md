@@ -26,6 +26,7 @@ This project was initially inspired by [react-grid-layout](https://www.npmjs.com
     - [RLGPanel](#rlgpanel)
     - [Responsive Layout](#responsive-layout)
     - [Responsive Desktop Layout](#responsive-desktop-layout)
+    - [Layers](#layers)
     - [Drag and Drop](#drag-and-drop)
       - [Draggable](#draggable)
     - [Generator](#generator)
@@ -221,6 +222,56 @@ An example of a responsive generator is defined by the [desktopGenerator](global
   </div>
 </RLGLayout>
 ```
+
+### Layers
+
+RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. The last layer is the control layer that sets on top any services activated.
+
+Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
+
+To specify the layer of a block and all its content you just set the layer of the block. This can be done using the data-layout specification or can be done by setting the layer using javascript. Here is how its done using data-layout:
+
+```ts
+  data-layout={{
+      name: 'name',
+      position: {
+        ...
+        layer: 9
+      }
+    }}
+```
+
+To manage the layers you add a layers property in RLGLayout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
+
+```ts
+<RLGLayout
+        name='name'
+        ...
+        layers={{
+          maximum: 5,
+          service: 4,
+          mapper: (layer: number) => {
+            if (layer === 3) {
+              // hide layer 3
+              return undefined
+            }
+            if (layer > 4) {
+              // combine all layers greater than 5
+              return 5
+            }
+            return layer
+          }
+        }}
+        ...
+```
+
+In this example any services specified will use layer 4. All layers above 4 will be treated as a control layer.
+
+To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator](#generator). Other animations can be running on other layers.
+
+The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers.
+
+Each layer is placed in its own group so that z-index will only effect that layer.
 
 ### Drag and Drop
 

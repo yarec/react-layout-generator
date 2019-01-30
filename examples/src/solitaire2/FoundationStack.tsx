@@ -18,7 +18,7 @@ export default class FoundationStack {
   }
 
   public canDrop = (data: string[]) => {
-    console.log(`canDrop ${this._stack.cards.name} `)
+    console.log(`foundatation stack canDrop ${data} `)
     return false
   }
 
