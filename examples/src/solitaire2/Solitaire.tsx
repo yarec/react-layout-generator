@@ -10,7 +10,6 @@ import {
   Unit
 } from '../importRLG'
 
-import { Control } from '../../../src/Control'
 import FoundationStack from './FoundationStack'
 import solitaireGenerator from './solitaireGenerator'
 import Stock from './Stock'
@@ -105,11 +104,7 @@ export default class Solitaire extends React.Component<
   public noop = (event: React.MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
-
-    
   }
-
-
 
   public render() {
     return (
@@ -118,7 +113,7 @@ export default class Solitaire extends React.Component<
         g={this._g}
         service={ServiceOptions.dnd}
         layers={{
-          maximum: 3,
+          maximum: 2,
           service: 2 
         }}
         debug={[DebugOptions.info, DebugOptions.mouseEvents]}
@@ -128,11 +123,10 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name: 'stock'
           }}
-          data-layer={3}>
-          onClick={this.onPopulateWaste}
+          data-layer={2}>
         >
           {this._stock.cards()}
-          <button onMouseDown={this.noop}>Test</button>
+          <button onClick={this.onPopulateWaste}>Test</button>
         </div>
 
         <div
@@ -149,23 +143,24 @@ export default class Solitaire extends React.Component<
 
         {this.tableaus()}
 
-        <Control name={'New Game'} data-layout={{
+        <div
+            data-layout={{
               name: 'New Game',
               position: {
                 origin: { x: 50, y: 50 },
                 location: { x: 50, y: 90, unit: Unit.percent },
                 size: { width: 90, height: 24 },
-                layer: 10000
+                zIndex: 10
               }
             }}
-            data-layer={3}>
+            data-layer={2}>
           <button
             key={'New Game'}
             onClick={this.newGame}
           >
             New Game
           </button>
-        </Control>
+        </div>
       </RLGLayout>
     )
   }
@@ -185,7 +180,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name
           }}
-          data-layer={2}
+          data-layer={1}
           g={this._g}
         >
           {this._foundation[i].cards()}
@@ -201,15 +196,20 @@ export default class Solitaire extends React.Component<
     for (let i = 0; i < 7; i++) {
       const name = `tableau${i + 1}`
       jsx.push(
-        <div
+        <DragDrop
+          name={name}
           key={name}
+          canDrop={this._tableau[i].canDrop}
+          drop={this._tableau[i].drop}
+          endDrop={this._tableau[i].endDrop}
           data-layout={{
             name
           }}
-          data-layer={2}
+          data-layer={1}
+          g={this._g}
         >
           {this._tableau[i].cards()}
-        </div>
+        </DragDrop>
       )
     }
     return jsx

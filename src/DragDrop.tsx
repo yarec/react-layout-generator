@@ -6,7 +6,7 @@ import { IGenerator } from './generators/Generator';
 /**
  * 
  */
-export interface IDragDropProps extends React.HTMLProps<HTMLButtonElement>{
+export interface IDragDropProps extends React.HTMLProps<HTMLDivElement>{
   name: string
   /**
    * Performs the transfer of the data to a new container. Returns true if
@@ -14,31 +14,32 @@ export interface IDragDropProps extends React.HTMLProps<HTMLButtonElement>{
    */
   drop: (data: string[]) => boolean
   /**
+   * Fired whenever the draggable is over a drop container.
    * Test to see if this container can accept this data. Returns true if 
    * droppable.
    */
   canDrop: (data: string[]) => boolean
   /**
-   * Calls the source container to notify it that the data has been 
+   * Fired at end drag. Calls the source container to notify it that the data has been 
    * transferred to another container.
    */
   endDrop: (data: string[]) => void
   /**
-   * 
+   * Fired during start drag. Returns the list of id that are to be dragged.
    */
-  dragStart?: (id: string) => string[]
+  dragData?: (id: string) => string[]
   /**
-   * 
+   * Fired during start drag. Returns the JSX code representing the image to be dragged.
    */
-  getDragJSX?: (data: string[]) => JSX.Element
+  dragImage?: (data: string[]) => JSX.Element
   /**
-   * 
+   * Fired when the draggable enters a valid droppable container.
    */
-  dragEnter?: (data: string[]) => void
+  dragEnter?: () => void
   /**
-   * 
+   * Fired when the draggable leaves a valid droppable container.
    */
-  dragLeave?: (data: string[]) => void
+  dragLeave?: () => void
   g: IGenerator
 }
 
@@ -55,8 +56,8 @@ export class DragDrop extends React.Component<IDragDropProps> {
       this._block.setHandler('drop', this.props.drop)
       this._block.setHandler('canDrop', this.props.canDrop)
       this._block.setHandler('endDrop', this.props.endDrop)
-      this.props.dragStart && this._block.setHandler('dragStart', this.props.dragStart)
-      this.props.getDragJSX && this._block.setHandler('getDragJSX', this.props.getDragJSX)
+      this.props.dragData && this._block.setHandler('dragData', this.props.dragData)
+      this.props.dragImage && this._block.setHandler('dragImage', this.props.dragImage)
       this.props.dragEnter && this._block.setHandler('dragEnter', this.props.dragEnter)
       this.props.dragLeave && this._block.setHandler('dragLeave', this.props.dragLeave)
     }

@@ -104,13 +104,7 @@ export default class Stack {
                 id={card.name}
                 key={card.name}
                 data-draggable={'1'}
-                onDragStart={this.noop}
-                
-                // draggable={true}
-                // data-onDragEnd={this.onDragEnd}
-                // data-onDragOver={this.onDragOver}
-                // data-onDragStart={this.onDragStart}
-                // data-onDrop={this.onDrop}
+                onDragStart={this.noop} // Kill built in image
                 src={card.path}
                 style={style}
               />

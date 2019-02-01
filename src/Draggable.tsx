@@ -20,7 +20,7 @@ export class Draggable extends React.Component<IDraggableProps> {
     const block = this.props.g.blocks().set(`${this.props.name}`, p, this.props.g)
     if (block) {
       block.setHandler(
-        'dragJSX',
+        'dragImage',
         this.cloneChildren(.7)
       )
     }

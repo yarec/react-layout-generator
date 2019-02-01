@@ -1,5 +1,6 @@
 import { IGenerator } from '../importRLG';
-import Stack, {allowFoundationDrop} from './Stack'
+import { gCards } from './Card';
+import Stack, {allowFoundationDrop, isRedSuite} from './Stack'
 
 export default class FoundationStack {
 
@@ -18,9 +19,21 @@ export default class FoundationStack {
   }
 
   public canDrop = (data: string[]) => {
- 
-    console.log(`foundation canDrop ${data} `)
-    return false
+    let result = false
+    const top = gCards.get(data[0])
+    if (this._stack.length === 0) {
+      if (top) {
+        result = top.rank === 1
+      }
+    } else if (data.length === 1) {
+      const tail = this._stack[this._stack.length - 1]
+      if (top) {
+        result = tail.rank - top.rank === -1 &&
+        isRedSuite(tail.suite) === isRedSuite(top.suite)
+      }
+    }
+    console.log(`can drop foundation ${data[0]}`, result);
+    return result
   }
 
   public drop = (data: string[]) => {

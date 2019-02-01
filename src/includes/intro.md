@@ -28,6 +28,9 @@ This project was initially inspired by [react-grid-layout](https://www.npmjs.com
     - [Responsive Desktop Layout](#responsive-desktop-layout)
     - [Layers](#layers)
     - [Drag and Drop](#drag-and-drop)
+      - [dragData(id: string) => string[]](#dragdataid-string--string)
+      - [dragImage(ids: string[]) => JSX](#dragimageids-string--jsx)
+      - [dragEnd(ids: string[]) => void](#dragendids-string--void)
       - [Draggable](#draggable)
     - [Generator](#generator)
       - [Animations](#animations)
@@ -275,23 +278,75 @@ The reason for having a control layer is that services manage the interactions o
 
 ### Drag and Drop
 
-RLG has its own drag and drop implementation. To activate add the ServiceOptions.dnd to the service property of RLGLayout like this:
+Drag and drop allows you to drag items from one container to another container within a Layout. To activate drag and drop, add the ServiceOptions.dnd to the service property of RLGLayout:
 
 ```ts
       <RLGLayout
-        name='example.Solitaire'
+        name='name'
         service={ServiceOptions.dnd}
         ...
 ```
 
-Items in a layout need to use Draggable for items that can be dragged, and DragDrop containers for source and or destination containers. This process is one of moving content from one container to another.
+Then wrap your draggable elements and components using Draggable and DragDrop
 
-For controls to work set their layer property to topmost (currently set the layer to 10000) so that they are active.
+1. Container Source:
+
+```txt
+  Handler                Required
+  
+  dragData                [no]
+  dragImage               [no]
+  dragEnd                 [yes]
+```
+
+2. Draggable:
+
+```txt
+  Handler                Required
+  
+  drag                    [no]
+  draggable               [yes]
+  dragImage               [yes]
+```
+
+3. Droppable:
+
+```txt
+  Handler                Required
+  
+  droppable               [yes]
+  canDrop                 [yes]
+  drop                    [yes]
+  dragEnter               [no]
+  dragLeave               [no]
+```
+
+#### dragData(id: string) => string[]
+
+Fired once when the user starts dragging a component.
+
+Used on draggable components and on the source container. Optional: default is the block id. This function takes the block id and returns an array of ids or undefined. Undefined will stop the drag.
+
+Uses include: preventing a drag, returning a different block, or a list of blocks. The list of blocks is used in the Solitaire game.
+
+#### dragImage(ids: string[]) => JSX
+
+Fired once when the user starts dragging a component.
+
+Optional: default is the draggable component content. Can be used to provide an image for all ids. Returned value must JSX.
+
+#### dragEnd(ids: string[]) => void
+
+Fired once when the user is ending a drag.
+
+This function is called on the source container when a drag has been completed. It must remove the blocks from this container.
+
+Then mark layers. Only controls need have data-layer value greater then 0. Then enable both drag and drop and a [layers](#layers) property if needed.
 
 The implementation follows this logic:
 
 1. mouse down
-  
+
     a. start if a draggable component is found
 
 2. drag start
@@ -323,7 +378,6 @@ The implementation follows this logic:
     a. calls container.drop(ids: string[]) => void
 
     b. calls container.endDrop(ids: string[]) => void
-
 
 #### Draggable
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as rbush from 'rbush'
 
-import { DebugOptions, IPoint, IRect } from '../types'
+import { DebugOptions, IPoint, IRect, difference } from '../types'
 import { IService, IServiceProps, IUndo } from './Service'
 import { Block } from '../components/Block'
 // import { Control } from '../Control'
@@ -37,7 +37,8 @@ export class DragDropService
 
   private _rbush: rbush.RBush<Block>
   private _root: React.RefObject<HTMLDivElement>
-  private _dragData: string[]
+  private _dragData: string[] = []
+  private _prevDroppable: Set<Block> = new Set;
 
   constructor(props: IServiceProps) {
     super(props)
@@ -173,9 +174,9 @@ export class DragDropService
             height: r.height
           }
 
-          this._jsx = block.getHandler('dragJSX') as JSX.Element
+          this._jsx = block.getHandler('dragImage') as JSX.Element
 
-          console.log('this._jsx block dragJSX defined: ', this._jsx ? true : false)
+          console.log(`this._jsx block dragImage defined for ${block.name} `, this._jsx ? true : false)
         }
       }
 
@@ -199,10 +200,13 @@ export class DragDropService
       const dragData = localParent.getHandler('dragData')
       if (dragData) {
         this._dragData = dragData(block)
+        if (!this._dragData) {
+          return
+        }
       }
     } 
     
-    if (!this._dragData) {
+    if (this._dragData.length === 0) {
       this._dragData = [block.name]
     }
 
@@ -210,12 +214,16 @@ export class DragDropService
 
     // get drag image as JSX
     if (localParent) {
-      const dragJSX = localParent.getHandler('dragJSX')
-      if (dragJSX) {
-        this._jsx = dragJSX(this._dragData)
+      const dragImage = localParent.getHandler('dragImage')
+      if (dragImage) {
+        this._jsx = dragImage(this._dragData)
 
-        console.log('this._jsx localParent dragJSX defined: ', this._jsx ? true : false)
+        console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
       }
+    }
+
+    if (this._dragData.length === 0) {
+      return
     }
 
     // Start drag
@@ -300,14 +308,36 @@ export class DragDropService
       }
 
       // 3 CanDrop
+      const candidates = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
 
-      const blocks = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
-      blocks.forEach((block) => {
+      const blocks: Set<Block> = new Set
+      candidates.forEach((block) => {
         const canDrop = block.getHandler('canDrop')
-        if (canDrop(this._dragData)) {
+        if (canDrop && canDrop(this._dragData)) {
+          blocks.add(block)
           console.log(`can drop ${block.name}`)
         }
       })
+
+      let leave = difference(this._prevDroppable, blocks)
+
+      leave.forEach((b) => {
+        const dragLeave = b.getHandler('dragLeave')
+        if (dragLeave) {
+          dragLeave()
+        }
+      })
+
+      let enter = difference(blocks, this._prevDroppable)
+
+      enter.forEach((b) => {
+        const dragEnter = b.getHandler('dragEnter')
+        if (dragEnter) {
+          dragEnter()
+        }
+      })
+
+      this._prevDroppable = blocks
   
       // tslint:disable-next-line:no-bitwise
       if (this.props.debug && this.props.debug & DebugOptions.trace) {
@@ -315,12 +345,15 @@ export class DragDropService
       }
 
       // 4 Update handle
-      this.setState({
-        leftTop: {
-          x: this._startRect.x + deltaX,
-          y: this._startRect.y + deltaY
-        }
-      })
+      if (this.state.leftTop.x !== this._startRect.x + deltaX ||
+        this.state.leftTop.y !== this._startRect.y + deltaY) {
+        this.setState({
+          leftTop: {
+            x: this._startRect.x + deltaX,
+            y: this._startRect.y + deltaY
+          }
+        })
+      }
     }
   }
 }

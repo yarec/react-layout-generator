@@ -3,6 +3,8 @@ export enum Face {
   down
 }
 
+export const gCards: Map<string, Card> = new Map
+
 export default class Card {
   private _name: string;
   private _face: Face;

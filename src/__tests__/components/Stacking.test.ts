@@ -19,7 +19,7 @@ it('Stacking #1', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
 
   const block = new Block('b', p, g)
@@ -38,7 +38,7 @@ it('Stacking #2', () => {
   const pb = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
 
   const blocks = g.blocks()
@@ -47,7 +47,7 @@ it('Stacking #2', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
 
   const block = blocks.set('a', p, g)
@@ -66,7 +66,7 @@ it('Stacking #3', () => {
   const pa = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
   blocks.set('a', pa, g)
 
@@ -75,7 +75,7 @@ it('Stacking #3', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
 
   const block = blocks.set('b', p, g)
@@ -94,14 +94,14 @@ it('Stacking #4', () => {
   const pa = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
   blocks.set('b', pb, g)
 
@@ -110,7 +110,7 @@ it('Stacking #4', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 7
+    zIndex: 7
   }
 
   const block = blocks.set('c', p, g)
@@ -129,14 +129,14 @@ it('Stacking #5', () => {
   const pa = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
   blocks.set('b', pb, g)
 
@@ -145,7 +145,7 @@ it('Stacking #5', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 7
+    zIndex: 7
   }
 
   const block = blocks.set('c', p, g)
@@ -164,14 +164,14 @@ it('Stacking #6', () => {
   const pa = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
   blocks.set('b', pb, g)
 
@@ -180,7 +180,7 @@ it('Stacking #6', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 7
+    zIndex: 7
   }
 
   const block = blocks.set('c', p, g)
@@ -200,14 +200,14 @@ it('Stacking #7', () => {
   const pa = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 10
+    zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 5
+    zIndex: 5
   }
   blocks.set('b', pb, g)
 
@@ -216,7 +216,7 @@ it('Stacking #7', () => {
   const p = {
     location: { x: 0, y: 10 },
     size: { width: 100, height: 10 },
-    layer: 7
+    zIndex: 7
   }
 
   const block = blocks.set('c', p, g)

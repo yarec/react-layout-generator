@@ -682,3 +682,51 @@ export interface IArgsSize {
   width?: number | string
   height?: number | string
 }
+
+export function isSuperset<T>(set: Set<T>, subset: Set<T>) {
+  let result = true
+  subset.forEach(elem => {
+    if (!set.has(elem)) {
+      result = false
+    }
+  })
+  return result
+}
+
+export function union<T>(setA: Set<T>, setB: Set<T>) {
+  var _union = new Set(setA)
+  setB.forEach(elem => {
+    _union.add(elem)
+  })
+  return _union
+}
+
+export function intersection<T>(setA: Set<T>, setB: Set<T>) {
+  var _intersection = new Set()
+  setB.forEach(elem => {
+    if (setA.has(elem)) {
+      _intersection.add(elem)
+    }
+  })
+  return _intersection
+}
+
+export function symmetricDifference<T>(setA: Set<T>, setB: Set<T>) {
+  var _difference = new Set(setA)
+  setB.forEach(elem => {
+    if (_difference.has(elem)) {
+      _difference.delete(elem)
+    } else {
+      _difference.add(elem)
+    }
+  })
+  return _difference
+}
+
+export function difference<T>(setA: Set<T>, setB: Set<T>) {
+  var _difference = new Set(setA)
+  setB.forEach(elem => {
+    _difference.delete(elem)
+  })
+  return _difference
+}

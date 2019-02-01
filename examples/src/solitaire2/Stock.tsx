@@ -1,6 +1,6 @@
 import Deck from '../algos/Deck';
 import { IGenerator } from '../importRLG';
-import Card, { Face } from './Card'
+import Card, { Face, gCards } from './Card'
 import Stack from './Stack';
 
 export default class Stock {
@@ -18,8 +18,11 @@ export default class Stock {
     this._deck.shuffle();
 
     this._stack.clear();
-    this._deck.cards.map((card) => {
-      this._stack.push(new Card(card, Face.down));
+    gCards.clear()
+    this._deck.cards.map((cardName) => {
+      const card = new Card(cardName, Face.down)
+      this._stack.push(card);
+      gCards.set(cardName, card)
     });
   }
 

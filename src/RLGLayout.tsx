@@ -365,7 +365,6 @@ export class RLGLayout extends React.Component<
       this.props.debug !== props.debug ||
       this.props.service !== props.service
     ) {
-      this.props.g.clear()
       this.initProps(props)
     }
   }
@@ -1119,7 +1118,7 @@ export class RLGLayout extends React.Component<
 
     // Phase II update
     let i = 0
-    for (; i < serviceLayer && i < layers.length; i++) {
+    for (; i < (serviceLayer - 1) && i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       // if (i === 0) {
@@ -1154,7 +1153,7 @@ export class RLGLayout extends React.Component<
       )
     }
 
-    for (let i = serviceLayer; i < layers.length; i++) {
+    for (let i = (serviceLayer - 1); i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       elements.push(

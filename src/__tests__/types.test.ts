@@ -5,7 +5,12 @@ import {
   rectPoint,
   rectSize,
   stringToUnit,
-  Unit
+  Unit,
+  isSuperset,
+  union,
+  intersection,
+  symmetricDifference,
+  difference
 } from '../types'
 
 it('stringToUnit return correct value', () => {
@@ -56,4 +61,81 @@ it('return size of rect', () => {
 
 it('return location of rect', () => {
   expect(rectPoint({ x: 1, y: 2, width: 3, height: 4 })).toEqual({ x: 1, y: 2 })
+})
+
+it('Set difference #1', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(difference(one, two)).toEqual(new Set([2]))
+})
+
+it('Set difference #2', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(difference(two, one)).toEqual(new Set())
+})
+
+it('Set difference #3', () => {
+  const one = new Set([1, 3])
+  const two = new Set([2])
+
+  expect(difference(one, two)).toEqual(new Set([1, 3]))
+})
+
+it('Set difference #4', () => {
+  const two = new Set([1, 3])
+  const one = new Set([2])
+
+  expect(difference(one, two)).toEqual(new Set([2]))
+})
+
+it('Set symmetricDifference #1', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(symmetricDifference(one, two)).toEqual(new Set([2]))
+})
+
+it('Set symmetricDifference #2', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(symmetricDifference(two, one)).toEqual(new Set([2]))
+})
+
+it('Set intersection #1', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(intersection(one, two)).toEqual(new Set([1, 3]))
+})
+
+it('Set intersection #2', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(intersection(two, one)).toEqual(new Set([1, 3]))
+})
+
+it('Set union #1', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(union(one, two)).toEqual(new Set([1, 2, 3]))
+})
+
+it('Set union #2', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(union(two, one)).toEqual(new Set([1, 2, 3]))
+})
+
+it('Set isSuperset #1', () => {
+  const one = new Set([1, 2, 3])
+  const two = new Set([1, 3])
+
+  expect(isSuperset(two, one)).toEqual(true)
 })
