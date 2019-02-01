@@ -908,7 +908,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.7.18":
+"@types/react@*":
   version "16.7.18"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.18.tgz#f4ce0d539a893dd61e36cd11ae3a5e54f5a48337"
   dependencies:
@@ -5167,12 +5167,6 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-markdown-include@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/markdown-include/-/markdown-include-0.4.3.tgz#bac6555402c6da93a0f52952225dfb9a6ccc731b"
-  dependencies:
-    q "^1.2.0"
-
 marked-terminal@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/marked-terminal/-/marked-terminal-3.1.1.tgz#1e726816ddc4552a83393228ff0952b6cd4e5e04"
@@ -6805,7 +6799,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
-q@^1.1.2, q@^1.2.0, q@^1.5.1:
+q@^1.1.2, q@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 
@@ -6883,14 +6877,14 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.8.0-alpha.0:
-  version "16.8.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.0-alpha.1.tgz#dab73b8354ba2e498e3127d18e29d4546cea889e"
+react-dom@^16.7.0:
+  version "16.7.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.7.0.tgz#a17b2a7ca89ee7390bc1ed5eb81783c7461748b8"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.0-alpha.1"
+    scheduler "^0.12.0"
 
 react-is@^16.6.1, react-is@^16.7.0:
   version "16.7.0"
@@ -6920,14 +6914,14 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.7.0"
     scheduler "^0.12.0"
 
-react@^16.8.0-alpha.0:
-  version "16.8.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.8.0-alpha.1.tgz#c2b32689f3b466d3ce85a634dd9035f789d2cd97"
+react@^16.7.0:
+  version "16.7.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.0-alpha.1"
+    scheduler "^0.12.0"
 
 read-cmd-shim@^1.0.1, read-cmd-shim@~1.0.1:
   version "1.0.1"
@@ -7524,13 +7518,6 @@ saxes@^3.1.4:
 scheduler@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.12.0.tgz#8ab17699939c0aedc5a196a657743c496538647b"
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-
-scheduler@^0.13.0-alpha.1:
-  version "0.13.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.0-alpha.1.tgz#753977fb4fb35d8cdd559868a11e46b640955556"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

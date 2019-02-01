@@ -311,7 +311,7 @@ export class DragDropService
       const candidates = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
 
       const blocks: Set<Block> = new Set
-      candidates.forEach((block) => {
+      candidates.forEach((block: Block) => {
         const canDrop = block.getHandler('canDrop')
         if (canDrop && canDrop(this._dragData)) {
           blocks.add(block)

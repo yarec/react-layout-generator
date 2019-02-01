@@ -137,5 +137,5 @@ it('Set isSuperset #1', () => {
   const one = new Set([1, 2, 3])
   const two = new Set([1, 3])
 
-  expect(isSuperset(two, one)).toEqual(true)
+  expect(isSuperset(one, two)).toEqual(true)
 })

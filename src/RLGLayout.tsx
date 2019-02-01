@@ -397,7 +397,7 @@ export class RLGLayout extends React.Component<
     return null
   }
 
-  getLayers(): React.ReactChild[][] {
+  getLayers():  React.ReactChild[][] {
     const jsx: React.ReactChild[][] = []
 
     function push(layer: number, child: React.ReactChild) {
@@ -421,13 +421,13 @@ export class RLGLayout extends React.Component<
       if (c) {
         const layer = c.props['data-layer']
         if (!layer) {
-          push(0, child)
+          push(0, child as React.ReactChild)
         } else {
           const _layer = mapper(layer)
           if (_layer && _layer > 0 && _layer < maxLayer) {
-            push(layer, child)
+            push(layer, c)
           } else {
-            push(maxLayer, child)
+            push(maxLayer, c)
           }
         }
       }

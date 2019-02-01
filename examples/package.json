@@ -28,8 +28,7 @@
     "@types/highlight.js": "^9.12.3",
     "@types/inline-style-prefixer": "^5.0.0",
     "@types/jest": "^23.3.8",
-    "@types/react": "^16.7.6",
-    "@types/react-dom": "^16.0.9",
+    "@types/react-dom": "^16.0.11",
     "@types/react-highlight": "^0.12.1",
     "@types/react-resize-detector": "^3.1.0",
     "@types/styled-components": "^4.1.0",
@@ -45,9 +44,8 @@
     "image-webpack-loader": "^4.5.0",
     "inline-style-prefixer": "^5.0.1",
     "jest": "^23.6.0",
-    "react": "^16.8.0-alpha.1",
-    "react-dnd-html5-backend": "^7.0.2",
-    "react-dom": "^16.8.0-alpha.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-highlight": "^0.12.0",
     "react-icons": "^3.2.2",
     "react-prefixer": "^2.0.1",
@@ -61,15 +59,11 @@
     "tslint-config-prettier": "^1.16.0",
     "tslint-react": "^3.6.0",
     "tslint-webpack-plugin": "^1.2.2",
-    "typescript": "^3.3.1",
+    "typescript": "3.0.3",
     "underscore": "^1.9.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
-  },
-  "dependencies": {
-    "@types/webpack": "^4.4.20",
-    "yarn": "^1.13.0"
   },
   "jest": {
     "transform": {
@@ -84,5 +78,9 @@
     "modulePaths": [
       "."
     ]
+  },
+  "dependencies": {
+    "@types/rbush": "^2.0.2",
+    "rbush": "^2.0.2"
   }
 }
