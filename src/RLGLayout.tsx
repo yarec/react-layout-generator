@@ -58,7 +58,7 @@ export function blockSelectedStyle(rect: IRect, zIndex: number) {
     borderStyle: 'dotted',
     borderWidth: '2px',
     borderColor: 'gray',
-    zIndex: zIndex === 0 ? 'auto' : zIndex
+    // zIndex: zIndex === 0 ? 'auto' : zIndex
   })
 }
 
@@ -113,7 +113,7 @@ function blockStyle(
       position: 'absolute' as 'absolute',
       transform: v,
       transformOrigin: transformOrigin,
-      zIndex: zIndex === 0 ? 'auto' : zIndex,
+      // zIndex: zIndex === 0 ? 'auto' : zIndex,
       ...style
     })
   } else {
@@ -122,7 +122,7 @@ function blockStyle(
       ...size,
       position: 'absolute' as 'absolute',
       transform: v,
-      zIndex: zIndex === 0 ? 'auto' : zIndex,
+      // zIndex: zIndex === 0 ? 'auto' : zIndex,
       ...style
     })
   }
@@ -267,6 +267,8 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   animate?: IAnimateProps
 
   layers?: ILayerMapper
+
+  onUpdate?: () => void
 }
 
 export interface IRLGLayoutState {
@@ -397,14 +399,16 @@ export class RLGLayout extends React.Component<
     return null
   }
 
-  getLayers():  React.ReactChild[][] {
+  getLayers(): React.ReactChild[][] {
     const jsx: React.ReactChild[][] = []
 
     function push(layer: number, child: React.ReactChild) {
+      if (!jsx[layer]) {
+        jsx[layer] = []
+      }
       jsx[layer].push(child)
     }
 
-    const maxLayer = this.props.layers ? this.props.layers.maximum : 1
     const mapper =
       this.props.layers && this.props.layers.mapper
         ? this.props.layers.mapper
@@ -412,22 +416,22 @@ export class RLGLayout extends React.Component<
             return layer
           }
 
-    for (let i = 0; i <= maxLayer; i++) {
-      jsx[i] = []
-    }
-
     React.Children.map(this.props.children, child => {
       const c = child as React.ReactElement<any>
       if (c) {
-        const layer = c.props['data-layer']
+        const layer: number | undefined = c.props['data-layer']
         if (!layer) {
           push(0, child as React.ReactChild)
+        } else if (typeof layer === 'string') {
+          const _layer = parseInt(layer as string, 10)
+          const l = mapper(_layer)
+          if (l) {
+            push(l, c)
+          }
         } else {
-          const _layer = mapper(layer)
-          if (_layer && _layer > 0 && _layer < maxLayer) {
-            push(layer, c)
-          } else {
-            push(maxLayer, c)
+          const l = mapper(layer)
+          if (l) {
+            push(l, c)
           }
         }
       }
@@ -437,6 +441,7 @@ export class RLGLayout extends React.Component<
   }
 
   public render(): React.ReactNode {
+    // console.log(`----------- render ${this.props.name}`)
     this.initLayout()
 
     let mainStyle: React.CSSProperties = this.mainStyle()
@@ -452,6 +457,7 @@ export class RLGLayout extends React.Component<
           onMouseDown={this.onParentMouseDown}
           onContextMenu={this.onParentContextMenu()}
         >
+        <>
           {this.content()}
 
           {this.state.contextMenuActive ? (
@@ -466,6 +472,7 @@ export class RLGLayout extends React.Component<
           ) : null}
 
           {this.frameEnd()}
+          </>
         </div>
       )
     }
@@ -1059,11 +1066,12 @@ export class RLGLayout extends React.Component<
     this._select = instance
   }
 
-  private onUpdate = (reset: boolean = false) => {
-    if (reset) {
-      this.setState({ update: 0 })
+  private onUpdate = () => {
+    if (this.props.onUpdate) {
+      this.props.onUpdate()
     } else {
       this.setState({ update: this.state.update + 1 })
+      console.log(`update ${this.state.update}`)
     }
   }
 
@@ -1099,10 +1107,12 @@ export class RLGLayout extends React.Component<
       }
     })
 
-    // Bug: The idea is to put each layer into its own div to form a 
+    // Bug: The idea is to put each layer into its own div to form a
     // stacking context. So far this is not working. Even though
     // React has the correct hierarchy, the browser arranges it
-    // into a different hierarchy. 
+    // into a different hierarchy.
+
+    // So have not found a solution for this.
 
     // const layerStyle = {
     //   position: 'absolute' as 'absolute',
@@ -1113,32 +1123,32 @@ export class RLGLayout extends React.Component<
     // }
 
     const layers = this.getLayers()
-    const serviceLayer = 1
     const elements: React.ReactNode[] = []
 
     // Phase II update
     let i = 0
-    for (; i < (serviceLayer - 1) && i < layers.length; i++) {
+
+    for (; i < layers.length - 1 && i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       // if (i === 0) {
       //   // Layer#0 is the default
       //   elements.push(children)
       // } else {
-        elements.push(
-          children
-          // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
-          //   {children}
-          // </div>
-        )
+      elements.push(
+        children
+        // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
+        //   {children}
+        // </div>
+      )
       //}
     }
 
     if (elements && this.props.service === ServiceOptions.dnd) {
       elements.push(
         <DragDropService
-          name={`dnd-${name}`}
-          key={`dnd-${name}`}
+          name={`dnd-${this.props.name}`}
+          key={`dnd-${this.props.name}`}
           debug={this._debug}
           boundary={{
             x: 0,
@@ -1153,7 +1163,7 @@ export class RLGLayout extends React.Component<
       )
     }
 
-    for (let i = (serviceLayer - 1); i < layers.length; i++) {
+    for (let i = layers.length - 1; i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       elements.push(
@@ -1252,6 +1262,7 @@ export class RLGLayout extends React.Component<
           nestedChild.props
         )
         if (nestedLayout && nestedChild.props) {
+          nestedLayout.localParent = b
           // const blocks = this._g.blocks();
           // blocks.set(nestedLayout.name, nestedLayout.position, nestedLayout.generator);
 

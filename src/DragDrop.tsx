@@ -27,7 +27,7 @@ export interface IDragDropProps extends React.HTMLProps<HTMLDivElement>{
   /**
    * Fired during start drag. Returns the list of id that are to be dragged.
    */
-  dragData?: (id: string) => string[]
+  dragData?: (id: string) => string[] | undefined
   /**
    * Fired during start drag. Returns the JSX code representing the image to be dragged.
    */

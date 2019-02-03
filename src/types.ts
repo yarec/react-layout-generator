@@ -649,12 +649,14 @@ export class Rect implements IRect {
     }
   }
 
-  // intersect(r: Rect): boolean {
-  //   return !(r.x > this._right
-  //     || r._right < this.x
-  //     || r.y > this._bottom
-  //     || r._bottom < this.y);
-  // }
+  intersect(r: IRect): boolean {
+    return !(
+      r.x > this.right ||
+      r.x + r.width < this.x ||
+      r.y > this.bottom ||
+      r.y + r.height < this.y
+    )
+  }
 }
 
 /**

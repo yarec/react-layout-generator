@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./examples",
+    "baseUrl": "./examples/",
     "outDir": "lib",
     "module": "commonjs",
     "target": "es5",

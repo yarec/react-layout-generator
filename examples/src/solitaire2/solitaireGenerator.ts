@@ -72,7 +72,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     const stock: IPosition = {
       location: { x: gameMargin + (interval - cardSize.width) / 2, y: gameMargin },
       size: cardSize,
-      zIndex: 10001,
+      // zIndex: 10,
       positionChildren: positionStockChildren
     }
     // console.log('cardSize', cardSize);
@@ -139,11 +139,11 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     if (props && props.id) {
-      return g.blocks().set(props.id, child, g, block)
+      return g.blocks().set(props.id, child, g)
     }
 
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g, block);
+    return new Block('temp', child, g);
   }
 
   function positionFoundationChildren(block: Block, g: IGenerator, index: number, props: Props) {
@@ -159,11 +159,11 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     if (props && props['data-dnd'] && props.id) {
-      return g.blocks().set(props.id, child, g, block)
+      return g.blocks().set(props.id, child, g)
     }
 
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g, block);
+    return new Block('temp', child, g);
   }
 
   function positionTableauChildren(block: Block, g: IGenerator, index: number, props: Props) {
@@ -179,11 +179,11 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     if (props && props.id) {
-      return g.blocks().set(props.id, child, g, block)
+      return g.blocks().set(props.id, child, g)
     }
 
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g, block);
+    return new Block('temp', child, g);
   }
 
   function positionWasteChildren(block: Block, g: Generator, index: number, props: Props) {
@@ -199,11 +199,11 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     };
 
     if (props && props.id) {
-      return g.blocks().set(props.id, child, g, block)
+      return g.blocks().set(props.id, child, g)
     }
 
     // This block is temp and will not be stored in blocks
-    return new Block('temp', child, g, block);
+    return new Block('temp', child, g);
   }
 
   return new Generator(name, init, _params, create, gArgs.editHelper);

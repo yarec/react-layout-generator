@@ -1,12 +1,12 @@
 import * as React from 'react'
 import * as rbush from 'rbush'
 
-import { DebugOptions, IPoint, IRect, difference } from '../types'
+import { DebugOptions, IPoint, IRect, difference, Rect } from '../types'
 import { IService, IServiceProps, IUndo } from './Service'
 import { Block } from '../components/Block'
 // import { Control } from '../Control'
 
-const gLayer = 10000
+// const gXIndex = 10
 /**
  * internal use only
  * @ignore
@@ -38,7 +38,9 @@ export class DragDropService
   private _rbush: rbush.RBush<Block>
   private _root: React.RefObject<HTMLDivElement>
   private _dragData: string[] = []
-  private _prevDroppable: Set<Block> = new Set;
+  private _prevDroppable: Set<Block> = new Set()
+  private _dragBlock: Block | undefined = undefined
+  private _parentContainer: Block | undefined
 
   constructor(props: IServiceProps) {
     super(props)
@@ -58,19 +60,24 @@ export class DragDropService
     this._root = React.createRef()
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   private loadDropContainers() {
     const blocks = this.props.g.blocks()
     const items: Block[] = []
     this._rbush.clear()
-    blocks.map.forEach(block => {
-      if (block.getHandler('canDrop')) {
-        items.push(block)
-        // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
-      } 
-    })
+    const dragBlockParent = this._dragBlock!.localParent
+    if (dragBlockParent) {
+      blocks.map.forEach(block => {
+        if (
+          block.getHandler('canDrop') &&
+          dragBlockParent.name !== block.name
+        ) {
+          items.push(block)
+          // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
+        }
+      })
+    }
     this._rbush.load(items)
   }
 
@@ -86,6 +93,7 @@ export class DragDropService
 
   public endDrag = () => {
     this._jsx = undefined
+    this._dragBlock = undefined
     this._dragData = []
     document.removeEventListener('mouseup', this.onHtmlMouseUp)
     document.removeEventListener('mousemove', this.onHtmlMouseMove)
@@ -95,11 +103,11 @@ export class DragDropService
     // console.log(`DragDrop render x: ${this.state.leftTop.x} y: ${this.state.leftTop.y}`)
     const style = {
       boxSizing: 'border-box' as 'border-box',
-      transform: `translate(${
-        this.state.leftTop.x}px, ${
-        this.state.leftTop.y}px)`,
+      transform: `translate(${this.state.leftTop.x}px, ${
+        this.state.leftTop.y
+      }px)`,
       position: 'absolute' as 'absolute',
-      backgroundColor: 'rgba(0, 0, 0, 0)',
+      backgroundColor: 'rgba(0, 0, 0, 0)'
       /* zIndex: gLayer */
     }
     return (
@@ -111,7 +119,7 @@ export class DragDropService
           position: 'absolute',
           width: this.props.boundary.width,
           height: this.props.boundary.height,
-          zIndex: gLayer
+          // zIndex: gXIndex
         }}
         onMouseDown={this.onMouseDown}
       >
@@ -159,7 +167,13 @@ export class DragDropService
     // Get target and corresponding Block
     let block: Block | undefined = undefined
     if (this._root && this._root.current) {
-      this._root.current.style.zIndex = '-1'
+      // TODO Switch from using zIndex to setting style.display to 'hide'
+      // When/if Layers are placed in separate <div
+      // const display = this._root.current.style.display
+
+      // this._root.current.style.display = 'none'
+      this._root.current.style.visibility = 'hidden'
+      // this._root.current.style.zIndex = '-1'
 
       let element = document.elementFromPoint(event.clientX, event.clientY)
       if (element) {
@@ -174,13 +188,20 @@ export class DragDropService
             height: r.height
           }
 
+          // Find parent block - get it now because it will change during the
+          // DnD process. It is needed for endDrag.
+          this._parentContainer = block.localParent
+
+          this._dragBlock = block
+
           this._jsx = block.getHandler('dragImage') as JSX.Element
 
-          console.log(`this._jsx block dragImage defined for ${block.name} `, this._jsx ? true : false)
+          // console.log(`this._jsx block dragImage defined for ${block.name} `, this._jsx ? true : false)
         }
       }
-
-      this._root.current.style.zIndex = `${gLayer}`
+      // this._root.current.style.display = display
+      this._root.current.style.visibility = 'visible'
+      // this._root.current.style.zIndex = gXIndex.toFixed()
     }
 
     if (!block) {
@@ -199,18 +220,18 @@ export class DragDropService
     if (localParent) {
       const dragData = localParent.getHandler('dragData')
       if (dragData) {
-        this._dragData = dragData(block)
+        this._dragData = dragData(block.name)
         if (!this._dragData) {
           return
         }
       }
-    } 
-    
-    if (this._dragData.length === 0) {
+    }
+
+    if (this._dragData ? this._dragData.length === 0 : true) {
       this._dragData = [block.name]
     }
 
-    console.log(`dnd dragData ${this._dragData}`)
+    // console.log(`dnd dragData ${this._dragData}`)
 
     // get drag image as JSX
     if (localParent) {
@@ -218,7 +239,7 @@ export class DragDropService
       if (dragImage) {
         this._jsx = dragImage(this._dragData)
 
-        console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
+        // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
       }
     }
 
@@ -250,7 +271,46 @@ export class DragDropService
 
     if (event) {
       event.preventDefault()
+
+      if (this._dragBlock) {
+        const ur = {
+          x: this.state.leftTop.x,
+          y: this.state.leftTop.y,
+          width: this._startRect.width,
+          height: this._startRect.height
+        }
+        const candidates = this.collisions(new Rect(ur))
+        console.log(`candidates.length ${candidates.length}`)
+        candidates.forEach((b) => {
+          console.log(`   block ${b.name}`)
+        })
+        if (candidates.length === 1) {
+          const canDrop = candidates[0].getHandler('canDrop')
+          if (canDrop && canDrop(this._dragData)) {
+            const drop = candidates[0].getHandler('drop')
+            if (drop && drop(this._dragData)) {
+              if (this._parentContainer) {
+                const endDrop = this._parentContainer.getHandler('endDrop')
+                if (endDrop) {
+                  endDrop(this._dragData)
+                } else {
+                  console.error(
+                    `Drag container for ${
+                      this._dragBlock.name
+                    } does not have a endDrag handler`
+                  )
+                }
+              } else {
+                console.error(
+                  `Drag container for ${this._dragBlock.name} does not exist`
+                )
+              }
+            }
+          }
+        }
+      }
       this.endDrag()
+      this.props.onUpdate()
 
       if (this.state.contextMenu) {
         this.setState({ contextMenu: false })
@@ -261,6 +321,25 @@ export class DragDropService
       }
       this.props.onUpdate(true)
     }
+  }
+
+  private collisions(r: Rect) {
+
+    // Current block container already ignored
+    const candidates = this._rbush.search({
+      minX: r.x,
+      minY: r.y,
+      maxX: r.right,
+      maxY: r.bottom
+    })
+
+    const verified: Block[] = []
+    candidates.forEach((b: Block) => {
+      if (r.intersect(b.rect())) {
+        verified.push(b)
+      }
+    })
+    return verified
   }
 
   public moveUpdate(x: number, y: number) {
@@ -308,20 +387,29 @@ export class DragDropService
       }
 
       // 3 CanDrop
-      const candidates = this._rbush.search({minX: ur.x, minY: ur.y, maxX: ur.x + ur.width, maxY: ur.y + ur.height})
+      const candidates = this._rbush.search({
+        minX: ur.x,
+        minY: ur.y,
+        maxX: ur.x + ur.width,
+        maxY: ur.y + ur.height
+      })
 
-      const blocks: Set<Block> = new Set
+      // candidates.forEach((block: Block) => {
+      //   console.log(` drop target ${block.name}`)
+      // })
+
+      const blocks: Set<Block> = new Set()
       candidates.forEach((block: Block) => {
         const canDrop = block.getHandler('canDrop')
         if (canDrop && canDrop(this._dragData)) {
           blocks.add(block)
-          console.log(`can drop ${block.name}`)
+          // console.log(`can drop ${block.name}`)
         }
       })
 
       let leave = difference(this._prevDroppable, blocks)
 
-      leave.forEach((b) => {
+      leave.forEach(b => {
         const dragLeave = b.getHandler('dragLeave')
         if (dragLeave) {
           dragLeave()
@@ -330,7 +418,7 @@ export class DragDropService
 
       let enter = difference(blocks, this._prevDroppable)
 
-      enter.forEach((b) => {
+      enter.forEach(b => {
         const dragEnter = b.getHandler('dragEnter')
         if (dragEnter) {
           dragEnter()
@@ -338,15 +426,17 @@ export class DragDropService
       })
 
       this._prevDroppable = blocks
-  
+
       // tslint:disable-next-line:no-bitwise
       if (this.props.debug && this.props.debug & DebugOptions.trace) {
         console.log(`DragDrop update location (x: ${ur.x} y: ${ur.y})`)
       }
 
       // 4 Update handle
-      if (this.state.leftTop.x !== this._startRect.x + deltaX ||
-        this.state.leftTop.y !== this._startRect.y + deltaY) {
+      if (
+        this.state.leftTop.x !== this._startRect.x + deltaX ||
+        this.state.leftTop.y !== this._startRect.y + deltaY
+      ) {
         this.setState({
           leftTop: {
             x: this._startRect.x + deltaX,

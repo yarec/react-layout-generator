@@ -47,10 +47,10 @@ export default class Solitaire extends React.Component<
     this._stock = new Stock(this.update, this._g)
     this._waste = new Waste(this.update, this._g)
     for (let i = 0; i < 4; i++) {
-      this._foundation.push(new FoundationStack(this.update, this._g))
+      this._foundation.push(new FoundationStack(`#${i}`, this.update, this._g))
     }
     for (let i = 0; i < 7; i++) {
-      this._tableau.push(new TableauStack(this.update, this._g))
+      this._tableau.push(new TableauStack(`#${i}`, this.update, this._g))
     }
 
     this.state = { update: 0 }
@@ -116,7 +116,8 @@ export default class Solitaire extends React.Component<
           maximum: 2,
           service: 2 
         }}
-        debug={[DebugOptions.info, DebugOptions.mouseEvents]}
+        debug={[DebugOptions.none]}
+        onUpdate={this.update}
       >
         <div
           key='stock'
@@ -129,15 +130,21 @@ export default class Solitaire extends React.Component<
           <button onClick={this.onPopulateWaste}>Test</button>
         </div>
 
-        <div
+        <DragDrop
+          name={'waste'}
           key={'waste'}
           data-layout={{
             name: 'waste'
           }}
           data-layer={1}
+          dragData={this._waste.dragData}
+          canDrop={this._waste.canDrop}
+          drop={this._waste.drop}
+          endDrop={this._waste.endDrop}
+          g={this._g}
         >
           {this._waste.cards()}
-        </div>
+        </DragDrop>
 
         {this.foundations()}
 
@@ -150,7 +157,7 @@ export default class Solitaire extends React.Component<
                 origin: { x: 50, y: 50 },
                 location: { x: 50, y: 90, unit: Unit.percent },
                 size: { width: 90, height: 24 },
-                zIndex: 10
+                // zIndex: 10
               }
             }}
             data-layer={2}>
@@ -199,6 +206,8 @@ export default class Solitaire extends React.Component<
         <DragDrop
           name={name}
           key={name}
+          dragData={this._tableau[i].dragData}
+          // dragImage ={this._tableau[i].dragImage}
           canDrop={this._tableau[i].canDrop}
           drop={this._tableau[i].drop}
           endDrop={this._tableau[i].endDrop}

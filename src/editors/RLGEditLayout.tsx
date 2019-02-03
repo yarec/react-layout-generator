@@ -31,7 +31,7 @@ function editStyle(args: IEditHandleProps): React.CSSProperties {
     position: 'absolute' as 'absolute',
     cursor: `${args.cursor}`,
     background: 'rgba(0, 0, 0, 0)',
-    zIndex: args.zIndex,
+    // zIndex: args.zIndex,
     borderWidth: '4px',
     outline: 'none',
     userSelect: 'none'

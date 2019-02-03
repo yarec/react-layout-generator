@@ -35,17 +35,12 @@ export class Blocks {
     return this._blocks.get(key)
   }
 
-  public set(
-    key: string,
-    p: IPosition,
-    g: IGenerator,
-    localParent?: Block
-  ): Block {
+  public set(key: string, p: IPosition, g: IGenerator): Block {
     let block = this._blocks.get(key)
     if (block) {
       block.updatePosition(p)
     } else {
-      block = new Block(key, p, g, localParent)
+      block = new Block(key, p, g)
       this._blocks.set(key, block)
       if (this._blocks.size > this._byIndex.length) {
         // Add to byIndex array

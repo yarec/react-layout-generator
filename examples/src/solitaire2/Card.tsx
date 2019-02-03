@@ -5,6 +5,10 @@ export enum Face {
 
 export const gCards: Map<string, Card> = new Map
 
+export function cardPath(id: string) {
+  return require(`../assets/cards/${id}.jpg`)
+}
+
 export default class Card {
   private _name: string;
   private _face: Face;
@@ -44,6 +48,10 @@ export default class Card {
     return this._face;
   }
 
+  public set face(face: Face) {
+    this._face = face;
+  }
+
   public get rank() {
     return this._rank;
   }
@@ -52,14 +60,12 @@ export default class Card {
     return this._suite;
   }
 
-  public flip = () => {
-    this._face = this._face === Face.up ? Face.down : Face.up;
-  }
-
   public get path() {
     if (this._face === Face.up) {
-      return require(`../assets/cards/${this._name}.jpg`)
+      return cardPath(this._name)
     }
     return require(`../assets/cards/back.jpg`)
   }
+
+
 }

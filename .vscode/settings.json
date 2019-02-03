@@ -10,6 +10,7 @@
     "dragdrop",
     "droppable",
     "inline",
+    "irlglayoutprops",
     "prefixer",
     "quadtree",
     "rbush",

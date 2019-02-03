@@ -333,8 +333,6 @@ export interface IPosition {
    * to change.
    */
   transform?: Transform[]
-
-  dragDrop?: any
 }
 
 /**
@@ -410,8 +408,12 @@ export class Block {
     return this._cached.y
   }
 
-  get localParent() {
+  get localParent(): Block | undefined {
     return this._localParent
+  }
+
+  set localParent(parent: Block | undefined) {
+    this._localParent = parent
   }
 
   /**
@@ -494,7 +496,7 @@ export class Block {
   private _onMouseDown: (e: React.MouseEvent) => void
   private _onClick: (e: React.MouseEvent) => void
 
-  constructor(name: string, p: IPosition, g: IGenerator, localParent?: Block) {
+  constructor(name: string, p: IPosition, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
     if (p) {
@@ -506,7 +508,7 @@ export class Block {
       }
     }
     this._g = g
-    this._localParent = localParent
+    this._localParent = undefined
     this.updatePosition(this._position)
     if (this._position.zIndex) {
       this.zIndex = this._position.zIndex

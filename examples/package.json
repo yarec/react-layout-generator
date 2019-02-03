@@ -79,8 +79,5 @@
       "."
     ]
   },
-  "dependencies": {
-    "@types/rbush": "^2.0.2",
-    "rbush": "^2.0.2"
-  }
+  "dependencies": {}
 }

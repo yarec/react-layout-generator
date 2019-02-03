@@ -79,6 +79,7 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 ## TODO
 
 - Place each layer in its own group so that [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) will only have effect in that layer.
+- Add move command within a container to drag and drop to allow rearranging draggable blocks).
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar
 - Add arrange group to toolBar (align, layers,

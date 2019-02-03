@@ -1,4 +1,5 @@
 import { IGenerator } from '../importRLG';
+import { Face } from '../solitaire/Card';
 import Stack from './Stack';
 import Stock from './Stock';
 
@@ -15,7 +16,7 @@ export default class Waste {
   public populate = (stock: Stock) => {
     let oldCard = this._waste.shift();
     while(oldCard) {
-      oldCard.flip();
+      oldCard.face = Face.down;
       stock.unshift(oldCard);
       oldCard = this._waste.shift();
     }
@@ -24,17 +25,17 @@ export default class Waste {
 
     let card = stock.pop();
     if (card) {
-      card.flip();
+      card.face = Face.up;
       this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
-      card.flip();
+      card.face = Face.up;
       this._waste.push(card)
     }
     card = stock.pop()
     if (card) {
-      card.flip();
+      card.face = Face.up;
       this._waste.push(card)
     }
 
@@ -47,5 +48,28 @@ export default class Waste {
 
   public cards = () => {
     return this._waste.cards();
+  }
+
+  public dragData = (id: string): string[] | undefined => {
+    const last = this._waste ? this._waste.last : undefined
+    // Return undefined to cancel if the selected card is not the last one
+    if (last && last.name === id) {
+      return [id]
+    }
+    return undefined
+  }
+
+  public canDrop = (data: string[]) => {
+    return false
+  }
+
+  public drop = (data: string[]) => {
+    return false
+  }
+
+  public endDrop = (data: string[]) => {
+    console.log(`foundation endDrop ${this._waste.cards.name} `)
+    // Remove last card
+    this._waste.pop()
   }
 }
