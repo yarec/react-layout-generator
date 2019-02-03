@@ -58,7 +58,8 @@ export function blockSelectedStyle(rect: IRect, zIndex: number) {
     borderStyle: 'dotted',
     borderWidth: '2px',
     borderColor: 'gray',
-    // zIndex: zIndex === 0 ? 'auto' : zIndex
+    zIndex: zIndex === 0 ? 'auto' : zIndex,
+    pointerEvents: 'auto' as 'auto',
   })
 }
 
@@ -113,7 +114,8 @@ function blockStyle(
       position: 'absolute' as 'absolute',
       transform: v,
       transformOrigin: transformOrigin,
-      // zIndex: zIndex === 0 ? 'auto' : zIndex,
+      zIndex: zIndex === 0 ? 'auto' : zIndex,
+      pointerEvents: 'auto' as 'auto',
       ...style
     })
   } else {
@@ -122,7 +124,8 @@ function blockStyle(
       ...size,
       position: 'absolute' as 'absolute',
       transform: v,
-      // zIndex: zIndex === 0 ? 'auto' : zIndex,
+      zIndex: zIndex === 0 ? 'auto' : zIndex,
+      pointerEvents: 'auto' as 'auto',
       ...style
     })
   }
@@ -155,9 +158,7 @@ export const gContext: Map<string, any> = new Map()
  */
 export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   /**
-   * Name is required by [RLGDynamic](#RLGDynamic) and
-   * useful when debugging even if you are not using dynamic
-   * rendering.
+   * Unique name is required.
    */
   name: string
   /**
@@ -444,6 +445,8 @@ export class RLGLayout extends React.Component<
     // console.log(`----------- render ${this.props.name}`)
     this.initLayout()
 
+    // document.body.style.pointerEvents = 'none'
+
     let mainStyle: React.CSSProperties = this.mainStyle()
 
     if (this._edit) {
@@ -457,21 +460,21 @@ export class RLGLayout extends React.Component<
           onMouseDown={this.onParentMouseDown}
           onContextMenu={this.onParentContextMenu()}
         >
-        <>
-          {this.content()}
+          <>
+            {this.content()}
 
-          {this.state.contextMenuActive ? (
-            <RLGContextMenu
-              commands={this.generateContextMenu(this.state.contextMenu)}
-              location={this._menuLocation}
-              bounds={{ width: this.state.width, height: this.state.height }}
-              debug={this._debug}
-              hideMenu={this.hideMenu}
-              zIndex={this._zIndex}
-            />
-          ) : null}
+            {this.state.contextMenuActive ? (
+              <RLGContextMenu
+                commands={this.generateContextMenu(this.state.contextMenu)}
+                location={this._menuLocation}
+                bounds={{ width: this.state.width, height: this.state.height }}
+                debug={this._debug}
+                hideMenu={this.hideMenu}
+                zIndex={this._zIndex}
+              />
+            ) : null}
 
-          {this.frameEnd()}
+            {this.frameEnd()}
           </>
         </div>
       )
@@ -537,6 +540,7 @@ export class RLGLayout extends React.Component<
         top: 0,
         width: '100%',
         height: '100%',
+        // pointerEvents: 'none' as 'none',
         overflow: `${overflowFn(this.props.overflowX)} ${overflowFn(
           this.props.overflowY
         )}`,
@@ -1114,34 +1118,46 @@ export class RLGLayout extends React.Component<
 
     // So have not found a solution for this.
 
-    // const layerStyle = {
-    //   position: 'absolute' as 'absolute',
-    //   left: 0,
-    //   top: 0,
-    //   right: 0,
-    //   bottom: 0
-    // }
+    const layerStyle = {
+      position: 'absolute' as 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0
+      // pointerEvents: 'none' as 'none'
+    }
+
+    const topLayerStyle = {
+      background: 'transparent',
+      position: 'absolute' as 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      pointerEvents: 'none' as 'none'
+    }
 
     const layers = this.getLayers()
     const elements: React.ReactNode[] = []
 
     // Phase II update
-    let i = 0
 
+    const encapsulate = this.props.layers
+      ? this.props.layers.encapsulate
+      : false
+    let i = 0
     for (; i < layers.length - 1 && i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
-      // if (i === 0) {
-      //   // Layer#0 is the default
-      //   elements.push(children)
-      // } else {
       elements.push(
-        children
-        // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
-        //   {children}
-        // </div>
+        encapsulate ? (
+          <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
+            {children}
+          </div>
+        ) : (
+          children
+        )
       )
-      //}
     }
 
     if (elements && this.props.service === ServiceOptions.dnd) {
@@ -1167,10 +1183,13 @@ export class RLGLayout extends React.Component<
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       elements.push(
-        children
-        // <div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}>
-        //   {children}
-        // </div>
+        encapsulate ? (
+          <div key={`layer#${i}`} id={`layer#${i}`} style={topLayerStyle}>
+            {children}
+          </div>
+        ) : (
+          children
+        )
       )
     }
 

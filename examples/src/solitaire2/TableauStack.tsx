@@ -52,7 +52,6 @@ export default class TableauStack {
     if (first) {
       if (this._stack.length === 0) {
         result = first.rank === 13
-        // console.log(`can drop tableau ${this._name} ${first.name}`, result);
       } else {
         const last = this._stack.last
         if (last) {

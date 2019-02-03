@@ -9,17 +9,22 @@ export interface Props {
  */
 export interface ILayerMapper {
   /**
-   * The maximum layer
+   * This option lets you encapsulate each layer with its own
+   * [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context).
+   *
+   * If you are not using stacking other than layers (which just manages the order that elements are
+   * rendered), then the results are similar. Do note that UI interactions can be changed when encapsulation
+   * is on so be sure to test.
+   *
+   * Default is to not encapsulate each layer its own stacking context. This means that
+   * z-index stacking context for direct children will be global within an Layout.
    */
-  maximum: number
-  /**
-   * The service layer
-   */
-  service: number
+  encapsulate?: boolean
+
   /**
    * A mapper lets you merge, reorder, and/or hide layers. It simply maps one layer to another.
-   * If it returns undefined then nothing will be rendered. The default is to use the specified
-   * layers in blocks directly only trimming values below 0 and above the maximum layer.
+   * If it returns undefined then nothing will be rendered for that layer. The default is render
+   * all layers as specified.
    */
   mapper?: (layer: number) => number | undefined
 }

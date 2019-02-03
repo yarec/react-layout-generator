@@ -72,7 +72,6 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     const stock: IPosition = {
       location: { x: gameMargin + (interval - cardSize.width) / 2, y: gameMargin },
       size: cardSize,
-      // zIndex: 10,
       positionChildren: positionStockChildren
     }
     // console.log('cardSize', cardSize);

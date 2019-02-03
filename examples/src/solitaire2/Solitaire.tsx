@@ -10,6 +10,7 @@ import {
   Unit
 } from '../importRLG'
 
+import { cardPath } from './Card';
 import FoundationStack from './FoundationStack'
 import solitaireGenerator from './solitaireGenerator'
 import Stock from './Stock'
@@ -113,22 +114,19 @@ export default class Solitaire extends React.Component<
         g={this._g}
         service={ServiceOptions.dnd}
         layers={{
-          maximum: 2,
-          service: 2 
+          encapsulate: false
         }}
         debug={[DebugOptions.none]}
         onUpdate={this.update}
       >
-        <div
+        <StockButton
           key='stock'
           data-layout={{
             name: 'stock'
           }}
-          data-layer={2}>
-        >
-          {this._stock.cards()}
-          <button onClick={this.onPopulateWaste}>Test</button>
-        </div>
+          data-layer={2}
+          data-click={this.onPopulateWaste}
+        />
 
         <DragDrop
           name={'waste'}
@@ -142,6 +140,7 @@ export default class Solitaire extends React.Component<
           drop={this._waste.drop}
           endDrop={this._waste.endDrop}
           g={this._g}
+         
         >
           {this._waste.cards()}
         </DragDrop>
@@ -247,5 +246,40 @@ export default class Solitaire extends React.Component<
     }
 
     return jsx
+  }
+}
+
+export interface IStockButtonProps extends React.HTMLProps<HTMLDivElement> {
+
+}
+
+// tslint:disable-next-line:max-classes-per-file
+class StockButton extends React.Component<IStockButtonProps> {
+
+  public noop = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  public render () {
+    const style = this.props.style
+    if (style) {
+      // Make image expand to the edge of the button
+      style.padding = '0 0'
+      style.borderWidth = '0'
+    }
+
+    return <button 
+      onClick={this.props['data-click']} 
+      style={style} 
+      onDragStart={this.noop} // Kill built in image
+    >
+      <img
+          id={'back'}
+          key={'back'}
+          src={cardPath('back')}
+          style={{ width: '100%', height: '100%' }}
+        />
+    </button>
   }
 }

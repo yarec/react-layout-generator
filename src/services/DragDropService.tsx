@@ -108,7 +108,6 @@ export class DragDropService
       }px)`,
       position: 'absolute' as 'absolute',
       backgroundColor: 'rgba(0, 0, 0, 0)'
-      /* zIndex: gLayer */
     }
     return (
       <div
@@ -119,11 +118,9 @@ export class DragDropService
           position: 'absolute',
           width: this.props.boundary.width,
           height: this.props.boundary.height,
-          // zIndex: gXIndex
         }}
         onMouseDown={this.onMouseDown}
       >
-        {/* <Control name={'$newGame'} g={this.props.g} /> */}
         <div style={style}>{this._jsx}</div>
       </div>
     )
@@ -154,26 +151,21 @@ export class DragDropService
   }
 
   public onMouseDown = (event: React.MouseEvent) => {
+     // tslint:disable-next-line:no-bitwise
     if (this._debug & DebugOptions.mouseEvents && event.target) {
-      // tslint:disable-next-line:no-bitwise
-      // tslint:disable-next-line:no-string-literal
       console.log(`RLGDragDrop onMouseDown ${(event.target as HTMLElement).id}`)
     }
 
     if (event.button === 2) {
-      // context menu
+      // context menu needed?
     }
 
     // Get target and corresponding Block
     let block: Block | undefined = undefined
     if (this._root && this._root.current) {
-      // TODO Switch from using zIndex to setting style.display to 'hide'
-      // When/if Layers are placed in separate <div
-      // const display = this._root.current.style.display
-
-      // this._root.current.style.display = 'none'
+      
+      // Hide this layer so that we can use elementFromPoint
       this._root.current.style.visibility = 'hidden'
-      // this._root.current.style.zIndex = '-1'
 
       let element = document.elementFromPoint(event.clientX, event.clientY)
       if (element) {
@@ -199,9 +191,9 @@ export class DragDropService
           // console.log(`this._jsx block dragImage defined for ${block.name} `, this._jsx ? true : false)
         }
       }
-      // this._root.current.style.display = display
+
+      // Re-enable visible
       this._root.current.style.visibility = 'visible'
-      // this._root.current.style.zIndex = gXIndex.toFixed()
     }
 
     if (!block) {
@@ -215,7 +207,7 @@ export class DragDropService
       }
     })
 
-    // get transfer data
+    // get dragData
     const localParent = block.localParent
     if (localParent) {
       const dragData = localParent.getHandler('dragData')
@@ -238,7 +230,6 @@ export class DragDropService
       const dragImage = localParent.getHandler('dragImage')
       if (dragImage) {
         this._jsx = dragImage(this._dragData)
-
         // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
       }
     }
@@ -262,9 +253,8 @@ export class DragDropService
   }
 
   public onHtmlMouseUp = (event: MouseEvent) => {
-    // tslint:disable-next-line:no-bitwise
+    
     if (this.props.debug && this.props.debug & DebugOptions.mouseEvents) {
-      // tslint:disable-next-line:no-string-literal
       const id = event && event.target && event.target['id']
       console.log(`DragDrop onHtmlMouseUp ${id ? id : ''}`)
     }
@@ -280,10 +270,14 @@ export class DragDropService
           height: this._startRect.height
         }
         const candidates = this.collisions(new Rect(ur))
-        console.log(`candidates.length ${candidates.length}`)
-        candidates.forEach((b) => {
-          console.log(`   block ${b.name}`)
-        })
+
+        if (this.props.debug && this.props.debug & DebugOptions.mouseEvents & DebugOptions.trace) {
+          console.log(`candidates.length ${candidates.length}`)
+          candidates.forEach((b) => {
+            console.log(`   block ${b.name}`)
+          })
+        }
+
         if (candidates.length === 1) {
           const canDrop = candidates[0].getHandler('canDrop')
           if (canDrop && canDrop(this._dragData)) {
@@ -295,14 +289,13 @@ export class DragDropService
                   endDrop(this._dragData)
                 } else {
                   console.error(
-                    `Drag container for ${
-                      this._dragBlock.name
-                    } does not have a endDrag handler`
+                    `Drag container for ${this._dragBlock.name} does not have a endDrag handler`
                   )
                 }
               } else {
                 console.error(
-                  `Drag container for ${this._dragBlock.name} does not exist`
+                  `Drag container for ${this._dragBlock.name} does not exist. You can only drag
+                  elements that are in an enabled container element.`
                 )
               }
             }
@@ -326,6 +319,7 @@ export class DragDropService
   private collisions(r: Rect) {
 
     // Current block container already ignored
+    // TODO fix this when allowing DnD to be used within a container.
     const candidates = this._rbush.search({
       minX: r.x,
       minY: r.y,
@@ -394,9 +388,12 @@ export class DragDropService
         maxY: ur.y + ur.height
       })
 
-      // candidates.forEach((block: Block) => {
-      //   console.log(` drop target ${block.name}`)
-      // })
+      if (this.props.debug && this.props.debug & DebugOptions.mouseEvents & DebugOptions.trace) {
+        console.log(`Drop target containers for ${this.props.name}`)
+        candidates.forEach((block: Block) => {
+          console.log(`  drop target ${block.name}`)
+        })
+      }
 
       const blocks: Set<Block> = new Set()
       candidates.forEach((block: Block) => {
@@ -447,79 +444,3 @@ export class DragDropService
     }
   }
 }
-
-// const b = this._rbush.search({minX: event.clientX, minY: event.clientY, maxX:event.clientX, maxY:event.clientY})
-// console.log(`found ${b.length}`)
-// const map: Map<string, Block> = new Map
-// b.forEach((block) => {
-//   console.log(`   block ${block.name}`)
-//   map.set(block.name, block)
-// })
-// console.log(`map ${map.size}`)
-// console.log(`RLGDragDrop onMouseDown ${(event.target as HTMLElement).id}`)
-
-// 1 Convert to layout coords
-// const r = (event.target as HTMLElement).getBoundingClientRect()
-// const hit = {x: event.clientX - r.left, y: event.clientY - r.top}
-
-// 2 Find hit in Blocks using r-tree
-
-// 3 Get data to transfer from src from its container
-
-// Start move
-
-// Look  for drops while moving using r-tree
-
-// Drop on mouse up
-
-// if (this._debug & DebugOptions.mouseEvents && event.target) {
-//   // tslint:disable-next-line:no-bitwise
-//   // tslint:disable-next-line:no-string-literal
-//   console.log(`RLGDragDrop onMouseDown ${(event.target as HTMLElement).id}`)
-// }
-
-// let element = document.elementFromPoint(event.clientX, event.clientY)
-// if (!element) {
-//   return
-// }
-
-// // lower zIndex to get elements under dnd overlay
-// // (element as HTMLElement).style.zIndex = '0'
-
-// element = document.elementFromPoint(event.clientX, event.clientY)
-
-// if (!element) {
-//   return
-// }
-
-// // Is it draggable?
-// function findAncestor(element: Element) {
-//   /// element.attributes.getNamedItem('data-draggable')
-
-//   if ((element as HTMLElement).dataset.draggable) {
-//     return element
-//   }
-//   let el: Element | null = element
-//   while (
-//     (el = el.parentElement) &&
-//     !(element as HTMLElement).dataset.draggable
-//   );
-//   return el
-// }
-// element = findAncestor(element)
-// if (!element) {
-//   return
-// }
-
-// const g = element.getAttribute('g')
-// console.log(`g.name ${g ? g['name'] : 'invalid'}`)
-
-// // Disable the browser's own dnd image by adding ondragstart:()=>{return false}
-// const ondragstart = () => {
-//   return false
-// }
-
-// // wrap element in a <div data-layout
-// const layoutDiv = React.createElement('div', { ondragstart }, element)
-
-// this._jsx = <>{layoutDiv}</>

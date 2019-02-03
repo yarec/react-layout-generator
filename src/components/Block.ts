@@ -527,11 +527,6 @@ export class Block {
     console.error('Event handler not defined')
   }
 
-  // public clone = (): Layout => {
-  //   const p = clone(this._position);
-  //   return new Layout(this._name, p, this._g);
-  // }
-
   public get onMouseDown() {
     return this._onMouseDown
   }
