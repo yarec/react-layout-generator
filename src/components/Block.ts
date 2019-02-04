@@ -557,6 +557,10 @@ export class Block {
     }
   }
 
+  public get layer() {
+    return this.getHandler('$layer')
+  }
+
   public connectionHandles = () => {
     const align = this._position.align
     if (align) {

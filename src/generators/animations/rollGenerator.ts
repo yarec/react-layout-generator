@@ -49,7 +49,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
             min = rect.y
           }
           if (rect.y + rect.height > max) {
-            max = rect.y + rect.height
+            max = rect.y + rect.height * Math.sign(velocity)
           }
         })
         params.set('update', 0)

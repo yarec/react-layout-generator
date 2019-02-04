@@ -913,13 +913,10 @@ img { max-width: 100%; }
 			<a href="ilayermapper.html" class="tsd-kind-icon">ILayer<wbr>Mapper</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ilayermapper.html#encapsulate" class="tsd-kind-icon">encapsulate</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="ilayermapper.html#mapper" class="tsd-kind-icon">mapper</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ilayermapper.html#maximum" class="tsd-kind-icon">maximum</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ilayermapper.html#service" class="tsd-kind-icon">service</a>
 				</li>
 			</ul>
 		</li>
@@ -951,9 +948,8 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ilayermapper.html#encapsulate" class="tsd-kind-icon">encapsulate</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ilayermapper.html#mapper" class="tsd-kind-icon">mapper</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ilayermapper.html#maximum" class="tsd-kind-icon">maximum</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ilayermapper.html#service" class="tsd-kind-icon">service</a></li>
 						</ul>
 					</section>
 				</div>
@@ -962,49 +958,40 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="encapsulate" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> encapsulate</h3>
+				<div class="tsd-signature tsd-kind-icon">encapsulate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/types.ts#L22">types.ts:22</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This option lets you encapsulate each layer with its own
+						<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context">stacking context</a>.</p>
+					</div>
+					<p>If you are not using stacking other than layers (which just manages the order that elements are
+						rendered), then the results are similar. Do note that UI interactions can be changed when encapsulation
+					is on so be sure to test.</p>
+					<p>Default is to not encapsulate each layer its own stacking context. This means that
+					z-index stacking context for direct children will be global within an Layout.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="mapper" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> mapper</h3>
 				<div class="tsd-signature tsd-kind-icon">mapper<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L24">types.ts:24</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/types.ts#L29">types.ts:29</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>A mapper lets you merge, reorder, and/or hide layers. It simply maps one layer to another.
-							If it returns undefined then nothing will be rendered. The default is to use the specified
-						layers in blocks directly only trimming values below 0 and above the maximum layer.</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="maximum" class="tsd-anchor"></a>
-				<h3>maximum</h3>
-				<div class="tsd-signature tsd-kind-icon">maximum<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L14">types.ts:14</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The maximum layer</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="service" class="tsd-anchor"></a>
-				<h3>service</h3>
-				<div class="tsd-signature tsd-kind-icon">service<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/types.ts#L18">types.ts:18</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The service layer</p>
+							If it returns undefined then nothing will be rendered for that layer. The default is render
+						all layers as specified.</p>
 					</div>
 				</div>
 			</section>

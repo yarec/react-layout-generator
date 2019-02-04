@@ -916,13 +916,7 @@ img { max-width: 100%; }
 					<a href="iposition.html#align" class="tsd-kind-icon">align</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="iposition.html#dragdrop" class="tsd-kind-icon">drag<wbr>Drop</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="iposition.html#editor" class="tsd-kind-icon">editor</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="iposition.html#layer" class="tsd-kind-icon">layer</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="iposition.html#location" class="tsd-kind-icon">location</a>
@@ -939,6 +933,9 @@ img { max-width: 100%; }
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="iposition.html#transform" class="tsd-kind-icon">transform</a>
 				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="iposition.html#zindex" class="tsd-kind-icon">z<wbr>Index</a>
+				</li>
 			</ul>
 		</li>
 	</ul>
@@ -948,7 +945,7 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>IPosition defines the positioning, layer, and editor rules for elements in RLG.</p>
+					<p>IPosition defines the positioning, zIndex, and editor rules for elements in RLG.</p>
 				</div>
 				<p>A minimal definition is:</p>
 				<pre><code class="language-ts"> position: {
@@ -973,14 +970,13 @@ img { max-width: 100%; }
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#align" class="tsd-kind-icon">align</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#dragdrop" class="tsd-kind-icon">drag<wbr>Drop</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#editor" class="tsd-kind-icon">editor</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#layer" class="tsd-kind-icon">layer</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#location" class="tsd-kind-icon">location</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#origin" class="tsd-kind-icon">origin</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#positionchildren" class="tsd-kind-icon">position<wbr>Children</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#size" class="tsd-kind-icon">size</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#transform" class="tsd-kind-icon">transform</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#zindex" class="tsd-kind-icon">z<wbr>Index</a></li>
 						</ul>
 					</section>
 				</div>
@@ -994,7 +990,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">align<span class="tsd-signature-symbol">:</span> <a href="ialign.html" class="tsd-signature-type">IAlign</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L295">components/Block.ts:295</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L295">components/Block.ts:295</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1004,22 +1000,12 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="dragdrop" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> drag<wbr>Drop</h3>
-				<div class="tsd-signature tsd-kind-icon">drag<wbr>Drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L337">components/Block.ts:337</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="editor" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> editor</h3>
 				<div class="tsd-signature tsd-kind-icon">editor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IEditor</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L306">components/Block.ts:306</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L306">components/Block.ts:306</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1030,29 +1016,12 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="layer" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> layer</h3>
-				<div class="tsd-signature tsd-kind-icon">layer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L313">components/Block.ts:313</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>A layer is the same as css z-index. The default is 0.</p>
-					</div>
-					<p>If you use the editor to change the layer it will be stored in Params
-					using the key <code>${block.name}ZIndex</code>.</p>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="location" class="tsd-anchor"></a>
 				<h3>location</h3>
 				<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="ipositionlocation.html" class="tsd-signature-type">IPositionLocation</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L324">components/Block.ts:324</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L324">components/Block.ts:324</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1068,7 +1037,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L319">components/Block.ts:319</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L319">components/Block.ts:319</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1085,7 +1054,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">position<wbr>Children<span class="tsd-signature-symbol">:</span> <a href="../globals.html#positionchildren" class="tsd-signature-type">PositionChildren</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L301">components/Block.ts:301</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L301">components/Block.ts:301</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1102,7 +1071,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <a href="ipositionsize.html" class="tsd-signature-type">IPositionSize</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L328">components/Block.ts:328</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L328">components/Block.ts:328</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1117,7 +1086,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">:</span> <a href="../globals.html#transform" class="tsd-signature-type">Transform</a><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L335">components/Block.ts:335</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L335">components/Block.ts:335</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1127,6 +1096,23 @@ img { max-width: 100%; }
 							the style property for this block. This feature is experimental and subject
 						to change.</p>
 					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="zindex" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> z<wbr>Index</h3>
+				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L313">components/Block.ts:313</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>zIndex is the same as css z-index. The default is 0.</p>
+					</div>
+					<p>If you use the editor to change the zIndex it will be stored in Params
+					using the key <code>${block.name}ZIndex</code>.</p>
 				</div>
 			</section>
 		</section>

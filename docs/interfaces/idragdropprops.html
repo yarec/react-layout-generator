@@ -1054,13 +1054,16 @@ img { max-width: 100%; }
 					<a href="idragdropprops.html#download" class="tsd-kind-icon">download</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idragdropprops.html#dragdata" class="tsd-kind-icon">drag<wbr>Data</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="idragdropprops.html#dragenter" class="tsd-kind-icon">drag<wbr>Enter</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="idragdropprops.html#dragleave" class="tsd-kind-icon">drag<wbr>Leave</a>
+					<a href="idragdropprops.html#dragimage" class="tsd-kind-icon">drag<wbr>Image</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="idragdropprops.html#dragstart" class="tsd-kind-icon">drag<wbr>Start</a>
+					<a href="idragdropprops.html#dragleave" class="tsd-kind-icon">drag<wbr>Leave</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="idragdropprops.html#draggable" class="tsd-kind-icon">draggable</a>
@@ -1097,9 +1100,6 @@ img { max-width: 100%; }
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="idragdropprops.html#g" class="tsd-kind-icon">g</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="idragdropprops.html#getdragjsx" class="tsd-kind-icon">get<wbr>DragJSX</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="idragdropprops.html#headers" class="tsd-kind-icon">headers</a>
@@ -1876,7 +1876,7 @@ img { max-width: 100%; }
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="tsd-signature-type">HTMLProps</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span>
+					<span class="tsd-signature-type">HTMLProps</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span>
 					<ul class="tsd-hierarchy">
 						<li>
 							<span class="target">IDragDropProps</span>
@@ -1939,9 +1939,10 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#dir" class="tsd-kind-icon">dir</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#disabled" class="tsd-kind-icon">disabled</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#download" class="tsd-kind-icon">download</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#dragdata" class="tsd-kind-icon">drag<wbr>Data</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#dragenter" class="tsd-kind-icon">drag<wbr>Enter</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#dragimage" class="tsd-kind-icon">drag<wbr>Image</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#dragleave" class="tsd-kind-icon">drag<wbr>Leave</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#dragstart" class="tsd-kind-icon">drag<wbr>Start</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#draggable" class="tsd-kind-icon">draggable</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#drop" class="tsd-kind-icon">drop</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#enctype" class="tsd-kind-icon">enc<wbr>Type</a></li>
@@ -1954,7 +1955,6 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#formtarget" class="tsd-kind-icon">form<wbr>Target</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#frameborder" class="tsd-kind-icon">frame<wbr>Border</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#g" class="tsd-kind-icon">g</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idragdropprops.html#getdragjsx" class="tsd-kind-icon">get<wbr>DragJSX</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#headers" class="tsd-kind-icon">headers</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#height" class="tsd-kind-icon">height</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="idragdropprops.html#hidden" class="tsd-kind-icon">hidden</a></li>
@@ -2399,12 +2399,13 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">can<wbr>Drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L20">DragDrop.tsx:20</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L21">DragDrop.tsx:21</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Test to see if this container can accept this data. Returns true if
+						<p>Fired whenever the draggable is over a drop container.
+							Test to see if this container can accept this data. Returns true if
 						droppable.</p>
 					</div>
 				</div>
@@ -2761,14 +2762,49 @@ img { max-width: 100%; }
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="dragdata" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> drag<wbr>Data</h3>
+				<div class="tsd-signature tsd-kind-icon">drag<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L30">DragDrop.tsx:30</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Fired during start drag. Returns the list of id that are to be dragged.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="dragenter" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> drag<wbr>Enter</h3>
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L37">DragDrop.tsx:37</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L38">DragDrop.tsx:38</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Fired when the draggable enters a valid droppable container.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="dragimage" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> drag<wbr>Image</h3>
+				<div class="tsd-signature tsd-kind-icon">drag<wbr>Image<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L34">DragDrop.tsx:34</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Fired during start drag. Returns the JSX code representing the image to be dragged.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="dragleave" class="tsd-anchor"></a>
@@ -2776,19 +2812,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">drag<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L41">DragDrop.tsx:41</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L42">DragDrop.tsx:42</a></li>
 					</ul>
 				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="dragstart" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> drag<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">drag<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L29">DragDrop.tsx:29</a></li>
-					</ul>
-				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Fired when the draggable leaves a valid droppable container.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="draggable" class="tsd-anchor"></a>
@@ -2807,7 +2838,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L15">DragDrop.tsx:15</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L15">DragDrop.tsx:15</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2855,12 +2886,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">end<wbr>Drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L25">DragDrop.tsx:25</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L26">DragDrop.tsx:26</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Calls the source container to notify it that the data has been
+						<p>Fired at end drag. Calls the source container to notify it that the data has been
 						transferred to another container.</p>
 					</div>
 				</div>
@@ -2969,17 +3000,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="igenerator.html" class="tsd-signature-type">IGenerator</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L42">DragDrop.tsx:42</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="getdragjsx" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> get<wbr>DragJSX</h3>
-				<div class="tsd-signature tsd-kind-icon">get<wbr>DragJSX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L33">DragDrop.tsx:33</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L43">DragDrop.tsx:43</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3419,7 +3440,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Overrides AllHTMLAttributes.name</p>
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/DragDrop.tsx#L10">DragDrop.tsx:10</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/DragDrop.tsx#L10">DragDrop.tsx:10</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -3448,7 +3469,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onabort" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Abort</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Abort<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Abort<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAbort</p>
 					<ul>
@@ -3459,7 +3480,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onabortcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Abort<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Abort<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Abort<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAbortCapture</p>
 					<ul>
@@ -3470,7 +3491,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>End</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationEnd</p>
 					<ul>
@@ -3481,7 +3502,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>End<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationEndCapture</p>
 					<ul>
@@ -3492,7 +3513,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationiteration" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>Iteration</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Iteration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Iteration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationIteration</p>
 					<ul>
@@ -3503,7 +3524,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationiterationcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>Iteration<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Iteration<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Iteration<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationIterationCapture</p>
 					<ul>
@@ -3514,7 +3535,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationstart" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationStart</p>
 					<ul>
@@ -3525,7 +3546,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onanimationstartcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Animation<wbr>Start<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Animation<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onAnimationStartCapture</p>
 					<ul>
@@ -3536,7 +3557,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onbeforeinput" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Before<wbr>Input</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Before<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Before<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onBeforeInput</p>
 					<ul>
@@ -3547,7 +3568,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onbeforeinputcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Before<wbr>Input<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Before<wbr>Input<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Before<wbr>Input<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onBeforeInputCapture</p>
 					<ul>
@@ -3558,7 +3579,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onblur" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Blur</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Blur<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Blur<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onBlur</p>
 					<ul>
@@ -3569,7 +3590,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onblurcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Blur<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Blur<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Blur<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onBlurCapture</p>
 					<ul>
@@ -3580,7 +3601,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncanplay" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Can<wbr>Play</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCanPlay</p>
 					<ul>
@@ -3591,7 +3612,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncanplaycapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Can<wbr>Play<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCanPlayCapture</p>
 					<ul>
@@ -3602,7 +3623,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncanplaythrough" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Can<wbr>Play<wbr>Through</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Through<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Through<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCanPlayThrough</p>
 					<ul>
@@ -3613,7 +3634,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncanplaythroughcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Can<wbr>Play<wbr>Through<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Through<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Can<wbr>Play<wbr>Through<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCanPlayThroughCapture</p>
 					<ul>
@@ -3624,7 +3645,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onchange" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Change</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onChange</p>
 					<ul>
@@ -3635,7 +3656,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onchangecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Change<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onChangeCapture</p>
 					<ul>
@@ -3646,7 +3667,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onclick" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Click</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Click<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Click<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onClick</p>
 					<ul>
@@ -3657,7 +3678,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onclickcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Click<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Click<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Click<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onClickCapture</p>
 					<ul>
@@ -3668,7 +3689,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>End</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionEnd</p>
 					<ul>
@@ -3679,7 +3700,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>End<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionEndCapture</p>
 					<ul>
@@ -3690,7 +3711,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionstart" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionStart</p>
 					<ul>
@@ -3701,7 +3722,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionstartcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>Start<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionStartCapture</p>
 					<ul>
@@ -3712,7 +3733,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionupdate" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>Update</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionUpdate</p>
 					<ul>
@@ -3723,7 +3744,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncompositionupdatecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Composition<wbr>Update<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Update<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Composition<wbr>Update<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCompositionUpdateCapture</p>
 					<ul>
@@ -3734,7 +3755,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncontextmenu" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Context<wbr>Menu</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Context<wbr>Menu<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Context<wbr>Menu<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onContextMenu</p>
 					<ul>
@@ -3745,7 +3766,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncontextmenucapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Context<wbr>Menu<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Context<wbr>Menu<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Context<wbr>Menu<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onContextMenuCapture</p>
 					<ul>
@@ -3756,7 +3777,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncopy" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Copy</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Copy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Copy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCopy</p>
 					<ul>
@@ -3767,7 +3788,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncopycapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Copy<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Copy<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Copy<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCopyCapture</p>
 					<ul>
@@ -3778,7 +3799,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncut" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Cut</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Cut<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Cut<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCut</p>
 					<ul>
@@ -3789,7 +3810,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oncutcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Cut<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Cut<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Cut<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onCutCapture</p>
 					<ul>
@@ -3800,7 +3821,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondoubleclick" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Double<wbr>Click</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Double<wbr>Click<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Double<wbr>Click<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDoubleClick</p>
 					<ul>
@@ -3811,7 +3832,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondoubleclickcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Double<wbr>Click<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Double<wbr>Click<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Double<wbr>Click<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDoubleClickCapture</p>
 					<ul>
@@ -3822,7 +3843,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondrag" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDrag</p>
 					<ul>
@@ -3833,7 +3854,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragCapture</p>
 					<ul>
@@ -3844,7 +3865,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>End</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragEnd</p>
 					<ul>
@@ -3855,7 +3876,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>End<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragEndCapture</p>
 					<ul>
@@ -3866,7 +3887,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragenter" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Enter</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragEnter</p>
 					<ul>
@@ -3877,7 +3898,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragentercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Enter<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Enter<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Enter<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragEnterCapture</p>
 					<ul>
@@ -3888,7 +3909,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragexit" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Exit</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Exit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Exit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragExit</p>
 					<ul>
@@ -3899,7 +3920,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragexitcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Exit<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Exit<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Exit<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragExitCapture</p>
 					<ul>
@@ -3910,7 +3931,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragleave" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Leave</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragLeave</p>
 					<ul>
@@ -3921,7 +3942,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragleavecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Leave<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Leave<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Leave<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragLeaveCapture</p>
 					<ul>
@@ -3932,7 +3953,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragover" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Over</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragOver</p>
 					<ul>
@@ -3943,7 +3964,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragovercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Over<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragOverCapture</p>
 					<ul>
@@ -3954,7 +3975,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragstart" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragStart</p>
 					<ul>
@@ -3965,7 +3986,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondragstartcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drag<wbr>Start<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drag<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDragStartCapture</p>
 					<ul>
@@ -3976,7 +3997,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondrop" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drop</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDrop</p>
 					<ul>
@@ -3987,7 +4008,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondropcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Drop<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Drop<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Drop<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DragEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDropCapture</p>
 					<ul>
@@ -3998,7 +4019,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondurationchange" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Duration<wbr>Change</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Duration<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Duration<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDurationChange</p>
 					<ul>
@@ -4009,7 +4030,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ondurationchangecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Duration<wbr>Change<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Duration<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Duration<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onDurationChangeCapture</p>
 					<ul>
@@ -4020,7 +4041,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onemptied" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Emptied</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Emptied<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Emptied<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEmptied</p>
 					<ul>
@@ -4031,7 +4052,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onemptiedcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Emptied<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Emptied<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Emptied<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEmptiedCapture</p>
 					<ul>
@@ -4042,7 +4063,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onencrypted" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Encrypted</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Encrypted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Encrypted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEncrypted</p>
 					<ul>
@@ -4053,7 +4074,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onencryptedcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Encrypted<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Encrypted<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Encrypted<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEncryptedCapture</p>
 					<ul>
@@ -4064,7 +4085,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onended" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Ended</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Ended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Ended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEnded</p>
 					<ul>
@@ -4075,7 +4096,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onendedcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Ended<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Ended<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Ended<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onEndedCapture</p>
 					<ul>
@@ -4086,7 +4107,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onerror" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Error</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onError</p>
 					<ul>
@@ -4097,7 +4118,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onerrorcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Error<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Error<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Error<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onErrorCapture</p>
 					<ul>
@@ -4108,7 +4129,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onfocus" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Focus</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Focus<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Focus<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onFocus</p>
 					<ul>
@@ -4119,7 +4140,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onfocuscapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Focus<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Focus<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Focus<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FocusEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onFocusCapture</p>
 					<ul>
@@ -4130,7 +4151,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ongotpointercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Got<wbr>Pointer<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Got<wbr>Pointer<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Got<wbr>Pointer<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onGotPointerCapture</p>
 					<ul>
@@ -4141,7 +4162,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ongotpointercapturecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Got<wbr>Pointer<wbr>Capture<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Got<wbr>Pointer<wbr>Capture<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Got<wbr>Pointer<wbr>Capture<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onGotPointerCaptureCapture</p>
 					<ul>
@@ -4152,7 +4173,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oninput" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Input</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onInput</p>
 					<ul>
@@ -4163,7 +4184,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oninputcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Input<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Input<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Input<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onInputCapture</p>
 					<ul>
@@ -4174,7 +4195,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oninvalid" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Invalid</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Invalid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Invalid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onInvalid</p>
 					<ul>
@@ -4185,7 +4206,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="oninvalidcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Invalid<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Invalid<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Invalid<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onInvalidCapture</p>
 					<ul>
@@ -4196,7 +4217,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeydown" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>Down</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyDown</p>
 					<ul>
@@ -4207,7 +4228,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeydowncapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>Down<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyDownCapture</p>
 					<ul>
@@ -4218,7 +4239,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeypress" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>Press</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Press<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Press<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyPress</p>
 					<ul>
@@ -4229,7 +4250,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeypresscapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>Press<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Press<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Press<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyPressCapture</p>
 					<ul>
@@ -4240,7 +4261,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeyup" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>Up</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyUp</p>
 					<ul>
@@ -4251,7 +4272,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onkeyupcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key<wbr>UpCapture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Key<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onKeyUpCapture</p>
 					<ul>
@@ -4262,7 +4283,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onload" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Load</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoad</p>
 					<ul>
@@ -4273,7 +4294,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Load<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadCapture</p>
 					<ul>
@@ -4284,7 +4305,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadstart" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Load<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadStart</p>
 					<ul>
@@ -4295,7 +4316,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadstartcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Load<wbr>Start<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Load<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadStartCapture</p>
 					<ul>
@@ -4306,7 +4327,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadeddata" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Loaded<wbr>Data</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadedData</p>
 					<ul>
@@ -4317,7 +4338,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadeddatacapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Loaded<wbr>Data<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Data<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Data<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadedDataCapture</p>
 					<ul>
@@ -4328,7 +4349,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadedmetadata" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Loaded<wbr>Metadata</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadedMetadata</p>
 					<ul>
@@ -4339,7 +4360,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onloadedmetadatacapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Loaded<wbr>Metadata<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Metadata<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Loaded<wbr>Metadata<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLoadedMetadataCapture</p>
 					<ul>
@@ -4350,7 +4371,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onlostpointercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Lost<wbr>Pointer<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Lost<wbr>Pointer<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Lost<wbr>Pointer<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLostPointerCapture</p>
 					<ul>
@@ -4361,7 +4382,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onlostpointercapturecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Lost<wbr>Pointer<wbr>Capture<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Lost<wbr>Pointer<wbr>Capture<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Lost<wbr>Pointer<wbr>Capture<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onLostPointerCaptureCapture</p>
 					<ul>
@@ -4372,7 +4393,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmousedown" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Down</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseDown</p>
 					<ul>
@@ -4383,7 +4404,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmousedowncapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Down<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseDownCapture</p>
 					<ul>
@@ -4394,7 +4415,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseenter" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Enter</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseEnter</p>
 					<ul>
@@ -4405,7 +4426,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseleave" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Leave</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseLeave</p>
 					<ul>
@@ -4416,7 +4437,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmousemove" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Move</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseMove</p>
 					<ul>
@@ -4427,7 +4448,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmousemovecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Move<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseMoveCapture</p>
 					<ul>
@@ -4438,7 +4459,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseout" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Out</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseOut</p>
 					<ul>
@@ -4449,7 +4470,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseoutcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Out<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Out<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Out<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseOutCapture</p>
 					<ul>
@@ -4460,7 +4481,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseover" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Over</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseOver</p>
 					<ul>
@@ -4471,7 +4492,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseovercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Over<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseOverCapture</p>
 					<ul>
@@ -4482,7 +4503,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseup" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>Up</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseUp</p>
 					<ul>
@@ -4493,7 +4514,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onmouseupcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Mouse<wbr>UpCapture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onMouseUpCapture</p>
 					<ul>
@@ -4504,7 +4525,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpaste" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Paste</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Paste<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Paste<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPaste</p>
 					<ul>
@@ -4515,7 +4536,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpastecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Paste<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Paste<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Paste<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ClipboardEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPasteCapture</p>
 					<ul>
@@ -4526,7 +4547,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpause" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pause</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pause<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pause<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPause</p>
 					<ul>
@@ -4537,7 +4558,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpausecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pause<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pause<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pause<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPauseCapture</p>
 					<ul>
@@ -4548,7 +4569,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onplay" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Play</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Play<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Play<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPlay</p>
 					<ul>
@@ -4559,7 +4580,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onplaycapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Play<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Play<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Play<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPlayCapture</p>
 					<ul>
@@ -4570,7 +4591,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onplaying" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Playing</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Playing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Playing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPlaying</p>
 					<ul>
@@ -4581,7 +4602,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onplayingcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Playing<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Playing<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Playing<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPlayingCapture</p>
 					<ul>
@@ -4592,7 +4613,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointercancel" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Cancel</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerCancel</p>
 					<ul>
@@ -4603,7 +4624,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointercancelcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Cancel<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Cancel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Cancel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerCancelCapture</p>
 					<ul>
@@ -4614,7 +4635,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerdown" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Down</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerDown</p>
 					<ul>
@@ -4625,7 +4646,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerdowncapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Down<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Down<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerDownCapture</p>
 					<ul>
@@ -4636,7 +4657,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerenter" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Enter</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Enter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerEnter</p>
 					<ul>
@@ -4647,7 +4668,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerentercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Enter<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Enter<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Enter<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerEnterCapture</p>
 					<ul>
@@ -4658,7 +4679,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerleave" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Leave</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerLeave</p>
 					<ul>
@@ -4669,7 +4690,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerleavecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Leave<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Leave<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Leave<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerLeaveCapture</p>
 					<ul>
@@ -4680,7 +4701,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointermove" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Move</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerMove</p>
 					<ul>
@@ -4691,7 +4712,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointermovecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Move<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerMoveCapture</p>
 					<ul>
@@ -4702,7 +4723,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerout" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Out</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerOut</p>
 					<ul>
@@ -4713,7 +4734,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointeroutcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Out<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Out<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Out<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerOutCapture</p>
 					<ul>
@@ -4724,7 +4745,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerover" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Over</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Over<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerOver</p>
 					<ul>
@@ -4735,7 +4756,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerovercapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Over<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Over<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerOverCapture</p>
 					<ul>
@@ -4746,7 +4767,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerup" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>Up</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerUp</p>
 					<ul>
@@ -4757,7 +4778,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onpointerupcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pointer<wbr>UpCapture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Pointer<wbr>UpCapture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onPointerUpCapture</p>
 					<ul>
@@ -4768,7 +4789,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onprogress" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Progress</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Progress<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Progress<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onProgress</p>
 					<ul>
@@ -4779,7 +4800,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onprogresscapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Progress<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Progress<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Progress<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onProgressCapture</p>
 					<ul>
@@ -4790,7 +4811,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onratechange" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Rate<wbr>Change</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Rate<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Rate<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onRateChange</p>
 					<ul>
@@ -4801,7 +4822,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onratechangecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Rate<wbr>Change<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Rate<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Rate<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onRateChangeCapture</p>
 					<ul>
@@ -4812,7 +4833,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onreset" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Reset</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Reset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Reset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onReset</p>
 					<ul>
@@ -4823,7 +4844,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onresetcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Reset<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Reset<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Reset<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onResetCapture</p>
 					<ul>
@@ -4834,7 +4855,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onscroll" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Scroll</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Scroll<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">UIEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Scroll<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">UIEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onScroll</p>
 					<ul>
@@ -4845,7 +4866,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onscrollcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Scroll<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Scroll<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">UIEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Scroll<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">UIEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onScrollCapture</p>
 					<ul>
@@ -4856,7 +4877,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onseeked" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Seeked</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeked<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeked<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSeeked</p>
 					<ul>
@@ -4867,7 +4888,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onseekedcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Seeked<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeked<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeked<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSeekedCapture</p>
 					<ul>
@@ -4878,7 +4899,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onseeking" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Seeking</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeking<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeking<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSeeking</p>
 					<ul>
@@ -4889,7 +4910,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onseekingcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Seeking<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeking<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Seeking<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSeekingCapture</p>
 					<ul>
@@ -4900,7 +4921,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onselect" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Select</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Select<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Select<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSelect</p>
 					<ul>
@@ -4911,7 +4932,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onselectcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Select<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Select<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Select<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSelectCapture</p>
 					<ul>
@@ -4922,7 +4943,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onstalled" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Stalled</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Stalled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Stalled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onStalled</p>
 					<ul>
@@ -4933,7 +4954,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onstalledcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Stalled<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Stalled<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Stalled<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onStalledCapture</p>
 					<ul>
@@ -4944,7 +4965,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onsubmit" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Submit</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Submit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Submit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSubmit</p>
 					<ul>
@@ -4955,7 +4976,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onsubmitcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Submit<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Submit<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Submit<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FormEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSubmitCapture</p>
 					<ul>
@@ -4966,7 +4987,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onsuspend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Suspend</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Suspend<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Suspend<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSuspend</p>
 					<ul>
@@ -4977,7 +4998,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onsuspendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Suspend<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Suspend<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Suspend<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onSuspendCapture</p>
 					<ul>
@@ -4988,7 +5009,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontimeupdate" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Time<wbr>Update</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Time<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Time<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTimeUpdate</p>
 					<ul>
@@ -4999,7 +5020,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontimeupdatecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Time<wbr>Update<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Time<wbr>Update<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Time<wbr>Update<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTimeUpdateCapture</p>
 					<ul>
@@ -5010,7 +5031,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchcancel" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Cancel</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Cancel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchCancel</p>
 					<ul>
@@ -5021,7 +5042,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchcancelcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Cancel<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Cancel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Cancel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchCancelCapture</p>
 					<ul>
@@ -5032,7 +5053,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>End</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchEnd</p>
 					<ul>
@@ -5043,7 +5064,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>End<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchEndCapture</p>
 					<ul>
@@ -5054,7 +5075,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchmove" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Move</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchMove</p>
 					<ul>
@@ -5065,7 +5086,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchmovecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Move<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Move<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchMoveCapture</p>
 					<ul>
@@ -5076,7 +5097,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchstart" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Start</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchStart</p>
 					<ul>
@@ -5087,7 +5108,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontouchstartcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Touch<wbr>Start<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Touch<wbr>Start<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TouchEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTouchStartCapture</p>
 					<ul>
@@ -5098,7 +5119,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontransitionend" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Transition<wbr>End</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Transition<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransitionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Transition<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransitionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTransitionEnd</p>
 					<ul>
@@ -5109,7 +5130,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ontransitionendcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Transition<wbr>End<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Transition<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransitionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Transition<wbr>End<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransitionEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onTransitionEndCapture</p>
 					<ul>
@@ -5120,7 +5141,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onvolumechange" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Volume<wbr>Change</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Volume<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Volume<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onVolumeChange</p>
 					<ul>
@@ -5131,7 +5152,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onvolumechangecapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Volume<wbr>Change<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Volume<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Volume<wbr>Change<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onVolumeChangeCapture</p>
 					<ul>
@@ -5142,7 +5163,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onwaiting" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Waiting</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Waiting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Waiting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onWaiting</p>
 					<ul>
@@ -5153,7 +5174,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onwaitingcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Waiting<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Waiting<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Waiting<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReactEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onWaitingCapture</p>
 					<ul>
@@ -5164,7 +5185,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onwheel" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Wheel</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Wheel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WheelEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Wheel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WheelEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onWheel</p>
 					<ul>
@@ -5175,7 +5196,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="onwheelcapture" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Wheel<wbr>Capture</h3>
-				<div class="tsd-signature tsd-kind-icon">on<wbr>Wheel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WheelEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">on<wbr>Wheel<wbr>Capture<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WheelEventHandler</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from DOMAttributes.onWheelCapture</p>
 					<ul>
@@ -5308,7 +5329,7 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="ref" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> ref</h3>
-				<div class="tsd-signature tsd-kind-icon">ref<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LegacyRef</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLButtonElement</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">ref<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LegacyRef</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLDivElement</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from ClassAttributes.ref</p>
 					<ul>

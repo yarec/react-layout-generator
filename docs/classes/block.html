@@ -922,6 +922,9 @@ img { max-width: 100%; }
 					<a href="block.html#generator" class="tsd-kind-icon">generator</a>
 				</li>
 				<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+					<a href="block.html#layer" class="tsd-kind-icon">layer</a>
+				</li>
+				<li class=" tsd-kind-accessor tsd-parent-kind-class">
 					<a href="block.html#localparent" class="tsd-kind-icon">local<wbr>Parent</a>
 				</li>
 				<li class=" tsd-kind-get-signature tsd-parent-kind-class">
@@ -1064,7 +1067,8 @@ img { max-width: 100%; }
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#editor" class="tsd-kind-icon">editor</a></li>
 							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#generator" class="tsd-kind-icon">generator</a></li>
-							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#localparent" class="tsd-kind-icon">local<wbr>Parent</a></li>
+							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#layer" class="tsd-kind-icon">layer</a></li>
+							<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="block.html#localparent" class="tsd-kind-icon">local<wbr>Parent</a></li>
 							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#location" class="tsd-kind-icon">location</a></li>
 							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#maxx" class="tsd-kind-icon">maxX</a></li>
 							<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="block.html#maxy" class="tsd-kind-icon">maxY</a></li>
@@ -1115,13 +1119,13 @@ img { max-width: 100%; }
 				<a name="constructor" class="tsd-anchor"></a>
 				<h3>constructor</h3>
 				<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">new <wbr>Block<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, p<span class="tsd-signature-symbol">: </span><a href="../interfaces/iposition.html" class="tsd-signature-type">IPosition</a>, g<span class="tsd-signature-symbol">: </span><a href="../interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a>, localParent<span class="tsd-signature-symbol">?: </span><a href="block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="block.html" class="tsd-signature-type">Block</a></li>
+					<li class="tsd-signature tsd-kind-icon">new <wbr>Block<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, p<span class="tsd-signature-symbol">: </span><a href="../interfaces/iposition.html" class="tsd-signature-type">IPosition</a>, g<span class="tsd-signature-symbol">: </span><a href="../interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="block.html" class="tsd-signature-type">Block</a></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L495">components/Block.ts:495</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L497">components/Block.ts:497</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1134,9 +1138,6 @@ img { max-width: 100%; }
 							</li>
 							<li>
 								<h5>g: <a href="../interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a></h5>
-							</li>
-							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> localParent: <a href="block.html" class="tsd-signature-type">Block</a></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <a href="block.html" class="tsd-signature-type">Block</a></h4>
@@ -1152,7 +1153,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">editor<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L350">components/Block.ts:350</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L348">components/Block.ts:348</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1162,17 +1163,28 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">generator<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L366">components/Block.ts:366</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L364">components/Block.ts:364</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+				<a name="layer" class="tsd-anchor"></a>
+				<h3>layer</h3>
+				<div class="tsd-signature tsd-kind-icon">layer<span class="tsd-signature-symbol">:</span> </div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L560">components/Block.ts:560</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
 				<a name="localparent" class="tsd-anchor"></a>
 				<h3>local<wbr>Parent</h3>
 				<div class="tsd-signature tsd-kind-icon">local<wbr>Parent<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L413">components/Block.ts:413</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L411">components/Block.ts:411</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L415">components/Block.ts:415</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1182,7 +1194,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L354">components/Block.ts:354</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L352">components/Block.ts:352</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1192,7 +1204,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">maxX<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L448">components/Block.ts:448</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L450">components/Block.ts:450</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1207,7 +1219,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">maxY<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L462">components/Block.ts:462</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L464">components/Block.ts:464</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1222,7 +1234,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">minX<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L420">components/Block.ts:420</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L422">components/Block.ts:422</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1237,7 +1249,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">minY<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L434">components/Block.ts:434</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L436">components/Block.ts:436</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1252,7 +1264,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L346">components/Block.ts:346</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L344">components/Block.ts:344</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1262,8 +1274,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Click<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L541">components/Block.ts:541</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L545">components/Block.ts:545</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L538">components/Block.ts:538</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L542">components/Block.ts:542</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1273,8 +1285,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Mouse<wbr>Down<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L533">components/Block.ts:533</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L537">components/Block.ts:537</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L530">components/Block.ts:530</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L534">components/Block.ts:534</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1284,8 +1296,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L374">components/Block.ts:374</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L378">components/Block.ts:378</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L372">components/Block.ts:372</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L376">components/Block.ts:376</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1295,7 +1307,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">position<wbr>Children<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L370">components/Block.ts:370</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L368">components/Block.ts:368</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1305,7 +1317,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">react<wbr>Transform<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L395">components/Block.ts:395</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L393">components/Block.ts:393</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1315,7 +1327,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">react<wbr>Transform<wbr>Origin<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L399">components/Block.ts:399</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L397">components/Block.ts:397</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1325,7 +1337,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">resize<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L362">components/Block.ts:362</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L360">components/Block.ts:360</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1335,7 +1347,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">sibling<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L382">components/Block.ts:382</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L380">components/Block.ts:380</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1345,7 +1357,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L358">components/Block.ts:358</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L356">components/Block.ts:356</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1355,8 +1367,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L386">components/Block.ts:386</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L390">components/Block.ts:390</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L384">components/Block.ts:384</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L388">components/Block.ts:388</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1366,7 +1378,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L403">components/Block.ts:403</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L401">components/Block.ts:401</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1376,7 +1388,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L408">components/Block.ts:408</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L406">components/Block.ts:406</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1386,8 +1398,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L549">components/Block.ts:549</a></li>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L553">components/Block.ts:553</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L546">components/Block.ts:546</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L550">components/Block.ts:550</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1404,7 +1416,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L563">components/Block.ts:563</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L564">components/Block.ts:564</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -1421,7 +1433,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L587">components/Block.ts:587</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L588">components/Block.ts:588</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1443,7 +1455,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L618">components/Block.ts:618</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L619">components/Block.ts:619</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1465,7 +1477,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L478">components/Block.ts:478</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L480">components/Block.ts:480</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1488,7 +1500,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L524">components/Block.ts:524</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L526">components/Block.ts:526</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1510,7 +1522,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L776">components/Block.ts:776</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L777">components/Block.ts:777</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1536,7 +1548,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L623">components/Block.ts:623</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L624">components/Block.ts:624</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1559,7 +1571,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L690">components/Block.ts:690</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L691">components/Block.ts:691</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1590,7 +1602,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L903">components/Block.ts:903</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L904">components/Block.ts:904</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1613,7 +1625,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L474">components/Block.ts:474</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L476">components/Block.ts:476</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1639,7 +1651,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L628">components/Block.ts:628</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L629">components/Block.ts:629</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1656,7 +1668,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L635">components/Block.ts:635</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L636">components/Block.ts:636</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1687,7 +1699,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L816">components/Block.ts:816</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L817">components/Block.ts:817</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1710,7 +1722,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L681">components/Block.ts:681</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L682">components/Block.ts:682</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1733,7 +1745,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8b03fcb/src/components/Block.ts#L800">components/Block.ts:800</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/3bf6a7f/src/components/Block.ts#L801">components/Block.ts:801</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>

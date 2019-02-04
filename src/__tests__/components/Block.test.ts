@@ -259,23 +259,4 @@ it('local coordinate #1', () => {
   expect(b.maxY).toEqual(250)
 })
 
-it('local coordinate #2', () => {
-  const p0 = {
-    location: { x: 50, y: 25, unit: Unit.pixel },
-    size: { width: 500, height: 500 }
-  }
-  const b0 = new Block('test', p0, g)
-
-  const p = {
-    location: { x: 250, y: 150, unit: Unit.pixel },
-    size: { width: 100, height: 50 }
-  }
-  const b = new Block('test', p, g, b0)
-
-  expect(b.minX).toEqual(400)
-  expect(b.minY).toEqual(225)
-  expect(b.maxX).toEqual(500)
-  expect(b.maxY).toEqual(275)
-})
-
 // Test align, connection points

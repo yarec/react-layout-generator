@@ -313,7 +313,6 @@ export class RLGLayout extends React.Component<
   private _count: number = 0
   private _select: RLGSelect | undefined = undefined
   private _menuLocation: IPoint = { x: 0, y: 0 }
-  private _zIndex: number = 0
   private _rafId: number = 0
   private _lastAnimationFrame: number = 0
 
@@ -470,7 +469,7 @@ export class RLGLayout extends React.Component<
                 bounds={{ width: this.state.width, height: this.state.height }}
                 debug={this._debug}
                 hideMenu={this.hideMenu}
-                zIndex={this._zIndex}
+                zIndex={999}
               />
             ) : null}
 
@@ -702,8 +701,6 @@ export class RLGLayout extends React.Component<
 
     this._g.reset()
 
-    this._zIndex = 0
-
     // tslint:disable-next-line:no-bitwise
     if (this._debug && this._debug & DebugOptions.data) {
       const params = this._g.params()
@@ -762,7 +759,14 @@ export class RLGLayout extends React.Component<
       }
     }
 
-    this._zIndex += 1
+    if (b) {
+      const layer = child.props['data-layer']
+      if (layer) {
+        if (typeof layer === 'number') {
+          b.setHandler('$layer', layer)
+        }
+      }
+    }
   }
 
   private updatePositionedElement = (
@@ -782,8 +786,6 @@ export class RLGLayout extends React.Component<
     const b = this._g.lookup(name)
 
     if (b) {
-      this._zIndex += 1
-
       const rect = b.rect()
 
       // tslint:disable-next-line:no-bitwise
