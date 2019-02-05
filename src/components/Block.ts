@@ -623,7 +623,7 @@ export class Block {
 
   public rect = (force?: boolean) => {
     this.updateRect(force)
-    return this._cached.data
+    return this._cached
   }
 
   public touch = () => {
