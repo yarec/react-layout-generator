@@ -43,10 +43,10 @@ export default class FoundationStack {
         }
       }
     }
-    console.log(
-      `can drop foundation final ${top ? top.name : undefined}`,
-      result
-    )
+    // console.log(
+    //   `can drop foundation final ${top ? top.name : undefined}`,
+    //   result
+    // )
     return result
   }
 

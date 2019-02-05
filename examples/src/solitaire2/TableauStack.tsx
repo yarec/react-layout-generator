@@ -57,7 +57,7 @@ export default class TableauStack {
         if (last) {
           result = last.rank - first.rank === 1 &&
             isRedSuite(last.suite) !== isRedSuite(first.suite)
-          console.log(`can drop tableau ${this._name} ${first.name} on ${last.name}`, result);
+          // console.log(`can drop tableau ${this._name} ${first.name} on ${last.name}`, result);
         }
       }
     }
@@ -66,7 +66,7 @@ export default class TableauStack {
   }
 
   public drop (data: string[]) {
-    console.log(`tableau drop ${this._name} ${data[0]} on ${this._stack.last ? this._stack.last.name : 'undefined'} `)
+    // console.log(`tableau drop ${this._name} ${data[0]} on ${this._stack.last ? this._stack.last.name : 'undefined'} `)
     data.forEach((name) => {
       const card = gCards.get(name)
       if (card) {

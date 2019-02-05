@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">69.68% </span>
+        <span class="strong">69.35% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>301/432</span>
+        <span class='fraction'>301/434</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.29% </span>
+        <span class="strong">53.92% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>177/326</span>
+        <span class='fraction'>179/332</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">76.19% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>48/63</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">69.81% </span>
+        <span class="strong">69.48% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>296/424</span>
+        <span class='fraction'>296/426</span>
       </div>
     </div>
   </div>
@@ -1503,7 +1503,9 @@
 1458
 1459
 1460
-1461</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+1461
+1462
+1463</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
@@ -1934,6 +1936,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2654,9 +2658,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2687,9 +2691,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2733,8 +2737,8 @@
 <span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">54x</span>
@@ -3395,8 +3399,10 @@ export class RLGLayout extends React.Component&lt;
           }
         } else {
           const l = <span class="cstat-no" title="statement not covered" >mapper(layer)</span>
-<span class="cstat-no" title="statement not covered" >          if (l) {</span>
+<span class="cstat-no" title="statement not covered" >          if (l &amp;&amp; l &gt;= 0) {</span>
 <span class="cstat-no" title="statement not covered" >            push(l, c)</span>
+          } else <span class="cstat-no" title="statement not covered" >if (l) {</span>
+<span class="cstat-no" title="statement not covered" >            push(-1, c)</span>
           }
         }
       }
@@ -4113,12 +4119,12 @@ export class RLGLayout extends React.Component&lt;
       ? <span class="branch-0 cbranch-no" title="branch not covered" >this.props.layers.encapsulate</span>
       : false
     let i = 0
-    for (; i &lt; layers.length - 1 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >i &lt; layers.length;</span> i++) {
-      const layer = <span class="cstat-no" title="statement not covered" >layers[i]</span>
-      const children = <span class="cstat-no" title="statement not covered" >this.processLayout(layer, count)</span>
-<span class="cstat-no" title="statement not covered" >      elements.push(</span>
+    for (; i &lt; layers.length &amp;&amp; i &lt; layers.length; i++) {
+      const layer = layers[i]
+      const children = this.processLayout(layer, count)
+      elements.push(
         encapsulate ? (
-          &lt;div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >          &lt;div key={`layer#${i}`} id={`layer#${i}`} style={layerStyle}&gt;</span>
             {children}
           &lt;/div&gt;
         ) : (
@@ -4146,12 +4152,12 @@ export class RLGLayout extends React.Component&lt;
       )
     }
 &nbsp;
-    for (let i = layers.length - 1; i &lt; layers.length; i++) {
-      const layer = layers[i]
-      const children = this.processLayout(layer, count)
-      elements.push(
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (layers[-1]) {
+      const layer = <span class="cstat-no" title="statement not covered" >layers[-1]</span>
+      const children = <span class="cstat-no" title="statement not covered" >this.processLayout(layer, count)</span>
+<span class="cstat-no" title="statement not covered" >      elements.push(</span>
         encapsulate ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >          &lt;div key={`layer#${i}`} id={`layer#${i}`} style={topLayerStyle}&gt;</span>
+          &lt;div key={`layer#${i}`} id={`layer#${i}`} style={topLayerStyle}&gt;
             {children}
           &lt;/div&gt;
         ) : (
@@ -4429,7 +4435,7 @@ export class RLGLayout extends React.Component&lt;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 03 2019 20:44:01 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 04 2019 19:07:15 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\prettify.js"></script>

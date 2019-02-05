@@ -124,7 +124,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name: 'stock'
           }}
-          data-layer={2}
+          data-layer={-1}
           data-click={this.onPopulateWaste}
         />
 
@@ -159,7 +159,7 @@ export default class Solitaire extends React.Component<
                 // zIndex: 10
               }
             }}
-            data-layer={2}>
+            data-layer={-1}>
           <button
             key={'New Game'}
             onClick={this.newGame}

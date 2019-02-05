@@ -7,7 +7,9 @@ RLG is focused on layout and editing of both html and svg components. By taking 
 ___
 A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
 
-Of course, this also means that the author needs to know how the content will fit into the allocated space. We'll add notes on how we are dealing with this as we continue with the development of RLG. Note that it is not always a problem that needs solving.
+Of course, this also means that the author needs to know how the content will fit into the allocated space. We'll add notes on how we are dealing with this as we continue with the development of RLG. Note that this is not always a problem that needs solving.
+
+Another key difference is that since RLG is only using absolute positioning all the blocks are independent of other blocks. This lets us manipulate the blocks. One use of this is to build a flexible layering system that allows rearranging, hiding, and animating layers. It also enables optional services to be added such as editing and drag and drop. The layering system also features a control layers that is excluded from the services.
 ___
 
 This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
@@ -229,7 +231,7 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 
 ### Layers
 
-RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. The last layer is the control layer that sets on top any services activated.
+RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. You can also specify negative values for Layers. These are used as control layers that set on top any services activated.
 
 Note: Layers are NOT related to z-index. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if
 [encapsulation](#RLGLayout) is on in layers.

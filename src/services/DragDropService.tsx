@@ -1,10 +1,13 @@
 import * as React from 'react'
-import * as rbush from 'rbush'
+// import * as rbush from 'rbush'
 
 import { DebugOptions, IPoint, IRect, difference, Rect } from '../types'
 import { IService, IServiceProps, IUndo } from './Service'
 import { Block } from '../components/Block'
 // import { Control } from '../Control'
+
+const rbush = require('rbush')
+
 
 // const gXIndex = 10
 /**
@@ -35,7 +38,7 @@ export class DragDropService
 
   private _jsx: JSX.Element | undefined
 
-  private _rbush: rbush.RBush<Block>
+  private _rbush: any
   private _root: React.RefObject<HTMLDivElement>
   private _dragData: string[] = []
   private _prevDroppable: Set<Block> = new Set()
@@ -56,7 +59,7 @@ export class DragDropService
       this._debug = props.debug
     }
 
-    this._rbush = rbush<Block>()
+    this._rbush = rbush()
     this._root = React.createRef()
   }
 

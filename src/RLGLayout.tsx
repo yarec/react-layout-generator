@@ -430,8 +430,10 @@ export class RLGLayout extends React.Component<
           }
         } else {
           const l = mapper(layer)
-          if (l) {
+          if (l && l >= 0) {
             push(l, c)
+          } else if (l) {
+            push(-1, c)
           }
         }
       }
@@ -1148,7 +1150,7 @@ export class RLGLayout extends React.Component<
       ? this.props.layers.encapsulate
       : false
     let i = 0
-    for (; i < layers.length - 1 && i < layers.length; i++) {
+    for (; i < layers.length && i < layers.length; i++) {
       const layer = layers[i]
       const children = this.processLayout(layer, count)
       elements.push(
@@ -1181,8 +1183,8 @@ export class RLGLayout extends React.Component<
       )
     }
 
-    for (let i = layers.length - 1; i < layers.length; i++) {
-      const layer = layers[i]
+    if (layers[-1]) {
+      const layer = layers[-1]
       const children = this.processLayout(layer, count)
       elements.push(
         encapsulate ? (
