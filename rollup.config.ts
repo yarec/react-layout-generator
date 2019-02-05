@@ -17,7 +17,7 @@ export default {
     { file: pkg.module, format: 'es', sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: [],
+  external: ['lodash'],
   watch: {
     include: 'src/**',
   },
@@ -36,6 +36,7 @@ export default {
       ],
       exclude: [
         'node_modules/process-es6/**',
+        '__test__/**'
       ],
       namedExports: {
         'node_modules/react/index.js': [
