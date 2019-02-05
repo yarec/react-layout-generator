@@ -8,6 +8,8 @@ import { Block } from '../components/Block'
 
 const rbush = require('rbush')
 
+export { rbush }
+
 
 // const gXIndex = 10
 /**
