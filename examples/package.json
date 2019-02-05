@@ -1,6 +1,6 @@
 {
   "name": "react-layout-generator-examples",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "examples for react-layout-generator",
   "main": "index.tsx",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chetmurphy/react-/Blocks-generator.git"
+    "url": "git+https://github.com/chetmurphy/react-layout-generator.git"
   },
   "peerDependencies": {
     "react": "^16.0.0",

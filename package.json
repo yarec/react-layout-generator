@@ -1,7 +1,7 @@
 {
   "name": "react-layout-generator",
-  "version": "0.2.2",
-  "description": "A layout/editor in React",
+  "version": "0.2.5-prealpha.1",
+  "description": "A layout generator in React",
   "keywords": [
     "react",
     "reactjs",
@@ -43,6 +43,7 @@
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
     "covtest": "jest --coverage",
+    "publish": "npm publish",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
