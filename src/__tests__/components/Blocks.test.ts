@@ -77,3 +77,63 @@ it('Layouts index returns the correct key value #4', () => {
 
   expect(l.find(1)).toBe(t2)
 })
+
+it('Layouts index updates the block #1', () => {
+  const p = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 }
+  }
+
+  const l = new Blocks([])
+  l.set('t1', p, g)
+
+  const p2 = {
+    location: { x: 110, y: 110 },
+    size: { width: 100, height: 10 }
+  }
+
+  l.set('t1', p2, g)
+
+  const updatedBlock = l.get('t1')
+  const position = updatedBlock ? updatedBlock.position : undefined
+
+  expect(position && position.location.x).toBe(110)
+})
+
+it('Layouts layers returns the valid layers #1', () => {
+  const p = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 }
+  }
+
+  const l = new Blocks([])
+  l.set('t1', p, g)
+  l.set('t2', p, g)
+  l.set('t3', p, g)
+
+  const blocks = l.layers(0)
+  expect(blocks && blocks.length).toBe(3)
+})
+
+it('Layouts layers returns the valid layers #2', () => {
+  const p = {
+    location: { x: 0, y: 10 },
+    size: { width: 100, height: 10 }
+  }
+
+  const l = new Blocks([])
+  const b1 = l.set('t1', p, g)
+  b1.setHandler('$layer', 1)
+
+  l.set('t2', p, g)
+  l.set('t3', p, g)
+
+  const blocks1 = l.layers(0)
+  expect(blocks1 && blocks1.length).toBe(2)
+
+  const blocks2 = l.layers(1)
+  expect(blocks2 && blocks2.length).toBe(1)
+
+  const blocks3 = l.layers(2)
+  expect(blocks3 && blocks3.length).toBe(0)
+})

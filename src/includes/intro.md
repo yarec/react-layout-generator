@@ -4,6 +4,7 @@
 
 RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
+A [live demo](https://neq1.io) is available at https://neq1.io
 ___
 A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
 

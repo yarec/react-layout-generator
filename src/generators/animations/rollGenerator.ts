@@ -31,8 +31,9 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
 
     let containersize = params.get('containersize') as ISize
 
+    const layer0 = blocks.layers(0)
     if (params.changed()) {
-      blocks.map.forEach((block: Block) => {
+      layer0.forEach((block: Block) => {
         block.touch()
       })
     }
@@ -43,7 +44,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
       if (update === undefined || update) {
         let min = Number.MAX_SAFE_INTEGER
         let max = Number.MIN_SAFE_INTEGER
-        blocks.map.forEach((block: Block) => {
+        layer0.forEach((block: Block) => {
           const rect = block.rect()
           if (rect.y < min) {
             min = rect.y
@@ -58,7 +59,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
       }
 
       if (animate) {
-        blocks.map.forEach((block: Block) => {
+        layer0.forEach((block: Block) => {
           const rect = block.rect()
           let location = { x: rect.x, y: rect.y - velocity * deltaTime }
           if (location.y + rect.height < 0) {

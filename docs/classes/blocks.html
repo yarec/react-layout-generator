@@ -928,10 +928,10 @@ img { max-width: 100%; }
 					<a href="blocks.html#get" class="tsd-kind-icon">get</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
-					<a href="blocks.html#set" class="tsd-kind-icon">set</a>
+					<a href="blocks.html#layers" class="tsd-kind-icon">layers</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
-					<a href="blocks.html#values" class="tsd-kind-icon">values</a>
+					<a href="blocks.html#set" class="tsd-kind-icon">set</a>
 				</li>
 			</ul>
 		</li>
@@ -939,6 +939,13 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>Blocks managed the Block collection.</p>
+				</div>
+			</div>
+		</section>
 		<section class="tsd-panel tsd-hierarchy">
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
@@ -969,8 +976,8 @@ img { max-width: 100%; }
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="blocks.html#find" class="tsd-kind-icon">find</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="blocks.html#get" class="tsd-kind-icon">get</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="blocks.html#layers" class="tsd-kind-icon">layers</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="blocks.html#set" class="tsd-kind-icon">set</a></li>
-							<li class="tsd-kind-method tsd-parent-kind-class"><a href="blocks.html#values" class="tsd-kind-icon">values</a></li>
 						</ul>
 					</section>
 				</div>
@@ -988,7 +995,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L6">components/Blocks.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L10">components/Blocks.ts:10</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1010,9 +1017,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L20">components/Blocks.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L45">components/Blocks.ts:45</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This gets the underlying Map &lt;string, Block&gt; that
+						this class manages.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 				<a name="size" class="tsd-anchor"></a>
@@ -1020,9 +1033,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L24">components/Blocks.ts:24</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L52">components/Blocks.ts:52</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Returns the number of blocks.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
@@ -1037,9 +1055,14 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L28">components/Blocks.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L60">components/Blocks.ts:60</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This method returns the i th block in insert order.</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1060,19 +1083,56 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L34">components/Blocks.ts:34</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L70">components/Blocks.ts:70</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This method returns the block by name.</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
 								<h5>key: <span class="tsd-signature-type">string</span></h5>
+								<div class="tsd-comment tsd-typography">
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span>
 							<span class="tsd-signature-symbol"> | </span>
 							<a href="block.html" class="tsd-signature-type">Block</a>
 						</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="layers" class="tsd-anchor"></a>
+				<h3>layers</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">layers<span class="tsd-signature-symbol">(</span>layer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">[]</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L26">components/Blocks.ts:26</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>This method returns the array of Blocks that match the
+									specified layer. If there is layer for a Block it is treated
+								as having layer 0.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>layer: <span class="tsd-signature-type">number</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">[]</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -1086,9 +1146,15 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L38">components/Blocks.ts:38</a></li>
+								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/components/Blocks.ts#L81">components/Blocks.ts:81</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Set will either create block if it does not exist. If it does exist then
+								it will be updated.</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -1099,26 +1165,11 @@ img { max-width: 100%; }
 							</li>
 							<li>
 								<h5>g: <a href="../interfaces/igenerator.html" class="tsd-signature-type">IGenerator</a></h5>
+								<div class="tsd-comment tsd-typography">
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <a href="block.html" class="tsd-signature-type">Block</a></h4>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-				<a name="values" class="tsd-anchor"></a>
-				<h3>values</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">&gt;</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/dbe074e/src/components/Blocks.ts#L16">components/Blocks.ts:16</a></li>
-							</ul>
-						</aside>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
