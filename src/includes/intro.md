@@ -81,17 +81,15 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## TODO
 
-- Place each layer in its own group so that [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context) will only have effect in that layer.
 - Add move command within a container to drag and drop to allow rearranging draggable blocks).
 - Add React PropTypes for non typescript users.
-- Add grid command as option to toolBar
-- Add arrange group to toolBar (align, layers,
+- Add grid command as option to toolBar in the Demo.
+- Add arrange commands to toolBar in the Demo.
 - Implement nudge with arrow keys.
 - Implement current select commands.
 - Add cut, copy, and paste commands.
 - Add options to align columnsGenerator and rowsGenerator.
 - Add Touch support in editor.
-- Host website on Github
 
 ## Features
 
@@ -132,7 +130,7 @@ RLGLayout can contain instances of RLGLayout. And as usual with React, children 
 
 #### Note
 
-Do not use generic React components with a data-layout property as direct children of RLGLayout. This is because the generated style needs to applied to the outer most element in the component. Otherwise the component will not be positioned correctly.
+Do not use generic React components with a data-layout property as direct children of RLGLayout. This is because the generated style needs to applied to the outer most element in the component. Otherwise, the component will not be positioned correctly. This does not apply to styled-components.
 
 A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [RLGPanel](#RLGPanel) and/or Unit.unmanaged)
 
@@ -142,8 +140,8 @@ You can only use react components as direct children that apply the style proper
   render() {
     ...
     return (
-      <div style={this.props['style'] }>
-        { react components }
+      <div style={this.props.style }>
+        { this.props.children }
       </div>
     )
   }
@@ -174,7 +172,7 @@ One way to utilize these args is to use Styled-components with a Style defined l
 
 then just pass the args to \<Item containersize={args.containersize} \>
 
-Likewise it can be used to define the width and height in a svg element.
+RLGPanel is also useful svg since it pass the width and height to svg.
 
 ```ts
   <svg
@@ -195,9 +193,9 @@ In the above snippet the viewBox defines the coordinates system used by svg elem
 
 RLG provides a number of features to help make layouts responsive.
 
-A key approach is to just define all the elements in a generator as a function of the containersize.
+On approach is to define all the elements in a generator as a function of the containersize.
 
-An example of a responsive generator is defined by the [desktopGenerator](globals#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired.
+An example of a responsive generator is defined by the [desktopGenerator](globals#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired. It can used like this:
 
 ```ts
 <RLGLayout
@@ -296,7 +294,7 @@ Then wrap your draggable elements and components using Draggable and DragDrop
 
 1. Container Source:
 
-```txt
+```
   Handler                Required
   
   dragData                [no]
@@ -306,7 +304,7 @@ Then wrap your draggable elements and components using Draggable and DragDrop
 
 2. Draggable:
 
-```txt
+```
   Handler                Required
   
   drag                    [no]
@@ -316,7 +314,7 @@ Then wrap your draggable elements and components using Draggable and DragDrop
 
 3. Droppable:
 
-```txt
+```
   Handler                Required
   
   droppable               [yes]

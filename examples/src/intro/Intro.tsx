@@ -7,6 +7,7 @@ import {
   ParamValue,
   RLGLayout,
   rollGenerator,
+  rollHook,
   ServiceOptions,
   Status,
   Unit
@@ -39,6 +40,10 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
 
     this.state = { update: 0 };
 
+    const hooks = this._g.hooks()
+    hooks.set('layer2', rollHook('layer2', 
+    {'velocity': {x: .25, y: -.50}}
+    , this._g))
   }
 
   public componentDidMount() {
@@ -72,7 +77,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         debug={DebugOptions.none}
         params={[
           ...data['rlg.intro'] as Array<[string, ParamValue]>,
-          ['velocity', 0.05]
+          ['velocity', {x: 0.01, y: 0.05}]
         ]}
         animate={{ active: true }}
         g={this._g}
@@ -80,6 +85,20 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         overflowY={OverflowOptions.hidden}
       >
         {this.content()}
+
+        <div
+          data-layout={{
+            name: "implementation",
+            position: {
+              origin: { x: 100, y: 100 },
+              location: { x: 50, y: 50, unit: Unit.percent },
+              size: { width: 140, height: 24 }
+            }
+          }}
+          data-layer={2}
+        >
+          <span>Second Animation</span>
+        </div>
       </RLGLayout >
     );
   }
@@ -131,9 +150,11 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
     let j = 0
     while (i < features.length) {
       const name = `${i++}`
-      let col = 25
-      if (j === 1) { col = 75 }
-      if (j === 2) { col = 50 }
+      let col = -15
+      if (j === 1) { col = 15 }
+      if (j === 2) { col = 45 }
+      if (j === 3) { col = 85 }
+      if (j === 4) { col = 115 }
       jsx.push(
         <div
           key={name}
@@ -142,7 +163,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
             name,
             position: {
               origin: { x: 50, y: 50 },
-              location: { x: col, y: i * 15, unit: Unit.percent },
+              location: { x: col, y: i * 5, unit: Unit.percent },
               size: { width: 250, height: 100, unit: Unit.unmanagedHeight },
             }
           }}
@@ -153,7 +174,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
         </div>
       )
       j += 1
-      if (j > 2) { j = 0 }
+      if (j > 4) { j = 0 }
     }
 
     return jsx

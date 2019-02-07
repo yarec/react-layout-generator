@@ -31,7 +31,7 @@ import {
   isUnmanaged,
   rectSize,
   IAnimateProps,
-  ILayerMapper
+  ILayerOptions
 } from './types'
 import { DragDropService } from './services/DragDropService'
 
@@ -267,7 +267,7 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    */
   animate?: IAnimateProps
 
-  layers?: ILayerMapper
+  layers?: ILayerOptions
 
   onUpdate?: () => void
 }
@@ -327,11 +327,13 @@ export class RLGLayout extends React.Component<
       devicePixelRatio: window.devicePixelRatio
     }
 
-    if (props.g && props.g.blocks().size !== 0) {
-      console.error(`RLGLayout: Did you intend on reusing this generator in ${
-        props.name
-      }? 
-      If so you should clear it first by calling g.clear()`)
+    if (this._debug & DebugOptions.warning) {
+      if (props.g && props.g.blocks().size !== 0) {
+        console.warn(`RLGLayout: Did you intend on reusing this generator in ${
+          props.name
+        }? 
+        If so you should clear it first by calling g.clear()`)
+      }
     }
 
     this.initProps(props)

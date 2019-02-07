@@ -925,6 +925,9 @@ img { max-width: 100%; }
 					<a href="igenerator.html#editor" class="tsd-kind-icon">editor</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="igenerator.html#hooks" class="tsd-kind-icon">hooks</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="igenerator.html#lookup" class="tsd-kind-icon">lookup</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -970,6 +973,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#clear" class="tsd-kind-icon">clear</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#create" class="tsd-kind-icon">create</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#editor" class="tsd-kind-icon">editor</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#hooks" class="tsd-kind-icon">hooks</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#lookup" class="tsd-kind-icon">lookup</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#name" class="tsd-kind-icon">name</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igenerator.html#params" class="tsd-kind-icon">params</a></li>
@@ -988,9 +992,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">blocks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L32">generators/Generator.ts:32</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L44">generators/Generator.ts:44</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Returns the <a href="#Blocks">Blocks</a> manager for this Generator.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1013,9 +1022,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L38">generators/Generator.ts:38</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L64">generators/Generator.ts:64</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This will remove all Blocks forcing the blocks to be recreated on the next
+						render.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1038,9 +1053,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">:</span> <a href="../globals.html#create" class="tsd-signature-type">Create</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L39">generators/Generator.ts:39</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L75">generators/Generator.ts:75</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is function that is called in a generator to create a new Block. It is an optional
+						function.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="editor" class="tsd-anchor"></a>
@@ -1048,9 +1069,46 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">editor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L40">generators/Generator.ts:40</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L79">generators/Generator.ts:79</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p><a href="#EditHelper">EditHelper</a> is used to sync builtin edit commands with a custom Editor.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="hooks" class="tsd-anchor"></a>
+				<h3>hooks</h3>
+				<div class="tsd-signature tsd-kind-icon">hooks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L70">generators/Generator.ts:70</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This will return the <a href="#Hooks">Hooks</a> for this generator. A Hook is a function that
+							is called each time reset is called at the beginning of each render. One use a Hook
+						to perform animation on a layer. See <a href="#rollHook">rollHook</a> as a an example.</p>
+					</div>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/hooks.html" class="tsd-signature-type">Hooks</a></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-returns-title">Returns <a href="../classes/hooks.html" class="tsd-signature-type">Hooks</a></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="lookup" class="tsd-anchor"></a>
@@ -1058,9 +1116,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">lookup<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L36">generators/Generator.ts:36</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L59">generators/Generator.ts:59</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Returns the named Block or undefined.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1092,9 +1155,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L30">generators/Generator.ts:30</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L36">generators/Generator.ts:36</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Name of the generator.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1117,9 +1185,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L31">generators/Generator.ts:31</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L40">generators/Generator.ts:40</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Returns the <a href="#Params">params</a> that used with this Generator.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1142,9 +1215,16 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L34">generators/Generator.ts:34</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L55">generators/Generator.ts:55</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Reset invokes the <a href="#IInit">init function</a> in a Generator. It is called at the
+							beginning of each render. It will also call any <a href="#fnHook">hook functions</a>
+						at the same time.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -1167,9 +1247,15 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">stacking<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/00b8ae2/src/generators/Generator.ts#L33">generators/Generator.ts:33</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/03dbd8f/src/generators/Generator.ts#L49">generators/Generator.ts:49</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This component provides methods to manipulate the <a href="#Stacking">stacking</a>
+						order within a layer.</p>
+					</div>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">

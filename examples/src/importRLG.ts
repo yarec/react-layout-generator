@@ -42,6 +42,7 @@ export {
 } from '../../src/generators/Generator'
 export { rowsGenerator } from '../../src/generators/rowsGenerator'
 export { rollGenerator } from '../../src/generators/animations/rollGenerator'
+export { rollHook } from '../../src/generators/animations/rollHook'
 
 export { saveToLocalStorage, loadFromLocalStorage } from '../../src/generators/utils'
 

@@ -72,11 +72,10 @@ export class Blocks {
   }
 
   /**
-   * Set will either create block if it does not exist. If it does exist then
-   * it will be updated.
-   * @param key
-   * @param p
-   * @param g
+   * Set will create block if it does not exist otherwise it will just update the block.
+   * @param name: string
+   * @param p: Params
+   * @param g: IGenerator
    */
   public set(key: string, p: IPosition, g: IGenerator): Block {
     let block = this._blocks.get(key)

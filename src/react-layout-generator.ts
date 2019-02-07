@@ -2,7 +2,7 @@
 // import "core-js/fn/array.find"
 // ...
 
-export { RLGLayout } from './RLGLayout'
+export { RLGLayout, IRLGLayoutProps } from './RLGLayout'
 export { RLGPanel, IRLGMetaDataArgs } from './RLGPanel'
 export { Draggable, IDraggableProps } from './Draggable'
 export { DragDrop, IDragDropProps } from './DragDrop'
@@ -13,6 +13,7 @@ export {
   Unit,
   DebugOptions,
   ServiceOptions,
+  ILayerOptions,
   ISize,
   IPoint,
   IOrigin,
@@ -42,6 +43,7 @@ export {
 
 export { rowsGenerator } from './generators/rowsGenerator'
 export { rollGenerator } from './generators/animations/rollGenerator'
+export { rollHook } from './generators/animations/rollHook'
 
 export { saveToLocalStorage, loadFromLocalStorage } from './generators/utils'
 

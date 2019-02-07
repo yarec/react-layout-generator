@@ -43,10 +43,18 @@ const Container = styled.div`
   background: linear-gradient(top, #f9d835, #f3961c);
   padding: 0;
 `
+
+class Button extends React.Component<React.HTMLProps<HTMLButtonElement>> {
+  public render() {
+    return <button style={this.props.style}>{this.props.children}</button>
+  }
+}
+
 interface ICardDeckState {
   update: number;
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export default class CardDeck extends React.Component<IEditHelperProps, ICardDeckState> {
 
   private _g = dynamicGenerator('example.CardDeck');
@@ -91,7 +99,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
       >
         {this.createElements()}
         
-        <button data-layout={{
+        <Button data-layout={{
           name: 'shuffle',
           position: {
             origin: {x: 100, y: 0},
@@ -102,7 +110,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
           onClick={this.shuffle}
         >
           Shuffle
-        </button>
+        </Button>
         <Container data-layout={{
           name: 'instructions',
           position: {

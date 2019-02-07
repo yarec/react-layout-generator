@@ -7,7 +7,7 @@ export interface Props {
  * ignore layer values and render all children as specified. To access the specification
  * use the layers property attached to the [generator](#generator).
  */
-export interface ILayerMapper {
+export interface ILayerOptions {
   /**
    * This option lets you encapsulate each layer with its own
    * [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context).

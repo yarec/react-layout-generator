@@ -4,6 +4,7 @@ import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
 import { RLGSelect } from '../editors/RLGSelect'
 import { Stacking } from '../components/Stacking'
+import { Hooks } from '../components/Hooks'
 
 export interface IGeneratorFunctionArgs {
   name: string
@@ -16,6 +17,8 @@ export interface IGeneratorFunctionArgs {
  */
 export type IInit = (g: IGenerator) => Blocks
 
+export type IHook = (g: IGenerator) => void
+
 export interface ICreate {
   name: string
   g: IGenerator
@@ -27,16 +30,52 @@ export interface ICreate {
 export type Create = (args: ICreate) => Block | undefined
 
 export interface IGenerator {
+  /**
+   * Name of the generator.
+   */
   name: () => string
+  /**
+   * Returns the [params](#Params) that used with this Generator.
+   */
   params: () => Params
+  /**
+   * Returns the [Blocks](#Blocks) manager for this Generator.
+   */
   blocks: () => Blocks
+  /**
+   * This component provides methods to manipulate the [stacking](#Stacking)
+   * order within a layer.
+   */
   stacking: () => Stacking
+  /**
+   * Reset invokes the [init function](#IInit) in a Generator. It is called at the
+   * beginning of each render. It will also call any [hook functions](#fnHook)
+   * at the same time.
+   */
   reset: () => void
-  // next: () => Block | undefined
+  /**
+   * Returns the named Block or undefined.
+   */
   lookup: (name: string) => Block | undefined
-  // containersize: (name: string) => ISize | undefined
+  /**
+   * This will remove all Blocks forcing the blocks to be recreated on the next
+   * render.
+   */
   clear: () => void
+  /**
+   * This will return the [Hooks](#Hooks) for this generator. A Hook is a function that
+   * is called each time reset is called at the beginning of each render. One use a Hook
+   * to perform animation on a layer. See [rollHook](#rollHook) as a an example.
+   */
+  hooks: () => Hooks
+  /**
+   * This is function that is called in a generator to create a new Block. It is an optional
+   * function.
+   */
   create?: Create
+  /**
+   * [EditHelper](#EditHelper) is used to sync builtin edit commands with a custom Editor.
+   */
   editor?: () => EditHelper | undefined
 }
 
@@ -50,6 +89,7 @@ export class Generator implements IGenerator {
   private _stacking: Stacking
   private _select: RLGSelect
   private _init: IInit
+  private _hooks: Hooks
   private _create: Create | undefined
 
   constructor(
@@ -69,6 +109,8 @@ export class Generator implements IGenerator {
     this._params = params
 
     this._stacking = new Stacking({ name, params, blocks: this._blocks })
+
+    this._hooks = new Hooks()
   }
 
   public name = () => {
@@ -99,6 +141,10 @@ export class Generator implements IGenerator {
     return this._blocks.get(name)
   }
 
+  public hooks() {
+    return this._hooks
+  }
+
   // public containersize = (name: string): ISize => {
   //   const l = this._blocks.get(name)
   //   if (l) {
@@ -119,6 +165,7 @@ export class Generator implements IGenerator {
 
   public reset = () => {
     this._blocks = this._init(this)
+    this._hooks.run(this)
   }
 
   public clear = () => {
