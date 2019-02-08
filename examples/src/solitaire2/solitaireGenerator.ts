@@ -5,12 +5,12 @@ import {
   ICreate,
   IGenerator, 
   IGeneratorFunctionArgs, 
-  IPoint,
-  IPosition, 
-  ISize,
-  Params, 
+  IGenericProps,
+  IPoint, 
+  IPosition,
+  ISize, 
+  Params,
   ParamValue,
-  Props,
 } from '../importRLG'
 
 export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
@@ -126,7 +126,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return block;
   }
 
-  function positionStockChildren(block: Block, g: Generator, index: number, props: Props) {
+  function positionStockChildren(block: Block, g: Generator, index: number, props: IGenericProps) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -145,7 +145,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return new Block('temp', child, g);
   }
 
-  function positionFoundationChildren(block: Block, g: IGenerator, index: number, props: Props) {
+  function positionFoundationChildren(block: Block, g: IGenerator, index: number, props: IGenericProps) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -165,7 +165,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return new Block('temp', child, g);
   }
 
-  function positionTableauChildren(block: Block, g: IGenerator, index: number, props: Props) {
+  function positionTableauChildren(block: Block, g: IGenerator, index: number, props: IGenericProps) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;
@@ -185,7 +185,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     return new Block('temp', child, g);
   }
 
-  function positionWasteChildren(block: Block, g: Generator, index: number, props: Props) {
+  function positionWasteChildren(block: Block, g: Generator, index: number, props: IGenericProps) {
     // Return a Layout relative to block starting at position at (0, 0)
 
     const cardSize = g.params().get('cardSize') as ISize;

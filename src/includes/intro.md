@@ -4,7 +4,7 @@
 
 RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
-A [live demo](https://neq1.io) is available at https://neq1.io
+A [live demo](https://neq1.io) is available at https://neq1.io. Source is available at [Github](https://github.com/chetmurphy/react-layout-generator) under the MIT license.
 ___
 A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
 
@@ -15,9 +15,12 @@ ___
 
 This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
+## Table of Contents
+
 <!-- TOC -->
 
 - [React Layout Generator](#react-layout-generator)
+  - [Table of Contents](#table-of-contents)
   - [Install](#install)
     - [Contributing](#contributing)
   - [TODO](#todo)
@@ -61,26 +64,28 @@ For typescript user, type definitions are not needed since they are included.
 
 ### Contributing
 
-We're really glad you're reading this, because we need volunteer developers to help this project come to fruition. In particular we need components that are designed to use RLG.
+We're looking for both associates and contributors. If you have question please send an email to rlg@neq1.io.
 
 These steps will guide you through contributing to this project:
 
 - Fork RLG
 - Clone it and install dependencies
-- Build
 
 git clone `https://github.com/YOUR-USERNAME/react-layout-generator`
 
-Then run `npm install` or `yarn`.
+After cloning go to your install directory and use `npm` or `yarn` to initialize node_modules.
 
-RLG includes an examples sub-project so it too will need to be initialized using npm or yarn. See the package.json for scripts supported.
+RLG includes an examples sub-project so it too will need to be initialized using npm or yarn. 
 
-Make and commit your changes. Make sure the commands start, build, test, and test:prod are working.
+See the package.json for scripts supported.
+
+Make and commit your changes. Make sure the commands start, build, and test are working.
 
 Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-generator/compare?expand=1) with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/)). Make sure all of your commits are atomic (one feature per commit).
 
 ## TODO
 
+- Add support for position right and bottom in addition to left(x) and top(y) in IPosition.location.
 - Add move command within a container to drag and drop to allow rearranging draggable blocks).
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar in the Demo.
@@ -93,16 +98,19 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## Features
 
-- Top down design of websites.
-- Lightweight - minimal use of other React libraries.
-- Core edit capabilities with runtime layout.
-- Serializable.
+- templates via generators
+- animation including custom engines
+- persistance
+- built-in editor with position and size editing
+- fine grain responsiveness
+- top down design
+- drag and drop
+- layers with stacking
 
 ## Applications
 
 - Responsive page layout
 - Dashboards
-- Organization charts
 - Diagrams
 - Games
 - Animations
@@ -172,7 +180,7 @@ One way to utilize these args is to use Styled-components with a Style defined l
 
 then just pass the args to \<Item containersize={args.containersize} \>
 
-RLGPanel is also useful svg since it pass the width and height to svg.
+RLGPanel is also useful for svg since it can pass the width and height to svg.
 
 ```ts
   <svg
@@ -186,6 +194,18 @@ RLGPanel is also useful svg since it pass the width and height to svg.
 ```
 
 In the above snippet the viewBox defines the coordinates system used by svg elements which will now be mapped to the containersize.
+
+If you have more than one child you will need to use a [React Fragment](https://reactjs.org/docs/fragments.html) or add a <div wrapper.
+
+```ts
+  <RLGPanel data-layout={{ name: 'content' }}>
+    {(args: IRLGMetaDataArgs) => (
+      <> // React fragment shortcut
+       ... // multiple children
+      </>
+    )}
+  </RLGPanel>
+```
 
 ### Responsive Layout
 

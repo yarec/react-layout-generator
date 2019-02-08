@@ -24,7 +24,7 @@ export {
   OverflowOptions,
   IRect,
   PositionRef,
-  Props,
+  IGenericProps,
   rectPoint,
   rectSize
 } from '../../src/types'
