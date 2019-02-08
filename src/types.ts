@@ -1,4 +1,4 @@
-export interface Props {
+export interface IGenericProps {
   [key: string]: any
 }
 

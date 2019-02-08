@@ -7,12 +7,27 @@ export { RLGPanel, IRLGMetaDataArgs } from './RLGPanel'
 export { Draggable, IDraggableProps } from './Draggable'
 export { DragDrop, IDragDropProps } from './DragDrop'
 
-export { IPositionLocation, IPositionSize } from './components/Block'
+export {
+  Block,
+  IAlign,
+  IEdit,
+  IEditor,
+  IMenuItem,
+  IPosition,
+  IPositionLocation,
+  IPositionSize,
+  IRotate,
+  IScale,
+  ISkew,
+  PositionChildren,
+  Transform
+} from './components/Block'
 
 export {
   Unit,
   DebugOptions,
   ServiceOptions,
+  IGenericProps,
   ILayerOptions,
   ISize,
   IPoint,
@@ -54,7 +69,6 @@ export {
   updateParamWidth
 } from './editors/update'
 
-export { Block, IPosition } from './components/Block'
 export { Blocks } from './components/Blocks'
 export { IEditableTextData, Params, ParamValue } from './components/Params'
 

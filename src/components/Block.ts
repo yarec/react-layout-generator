@@ -12,7 +12,7 @@ import {
   Rect,
   isUnmanaged,
   namedUnit,
-  Props
+  IGenericProps
 } from '../types'
 import { clone } from '../utils'
 
@@ -237,7 +237,7 @@ export type PositionChildren = (
   block: Block,
   g: IGenerator,
   index: number,
-  props: Props
+  props: IGenericProps
 ) => Block | undefined
 
 // export interface IHandlers {
@@ -252,6 +252,11 @@ export interface IPositionLocation extends IPoint {
   y: number
   unit?: Unit
 }
+
+// export type PositionLocation = IPositionLocation | IAlign
+
+// const p: PositionLocation = {x: 0, y: 0}
+// const p1: PositionLocation = {key: 'abc', offset: {x: 0, y: 0}, source: {x: 0, y: 0}, self: {x: 0, y: 0}}
 
 /**
  * Extends ISize to add optional unit
