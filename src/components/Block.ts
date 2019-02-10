@@ -10,11 +10,10 @@ import {
   Unit,
   PositionRef,
   Rect,
-  isUnmanaged,
-  namedUnit,
   IGenericProps
 } from '../types'
 import { clone } from '../utils'
+import { layout } from './layout'
 
 /**
  * IDataLayout is the property that you use when defining children of RLGLayout. It
@@ -233,7 +232,7 @@ export interface IEditor {
  * }
  * ```
  */
-export type PositionChildren = (
+export type PositionChildrenFn = (
   block: Block,
   g: IGenerator,
   index: number,
@@ -247,10 +246,35 @@ export type PositionChildren = (
 /**
  * Extends IPoint to add optional unit
  */
-export interface IPositionLocation extends IPoint {
-  x: number
-  y: number
-  unit?: Unit
+// export type IPositionLocation =
+//   IContainerXY |
+//   IContainerLeftTop |
+//   IContainerRightTop |
+//   IContainerLeftBottom |
+//   IContainerRightBottom
+
+export interface IInputRect {
+  left?: number | string
+  right?: number | string
+  top?: number | string
+  bottom?: number | string
+  width?: number | string
+  height?: number | string
+}
+
+export interface IBlockRect {
+  left?: number
+  leftUnit?: Unit
+  right?: number
+  rightUnit?: Unit
+  top?: number
+  topUnit?: Unit
+  bottom?: number
+  bottomUnit?: Unit
+  width?: number
+  widthUnit?: Unit
+  height?: number
+  heightUnit?: Unit
 }
 
 // export type PositionLocation = IPositionLocation | IAlign
@@ -258,14 +282,11 @@ export interface IPositionLocation extends IPoint {
 // const p: PositionLocation = {x: 0, y: 0}
 // const p1: PositionLocation = {key: 'abc', offset: {x: 0, y: 0}, source: {x: 0, y: 0}, self: {x: 0, y: 0}}
 
-/**
- * Extends ISize to add optional unit
- */
-export interface IPositionSize {
-  width: number
-  height: number
-  unit?: Unit
-}
+// export interface IPositionSize {
+//   width: number
+//   height: number
+//   unit?: Unit
+// }
 
 export interface IRotate {
   origin: IOrigin
@@ -287,23 +308,21 @@ export type Transform = IRotate | IScale | ISkew
  *
  * A minimal definition is:
  * ```ts
- *  position: {
- *    location: { x: 0, y: 0 },
- *    size: { width: 100, height: 100 }
- *  }
+ *  location: { left: 0, right: 0, width: 100, height: '10%' }
+ *
  * ```
  */
 export interface IPosition {
   /**
-   *  align defines the other element that this one is attached to.
+   *  Specifies another block that this block is attached to.
    */
   align?: IAlign
   /**
-   * This user supplied function will calculate the Position data for 'children'.
+   * Specifies the This user supplied function will calculate the Position data for 'children'.
    * It will be supplied with the index of the child and it should compute the
    * child's position returning a new Block. The child should be jsx.
    */
-  positionChildren?: PositionChildren
+  positionChildren?: PositionChildrenFn
   /**
    * This defines the editor that will be available to the user when [RLGLayout
    * service](irlglayoutprops.html) property is set the ServiceOptions.edit.
@@ -323,22 +342,27 @@ export interface IPosition {
    */
   origin?: IOrigin
   /**
-   * Location is position of the block relative to the origin. With a default
+   * Specifies the location of this block. Location is position of the block
+   * relative to the origin. With a default
    * origin `{x: 0, y: 0}`, the location is the `(left top)` of the rect.
    */
-  location: IPositionLocation
-  /**
-   * Size specifies the width and height of a blocks rect.
-   */
-  size: IPositionSize
+  location: IInputRect
   /**
    * Additional transforms to add to this block. Note that you can also transform
-   * the contents of a block separately. Warning do not include any transforms in
-   * the style property for this block. This feature is experimental and subject
+   * the contents of a block separately. Warning do not add a style with any transforms
+   * for this block. This feature is experimental and subject
    * to change.
    */
   transform?: Transform[]
 }
+
+// export enum LocationOrientation {
+//   xy = 1,
+//   leftTop,
+//   rightTop,
+//   leftBottom,
+//   rightBottom
+// }
 
 /**
  * Defines the location and size using
@@ -358,9 +382,9 @@ export class Block {
     return this._position.location
   }
 
-  get size() {
-    return this._position.size
-  }
+  // get size() {
+  //   return this._position.size
+  // }
 
   get resize() {
     return this.onResize
@@ -486,6 +510,7 @@ export class Block {
     return this._handlers.get(name)
   }
 
+  // private _locationOrientation: LocationOrientation = LocationOrientation.xy
   private _siblings: Map<string, boolean> = new Map()
   private _name: string
   private _position: IPosition
@@ -493,7 +518,7 @@ export class Block {
   private _cached: Rect
   private _g: IGenerator
   private _localParent: Block | undefined
-  private _positionChildren: PositionChildren | undefined
+  private _positionChildren: PositionChildrenFn | undefined
   private _zIndex: number
   private _transform: string = ''
   private _transformOrigin: string = ''
@@ -508,8 +533,8 @@ export class Block {
       this._position = clone(p)
     } else {
       this.position = {
-        location: { x: 0, y: 0 },
-        size: { width: 100, height: 100 }
+        // same size as container
+        location: { left: 0, top: 0 }
       }
     }
     this._g = g
@@ -566,7 +591,7 @@ export class Block {
     return this.getHandler('$layer')
   }
 
-  public connectionHandles = () => {
+  public connectionHandles() {
     const align = this._position.align
     if (align) {
       const ref = this.getRef()
@@ -574,12 +599,12 @@ export class Block {
         const p1: IPoint = ref.fromLocation()
         const s1: ISize = ref.fromSize()
 
-        const r1 = this.getConnectPoint(p1, s1, align.source)
+        const r1 = getConnectPoint(p1, s1, align.source)
 
         const p2: IPoint = this.fromLocation()
         const s2: ISize = this.fromSize()
 
-        const r2 = this.getConnectPoint(p2, s2, align.self)
+        const r2 = getConnectPoint(p2, s2, align.self)
 
         return [r1, r2]
       }
@@ -590,30 +615,31 @@ export class Block {
   /**
    * Converts location to pixels
    */
-  public fromLocation = (): IPoint => {
+  public fromLocation(): IPoint {
     // Handle align - ignore actual value of location
     if (this._position.align) {
       const ref = this.getRef()
       if (ref) {
         const p: IPoint = ref.fromLocation()
         const s: ISize = ref.fromSize()
-        const source: IPoint = this.toAlign(p, s, this._position.align.source)
+        const source: IPoint = toAlign(p, s, this._position.align.source)
         const offset: IPoint = {
           x: source.x + this._position.align.offset.x,
           y: source.y + this._position.align.offset.y
         }
-        return this.fromAlign(
-          offset,
-          this.fromSize(),
-          this._position.align.self
-        )
+        return fromAlign(offset, this.fromSize(), this._position.align.self)
       }
     }
 
-    const point = this.scale(this._position.location) as IPositionLocation
+    const containersize = this._g.params().get('containersize') as ISize
+    const viewport = this._g.params().get('viewport') as ISize
+    const point = layout(this._position.location, {
+      local: containersize,
+      viewport: viewport
+    })
 
     if (this._position.origin) {
-      return this.fromOrigin(point, this._position.origin, this.fromSize())
+      return fromOrigin(point, this._position.origin, this.fromSize())
     }
     return point
   }
@@ -621,28 +647,29 @@ export class Block {
   /**
    * Converts size to pixels
    */
-  public fromSize = () => {
+  public fromSize() {
     // console.log('size ' + this._position.size.width)
-    return this.scale(this._position.size) as IPositionSize
+    const containersize = this._g.params().get('containersize') as ISize
+    return scaleSize(this._position.size, containersize)
   }
 
-  public rect = (force?: boolean) => {
+  public rect(force?: boolean) {
     this.updateRect(force)
     return this._cached
   }
 
-  public touch = () => {
+  public touch() {
     this.changed()
   }
 
   /**
    * Change the block state
    */
-  public update = (location: IPoint, size?: ISize) => {
+  public update(location: IPoint, size?: ISize) {
     // Takes in world coordinates
     // console.log(`Position update x: ${location.x} y: ${location.y}`)
 
-    const _location: IPositionLocation = {
+    const _location: IInputRect = {
       ...location,
       unit: this._position.location.unit
     }
@@ -652,6 +679,8 @@ export class Block {
       unit: this._position.size.unit
     }
 
+    const containersize = this._g.params().get('containersize') as ISize
+
     if (this._position.align && this.getRef()) {
       const align = this._position.align
       // Get source and self points
@@ -659,13 +688,14 @@ export class Block {
       const p1: IPoint = ref!.fromLocation()
       const s1: ISize = ref!.fromSize()
 
-      const r1 = this.getConnectPoint(p1, s1, align.source)
+      const r1 = getConnectPoint(p1, s1, align.source)
 
-      const p = this.toOrigin(_location, this._position.origin, _itemSize)
+      const p = toOrigin(_location, this._position.origin, _itemSize)
       // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
-      const s2 = this.inverseScale(_itemSize) as ISize
 
-      const r2 = this.getConnectPoint(p, s2, align.self)
+      const s2 = inverseScaleSize(_itemSize, containersize) as ISize
+
+      const r2 = getConnectPoint(p, s2, align.self)
 
       // Compute new offset
       const offset: IPoint = {
@@ -676,107 +706,27 @@ export class Block {
       // Update align offset
       align.offset = offset
     } else {
-      const p = this.toOrigin(_location, this._position.origin, _itemSize)
-      this._position.location = this.inverseScale(p) as IPositionLocation
-      this._position.size = this.inverseScale(_itemSize) as IPositionSize
+      const p = toOrigin(_location, this._position.origin, _itemSize)
+      this._position.location = pixelToLocation(
+        p,
+        this._position.location.unit,
+        this._locationOrientation,
+        containersize
+      ) as IInputRect
+      this._position.size = inverseScaleSize(
+        _itemSize,
+        containersize
+      ) as IPositionSize
     }
 
     this.changed()
   }
 
-  public updateSize = (size: IPositionSize) => {
+  public updateSize(size: IPositionSize) {
     // Takes in world coordinates
-    this._position.size = this.inverseScale(size) as ISize
+    const containersize = this._g.params().get('containersize') as ISize
+    this._position.size = inverseScaleSize(size, containersize) as ISize
     this.changed()
-  }
-
-  /**
-   * Take unit and convert to real world
-   */
-  public scale = (
-    input: IPositionLocation | IPositionSize
-  ): IPositionLocation | IPositionSize => {
-    switch (input.unit) {
-      case Unit.percent: {
-        const size = this._g.params().get('containersize') as ISize
-        if ('x' in input) {
-          const p = input as IPoint
-          return {
-            x: p.x * size.width,
-            y: p.y * size.height
-          }
-        } else {
-          const s = input as ISize
-          return {
-            width: s.width * size.width,
-            height: s.height * size.height
-          }
-        }
-        break
-      }
-      case Unit.preserve: {
-        const size = this._g.params().get('containersize') as ISize
-
-        const minWidth = size.width < size.height ? size.width : size.height
-
-        if ('x' in input) {
-          const p = input as IPoint
-          return {
-            x: p.x * minWidth,
-            y: p.y * minWidth
-          }
-        } else {
-          const s = input as ISize
-          return {
-            width: s.width * minWidth,
-            height: s.height * minWidth
-          }
-        }
-        break
-      }
-      case Unit.preserveWidth: {
-        const size = this._g.params().get('containersize') as ISize
-
-        const factor = size.width
-
-        if ('x' in input) {
-          const p = input as IPoint
-          return {
-            x: p.x * factor,
-            y: p.y * factor
-          }
-        } else {
-          const s = input as ISize
-          return {
-            width: s.width * factor,
-            height: s.height * factor
-          }
-        }
-        break
-      }
-      case Unit.preserveHeight: {
-        const size = this._g.params().get('containersize') as ISize
-
-        const factor = size.height
-
-        if ('x' in input) {
-          const p = input as IPoint
-          return {
-            x: p.x * factor,
-            y: p.y * factor
-          }
-        } else {
-          const s = input as ISize
-          return {
-            width: s.width * factor,
-            height: s.height * factor
-          }
-        }
-        break
-      }
-    }
-    // default no translation needed
-    return input
   }
 
   public onResize = (width: number, height: number) => {
@@ -804,19 +754,18 @@ export class Block {
   }
 
   public validate(p: IPosition) {
-    if (p.editor && p.editor.edits) {
-      // p.editor.edits.forEach((edit) => {
-      //   if (edit.ref === PositionRef.position) {
-      //   }
-      // })
-
-      if (isUnmanaged(p.location.unit)) {
-        console.error(`Position ${namedUnit(p.location.unit)} in 
-        ${this.name} is NOT supported
-        for location. It is only supported for size.
-        `)
-      }
-    }
+    // if (p.editor && p.editor.edits) {
+    //   // p.editor.edits.forEach((edit) => {
+    //   //   if (edit.ref === PositionRef.position) {
+    //   //   }
+    //   // })
+    //   if (p.location.unit)) {
+    //     console.error(`Position ${namedUnit(p.location.unit)} in
+    //     ${this.name} is NOT supported
+    //     for location. It is only supported for size.
+    //     `)
+    //   }
+    // }
   }
 
   public updatePosition(p: IPosition) {
@@ -824,62 +773,6 @@ export class Block {
     if (this._position.origin && p.origin) {
       this._position.origin.x = p.origin.x * 0.01
       this._position.origin.y = p.origin.y * 0.01
-    }
-
-    // Convert percents to decimal
-
-    const locUnit = (this._position.location.unit = p.location.unit)
-    if (
-      locUnit === Unit.percent ||
-      locUnit === Unit.preserve ||
-      locUnit === Unit.preserveWidth ||
-      locUnit === Unit.preserveHeight
-    ) {
-      this._position.location.x = p.location.x * 0.01
-      this._position.location.y = p.location.y * 0.01
-    } else if (locUnit === Unit.pixel) {
-      this._position.location.x = p.location.x
-      this._position.location.y = p.location.y
-    } else if (
-      locUnit === Unit.unmanaged ||
-      locUnit === Unit.unmanagedWidth ||
-      locUnit === Unit.unmanagedHeight
-    ) {
-      console.error(
-        'Block.updatePosition unmanaged ignored. Not supported for Location'
-      )
-    } else if (locUnit === undefined) {
-      this._position.location.x = p.location.x
-      this._position.location.y = p.location.y
-    } else {
-      console.error('Block.updatePosition add support for new unit')
-    }
-
-    // Convert percents to decimal
-    const sizeUnit = (this._position.size.unit = p.size.unit)
-
-    if (
-      sizeUnit === Unit.percent ||
-      sizeUnit === Unit.preserve ||
-      sizeUnit === Unit.preserveWidth ||
-      sizeUnit === Unit.preserveHeight
-    ) {
-      this._position.size.width = p.size.width * 0.01
-      this._position.size.height = p.size.height * 0.01
-    } else if (sizeUnit === Unit.pixel) {
-      this._position.size.width = p.size.width
-      this._position.size.height = p.size.height
-    } else if (sizeUnit === Unit.unmanaged) {
-      // Nothing to do
-    } else if (sizeUnit === Unit.unmanagedWidth) {
-      this._position.size.height = p.size.height
-    } else if (sizeUnit === Unit.unmanagedHeight) {
-      this._position.size.width = p.size.width
-    } else if (sizeUnit === undefined) {
-      this._position.size.width = p.size.width
-      this._position.size.height = p.size.height
-    } else {
-      console.error('Block.updatePosition add support for new unit')
     }
 
     // Convert percents to decimal
@@ -980,179 +873,462 @@ export class Block {
     }
     return ref
   }
+}
 
-  private getConnectPoint(l: IPoint, s: ISize, a: IOrigin) {
-    return { x: l.x + s.width * a.x, y: l.y + s.height * a.y }
-  }
+// /**
+//  * Take unit and convert to real world
+//  */
+// export function scale(input: IPositionLocation, containerSize: ISize): IPoint {
+//   switch (input.unit) {
+//     case Unit.percent: {
+//       if ('x' in input) {
+//         const p = input as IPoint
+//         return {
+//           x: p.x * containerSize.width,
+//           y: p.y * containerSize.height
+//         }
+//       }
+//       break
+//     }
+//     case Unit.preserve: {
+//       const minWidth = containerSize.width < containerSize.height ? containerSize.width : containerSize.height
 
-  /**
-   * Take pixels and convert to percent
-   */
-  private inverseScale = (
-    input: IPositionLocation | IPositionSize
-  ): IPositionLocation | IPositionSize => {
-    switch (input.unit) {
-      case Unit.percent: {
-        const size = this._g.params().get('containersize') as ISize
-        if (size.width && size.height) {
-          if ('x' in input) {
-            const p = input as IPositionLocation
-            return {
-              x: p.x / size.width,
-              y: p.y / size.height,
-              unit: p.unit
-            }
-          } else {
-            const s = input as IPositionSize
-            return {
-              width: s.width / size.width,
-              height: s.height / size.height,
-              unit: s.unit
-            }
-          }
-        }
-        break
-      }
-      case Unit.preserve: {
-        const size = this._g.params().get('containersize') as ISize
+//       if ('x' in input) {
+//         const p = input as IPoint
+//         return {
+//           x: p.x * minWidth,
+//           y: p.y * minWidth
+//         }
+//       }/*  else {
+//         const s = input as ISize
+//         return {
+//           width: s.width * minWidth,
+//           height: s.height * minWidth
+//         }
+//       } */
+//       break
+//     }
+//     case Unit.preserveWidth: {
+//       const factor = containerSize.width
 
-        const minWidth = size.width < size.height ? size.width : size.height
-        if (minWidth) {
-          if ('x' in input) {
-            const p = input as IPositionLocation
-            return {
-              x: p.x / minWidth,
-              y: p.y / minWidth,
-              unit: p.unit
-            }
-          } else {
-            const s = input as IPositionSize
-            return {
-              width: s.width / minWidth,
-              height: s.height / minWidth,
-              unit: s.unit
-            }
-          }
-        }
-        break
-      }
-      case Unit.preserveWidth: {
-        const size = this._g.params().get('containersize') as ISize
-        const factor = size.width
-        if (factor) {
-          if ('x' in input) {
-            const p = input as IPositionLocation
-            return {
-              x: p.x / factor,
-              y: p.y / factor,
-              unit: p.unit
-            }
-          } else {
-            const s = input as IPositionSize
-            return {
-              width: s.width / factor,
-              height: s.height / factor,
-              unit: s.unit
-            }
-          }
-        }
-        break
-      }
-      case Unit.preserveHeight: {
-        const size = this._g.params().get('containersize') as ISize
-        const factor = size.height
-        if (factor) {
-          if ('x' in input) {
-            const p = input as IPositionLocation
-            return {
-              x: p.x / factor,
-              y: p.y / factor,
-              unit: p.unit
-            }
-          } else {
-            const s = input as IPositionSize
-            return {
-              width: s.width / factor,
-              height: s.height / factor,
-              unit: s.unit
-            }
-          }
-        }
-        break
-      }
-    }
+//       if ('x' in input) {
+//         const p = input as IPoint
+//         return {
+//           x: p.x * factor,
+//           y: p.y * factor
+//         }
+//       } /* else {
+//         const s = input as ISize
+//         return {
+//           width: s.width * factor,
+//           height: s.height * factor
+//         }
+//       } */
+//       break
+//     }
+//     case Unit.preserveHeight: {
+//       const factor = containerSize.height
 
-    // default
-    return input
-  }
+//       if ('x' in input) {
+//         const p = input as IPoint
+//         return {
+//           x: p.x * factor,
+//           y: p.y * factor
+//         }
+//       } /* else {
+//         const s = input as ISize
+//         return {
+//           width: s.width * factor,
+//           height: s.height * factor
+//         }
+//       } */
+//       break
+//     }
+//   }
+//   // default no translation needed
+//   return {x: input.x, y:
+// }
 
-  /**
-   * Defines the origin of location in percent
-   * If the origin is (50,50) then the top left is
-   * (p.x - .50 * s.x, p.y - .50 * s.y)
-   *
-   *  x----------------
-   *  |               |
-   *  |       o       |
-   *  |               |
-   *  ----------------
-   *  o: origin
-   *  x: left top
-   */
-  private fromOrigin = (
-    p: IPositionLocation,
-    origin: IPoint,
-    s: ISize
-  ): IPositionLocation => {
-    return {
-      x: p.x - origin.x * s.width,
-      y: p.y - origin.y * s.height,
-      unit: p.unit
-    }
-  }
-
-  /**
-   * reverses fromOrigin
-   */
-  private toOrigin = (
-    p: IPositionLocation,
-    origin: IPoint | undefined,
-    s: ISize
-  ): IPositionLocation => {
-    if (origin) {
+/**
+ * Take unit and convert to real world
+ */
+export function scaleSize(
+  input: IPositionSize,
+  containersize: ISize
+): IPositionSize {
+  switch (input.unit) {
+    case Unit.percent: {
+      const s = input as ISize
       return {
-        x: p.x + origin.x * s.width,
-        y: p.y + origin.y * s.height,
-        unit: p.unit
+        width: s.width * containersize.width,
+        height: s.height * containersize.height
       }
+      break
     }
-    return p
+    case Unit.vmin: {
+      const minWidth =
+        containersize.width < containersize.height
+          ? containersize.width
+          : containersize.height
+      const s = input as ISize
+      return {
+        width: s.width * minWidth,
+        height: s.height * minWidth
+      }
+      break
+    }
+    case Unit.vw: {
+      const factor = containersize.width
+      const s = input as ISize
+      return {
+        width: s.width * factor,
+        height: s.height * factor
+      }
+      break
+    }
+    case Unit.vh: {
+      const factor = containersize.height
+      const s = input as ISize
+      return {
+        width: s.width * factor,
+        height: s.height * factor
+      }
+      break
+    }
+  }
+  // default no translation needed
+  return input
+}
+
+/**
+ * Take pixels and convert to percent
+ */
+export function inverseScaleSize(
+  input: IPositionSize,
+  containerSize: ISize
+): IPositionSize {
+  switch (input.unit) {
+    case Unit.percent: {
+      if (containerSize.width && containerSize.height) {
+        const s = input as IPositionSize
+        return {
+          width: s.width / containerSize.width,
+          height: s.height / containerSize.height,
+          unit: s.unit
+        }
+      }
+      break
+    }
+    case Unit.vmin: {
+      const minWidth =
+        containerSize.width < containerSize.height
+          ? containerSize.width
+          : containerSize.height
+      if (minWidth) {
+        const s = input as IPositionSize
+        return {
+          width: s.width / minWidth,
+          height: s.height / minWidth,
+          unit: s.unit
+        }
+      }
+      break
+    }
+    case Unit.vw: {
+      const factor = containerSize.width
+      if (factor) {
+        const s = input as IPositionSize
+        return {
+          width: s.width / factor,
+          height: s.height / factor,
+          unit: s.unit
+        }
+      }
+      break
+    }
+    case Unit.vh: {
+      const factor = containerSize.height
+      if (factor) {
+        const s = input as IPositionSize
+        return {
+          width: s.width / factor,
+          height: s.height / factor,
+          unit: s.unit
+        }
+      }
+      break
+    }
   }
 
-  /**
-   * Compute left top point of rectangle based on align value
-   * If p represents the bottom center point then the top left
-   * position is (p.x - s.x / 2, p.y - s.y;)
-   * Inverse of toAlign.
-   */
-  private fromAlign = (p: IPoint, s: ISize, origin: IOrigin): IPoint => {
-    return {
-      x: p.x - origin.x * s.width,
-      y: p.y - origin.y * s.height
+  // default
+  return input
+}
+
+export function getConnectPoint(l: IPoint, s: ISize, a: IOrigin) {
+  return { x: l.x + s.width * a.x, y: l.y + s.height * a.y }
+}
+
+// /**
+//  * Take pixels and convert to percent
+//  */
+// export function inverseScale(
+//   input: IPositionLocation,
+//   containerSize: ISize
+// ): IPositionLocation {
+//   switch (input.unit) {
+//     case Unit.percent: {
+//       if (containerSize.width && containerSize.height) {
+//         if ('x' in input) {
+//           const p = input as IPositionLocation
+//           return {
+//             x: p.x / containerSize.width,
+//             y: p.y / containerSize.height,
+//             unit: p.unit
+//           }
+//         }
+//       }
+//       break
+//     }
+//     case Unit.preserve: {
+//       const minWidth = containerSize.width < containerSize.height ? containerSize.width : containerSize.height
+//       if (minWidth) {
+//         if ('x' in input) {
+//           const p = input as IPositionLocation
+//           return {
+//             x: p.x / minWidth,
+//             y: p.y / minWidth,
+//             unit: p.unit
+//           }
+//         }
+//       }
+//       break
+//     }
+//     case Unit.preserveWidth: {
+
+//       const factor = containerSize.width
+//       if (factor) {
+//         if ('x' in input) {
+//           const p = input as IPositionLocation
+//           return {
+//             x: p.x / factor,
+//             y: p.y / factor,
+//             unit: p.unit
+//           }
+//         }
+//       }
+//       break
+//     }
+//     case Unit.preserveHeight: {
+//       const factor = containerSize.height
+//       if (factor) {
+//         if ('x' in input) {
+//           const p = input as IPositionLocation
+//           return {
+//             x: p.x / factor,
+//             y: p.y / factor,
+//             unit: p.unit
+//           }
+//         }
+//       }
+//       break
+//     }
+//   }
+
+//   // default
+//   return input
+// }
+
+/**
+ * Compute left top point of rectangle based on align value
+ * If p represents the bottom center point then the top left
+ * position is (p.x - s.x / 2, p.y - s.y;)
+ * Inverse of toAlign.
+ */
+export function fromAlign(p: IPoint, s: ISize, origin: IOrigin): IPoint {
+  return {
+    x: p.x - origin.x * s.width,
+    y: p.y - origin.y * s.height
+  }
+}
+
+/**
+ * Gets the point of an handle given an origin and size
+ * if align is left top then return (rect.left, rect.top)
+ * if align if bottom center then return
+ * (r.left + r.halfWidth, r.bottom;)
+ *  Inverse of fromAlign.
+ */
+export function toAlign(p: IPoint, s: ISize, align: IOrigin): IPoint {
+  return {
+    x: p.x + align.x * s.width,
+    y: p.y + align.y * s.height
+  }
+}
+
+/**
+ * Computes location point given the pixel location
+ */
+export function pixelToLocation(
+  pixel: IPoint,
+  unit: Unit | undefined,
+  orientation: LocationOrientation,
+  containerSize: ISize
+): IInputRect {
+  switch (orientation) {
+    case LocationOrientation.xy: {
+      return {
+        x: pixelXToLocation(pixel.x, unit ? unit : Unit.pixel, containerSize),
+        y: pixelYToLocation(pixel.y, unit ? unit : Unit.pixel, containerSize),
+        unit: unit
+      }
+      break
+    }
+    case LocationOrientation.leftTop: {
+      return {
+        left: pixelXToLocation(
+          pixel.x,
+          unit ? unit : Unit.pixel,
+          containerSize
+        ),
+        top: pixelYToLocation(pixel.y, unit ? unit : Unit.pixel, containerSize),
+        unit: unit
+      }
+      break
+    }
+    case LocationOrientation.rightTop: {
+      return {
+        x:
+          containerSize.width -
+          pixelXToLocation(pixel.x, unit ? unit : Unit.pixel, containerSize),
+        y: pixelYToLocation(pixel.y, unit ? unit : Unit.pixel, containerSize)
+      }
+      break
+    }
+    case LocationOrientation.leftBottom: {
+      return {
+        x: pixelXToLocation(pixel.x, unit ? unit : Unit.pixel, containerSize),
+        y:
+          containerSize.height -
+          pixelYToLocation(pixel.y, unit ? unit : Unit.pixel, containerSize)
+      }
+      break
+    }
+    case LocationOrientation.rightBottom: {
+      return {
+        x:
+          containerSize.width -
+          pixelXToLocation(pixel.x, unit ? unit : Unit.pixel, containerSize),
+        y:
+          containerSize.height -
+          pixelYToLocation(pixel.y, unit ? unit : Unit.pixel, containerSize)
+      }
+      break
+    }
+  }
+  return {
+    x: NaN,
+    y: NaN
+  }
+}
+
+/**
+ * Computes the pixel offset on the Y axis.
+ * @param value
+ * @param unit
+ * @param containerSize
+ */
+export function pixelXToLocation(
+  value: number,
+  unit: Unit,
+  containerSize: ISize
+) {
+  switch (unit) {
+    case Unit.percent: {
+      return value * containerSize.height
+    }
+    case Unit.vmin: {
+      const minWidth =
+        containerSize.width < containerSize.height
+          ? containerSize.width
+          : containerSize.height
+      return value * minWidth
+      break
+    }
+    case Unit.vw: {
+      return value * containerSize.width
+    }
+    case Unit.vh: {
+      return value * containerSize.height
     }
   }
 
-  /**
-   * Gets the point of an handle given an origin and size
-   * if align is left top then return (rect.left, rect.top)
-   * if align if bottom center then return
-   * (r.left + r.halfWidth, r.bottom;)
-   *  Inverse of fromAlign.
-   */
-  private toAlign = (p: IPoint, s: ISize, align: IOrigin): IPoint => {
-    return {
-      x: p.x + align.x * s.width,
-      y: p.y + align.y * s.height
+  return value
+}
+
+/**
+ * Computes the pixel offset on the Y axis.
+ * @param value
+ * @param unit
+ * @param containerSize
+ */
+export function pixelYToLocation(
+  value: number,
+  unit: Unit,
+  containerSize: ISize
+): number {
+  switch (unit) {
+    case Unit.percent: {
+      return value * containerSize.width
+    }
+    case Unit.vmin: {
+      const minWidth =
+        containerSize.width < containerSize.height
+          ? containerSize.width
+          : containerSize.height
+      return value * minWidth
+      break
+    }
+    case Unit.vw: {
+      return value * containerSize.width
+    }
+    case Unit.vh: {
+      return value * containerSize.height
     }
   }
+
+  return value
+}
+
+/**
+ * Computes the pixel offset on the Y axis.
+ * @param value
+ * @param unit
+ * @param containerSize
+ */
+export function locationXToPixel(
+  value: number,
+  unit: Unit,
+  containerSize: ISize
+): number {
+  switch (unit) {
+    case Unit.percent: {
+      return value * containerSize.width
+    }
+    case Unit.vmin: {
+      const minWidth =
+        containerSize.width < containerSize.height
+          ? containerSize.width
+          : containerSize.height
+      return value * minWidth
+      break
+    }
+    case Unit.vw: {
+      return value * containerSize.width
+    }
+    case Unit.vh: {
+      return value * containerSize.height
+    }
+  }
+
+  return value
 }

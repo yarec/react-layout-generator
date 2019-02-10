@@ -49,7 +49,7 @@
 
 // import { IRect } from '../types';
 
-export interface IBounds {
+export interface IQTBounds {
   x: number
   y: number
   width: number
@@ -60,7 +60,7 @@ export interface IBounds {
   bottom: number
 }
 
-// export class Bounds implements IBounds {
+// export class Bounds implements IQTBounds {
 //   public x: number;
 //   public y: number;
 //   public width: number;
@@ -83,7 +83,7 @@ export interface IBounds {
 // }
 
 export interface IShadowRoot {
-  bounds: IBounds
+  bounds: IQTBounds
   quadTreeIndex: number
 }
 
@@ -107,7 +107,7 @@ export default class QuadTree<T extends IShadowRoot> {
   private maxObjects: number
   private maxLevels: number
   private level: number
-  private bounds: IBounds
+  private bounds: IQTBounds
   private objects: T[]
   private nodes: QuadTree<T>[]
 
@@ -313,7 +313,7 @@ export default class QuadTree<T extends IShadowRoot> {
    * @return index - Index of the subnode (0-3), or -1 if rect cannot completely fit
    * within a subnode and is part of the parent node.
    */
-  private getIndex = (rect: IBounds) => {
+  private getIndex = (rect: IQTBounds) => {
     //  default is that rect doesn't fit, i.e. it straddles the internal quadrants
     let index = -1
 

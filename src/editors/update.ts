@@ -2,15 +2,15 @@ import { Block, IEdit } from '../components/Block'
 import { IRect, unitFactor } from '../types'
 
 /**
- * UpdateParamLocation computes the [location](interfaces/ipositionlocation.html) update.
+ * UpdateParamLocation computes a [location](interfaces/ipositionlocation.html) update.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.position.size.unit)
   return {
     name: edit.variable!,
     value: {
-      x: block.position.location.x * factor,
-      y: block.position.location.y * factor,
+      x: block.position.location.x! * factor,
+      y: block.position.location.y! * factor,
       unit: block.position.size.unit
     }
   }

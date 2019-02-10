@@ -14,12 +14,12 @@ export {
   IEditor,
   IMenuItem,
   IPosition,
-  IPositionLocation,
+  IBlockRect as IPositionLocation,
   IPositionSize,
   IRotate,
   IScale,
   ISkew,
-  PositionChildren,
+  PositionChildrenFn as PositionChildren,
   Transform
 } from './components/Block'
 

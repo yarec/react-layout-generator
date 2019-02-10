@@ -259,4 +259,14 @@ it('local coordinate #1', () => {
   expect(b.maxY).toEqual(250)
 })
 
+it('location left top #1', () => {
+  const p = {
+    origin: { x: 50, y: 50 },
+    location: { left: 50, top: 50, unit: Unit.percent },
+    size: { width: 10, height: 10 }
+  }
+  const l = new Block('test', p, g)
+  expect(l.fromLocation()).toEqual({ x: 495, y: 495 })
+})
+
 // Test align, connection points

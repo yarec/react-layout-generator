@@ -40,7 +40,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
         }
       }
     }
-    case Unit.preserve: {
+    case Unit.vmin: {
       const factor =
         containersize.height < containersize.width
           ? containersize.height
@@ -59,7 +59,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
         }
       }
     }
-    case Unit.preserveWidth: {
+    case Unit.vw: {
       const factor = containersize.width
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -75,7 +75,7 @@ export function toPixel(v: IValue, containersize: ISize): IPoint | ISize {
         }
       }
     }
-    case Unit.preserveHeight: {
+    case Unit.vh: {
       const factor = containersize.height
       if ('x' in v.value) {
         const p = v.value as IPoint
@@ -123,13 +123,13 @@ export function toPercent(v: IValue, containersize: ISize): IPoint | ISize {
     case Unit.percent: {
       return v.value
     }
-    case Unit.preserve: {
+    case Unit.vmin: {
       return v.value
     }
-    case Unit.preserveWidth: {
+    case Unit.vw: {
       return v.value
     }
-    case Unit.preserveHeight: {
+    case Unit.vh: {
       return v.value
     }
   }

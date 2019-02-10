@@ -1,5 +1,5 @@
 import { DebugOptions, IAttrRect, IPoint, IRect, ISize } from '../types'
-import { IPositionLocation, IPositionSize } from './Block'
+import { IInputRect, IPositionSize } from './Block'
 
 const deepEqual = require('deep-equal')
 
@@ -16,7 +16,7 @@ export type ParamValue =
   | ISize
   | IRect
   | IAttrRect
-  | IPositionLocation
+  | IInputRect
   | IPositionSize
   | IEditableTextData
 

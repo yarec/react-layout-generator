@@ -172,61 +172,49 @@ export enum Unit {
    * printers and high resolution screens 1px implies multiple
    * device pixels.
    */
-  pixel = 1, // px
+  pixel = 1,
   /**
    * Percent is relative to the parent size. That means that
    * if the parent size is rectangular the value will be proportional
    * to the parent size. In other words a perfect square will
-   * be displayed as a rectangular element.
+   * be displayed as a rectangular element unless the parent size is
+   * also square. In RLG the parent is the size of the [Layout](#) block
    */
-  percent, // %
+  percent,
   /**
-   * Preserve is similar percent except that it takes the shorter
-   * axis to define the value of a 1% pixel and then applies that
-   * to the other axis. This means that a perfect square will still
-   * be presented as a square. Preserve is also similar to css's vw,
-   * vh, vmin, and vmax units.
+   * Vmin is similar percent except that it takes the 1/100 of the shorter
+   * axis of the viewport as the base unit. This means any of the viewport
+   * units will render a square as a square.
    */
-  preserve, // %p
+  vmin,
   /**
-   * PreserveWidth is same as Preserve except that horizontal axis is
+   * Vmax is similar vmin except that it takes the 1/100 of the longer
+   * axis of the viewport as the base unit.
+   */
+  vmax,
+  /*
+   * Vw is same as vmin and vmax except that the horizontal axis is
    * taken as the basis.
    */
-  preserveWidth, // %pw
-  /**
-   * PreserveHeight is same as Preserve except that Vertical axis is
+  vw,
+  /*
+   * Vh is same as vmin and vmax except that the vertical axis is
    * taken as the basis.
    */
-  preserveHeight, // %ph
-
-  // Keep unmanaged at the end of the list
-
+  vh,
   /**
-   * Unmanaged is only usable for the size of an element. The actual
-   * value is the natural size of the content as determined by the browser.
-   *
-   * Unmanaged applies to both width and height.
+   * Unmanaged sets the Block to fit it's content.
    */
-  unmanaged, // a
-  /**
-   * UnmanagedWidth is the same as Unmanaged except it only applies to the
-   * width.
-   */
-  unmanagedWidth, // aw
-  /**
-   * UnmanagedHeight is the same as Unmanaged except it only applies to the
-   * height.
-   */
-  unmanagedHeight // ah
+  u
 }
 
 /**
  * isUnitUnmanaged returns true if the unit is one of the Unmanaged options.
  * @param unit
  */
-export function isUnmanaged(unit: Unit | undefined) {
-  return unit ? unit >= Unit.unmanaged : false
-}
+// export function isUnmanaged(unit: Unit | undefined) {
+//   return unit ? unit >= Unit.unmanaged : false
+// }
 
 /**
  * unitFactor returns the multiplication factor of 100 to convert to/from percent. Otherwise it returns 1.
@@ -234,99 +222,10 @@ export function isUnmanaged(unit: Unit | undefined) {
  */
 export function unitFactor(unit: Unit | undefined) {
   let factor = 1
-  if (
-    unit &&
-    (Unit.percent || Unit.preserve || Unit.preserveHeight || Unit.preserveWidth)
-  ) {
+  if (unit && (Unit.percent || Unit.vmin || Unit.vh || Unit.vw)) {
     factor = 100
   }
   return factor
-}
-
-/**
- * stringToUnit parses a string for an unit.
- * @param data
- */
-export function stringToUnit(data: string) {
-  const d = data.trim()
-  switch (d.charAt(d.length - 1)) {
-    case 'x': {
-      return Unit.pixel
-    }
-    case '%': {
-      return Unit.percent
-    }
-    case 'a': {
-      return Unit.unmanaged
-    }
-    case 'h': {
-      switch (d.charAt(d.length - 2)) {
-        case 'p': {
-          return Unit.preserveHeight
-        }
-        case 'a': {
-          return Unit.unmanagedWidth
-        }
-      }
-      break
-    }
-    case 'w': {
-      switch (d.charAt(d.length - 2)) {
-        case 'p': {
-          return Unit.preserveWidth
-        }
-        case 'a': {
-          return Unit.unmanagedWidth
-        }
-      }
-      break
-    }
-  }
-  return Unit.pixel
-}
-
-/**
- * namedUnit returns a printable name of a unit.
- * @param unit
- */
-export function namedUnit(unit: Unit | undefined) {
-  let name = 'unknown'
-  switch (unit) {
-    case Unit.pixel: {
-      name = 'pixel'
-      break
-    }
-    case Unit.percent: {
-      name = 'percent'
-      break
-    }
-    case Unit.preserve: {
-      name = 'preserve'
-      break
-    }
-    case Unit.preserveWidth: {
-      name = 'preserveWidth'
-      break
-    }
-    case Unit.preserveHeight: {
-      name = 'preserveHeight'
-      break
-    }
-
-    case Unit.unmanaged: {
-      name = 'unmanaged'
-      break
-    }
-    case Unit.unmanagedWidth: {
-      name = 'unmanagedWidth'
-      break
-    }
-    case Unit.unmanagedHeight: {
-      name = 'unmanagedHeight'
-      break
-    }
-  }
-  return name
 }
 
 /**

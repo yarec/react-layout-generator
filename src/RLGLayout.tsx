@@ -8,7 +8,7 @@ import {
   Block,
   IMenuItem,
   IPosition,
-  PositionChildren
+  PositionChildrenFn
 } from './components/Block'
 import { ParamValue } from './components/Params'
 import { RLGContextMenu } from './editors/RLGContextMenu'
@@ -742,7 +742,7 @@ export class RLGLayout extends React.Component<
     count: number,
     name: string,
     position: IPosition,
-    positionChildren: PositionChildren
+    positionChildren: PositionChildrenFn
   ) => {
     let b = this._g.lookup(name)
     if (!b && this._g.create) {
@@ -779,7 +779,7 @@ export class RLGLayout extends React.Component<
     count: number,
     name: string,
     position: IPosition,
-    positionChildren: PositionChildren,
+    positionChildren: PositionChildrenFn,
     offset?: IPoint
   ) => {
     const c = this._g.params().get('containersize') as ISize
