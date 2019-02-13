@@ -1,4 +1,5 @@
-import { Block, IPosition } from '../components/Block'
+import { Block } from '../components/Block'
+import { IPosition } from '../components/blockTypes'
 import { Blocks } from '../components/Blocks'
 import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
@@ -148,7 +149,7 @@ export class Generator implements IGenerator {
   // public containersize = (name: string): ISize => {
   //   const l = this._blocks.get(name)
   //   if (l) {
-  //     const r = l.rect()
+  //     const r = l.rect
 
   //     return { width: r.width, height: r.height }
   //   }

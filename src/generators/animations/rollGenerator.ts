@@ -43,7 +43,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
         let maxX = Number.MIN_SAFE_INTEGER
         let maxY = Number.MIN_SAFE_INTEGER
         layer0.forEach((block: Block) => {
-          const rect = block.rect()
+          const rect = block.rect
           if (rect.x < minX) {
             minX = rect.x
           }
@@ -66,10 +66,12 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
 
       if (animate) {
         layer0.forEach((block: Block) => {
-          const rect = block.rect()
+          const rect = block.rect
           let location = {
             x: rect.x - velocity.x * deltaTime,
-            y: rect.y - velocity.y * deltaTime
+            y: rect.y - velocity.y * deltaTime,
+            width: rect.width,
+            height: rect.height
           }
 
           if (Math.sign(velocity.x) === 1) {
@@ -91,7 +93,7 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
             }
           }
 
-          block.update(location, { width: rect.width, height: rect.height })
+          block.update(location)
         })
       }
     }

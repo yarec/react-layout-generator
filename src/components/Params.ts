@@ -135,7 +135,6 @@ export class Params {
   }
 
   public get(key: string, load?: boolean): ParamValue | undefined {
-    console.log('params', key)
     if (load && this._load) {
       const v = this._load(this._name, key)
       if (v) {

@@ -9,8 +9,7 @@ import {
   rollGenerator,
   rollHook,
   ServiceOptions,
-  Status,
-  Unit
+  Status
 } from '../importRLG'
 
 import * as data from '../assets/data/params.json'
@@ -91,8 +90,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
             name: "implementation",
             position: {
               origin: { x: 100, y: 100 },
-              location: { x: 50, y: 50, unit: Unit.percent },
-              size: { width: 140, height: 24 }
+              location: { left: '50%', top: '50%', width: 140, height: 24 }
             }
           }}
           data-layer={2}
@@ -163,8 +161,7 @@ export default class Intro extends React.Component<IEditHelperProps, IIntroState
             name,
             position: {
               origin: { x: 50, y: 50 },
-              location: { x: col, y: i * 5, unit: Unit.percent },
-              size: { width: 250, height: 100, unit: Unit.unmanagedHeight },
+              location: { left: `${col}%`, top: `${(i * 5)}%`, width: 250, height: '100u' },
             }
           }}
         >

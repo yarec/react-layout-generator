@@ -17,40 +17,7 @@ This project was initially inspired by [react-grid-layout](https://www.npmjs.com
 
 ## Table of Contents
 
-<!-- TOC -->
-
-- [React Layout Generator](#react-layout-generator)
-  - [Table of Contents](#table-of-contents)
-  - [Install](#install)
-    - [Contributing](#contributing)
-  - [TODO](#todo)
-  - [Features](#features)
-  - [Applications](#applications)
-  - [Usage](#usage)
-    - [RLGLayout](#rlglayout)
-      - [Note](#note)
-    - [RLGPanel](#rlgpanel)
-    - [Responsive Layout](#responsive-layout)
-    - [Responsive Desktop Layout](#responsive-desktop-layout)
-    - [Layers](#layers)
-    - [Drag and Drop](#drag-and-drop)
-      - [dragData(id: string) => string[]](#dragdataid-string--string)
-      - [dragImage(ids: string[]) => JSX](#dragimageids-string--jsx)
-      - [dragEnd(ids: string[]) => void](#dragendids-string--void)
-      - [Draggable](#draggable)
-    - [Generator](#generator)
-      - [Animations](#animations)
-      - [Notes](#notes)
-    - [Editor](#editor)
-      - [Edit commands (in examples)](#edit-commands-in-examples)
-      - [Keyboard controls](#keyboard-controls)
-  - [FAQ](#faq)
-    - [Why not build a system based on React refs](#why-not-build-a-system-based-on-react-refs)
-    - [Why is the page flashing](#why-is-the-page-flashing)
-    - [How can I right align blocks](#how-can-i-right-align-blocks)
-    - [How can I persist the Params for distribution](#how-can-i-persist-the-params-for-distribution)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [React Layout Generator](#react-layout-generator)auto    - [Table of Contents](#table-of-contents)auto    - [Install](#install)auto        - [Contributing](#contributing)auto    - [TODO](#todo)auto    - [Features](#features)auto    - [Applications](#applications)auto    - [Usage](#usage)auto        - [RLGLayout](#rlglayout)auto            - [Note](#note)auto        - [RLGPanel](#rlgpanel)auto        - [Responsive Layout](#responsive-layout)auto        - [Responsive Desktop Layout](#responsive-desktop-layout)auto        - [Layers](#layers)auto        - [Drag and Drop](#drag-and-drop)auto            - [dragData(id: string) => string[]](#dragdataid-string--string)auto            - [dragImage(ids: string[]) => JSX](#dragimageids-string--jsx)auto            - [dragEnd(ids: string[]) => void](#dragendids-string--void)auto            - [Draggable](#draggable)auto        - [Generator](#generator)auto            - [Animations](#animations)auto            - [Notes](#notes)auto        - [Editor](#editor)auto            - [Edit commands (in examples)](#edit-commands-in-examples)auto            - [Keyboard controls](#keyboard-controls)auto    - [FAQ](#faq)auto        - [Why not build a system based on React refs](#why-not-build-a-system-based-on-react-refs)auto        - [Why is the page flashing](#why-is-the-page-flashing)auto        - [How can I right align blocks](#how-can-i-right-align-blocks)auto        - [How can I persist the Params for distribution](#how-can-i-persist-the-params-for-distribution)autoauto<!-- /TOC -->
 
 ## Install
 
@@ -481,12 +448,12 @@ Generators can also be used for animations if they compute the layout blocks as 
 ```ts
 function init (...) {
   ...
-  let rect = block.rect()
+  let rect = block.rect
   let velocity = ...
   ...
   if (animate) {
     blocks.map.forEach((block: Block) => {
-    const rect = block.rect()
+    const rect = block.rect
     let location = { x: rect.x, y: rect.y - velocity * deltaTime }
     if (location.y + rect.height < 0) {
       // This creates the endless scroll
@@ -548,17 +515,15 @@ data-layout={{
   name: 'block 1',
   position: {
     origin: {x: 100, y: 0},
-    location: { x: 90, y: 10, unit: Unit.percent },
-    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+    location: { left: '90%', top: '10%', width: 200, height: '350u' }
   }
 }}
 
 data-layout={{
   name: 'block 2',
   position: {
-    origin: {x: 100, y: 0},
-    location: { x: 90, y: 10, unit: Unit.percent },
-    size: { width: 200, height: 350 }
+    origin: {x: 100, top: 0},
+    location: { left: '90%', top: '10%', width: 200, height: 350 }
   }
 }}
 
@@ -570,8 +535,7 @@ data-layout={{
 data-layout={{
   name: 'block 1',
   position: {
-    location: { x: 90, y: 10, unit: Unit.percent },
-    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+    location: { left: '90%', top: '10%', width: 200, height: '350u' }
   }
 }}
 
@@ -584,8 +548,7 @@ data-layout={{
       source: { x: 100, y: 100 },
       self: { x: 100, y: 0 }
     }
-    location: { x: 90, y: 10, unit: Unit.percent },
-    size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+    location: { left: '90%', top: '10%', width: 200, height: '350u' }
   }
 }}
 ```

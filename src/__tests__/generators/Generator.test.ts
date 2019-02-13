@@ -35,8 +35,7 @@ it('generator #3', () => {
 
 it('generator #4', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const g = new Generator('test', init, params)

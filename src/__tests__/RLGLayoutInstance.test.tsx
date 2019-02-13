@@ -48,8 +48,7 @@ describe('RLGLayout', () => {
         <div data-layout={{
           name: 'hello',
           position: {
-            location: { x: 200, y: 50 },
-            size: { width: 200, height: 200 }
+            location: { left: 200, top: 50, width: 200, height: 200 }
           }
         }}
           style={{ backgroundColor: 'tan' }} >

@@ -23,8 +23,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 50 },
-            size: { width: 200, height: 200 }
+            location: { left: 200, top: 50 ,width: 200, height: 200 }
           }
         }}>
           <span>one</span>
@@ -32,8 +31,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 50 },
-            size: { width: 200, height: 200 }
+            location: { left: 400, top: 50 ,width: 200, height: 200 }
           }
         }}>
           <span>two</span>
@@ -68,8 +66,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 50 },
-            size: { width: 200, height: 200 }
+            location: { left: 200, top: 50, width: 200, height: 200 }
           }
         }}>
           <span>one</span>
@@ -77,8 +74,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 50 },
-            size: { width: 200, height: 200 }
+            location: { left: 400, top: 50, width: 200, height: 200 }
           }
         }}>
           <span>two</span>
@@ -113,8 +109,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 200 },
-            size: { width: 200, height: 200 }
+            location: { left: 200, top: 200, width: 200, height: 200 }
           }
         }}>
           <span>one</span>
@@ -122,8 +117,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 250 },
-            size: { width: 200, height: 100 }
+            location: { left: 400, top: 250, width: 200, height: 100 }
           }
         }}>
           <span>two</span>
@@ -140,8 +134,8 @@ describe('RLGSelect', () => {
 
     select!.alignBottom()
 
-    expect(one.rect()).toEqual({ x: 200, y: 200, width: 200, height: 200 })
-    expect(two.rect()).toEqual({ x: 400, y: 300, width: 200, height: 100 })
+    expect(one.rect).toEqual({ x: 200, y: 200, width: 200, height: 200 })
+    expect(two.rect).toEqual({ x: 400, y: 300, width: 200, height: 100 })
   })
   test('RLGSelect #4', () => {
     g.clear()
@@ -155,8 +149,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 200 },
-            size: { width: 100, height: 200 }
+            location: { left: 200, top: 200, width: 100, height: 200 }
           }
         }}>
           <span>one</span>
@@ -164,8 +157,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 250 },
-            size: { width: 200, height: 100 }
+            location: { left: 400, top: 250, width: 200, height: 100 }
           }
         }}>
           <span>two</span>
@@ -182,8 +174,8 @@ describe('RLGSelect', () => {
 
     select!.alignCenter()
 
-    expect(one.rect()).toEqual({ x: 200, y: 200, width: 100, height: 200 })
-    expect(two.rect()).toEqual({ x: 150, y: 250, width: 200, height: 100 })
+    expect(one.rect).toEqual({ x: 200, y: 200, width: 100, height: 200 })
+    expect(two.rect).toEqual({ x: 150, y: 250, width: 200, height: 100 })
   })
   test('RLGSelect #5', () => {
     g.clear()
@@ -197,8 +189,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 200 },
-            size: { width: 100, height: 200 }
+            location: { left: 200, top: 200, width: 100, height: 200 }
           }
         }}>
           <span>one</span>
@@ -206,8 +197,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 250 },
-            size: { width: 200, height: 100 }
+            location: { left: 400, top: 250, width: 200, height: 100 }
           }
         }}>
           <span>two</span>
@@ -224,8 +214,8 @@ describe('RLGSelect', () => {
 
     select!.alignLeft()
 
-    expect(one.rect()).toEqual({ x: 200, y: 200, width: 100, height: 200 })
-    expect(two.rect()).toEqual({ x: 200, y: 250, width: 200, height: 100 })
+    expect(one.rect).toEqual({ x: 200, y: 200, width: 100, height: 200 })
+    expect(two.rect).toEqual({ x: 200, y: 250, width: 200, height: 100 })
   })
   test('RLGSelect #6', () => {
     g.clear()
@@ -240,8 +230,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'one',
           position: {
-            location: { x: 200, y: 200 },
-            size: { width: 100, height: 200 }
+            location: { left: 200, top: 200, width: 100, height: 200 }
           }
         }}>
           <span>one</span>
@@ -249,8 +238,7 @@ describe('RLGSelect', () => {
         <div data-layout={{
           name: 'two',
           position: {
-            location: { x: 400, y: 250 },
-            size: { width: 200, height: 100 }
+            location: { left: 400, top: 250, width: 200, height: 100 }
           }
         }}>
           <span>two</span>
@@ -268,7 +256,7 @@ describe('RLGSelect', () => {
 
     select!.alignTop()
 
-    expect(one.rect()).toEqual({ x: 200, y: 200, width: 100, height: 200 })
-    expect(two.rect()).toEqual({ x: 400, y: 200, width: 200, height: 100 })
+    expect(one.rect).toEqual({ x: 200, y: 200, width: 100, height: 200 })
+    expect(two.rect).toEqual({ x: 400, y: 200, width: 200, height: 100 })
   })
 })

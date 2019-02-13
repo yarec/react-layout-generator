@@ -1,17 +1,18 @@
-import { Block, IEdit } from '../components/Block'
+import { Block } from '../components/Block'
+import { IEdit } from '../components/blockTypes'
 import { IRect, unitFactor } from '../types'
 
 /**
  * UpdateParamLocation computes a [location](interfaces/ipositionlocation.html) update.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factorX = unitFactor(block.blockRect.leftUnit)
+  const factorY = unitFactor(block.blockRect.topUnit)
   return {
     name: edit.variable!,
     value: {
-      x: block.position.location.x! * factor,
-      y: block.position.location.y! * factor,
-      unit: block.position.size.unit
+      x: updated.x * factorX,
+      y: updated.y * factorY
     }
   }
 }
@@ -21,7 +22,8 @@ export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
  */
 
 export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factorX = unitFactor(block.blockRect.leftUnit)
+  const factorY = unitFactor(block.blockRect.topUnit)
   let r = {
     name: edit.variable!,
     value: {
@@ -29,12 +31,12 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
       y: 0
     }
   }
-  if (block.position.align) {
+  if (block.align) {
     r = {
       name: edit.variable!,
       value: {
-        x: block.position.align!.offset.x * factor,
-        y: block.position.align!.offset.y * factor
+        x: block.align.offset.x * factorX,
+        y: block.align.offset.y * factorY
       }
     }
   }
@@ -46,7 +48,7 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
  * a generator directly uses the width in computing a layout.
  */
 export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factor = unitFactor(block.blockRect.widthUnit)
   return {
     name: edit.variable!,
     value: updated.width * factor
@@ -58,7 +60,7 @@ export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
  * a generator directly uses the height in computing a layout.
  */
 export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factor = unitFactor(block.blockRect.heightUnit)
   return {
     name: edit.variable!,
     value: updated.height * factor

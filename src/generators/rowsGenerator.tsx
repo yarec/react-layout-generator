@@ -40,9 +40,9 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
     // update
     let currentHeight = margin.top;
     blocks.map.forEach((block) => {
-      const rect = block.rect();
+      const rect = block.rect;
       const leftOffset = (containersize.width / 2 - (rect.width + margin.left + margin.right) / 2);
-      block.update({ x: leftOffset, y: currentHeight }, rectSize(rect));
+      block.update({ x: leftOffset, y: currentHeight, ...rectSize(rect)});
       currentHeight += rect.height + margin.top + margin.bottom;
     });
   }
@@ -59,8 +59,7 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     if (!p) {
       p = {
-        location: { x: 0, y: 0 },
-        size
+        location: { left: 0, top: 0, ...size }
       }
     }
 
@@ -68,11 +67,11 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
     let topOffset = margin.top;
     if (blocks.map.size) {
       const block = blocks.find(blocks.map.size - 1);
-      const r = block.rect();
+      const r = block.rect;
       topOffset = r.y + r.height + margin.bottom + margin.top;
     }
     const leftOffset = (containersize.width / 2) - (size.width + margin.left + margin.right) / 2;
-    p.location = { x: leftOffset, y: topOffset }
+    p.location = { left: leftOffset, top: topOffset, ...size }
 
     return blocks.set(args.name, p, args.g);
   }

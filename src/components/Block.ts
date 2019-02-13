@@ -1,5 +1,6 @@
 import { IGenerator } from '../generators/Generator'
-import { Rect, IOrigin, ISize, IPoint } from '../types'
+import { toAlign, fromAlign } from './blockUtils'
+import { Rect, IOrigin, ISize, IPoint, IRect } from '../types'
 import {
   IPosition,
   IBlockRect,
@@ -11,7 +12,14 @@ import {
   IScale,
   ISkew
 } from './blockTypes'
-import { convertInputBlockRect, layout } from './blockUtils'
+import {
+  convertInputBlockRect,
+  layout,
+  fromOrigin,
+  inverseLayout,
+  toOrigin,
+  connectPoint
+} from './blockUtils'
 import { cursor } from '../editors/cursor'
 import { getUpdateHandle } from '../editors/updateHandle'
 import { getExtendElement } from '../editors/extendElement'
@@ -30,8 +38,8 @@ export class Block {
 
   private _localParent: Block | undefined = undefined
   private _blockRect: IBlockRect
-  private _align: IAlign
-  private _origin: IOrigin
+  private _align: IAlign | undefined = undefined
+  private _origin: IOrigin | undefined = undefined
   private _editor: IEditor | undefined = undefined
   private _zIndex: number | undefined = undefined
   private _positionChildren: PositionChildrenFn | undefined = undefined
@@ -51,11 +59,12 @@ export class Block {
     this._position = p
     this._g = g
 
+    this._blockRect = {}
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._onMouseDown = this.noop
     this._onClick = this.noop
 
-    this.preprocess(p)
+    this.updatePosition(p)
   }
 
   public get editor() {
@@ -76,6 +85,10 @@ export class Block {
 
   public get name() {
     return this._name
+  }
+
+  public set sibling(name: string) {
+    this._siblings.set(name, true)
   }
 
   public setHandler(name: string, value: any) {
@@ -118,6 +131,10 @@ export class Block {
     this.changed()
   }
 
+  get generator() {
+    return this._g
+  }
+
   get x() {
     this.updateRect()
     return this._cached.x
@@ -126,6 +143,14 @@ export class Block {
   get y() {
     this.updateRect()
     return this._cached.y
+  }
+
+  get blockRect() {
+    return this._blockRect
+  }
+
+  get align() {
+    return this._align
   }
 
   /**
@@ -200,26 +225,12 @@ export class Block {
     }
   }
 
-  private updateRect(force: boolean = false) {
-    if (this._changed || force) {
-      this._changed = false
-      const containersize = this._g.params().get('containersize') as ISize
-      const viewport = this._g.params().get('viewport') as ISize
-      const value = layout(this._blockRect, {
-        local: containersize,
-        viewport: viewport
-      })
-      this._cached.update({
-        x: value.x,
-        y: value.y,
-        width: value.width,
-        height: value.height
-      })
+  public updatePosition(p: IPosition) {
+    if (!p) {
+      return
     }
-  }
-
-  private preprocess(p: IPosition) {
     this.validate(p)
+    this._origin = { x: 0, y: 0 }
     if (p.origin) {
       this._origin.x = p.origin.x * 0.01
       this._origin.y = p.origin.y * 0.01
@@ -229,12 +240,21 @@ export class Block {
 
     // Convert percents to decimal
     if (p.align) {
-      this._align.source.x = p.align.source.x * 0.01
-      this._align.source.y = p.align.source.y * 0.01
-      this._align.self.x = p.align.self.x * 0.01
-      this._align.self.y = p.align.self.y * 0.01
-      this._align.offset.x = p.align.offset.x
-      this._align.offset.y = p.align.offset.y
+      this._align = {
+        key: p.align.key,
+        source: {
+          x: p.align.source.x * 0.01,
+          y: p.align.source.y * 0.01
+        },
+        self: {
+          x: p.align.self.x * 0.01,
+          y: p.align.self.y * 0.01
+        },
+        offset: {
+          x: p.align.offset.x,
+          y: p.align.offset.y
+        }
+      }
     }
 
     if (this._position.positionChildren) {
@@ -260,6 +280,47 @@ export class Block {
     this.changed()
   }
 
+  private updateRect(force: boolean = false) {
+    if (this._changed || force) {
+      this._changed = false
+      const containersize = this._g.params().get('containersize') as ISize
+      const viewport = this._g.params().get('viewport') as ISize
+      let value = layout(this._blockRect, {
+        local: containersize,
+        viewport: viewport
+      })
+
+      // Handle align - ignore actual value of location
+      if (this._align) {
+        const ref = this.getRef()
+        if (ref) {
+          let source = toAlign(ref.rect, this._align.source)
+
+          // Translate to self location
+          ;(source.x += this._align.offset.x),
+            (source.y += this._align.offset.y)
+
+          // Get left top point
+          const self = fromAlign(
+            { ...source, width: value.width, height: value.height },
+            this._align.self
+          )
+
+          // Update cache
+          this._cached.update({
+            ...self,
+            width: value.width,
+            height: value.height
+          })
+          return
+        }
+      }
+
+      value = fromOrigin(value, this._origin)
+      this._cached.update(value)
+    }
+  }
+
   public setEditDefaults(edit: IEdit) {
     if (!edit.cursor) {
       edit.cursor = cursor(edit.ref)
@@ -270,6 +331,97 @@ export class Block {
     if (!edit.extendElement) {
       edit.extendElement = getExtendElement(edit.ref)
     }
+  }
+
+  public connectionHandles = () => {
+    const align = this._align
+    if (align) {
+      const ref = this.getRef()
+      if (ref) {
+        const r1: IRect = ref.rect
+
+        const c1 = connectPoint(r1, align.source)
+
+        const r2 = this.rect
+
+        const c2 = connectPoint(r2, align.self)
+
+        return [c1, c2]
+      }
+    }
+    return []
+  }
+
+  /**
+   * Change the block state
+   */
+  public update = (r: IRect) => {
+    // Takes in world coordinates
+    // console.log(`Position update x: ${location.x} y: ${location.y}`)
+
+    if (this._align && this.getRef()) {
+      const align = this._align
+      // Get source and self points
+      const ref = this.getRef()
+      if (ref) {
+        const r1 = ref!.rect
+        const p1 = connectPoint(r1, this._align.source)
+
+        const r2 = this.rect
+        const p2 = connectPoint(r2, align.self)
+
+        // Compute new offset
+        const offset: IPoint = {
+          x: p2.x - p1.x,
+          y: p2.y - p1.y
+        }
+
+        // Update align offset
+        this._align.offset = offset
+      }
+    } else {
+      const _r = toOrigin(r, this._origin)
+
+      const containersize = this._g.params().get('containersize') as ISize
+      const viewport = this._g.params().get('viewport') as ISize
+      this._blockRect = inverseLayout(_r, this._blockRect, {
+        local: containersize,
+        viewport: viewport
+      })
+    }
+
+    this.changed()
+  }
+
+  private changed() {
+    this._changed = true
+    this._siblings.forEach((value: boolean, key: string) => {
+      const l = this._g.lookup(key)
+      if (l) {
+        l.touch()
+      }
+    })
+  }
+
+  /**
+   * Returns the block that is linked to this block
+   */
+  private getRef = () => {
+    let ref
+    if (this._align) {
+      if (typeof this._align.key === 'string') {
+        ref = this._g.lookup(this._align.key as string)
+      } else {
+        const blocks = this._g.blocks()
+        if (blocks) {
+          ref = blocks.find(this._align.key as number)
+        }
+      }
+    }
+    if (ref) {
+      ref.sibling = this.name
+    }
+    return ref
   }
 
   private validate(p: IPosition) {
@@ -317,16 +469,6 @@ export class Block {
         }
       })
     }
-  }
-
-  private changed() {
-    this._changed = true
-    this._siblings.forEach((value: boolean, key: string) => {
-      const l = this._g.lookup(key)
-      if (l) {
-        l.touch()
-      }
-    })
   }
 
   /**

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IMenuItem } from '../components/Block';
+import { IMenuItem } from '../components/blockTypes';
 import { DebugOptions, IPoint, ISize } from '../types';
 import '../assets/styles.css'
 

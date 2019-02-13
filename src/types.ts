@@ -222,7 +222,7 @@ export enum Unit {
  */
 export function unitFactor(unit: Unit | undefined) {
   let factor = 1
-  if (unit && (Unit.percent || Unit.vmin || Unit.vh || Unit.vw)) {
+  if (unit && (Unit.percent || Unit.vmin || Unit.vmax || Unit.vh || Unit.vw)) {
     factor = 100
   }
   return factor

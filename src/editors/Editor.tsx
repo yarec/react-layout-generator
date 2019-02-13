@@ -1,4 +1,5 @@
-import { Block, IEdit } from '../components/Block';
+import { Block } from '../components/Block';
+import { IEdit } from '../components/blockTypes';
 import { RLGSelect } from '../editors/RLGSelect';
 import { IRect } from '../types';
 import { DebugOptions } from '../types';

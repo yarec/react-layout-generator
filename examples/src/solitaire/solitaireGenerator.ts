@@ -69,8 +69,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // Stock
     const stock: IPosition = {
-      location: { x: gameMargin + (interval - cardSize.width) / 2, y: gameMargin },
-      size: cardSize,
+      location: { left: gameMargin + (interval - cardSize.width) / 2, top: gameMargin, ...cardSize},
       positionChildren: positionStockChildren
     }
     // console.log('cardSize', cardSize);
@@ -79,8 +78,12 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // Waste
     const waste: IPosition = {
-      location: { x: stock.location.x! + interval, y: gameMargin },
-      size: { width: cardSize.width + 3 * cardSize.width * cardSpacingRatio.x, height: cardSize.height },
+      location: { 
+        left: stock.location.x! + interval, 
+        top: gameMargin, 
+        width: cardSize.width + 3 * cardSize.width * cardSpacingRatio.x, 
+        height: cardSize.height 
+      },
       positionChildren: positionWasteChildren
     }
 
@@ -90,8 +93,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     for (let i = 4 - foundationStart; i < 8 - foundationStart; i++) {
       const offset = i * interval;
       const p: IPosition = {
-        location: { x: stock.location.x! + offset, y: gameMargin },
-        size: cardSize,
+        location: { left: stock.location.x! + offset, top: gameMargin, ...cardSize},
         positionChildren: positionFoundationChildren
       }
 
@@ -102,8 +104,12 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     for (let i = 1 - tableauStart; i < 8 - tableauStart; i++) {
       const offset = i * interval;
       const p: IPosition = {
-        location: { x: stock.location.x! + offset, y: cardSize.height + 2 * gameMargin },
-        size: { width: cardSize.width, height: cardSize.height + maxCards * cardSpacingRatio.y * cardSize.height },
+        location: { 
+          left: stock.location.x! + offset, 
+          top: cardSize.height + 2 * gameMargin,
+          width: cardSize.width, 
+          height: cardSize.height + maxCards * cardSpacingRatio.y * cardSize.height 
+        },
         positionChildren: positionTableauChildren
       }
 
@@ -132,7 +138,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // These children get placed on top of each other
     const child: IPosition = {
-      location: { x: 0, y: 0 },
+      location: { left: 0, top: 0 },
       size: cardSize
     };
 
@@ -148,7 +154,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     // These children get placed on top of each other
 
     const child: IPosition = {
-      location: { x: 0, y: 0 },
+      location: { left: 0, top: 0 },
       size: cardSize
     };
 
@@ -164,7 +170,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // These children get placed vertically based on index
     const child: IPosition = {
-      location: { x: 0, y: index * computedCardSpacing.y },
+      location: { left: 0, top: index * computedCardSpacing.y },
       size: cardSize
     };
 
@@ -180,7 +186,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // These children get placed horizontally based on index
     const child: IPosition = {
-      location: { x: index * computedCardSpacing.x, y: 0 },
+      location: { left: index * computedCardSpacing.x, top: 0 },
       size: cardSize
     };
 

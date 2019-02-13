@@ -125,8 +125,7 @@ export default class ToolBar extends React.Component<IToolBarProps, IToolBarStat
       } else {
         const name1 = `separator${i}`;
         const p: IPosition = {
-          location: { x: 0, y: 0 },
-          size: { width: fontSize, height: fontSize / 2 }
+          location: { left: 0, top: 0, width: fontSize, height: fontSize / 2 }
         }
         v = e.component({ key: name1, 'data-layout': { name: name1, position: p }, color: cssColor.lightMiddle, fontSize })
       }

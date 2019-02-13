@@ -102,6 +102,26 @@ export interface IPosition {
 }
 
 /**
+ * This interface defines an input point that can include [units](#Unit). 
+ * 
+ * The following example specifies a point at the center of the container:
+
+ * ```
+ *  const p = {
+ *    x: '50%',
+ *    y: '50%'
+ *  }
+ * ```
+ * 
+ * Passing this point to the function [toPixel](#toPixel) will return a 
+ * point that is centered in the container.
+ */
+export interface IInputPoint {
+  x: number | string
+  y: number | string
+}
+
+/**
  * This interface defines the data for a block's location and size. Its data and behavior
  * is based on css properties [size-and-position](https://www.w3.org/TR/css-position-3/)
  * rules. The default units are pixels.
@@ -205,7 +225,7 @@ export interface IAlign {
  *
  *  // These children get placed horizontally based on index
  *  const child: IPosition = {
- *   location: { x: index * computedCardSpacing.x, y: 0 },
+ *   location: { left: index * computedCardSpacing.x, y: 0 },
  *   size: cardSize
  *  };
  *

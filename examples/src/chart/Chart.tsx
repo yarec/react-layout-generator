@@ -8,7 +8,6 @@ import {
   IEditHelperProps,
   IGenerator,
   IPosition,
-  IPositionLocation ,
   IRLGMetaDataArgs,
   ISize,
   Params,
@@ -16,9 +15,9 @@ import {
   RLGLayout, 
   RLGPanel, 
   ServiceOptions,
-  Unit,
   updateParamLocation,
-  updateParamOffset
+  updateParamOffset,
+  IInputRect
 } from '../importRLG'
 
 import { t1 } from './tree';
@@ -71,7 +70,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
   public init = (g: IGenerator): Blocks => {
     const node = this._treeMap.lookup(this.state.node);
     const containersize = this._params.get('containersize') as ISize;
-    const aLocation = this._params.get('aLocation') as IPositionLocation;
+    const aLocation = this._params.get('aLocation') as IInputRect;
 
     const blocks = g.blocks();
 
@@ -89,8 +88,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
       // Self
       const self: IPosition = {
         origin: { x: 50, y: 0 }, 
-        location: aLocation ? aLocation : { x: 10, y: 10, unit: Unit.percent },
-        size: { width: 150, height: 100 },
+        location: aLocation ? aLocation : { left: '10%', top: '10%', width: 150, height: 100 },
         
         transform: [{rotate: 10, origin: {x: 50, y: 50}}],
         editor: {
@@ -110,8 +108,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
         node.children.forEach((name, i) => {
           const child: IPosition = {
             origin: { x: 50, y: 50 }, 
-            location: { x: 0, y: 0, unit: Unit.percent },
-            size: { width: 150, height: 100 },
+            location: { left: 0, top: 0, width: 150, height: 100 },
             editor: {
               edits: [
                 { ref: PositionRef.position, variable: `${name}Offset`, updateParam: updateParamOffset }

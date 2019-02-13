@@ -29,8 +29,7 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 it('Layouts index returns the correct key value #1', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
   const t: Block = new Block('test', p, g)
   const l = new Blocks([['a', t]])
@@ -39,8 +38,7 @@ it('Layouts index returns the correct key value #1', () => {
 
 it('Layouts index returns the correct key value #2', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])
@@ -52,8 +50,7 @@ it('Layouts index returns the correct key value #2', () => {
 
 it('Layouts index returns the correct key value #3', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])
@@ -66,8 +63,7 @@ it('Layouts index returns the correct key value #3', () => {
 
 it('Layouts index returns the correct key value #4', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])
@@ -80,30 +76,27 @@ it('Layouts index returns the correct key value #4', () => {
 
 it('Layouts index updates the block #1', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])
   l.set('t1', p, g)
 
   const p2 = {
-    location: { x: 110, y: 110 },
-    size: { width: 100, height: 10 }
+    location: { left: 110, top: 110, width: 100, height: 10 }
   }
 
   l.set('t1', p2, g)
 
   const updatedBlock = l.get('t1')
-  const position = updatedBlock ? updatedBlock.position : undefined
+  const blockRect = updatedBlock ? updatedBlock.blockRect : undefined
 
-  expect(position && position.location.x).toBe(110)
+  expect(blockRect && blockRect.left).toBe(110)
 })
 
 it('Layouts layers returns the valid layers #1', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])
@@ -117,8 +110,7 @@ it('Layouts layers returns the valid layers #1', () => {
 
 it('Layouts layers returns the valid layers #2', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
   const l = new Blocks([])

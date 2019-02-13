@@ -101,8 +101,7 @@ export default class Table extends React.Component<ITableProps> {
     if (containersize) {
 
       const title: IPosition = {
-        location: { x: 0, y: 0 },
-        size: { width: containersize.width, height: titleHeight },
+        location: { left: 0, top: 0, width: containersize.width, height: titleHeight },
         editor: {
           edits: [
             { ref: PositionRef.position, variable: 'titleHeight', updateParam: updateParamLocation }
@@ -114,8 +113,7 @@ export default class Table extends React.Component<ITableProps> {
       blocks.set('title', title, g);
 
       const row: IPosition = {
-        location: { x: 0, y: titleHeight },
-        size: { width: containersize.width, height: rowHeight },
+        location: { left: 0, top: titleHeight, width: containersize.width, height: rowHeight },
         positionChildren: this.positionRowChildren
       }
 
@@ -134,8 +132,7 @@ export default class Table extends React.Component<ITableProps> {
 
     // These children get placed vertically based on index
     const child: IPosition = {
-      location: { x: 0, y: titleHeight + index * rowHeight },
-      size: { width: containersize.width, height: rowHeight }
+      location: { left: 0, top: titleHeight + index * rowHeight, width: containersize.width, height: rowHeight }
     };
 
     // This block is temp and will not be stored in blocks

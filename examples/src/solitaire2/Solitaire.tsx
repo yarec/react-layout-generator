@@ -6,8 +6,7 @@ import {
   IEditHelperProps,
   IGenerator,
   RLGLayout,
-  ServiceOptions,
-  Unit
+  ServiceOptions
 } from '../importRLG'
 
 import { cardPath } from './Card';
@@ -154,8 +153,7 @@ export default class Solitaire extends React.Component<
               name: 'New Game',
               position: {
                 origin: { x: 50, y: 50 },
-                location: { x: 50, y: 90, unit: Unit.percent },
-                size: { width: 90, height: 24 },
+                location: { left: '50%', top: '90%', width: 90, height: 24 },
                 // zIndex: 10
               }
             }}
@@ -235,8 +233,7 @@ export default class Solitaire extends React.Component<
             data-layout={{
               name,
               position: {
-                location: { x: i, y: 0, unit: Unit.percent },
-                size: { width: 1, height: 100, unit: Unit.percent }
+                location: { left: `${i}%`, top: 0, width: '1%', height: '100%' }
               }
             }}
             style={{ backgroundColor: 'hsl(210,100%,80%)' }}

@@ -3,8 +3,7 @@ import * as React from 'react';
 import {
   IEditHelperProps,
   IGenerator,
-  RLGLayout,
-  Unit
+  RLGLayout
 } from '../importRLG'
 
 import FoundationStack from './FoundationStack';
@@ -123,8 +122,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
             name: 'New Game',
             position: {
               origin: { x: 50, y: 50 },
-              location: { x: 50, y: 90, unit: Unit.percent },
-              size: { width: 90, height: 24 }
+              location: { left: '50%', top: '90%', width: 90, height: 24 }
             }
           }}
           onClick={this.newGame}
@@ -184,8 +182,7 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
             data-layout={{
               name,
               position: {
-                location: { x: i, y: 0, unit: Unit.percent },
-                size: { width: 1, height: 100, unit: Unit.percent }
+                location: { left: `${i}%`, top: 0, width: '1%', height: '100%' }
               }
             }}
             style={{ backgroundColor: 'hsl(210,100%,80%)' }}

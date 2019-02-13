@@ -34,7 +34,7 @@ export function columnsGenerator(name: string, exParams?: Params) {
     // compute width of all columns
     let totalWidth = 0
     blocks.map.forEach((block) => {
-      totalWidth += block.rect().width;
+      totalWidth += block.rect.width;
     });
 
     // compute beginning offset
@@ -43,8 +43,8 @@ export function columnsGenerator(name: string, exParams?: Params) {
     // update
     let currentWidth = 0;
     blocks.map.forEach((block) => {
-      const rect = block.rect();
-      block.update({ x: offset0 + currentWidth, y: 0 }, { width: rect.width, height: containersize.height });
+      const rect = block.rect;
+      block.update({ x: offset0 + currentWidth, y: 0, width: rect.width, height: containersize.height });
       currentWidth += rect.width;
     });
   }
@@ -63,8 +63,7 @@ export function columnsGenerator(name: string, exParams?: Params) {
 
     if (!p) {
       p = {
-        location: { x: 0, y: 0 },
-        size: { width: itemSize.width, height: containersize.height }
+        location: { left: 0, top: 0,  width: itemSize.width, height: containersize.height }
       }
     }
 

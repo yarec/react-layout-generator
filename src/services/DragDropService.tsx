@@ -314,7 +314,7 @@ export class DragDropService
         this.setState({ contextMenu: false })
       } else {
         // const block = this.props.block
-        // const r = block.rect()
+        // const r = block.rect
         // block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height })
       }
       this.props.onUpdate(true)
@@ -334,7 +334,7 @@ export class DragDropService
 
     const verified: Block[] = []
     candidates.forEach((b: Block) => {
-      if (r.intersect(b.rect())) {
+      if (r.intersect(b.rect)) {
         verified.push(b)
       }
     })

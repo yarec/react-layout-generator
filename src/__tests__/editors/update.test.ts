@@ -5,7 +5,8 @@ import {
   updateParamHeight
 } from '../../editors/update'
 import { PositionRef } from '../../types'
-import { Block, IPosition } from '../../components/Block'
+import { Block } from '../../components/Block'
+import { IPosition } from '../../components/blockTypes'
 import { IGenerator, ICreate, Generator } from '../../generators/Generator'
 import { Params } from '../../components/Params'
 
@@ -32,8 +33,7 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 it('updateParamLocation returns correct value', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     editor: {
       edits: [
         {
@@ -66,8 +66,7 @@ it('updateParamLocation returns correct value', () => {
 
 it('updateParamOffset returns correct value', () => {
   const p: IPosition = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     editor: {
       edits: [
         {
@@ -100,8 +99,7 @@ it('updateParamOffset returns correct value', () => {
 
 it('updateParamWidth returns correct value', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     editor: {
       edits: [
         {
@@ -131,8 +129,7 @@ it('updateParamWidth returns correct value', () => {
 
 it('updateParamHeight returns correct value', () => {
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     editor: {
       edits: [
         {

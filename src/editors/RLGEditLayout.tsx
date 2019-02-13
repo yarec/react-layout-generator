@@ -74,7 +74,7 @@ export class RLGEditLayout
 
     this._handle = { x: 0, y: 0, width: 0, height: 0 }
     if (this.props.edit.updateHandle) {
-      const r = props.block.rect()
+      const r = props.block.rect
       this._handle = this.props.edit.updateHandle(r)
     }
 
@@ -106,7 +106,7 @@ export class RLGEditLayout
 
   public initUpdate(x: number, y: number) {
     this._startOrigin = { x, y }
-    const r = this.props.block.rect()
+    const r = this.props.block.rect
     this._handle = this.props.edit.updateHandle!(r)
     this._startRect = clone(this.props.handle)
     console.log(`initUpdate ${r.y + r.height} ${this._handle.y}`)
@@ -166,8 +166,7 @@ export class RLGEditLayout
       }
 
       this.props.block.update(
-        { x: ur.x, y: ur.y },
-        { width: ur.width, height: ur.height }
+        { x: ur.x, y: ur.y, width: ur.width, height: ur.height }
       )
 
       // update params if needed
@@ -275,8 +274,8 @@ export class RLGEditLayout
         event.stopPropagation()
         if (this.props.select) {
           let select: boolean | undefined = true
-          if (this.props.block.position.editor) {
-            const editor = this.props.block.position.editor
+          if (this.props.block.editor) {
+            const editor = this.props.block.editor
             select = editor.selectable
             if (select === undefined) {
               select = true
@@ -363,8 +362,8 @@ export class RLGEditLayout
         this.setState({ contextMenu: false })
       } else {
         const block = this.props.block
-        const r = block.rect()
-        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height })
+        const r = block.rect
+        block.update({ x: r.x, y: r.y, width: r.width, height: r.height })
       }
       this.props.onUpdate(true)
     }

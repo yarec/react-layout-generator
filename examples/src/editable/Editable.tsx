@@ -18,8 +18,7 @@ import {
   RLGPanel,
   saveToLocalStorage,
   ServiceOptions,
-  Status,
-  Unit
+  Status
 } from '../importRLG'
 
 import EditableText from '../components/EditableText';
@@ -160,8 +159,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            location: { x: 70, y: 50, unit: Unit.percent },
-            size: { width: 250, height: 300, unit: Unit.unmanagedHeight },
+            location: { left: 70, top: 50, width: 250, height: '300u' },
             editor: {
               selectable: true
             }

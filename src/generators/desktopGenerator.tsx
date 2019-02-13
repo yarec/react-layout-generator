@@ -1,8 +1,9 @@
-import { Block, IPosition } from '../components/Block';
+import { Block } from '../components/Block';
+import { IPosition, IInputRect } from '../components/blockTypes'
 import { Params, ParamValue } from '../components/Params';
 import { updateParamHeight, updateParamWidth } from '../editors/update';
 import { Generator, ICreate, IGenerator } from '../generators/Generator';
-import { IPoint, ISize, PositionRef } from '../types';
+import { ISize, PositionRef } from '../types';
 
 export function desktopGenerator(name: string, exParams?: Params) {
 
@@ -43,8 +44,7 @@ export function desktopGenerator(name: string, exParams?: Params) {
       rightSideWidth = 0;
     }
 
-    let location: IPoint;
-    let size: ISize;
+    let location: IInputRect;
     let p: IPosition;
 
     // Define parts
@@ -60,20 +60,16 @@ export function desktopGenerator(name: string, exParams?: Params) {
     function footer() {
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: containersize.height - footerHeight
-        };
-        size = {
+          left: 0,
+          top: containersize.height - footerHeight,
           width: containersize.width,
           height: footerHeight
         };
       }
       else {
         location = {
-          x: leftSideWidth,
-          y: containersize.height - footerHeight
-        };
-        size = {
+          left: leftSideWidth,
+          top: containersize.height - footerHeight,
           width: containersize.width - leftSideWidth - rightSideWidth,
           height: footerHeight
         };
@@ -84,25 +80,21 @@ export function desktopGenerator(name: string, exParams?: Params) {
             { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
           ]
         },
-        location,
-        size
+        location: location
       };
       blocks.set('footer', p, g);
     }
 
     function content() {
       location = {
-        x: leftSideWidth,
-        y: titleHeight + headerHeight
-      };
-      size = {
+        left: leftSideWidth,
+        top: titleHeight + headerHeight,
         width: containersize.width - rightSideWidth - leftSideWidth,
         height: containersize.height - titleHeight - headerHeight  - footerHeight
       };
 
       p = {
-        location,
-        size
+        location
       };
       blocks.set('content', p, g);
     }
@@ -110,20 +102,16 @@ export function desktopGenerator(name: string, exParams?: Params) {
     function header() {
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: titleHeight
-        };
-        size = {
+          left: 0,
+          top: titleHeight,
           width: containersize.width,
           height: headerHeight
         };
       }
       else {
         location = {
-          x: leftSideWidth,
-          y: titleHeight
-        };
-        size = {
+          left: leftSideWidth,
+          top: titleHeight,
           width: containersize.width - leftSideWidth - rightSideWidth,
           height: headerHeight
         };
@@ -134,16 +122,15 @@ export function desktopGenerator(name: string, exParams?: Params) {
             { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
           ]
         },
-        location,
-        size
+        location
       };
       blocks.set('header', p, g);
     }
 
     // function contentHeader() {
     //   location = {
-    //     x: leftSideWidth,
-    //     y: titleHeight + headerHeight
+    //     left: leftSideWidth,
+    //     top: titleHeight + headerHeight
     //   };
     //   size = {
     //     width: containersize.width - leftSideWidth - rightSideWidth,
@@ -169,20 +156,16 @@ export function desktopGenerator(name: string, exParams?: Params) {
     function rightSde() {
       if (fullWidthHeaders) {
         location = {
-          x: containersize.width - rightSideWidth,
-          y: titleHeight + headerHeight
-        };
-        size = {
+          left: containersize.width - rightSideWidth,
+          top: titleHeight + headerHeight,
           width: rightSideWidth,
           height: containersize.height - titleHeight - footerHeight - headerHeight
         };
       }
       else {
         location = {
-          x: containersize.width - rightSideWidth,
-          y: 0
-        };
-        size = {
+          left: containersize.width - rightSideWidth,
+          top: 0,
           width: rightSideWidth,
           height: containersize.height - titleHeight
         };
@@ -193,8 +176,7 @@ export function desktopGenerator(name: string, exParams?: Params) {
             { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
           ]
         },
-        location,
-        size
+        location
       };
       blocks.set('rightSide', p, g);
     }
@@ -202,20 +184,16 @@ export function desktopGenerator(name: string, exParams?: Params) {
     function leftSide() {
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: titleHeight + headerHeight
-        };
-        size = {
+          left: 0,
+          top: titleHeight + headerHeight,
           width: leftSideWidth,
           height: containersize.height - titleHeight - footerHeight - headerHeight
         };
       }
       else {
         location = {
-          x: 0,
-          y: 0
-        };
-        size = {
+          left: 0,
+          top: 0,
           width: leftSideWidth,
           height: containersize.height - titleHeight
         };
@@ -230,18 +208,15 @@ export function desktopGenerator(name: string, exParams?: Params) {
             }
           ]
         },
-        location,
-        size
+        location
       };
       blocks.set('leftSide', p, g);
     }
 
     function title() {
       location = {
-        x: 0,
-        y: 0
-      };
-      size = {
+        left: 0,
+        top: 0,
         width: containersize.width,
         height: titleHeight
       };
@@ -253,8 +228,7 @@ export function desktopGenerator(name: string, exParams?: Params) {
             }
           ]
         },
-        location,
-        size
+        location
       };
       blocks.set('title', p, g);
     }

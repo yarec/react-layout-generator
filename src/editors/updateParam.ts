@@ -1,4 +1,5 @@
-import { Block, IEdit } from '../components/Block'
+import { Block } from '../components/Block'
+import { IEdit } from '../components/blockTypes'
 import { ParamValue } from '../components/Params'
 import { IRect } from '../types'
 

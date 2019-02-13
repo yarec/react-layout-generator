@@ -6,22 +6,21 @@ export { RLGLayout, IRLGLayoutProps } from './RLGLayout'
 export { RLGPanel, IRLGMetaDataArgs } from './RLGPanel'
 export { Draggable, IDraggableProps } from './Draggable'
 export { DragDrop, IDragDropProps } from './DragDrop'
-
+export { Block } from './components/Block'
 export {
-  Block,
   IAlign,
   IEdit,
   IEditor,
+  IInputRect,
   IMenuItem,
   IPosition,
   IBlockRect as IPositionLocation,
-  IPositionSize,
   IRotate,
   IScale,
   ISkew,
   PositionChildrenFn as PositionChildren,
   Transform
-} from './components/Block'
+} from './components/blockTypes'
 
 export {
   Unit,
@@ -38,7 +37,8 @@ export {
   rectPoint,
   rectSize
 } from './types'
-export { toPixel, toPercent } from './utils'
+
+export { toPixel } from './components/blockUtils'
 
 export {
   EditHelper,

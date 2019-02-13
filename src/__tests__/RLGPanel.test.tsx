@@ -38,6 +38,7 @@ describe('RLGLayout', () => {
   });
 
   test('RLGPanel test #1', () => {
+    g.reset()
     const wrapper = mount(
       <RLGLayout
         name='panelTest#2'
@@ -49,6 +50,9 @@ describe('RLGLayout', () => {
           key={'a'}
           data-layout={{
             name: 'a',
+            position: {
+              location: {left: 10, top: 10, width: 100, height: 100}
+            }
           }}
         >
           {(args: IRLGMetaDataArgs) => (

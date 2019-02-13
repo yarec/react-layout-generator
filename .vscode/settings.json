@@ -17,6 +17,8 @@
     "rbush",
     "rlg",
     "style",
-    "types"
+    "types",
+    "unmanaged",
+    "vmin"
   ],
 }

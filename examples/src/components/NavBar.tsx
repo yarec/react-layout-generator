@@ -8,8 +8,7 @@ import cssColor from '../assets/colors';
 import {
   columnsGenerator,
   DebugOptions,
-  RLGLayout,
-  Unit
+  RLGLayout
 } from '../importRLG'
 
 // tslint:disable-next-line:variable-name
@@ -112,8 +111,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                location: { x: 0, y: 0, unit: Unit.percent },
-                size: { width: width ? width : 100, height: 20 }
+                location: { left: 0, top: 0, width: width ? width : 100, height: 20 }
               }
             }}>
             <SelectedButton
@@ -133,8 +131,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             data-layout={{
               name: e.name,
               position: {
-                location: { x: 0, y: 0, unit: Unit.percent },
-                size: { width: width ? width : 100, height: 20 }
+                location: { left: 0, top: 0, width: width ? width : 100, height: 20 }
               }
             }}>
             <Button

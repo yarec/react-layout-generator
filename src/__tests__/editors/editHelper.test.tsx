@@ -4,7 +4,7 @@ import { EditHelper, IEditHelperProps, Status } from '../../editors/EditHelper'
 import * as Enzyme from 'enzyme';
 import { Params } from '../../components/Params';
 import { IGenerator, ICreate, Generator } from '../../generators/Generator';
-import { dynamicGenerator, ServiceOptions, RLGLayout, Unit } from '../../react-layout-generator';
+import { dynamicGenerator, ServiceOptions, RLGLayout } from '../../react-layout-generator';
 // import { RLGSelect } from '../editors/RLGSelect';
 
 const { mount } = Enzyme
@@ -101,8 +101,7 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
         <div data-layout={{
           name: 'hello',
           position: {
-            location: { x: 10, y: 10, unit: Unit.percent },
-            size: { width: 150, height: 250, unit: Unit.unmanagedHeight }
+            location: { left: '10%', y: '10%', width: 150, height: '250u' }
           }
         }}
         >

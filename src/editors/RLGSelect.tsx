@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { Block, IMenuItem } from '../components/Block';
+import { Block } from '../components/Block';
+import { IMenuItem } from '../components/blockTypes';
 import { IGenerator } from '../generators/Generator';
 import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
@@ -236,10 +237,10 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     data.forEach((saved: ISavedPosition) => {
       const block = blocks.get(saved.name);
       if (block) {
-        oldData.push({name: saved.name, value: clone(block.rect())});
+        oldData.push({name: saved.name, value: clone(block.rect)});
         const r = saved.value;
         console.log(`Select restore ${saved.name} ${saved.value.x} ${saved.value.y}`);
-        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });
+        block.update({ x: r.x, y: r.y, width: r.width, height: r.height });
         this._selected.set(block.name, block);
       }
     });
@@ -267,7 +268,7 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     const data: IUndoRedo = []
     this._selected.forEach((block: Block) => {
       // save a clone of block.rect
-      data.push({ name: block.name, value: clone(block.rect()) });
+      data.push({ name: block.name, value: clone(block.rect) });
     })
     this._undo.push(data);
   }
@@ -278,11 +279,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (center === undefined) {
         center = r.x + .5 * r.width;
       } else {
-        block.update({ x: center - r.width / 2, y: r.y }, { width: r.width, height: r.height })
+        block.update({ x: center - r.width / 2, y: r.y, width: r.width, height: r.height })
       }
     });
     if (this._selected.size) {
@@ -296,11 +297,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (middle === undefined) {
         middle = r.y + .5 * r.height;
       } else {
-        block.update({ x: r.x, y: middle - r.height / 2 }, { width: r.width, height: r.height })
+        block.update({ x: r.x, y: middle - r.height / 2, width: r.width, height: r.height })
       }
     });
     if (this._selected.size) {
@@ -314,11 +315,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (top === undefined) {
         top = r.y;
       }
-      block.update({ x: r.x, y: top }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: top, width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -331,11 +332,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (left === undefined) {
         left = r.x;
       }
-      block.update({ x: left, y: r.y }, { width: r.width, height: r.height })
+      block.update({ x: left, y: r.y, width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -348,11 +349,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (bottom === undefined) {
         bottom = r.y + r.height;
       }
-      block.update({ x: r.x, y: bottom - r.height }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: bottom - r.height, width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();
@@ -365,11 +366,11 @@ export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState>
     this.pushRectState();
 
     this._selected.forEach((block: Block) => {
-      const r = block.rect();
+      const r = block.rect;
       if (right === undefined) {
         right = r.x + r.width;
       }
-      block.update({ x: right - r.width, y: r.y }, { width: r.width, height: r.height })
+      block.update({ x: right - r.width, y: r.y, width: r.width, height: r.height })
     });
     if (this._selected.size) {
       this.props.onUpdate();

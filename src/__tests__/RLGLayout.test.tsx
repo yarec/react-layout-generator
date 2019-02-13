@@ -43,8 +43,7 @@ describe('RLGLayout', () => {
       >
         <div data-layout={{
           name: 'a', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanaged }
+            location: { left: 0, top: 0, width: 100, height: 100, unit: Unit.unmanaged }
           }
         }}>
           <span>A test</span>
@@ -52,8 +51,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'b', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+            location: { left: 0, top: 0, width: 100, height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -61,8 +59,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'c', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+            location: { left: 0, top: 0, width: '100u', height: 100 }
           }
         }}>
           <span>A test</span>
@@ -83,8 +80,7 @@ describe('RLGLayout', () => {
       >
         <div data-layout={{
           name: 'a', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanaged }
+            location: { left: 0, top: 0, width: '100u', height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -92,8 +88,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'b', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+            location: { left: 0, top: 0, width: 100, height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -101,8 +96,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'c', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+            location: { left: 0, top: 0, width: '100u', height: 100 }
           }
         }}>
           <span>A test</span>
@@ -123,8 +117,7 @@ describe('RLGLayout', () => {
       >
         <div data-layout={{
           name: 'a', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanaged }
+            location: { left: 0, top: 0,  width: '100u', height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -132,8 +125,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'b', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+            location: { left: 0, top: 0, width: 100, height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -141,8 +133,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'c', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+            location: { left: 0, top: 0, width: '100u', height: 100 }
           }
         }}>
           <>
@@ -166,8 +157,7 @@ describe('RLGLayout', () => {
       >
         <div data-layout={{
           name: 'a', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanaged }
+            location: { left: 0, top: 0, width: '100u', height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -175,8 +165,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'b', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedHeight }
+            location: { left: 0, top: 0, width: 100, height: '100u' }
           }
         }}>
           <span>A test</span>
@@ -184,8 +173,7 @@ describe('RLGLayout', () => {
 
         <div data-layout={{
           name: 'c', position: {
-            location: { x: 0, y: 0 },
-            size: { width: 100, height: 100, unit: Unit.unmanagedWidth }
+            location: { left: 0, top: 0, width: '100u', height: 100 }
           }
         }}>
           <>
@@ -226,8 +214,7 @@ describe('RLGLayout', () => {
       <div data-layout={{
         name: 'shuffle',
         position: {
-          location: { x: 80, y: 80, unit: Unit.percent },
-          size: { width: 100, height: 24 }
+          location: { left: '80%', top: '80%', width: 100, height: 24 }
         }
       }}>
         <span>Hello</span>
@@ -255,8 +242,7 @@ describe('RLGLayout', () => {
       <div data-layout={{
         name: 'shuffle',
         position: {
-          location: { x: 80, y: 80, unit: Unit.percent },
-          size: { width: 100, height: 24 }
+          location: { left: '80%', top: '80%', width: 100, height: 24 }
         }
       }}>
         <span>Hello</span>

@@ -3,7 +3,7 @@ import {
   Blocks,
   Generator,
   IGenerator,
-  IPoint,
+  IInputRect,
   IPosition,
   ISize,
   Params,
@@ -48,13 +48,10 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     }
 
     const title = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect;
       location = {
-        x: 0,
-        y: 0
-      }
-      size = {
+        left: 0,
+        top: 0,
         width: viewport.width,
         height: titleHeight
       }
@@ -65,31 +62,25 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
             { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
           ]
         },
-        location,
-        size
+        location
       }
 
       return new Block('title', p, g);
     };
 
     const leftSide = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect;
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: titleHeight + headerHeight
-        }
-        size = {
+          left: 0,
+          top: titleHeight + headerHeight,
           width: leftSideWidth,
           height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       } else {
         location = {
-          x: 0,
-          y: 0
-        }
-        size = {
+          left: 0,
+          top: 0, 
           width: leftSideWidth,
           height: viewport.height - titleHeight
         }
@@ -102,32 +93,26 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
           ]
         }
         ,
-        location,
-        size
+        location
       }
 
       return new Block('leftSide', p, g);
     };
 
     const rightSide = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect;
 
       if (fullWidthHeaders) {
         location = {
-          x: viewport.width - rightSideWidth,
-          y: titleHeight + headerHeight
-        }
-        size = {
+          left: viewport.width - rightSideWidth,
+          top: titleHeight + headerHeight,
           width: rightSideWidth,
           height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       } else {
         location = {
-          x: viewport.width - rightSideWidth,
-          y: 0
-        }
-        size = {
+          left: viewport.width - rightSideWidth,
+          top: 0,
           width: rightSideWidth,
           height: viewport.height - titleHeight
         }
@@ -137,32 +122,26 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         edit: [
           { ref: PositionRef.left, variable: 'rightSideWidth', updateParam: updateParamWidth }
         ],
-        location,
-        size
+        location
       }
 
       return new Block('rightSide', p, g);
     };
 
     const header = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect
 
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: titleHeight
-        }
-        size = {
+          left: 0,
+          top: titleHeight,
           width: viewport.width,
           height: headerHeight
         }
       } else {
         location = {
-          x: leftSideWidth,
-          y: titleHeight
-        }
-        size = {
+          left: leftSideWidth,
+          top: titleHeight,
           width: viewport.width - leftSideWidth - rightSideWidth,
           height: headerHeight
         }
@@ -172,61 +151,49 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         edit: [
           { ref: PositionRef.bottom, variable: 'headerHeight', updateParam: updateParamHeight }
         ],
-        location,
-        size
+        location
       }
 
       return new Block('header', p, g);
     };
 
     const content = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect;
       if (fullWidthHeaders) {
         location = {
-          x: leftSideWidth,
-          y: titleHeight + headerHeight
-        }
-        size = {
+          left: leftSideWidth,
+          top: titleHeight + headerHeight,
           width: viewport.width - rightSideWidth - leftSideWidth,
           height: viewport.height - titleHeight - headerHeight - footerHeight
         }
       } else {
         location = {
-          x: leftSideWidth,
-          y: headerHeight
-        }
-        size = {
+          left: leftSideWidth,
+          top: headerHeight,
           width: viewport.width - rightSideWidth - leftSideWidth,
           height: viewport.height - titleHeight - footerHeight - headerHeight
         }
       }
       const p = {
-        location,
-        size
+        location
       }
 
       return new Block('content', p, g);
     };
 
     const footer = (): Block => {
-      let location: IPoint;
-      let size: ISize;
+      let location: IInputRect
       if (fullWidthHeaders) {
         location = {
-          x: 0,
-          y: viewport.height - footerHeight
-        }
-        size = {
+          left: 0,
+          top: viewport.height - footerHeight,
           width: viewport.width,
           height: footerHeight
         }
       } else {
         location = {
-          x: leftSideWidth,
-          y: viewport.height - footerHeight
-        }
-        size = {
+          left: leftSideWidth,
+          top: viewport.height - footerHeight,
           width: viewport.width - leftSideWidth - rightSideWidth,
           height: footerHeight
         }
@@ -236,8 +203,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         edit: [
           { ref: PositionRef.top, variable: 'footerHeight', updateParam: updateParamHeight }
         ],
-        location,
-        size
+        location
       }
 
       return new Block('footer', p, g);

@@ -1,5 +1,6 @@
 import { IGenerator } from '../generators/Generator'
-import { Block, IPosition } from './Block'
+import { Block } from './Block'
+import { IPosition } from '../components/blockTypes'
 
 /**
  * Blocks managed the Block collection.

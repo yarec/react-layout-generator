@@ -6,7 +6,6 @@ import {
   DebugOptions,
   dynamicGenerator,
   IEditHelperProps,
-  IPoint,
   IRLGMetaDataArgs,
   ISize,
   rectSize,
@@ -71,10 +70,10 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     this.setState({ update: this.state.update + 1 })
   }
 
-  public setPreserve = (event: React.MouseEvent<HTMLButtonElement>) => {
-    this.grid(Unit.preserve)
+  public setvmin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    this.grid(Unit.vmin)
     this._g.clear();
-    this._gridUnit = Unit.preserve;
+    this._gridUnit = Unit.vmin;
     this.setState({ update: this.state.update + 1 })
   }
 
@@ -113,8 +112,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'grid',
             position: {
-              location: { x: 0, y: 0, unit: Unit.percent },
-              size: { width: 100, height: 100, unit: Unit.percent }
+              location: { left: 0, top: 0, width: '100%', height: '100%' }
             }
           }}
           style={{ overflow: 'hidden' }}
@@ -133,8 +131,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square (pixel, pixel)',
             position: {
-              location: { x: 200, y: 50 },
-              size: { width: 200, height: 200 }
+              location: { left: 200, top: 50, width: 200, height: 200 }
             }
           }}
           style={{ backgroundColor: 'tan' }}
@@ -156,10 +153,9 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
         <RLGPanel
           data-layout={{
-            name: 'square(percent, preserve)',
+            name: 'square(percent, vmin)',
             position: {
-              location: { x: 30, y: 20, unit: Unit.percent },
-              size: { width: 30, height: 30, unit: Unit.preserve }
+              location: { left: '30%', top: '20%', width: 30, height: 30, unit: Unit.vmin }
             }
           }}
 
@@ -167,7 +163,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         >
           {(args: IRLGMetaDataArgs) => (
             <>
-            <span>Square (percent, preserve) </span> <br/><br/><br/>
+            <span>Square (percent, vmin) </span> <br/><br/><br/>
             <span>Use Alt-click to change grids when editing</span>
             </>
           )}
@@ -175,17 +171,16 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
         <RLGPanel
           data-layout={{
-            name: 'square(preserve, preserve)',
+            name: 'square(vmin, vmin)',
             position: {
-              location: { x: 60, y: 60, unit: Unit.preserve },
-              size: { width: 20, height: 20, unit: Unit.preserve  }
+              location: { left: '60vmin', top: '60min', width: 20, height: 20, unit: Unit.vmin  }
             }
           }}
 
           style={{ backgroundColor: 'lime' }}
         >
           {(args: IRLGMetaDataArgs) => (
-            <span>Square (preserve, preserve) </span>
+            <span>Square (vmin, vmin) </span>
           )}
 
         </RLGPanel>
@@ -194,8 +189,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(percent, percent)',
             position: {
-              location: { x: 50, y: 50, unit: Unit.percent  },
-              size: { width: 20, height: 20, unit: Unit.percent }
+              location: { left: '50%', top: '50%', width: '20%', height: '20%' }
             }
           }}
 
@@ -214,8 +208,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'callout',
             position: {
-              location: { x: 40, y: 40, unit: Unit.percent },
-              size: { width: 100, height: 80, unit: Unit.unmanagedHeight },
+              location: { left: '40%', top: '40%', width: 100, height: '80u' },
               align: {
                 key: 'square(percent, percent)',
                 offset: { x: 20, y: 10 },
@@ -246,8 +239,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         data-layout={{
           name: 'Legend',
           position: {
-            location: { x: 5, y: 20, unit: Unit.preserve },
-            size: { width: 100, height: 80, unit: Unit.unmanaged},
+            location: { left: '5vmin', top: '20vmin',width: 100, height: 80, unit: Unit.unmanaged},
           }
         }}
       >
@@ -278,8 +270,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Pixel',
             position: {
-              location: { x: 5, y: 5, unit: Unit.preserve },
-              size: { width: 90, height: 24 }
+              location: { left: '5vmin', top: '5vmin', width: 90, height: 24 }
             }
           }}
           style={this._gridUnit === Unit.pixel ? selectedStyle : style}
@@ -291,25 +282,23 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Percent',
             position: {
-              location: { x: 5, y: 10, unit: Unit.preserve },
-              size: { width: 90, height: 24 }
+              location: { left: '5%', top: '10%', width: 90, height: 24 }
             }
           }}
           style={this._gridUnit === Unit.percent ? selectedStyle : style}
           onClick={this.setPercent}
         />
         <Button
-          name={'Preserve'}
-          key={'Preserve'}
+          name={'vmin'}
+          key={'vmin'}
           data-layout={{
-            name: 'Preserve',
+            name: 'vmin',
             position: {
-              location: { x: 5, y: 15, unit: Unit.preserve },
-              size: { width: 90, height: 24 }
+              location: { left: '5vim', top: '15vmin', width: 90, height: 24 }
             }
           }}
-          style={this._gridUnit === Unit.preserve ? selectedStyle : style}
-          onClick={this.setPreserve}
+          style={this._gridUnit === Unit.vmin ? selectedStyle : style}
+          onClick={this.setvmin}
         />
       </>
     )
@@ -335,6 +324,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
   protected grid = (unit: Unit) => {
     const containersize = this._g.params().get('containersize') as ISize;
+    const viewport = this._g.params().get('viewport') as ISize;
+
 
     const w = Math.round(containersize.width);
     const h = Math.round(containersize.height);
@@ -353,53 +344,41 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         switch (unit) {
           case Unit.pixel: {
             this._units = '10px'
-            unitStep = toPixel(
-              {
-                unit: Unit.pixel,
-                value: { x: 10, y: 10 }
-              },
-              { width: w, height: h }) as IPoint;
+            unitStep = toPixel({ x: 10, y: 10 },
+                {local: containersize, viewport})
             break;
           }
           case Unit.percent: {
             this._units = '1%'
             unitStep = toPixel(
-              {
-                unit: Unit.percent,
-                value: { x: 1, y: 1 }
-              },
-              { width: w, height: h }) as IPoint;
+              { x: 1, y: 1 },
+              {local: containersize, viewport})
             break;
           }
 
-          case Unit.preserve: {
+          case Unit.vmin: {
             this._units = '1%'
             unitStep = toPixel(
-              {
-                unit: Unit.preserve,
-                value: { x: 1, y: 1 }
-              },
-              { width: w, height: h }) as IPoint;
+              { x: 1, y: 1 },
+              {local: containersize, viewport})
             break;
           }
-          case Unit.preserveHeight: {
+          case Unit.vmax: {
             this._units = '1%'
             unitStep = toPixel(
-              {
-                unit: Unit.preserveHeight,
-                value: { x: 1, y: 1 }
-              },
-              { width: w, height: h }) as IPoint;
+              { x: 1, y: 1 }, {local: containersize, viewport})
             break;
           }
-          case Unit.preserveWidth: {
+          case Unit.vh: {
             this._units = '1%'
             unitStep = toPixel(
-              {
-                unit: Unit.preserveWidth,
-                value: { x: 1, y: 1 }
-              },
-              { width: w, height: h }) as IPoint;
+              { x: 1, y: 1 }, {local: containersize, viewport})
+            break;
+          }
+          case Unit.vw: {
+            this._units = '1%'
+            unitStep = toPixel(
+              { x: 1, y: 1 }, {local: containersize, viewport})
             break;
           }
         }

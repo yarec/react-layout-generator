@@ -17,8 +17,7 @@ it('Stacking #1', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     zIndex: 10
   }
 
@@ -36,8 +35,7 @@ it('Stacking #2', () => {
   const stacking = g.stacking()
 
   const pb = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     zIndex: 5
   }
 
@@ -45,8 +43,7 @@ it('Stacking #2', () => {
   blocks.set('b', pb, g)
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, top: 10, width: 100, height: 10 },
     zIndex: 5
   }
 
@@ -64,8 +61,7 @@ it('Stacking #3', () => {
   const blocks = g.blocks()
 
   const pa = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
   blocks.set('a', pa, g)
@@ -73,8 +69,7 @@ it('Stacking #3', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
 
@@ -92,15 +87,13 @@ it('Stacking #4', () => {
   const blocks = g.blocks()
 
   const pa = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 5
   }
   blocks.set('b', pb, g)
@@ -108,8 +101,7 @@ it('Stacking #4', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 7
   }
 
@@ -127,15 +119,13 @@ it('Stacking #5', () => {
   const blocks = g.blocks()
 
   const pa = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 5
   }
   blocks.set('b', pb, g)
@@ -143,8 +133,7 @@ it('Stacking #5', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 7
   }
 
@@ -162,15 +151,13 @@ it('Stacking #6', () => {
   const blocks = g.blocks()
 
   const pa = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 5
   }
   blocks.set('b', pb, g)
@@ -178,8 +165,7 @@ it('Stacking #6', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 7
   }
 
@@ -198,15 +184,13 @@ it('Stacking #7', () => {
   const blocks = g.blocks()
 
   const pa = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 10
   }
   blocks.set('a', pa, g)
 
   const pb = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 5
   }
   blocks.set('b', pb, g)
@@ -214,8 +198,7 @@ it('Stacking #7', () => {
   const stacking = g.stacking()
 
   const p = {
-    location: { x: 0, y: 10 },
-    size: { width: 100, height: 10 },
+    location: { left: 0, y: 10, width: 100, height: 10 },
     zIndex: 7
   }
 

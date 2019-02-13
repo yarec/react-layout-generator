@@ -103,8 +103,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
           name: 'shuffle',
           position: {
             origin: {x: 100, y: 0},
-            location: { x: 90, y: 80, unit: Unit.percent },
-            size: { width: 100, height: 24 }
+            location: { left: 90, top: 80, unit: Unit.percent, width: 100, height: 24 }
           }
         }}
           onClick={this.shuffle}
@@ -115,8 +114,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
           name: 'instructions',
           position: {
             origin: {x: 100, y: 0},
-            location: { x: 90, y: 10, unit: Unit.percent },
-            size: { width: 200, height: 350, unit: Unit.unmanagedHeight }
+            location: { left: '90%', top: '10%', width: 200, height: '350u' }
           }
         }}
         >
@@ -151,11 +149,10 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         data-layout={{
           name: card,
           position: {
-            location: { x: 5, y: 5, unit: Unit.percent },
+            location: { left: '5%', top: '5%', width: 120, height: 156 },
             editor: {
               edits: [{ ref: PositionRef.position }]
-            },
-            size: { width: 120, height: 156 }
+            }
           }
         }} >
         <img width={120} height={156} src={e} />

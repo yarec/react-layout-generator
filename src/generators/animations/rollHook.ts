@@ -1,7 +1,7 @@
 import { Block } from '../../components/Block'
 // import { Params, ParamValue } from '../../components/Params'
 import { IGenerator } from '../Generator'
-import { IPoint, ISize } from '../../types'
+import { IPoint, ISize, IRect } from '../../types'
 import { fnHook } from '../../components/Hooks'
 import { ParamValue } from '../../components/Params'
 
@@ -63,7 +63,7 @@ export function rollHook(
       let maxX = Number.MIN_SAFE_INTEGER
       let maxY = Number.MIN_SAFE_INTEGER
       layer0.forEach((block: Block) => {
-        const rect = block.rect()
+        const rect = block.rect
         if (rect.x < minX) {
           minX = rect.x
         }
@@ -85,10 +85,12 @@ export function rollHook(
 
       if (animate) {
         layer0.forEach((block: Block) => {
-          const rect = block.rect()
-          let location = {
+          const rect = block.rect
+          let location: IRect = {
             x: rect.x - velocity.x * deltaTime,
-            y: rect.y - velocity.y * deltaTime
+            y: rect.y - velocity.y * deltaTime,
+            width: rect.width,
+            height: rect.height
           }
 
           // Wrap as needed
@@ -111,7 +113,7 @@ export function rollHook(
             }
           }
 
-          block.update(location, { width: rect.width, height: rect.height })
+          block.update(location)
         })
       }
     }

@@ -4,12 +4,12 @@ import ReactResizeDetector from 'react-resize-detector'
 const prefix = require('react-prefixer')
 const now = require('performance-now')
 
+import { Block } from './components/Block'
 import {
-  Block,
   IMenuItem,
   IPosition,
-  PositionChildrenFn
-} from './components/Block'
+  PositionChildrenFn 
+} from './components/blockTypes'
 import { ParamValue } from './components/Params'
 import { RLGContextMenu } from './editors/RLGContextMenu'
 import { RLGEditLayout } from './editors/RLGEditLayout'
@@ -32,6 +32,7 @@ import {
   ILayerOptions
 } from './types'
 import { DragDropService } from './services/DragDropService'
+import { isUnmanaged } from './components/blockUtils';
 
 const raf = require('raf')
 
@@ -71,35 +72,27 @@ function blockStyle(
   y: number,
   width: number,
   height: number,
-  unit: Unit | undefined,
+  widthUnmanaged: boolean,
+  heightUnmanaged: boolean,
   selected: boolean,
   zIndex: number,
   transform: string,
   transformOrigin: string
 ): React.CSSProperties {
   // For unmanaged elements
-  let size: any = {
-    height: `${height}px`,
-    width: `${width}px`
-  }
-  if (unit) {
-    switch (unit) {
-      case Unit.unmanaged: {
-        size = {}
-        break
-      }
-      case Unit.unmanagedHeight: {
-        size = {
-          width: `${width}px`
-        }
-        break
-      }
-      case Unit.unmanagedWidth: {
-        size = {
-          height: `${height}px`
-        }
-        break
-      }
+  let size = {}
+  if (!widthUnmanaged && !heightUnmanaged) {
+    size = {
+      height: `${height}px`,
+      width: `${width}px`
+    }
+  } else if (widthUnmanaged) {
+    size = {
+      height: `${height}px`
+    }
+  } else if (heightUnmanaged) {
+    size = {
+      width: `${width}px`
     }
   }
 
@@ -615,7 +608,7 @@ export class RLGLayout extends React.Component<
             if (blocks) {
               blocks.map.forEach(block => {
                 block.touch()
-                block.rect()
+                block.rect
               })
             }
           }
@@ -698,7 +691,7 @@ export class RLGLayout extends React.Component<
       if (blocks) {
         blocks.map.forEach(block => {
           block.touch()
-          block.rect()
+          block.rect
         })
       }
     }
@@ -723,7 +716,7 @@ export class RLGLayout extends React.Component<
         })
         console.log('blocks (computed position rects)')
         blocks.map.forEach((value, key) => {
-          const r = value.rect()
+          const r = value.rect
           console.log(
             `name: ${key} x: ${r.x} y: ${r.y} width: ${r.width} height: ${
               r.height
@@ -790,21 +783,22 @@ export class RLGLayout extends React.Component<
     const b = this._g.lookup(name)
 
     if (b) {
-      const rect = b.rect()
+      const rect = b.rect
 
       // tslint:disable-next-line:no-bitwise
       if (this._debug && this._debug & DebugOptions.trace) {
-        console.log(`updatePositionedElement ${name} position:`, b.position)
+        console.log(`updatePositionedElement ${name} blockRect:`, b.blockRect)
       }
 
-      if ((rect.width && rect.height) || isUnmanaged(b.size.unit)) {
+      if ((rect.width && rect.height) || isUnmanaged(b.blockRect)) {
         const style = blockStyle(
           child.props.style,
           rect.x + (offset ? offset.x : 0),
           rect.y + (offset ? offset.y : 0),
           rect.width,
           rect.height,
-          b.size.unit,
+          b.blockRect.widthUnit === Unit.unmanaged,
+          b.blockRect.heightUnit === Unit.unmanaged,
           this._select ? this._select.selected(name) : false,
           b.zIndex,
           b.reactTransform,
@@ -840,31 +834,29 @@ export class RLGLayout extends React.Component<
 
             constructor(b: Block) {
               this._b = b
-              this._s = rectSize(b.rect())
+              this._s = rectSize(b.rect)
             }
 
             setSize(w: number, h: number) {
               if (w && h) {
                 if (this._s.width !== w || this._s.height != h) {
-                  const sizeUnit = this._b.position.size.unit
-                  const r = this._b.rect()
-                  if (sizeUnit === Unit.unmanaged) {
-                    this._b.updateSize({ width: w, height: h })
-                    this._s.width = w
-                    this._s.height = h
-                  } else if (sizeUnit === Unit.unmanagedWidth) {
-                    this._b.updateSize({ width: w, height: r.height })
-                    this._s.width = w
-                  } else if (sizeUnit === Unit.unmanagedHeight) {
-                    this._b.updateSize({ width: r.width, height: h })
-                    this._s.height = h
+                  this._s.width = w
+                  this._s.height = h
+                  const r = this._b.rect
+                  let ws = r.width
+                  let hs = r.height
+                  if (this._b.blockRect.widthUnit === Unit.unmanaged) {
+                   ws = w 
+                  } else if (this._b.blockRect.heightUnit === Unit.unmanaged) {
+                    hs = h
                   }
+                  this._b.update({x: r.x, y: r.y, width: ws, height: hs})
                 }
               }
             }
 
             selectedStyle() {
-              return blockSelectedStyle(this._b.rect(), this._b.zIndex)
+              return blockSelectedStyle(this._b.rect, this._b.zIndex)
             }
           }
 
@@ -1291,14 +1283,15 @@ export class RLGLayout extends React.Component<
           // const blocks = this._g.blocks();
           // blocks.set(nestedLayout.name, nestedLayout.position, nestedLayout.generator);
 
-          const nestedRect = nestedLayout.rect()
+          const nestedRect = nestedLayout.rect
           const nestedStyle = blockStyle(
             nestedChild.props.style,
             nestedRect.x,
             nestedRect.y,
             nestedRect.width,
             nestedRect.height,
-            b.size.unit,
+            b.blockRect.widthUnit === Unit.unmanaged,
+            b.blockRect.heightUnit === Unit.unmanaged,
             this._select ? this._select.selected(name) : false,
             b.zIndex,
             b.reactTransform,
@@ -1393,24 +1386,23 @@ export class RLGLayout extends React.Component<
         b.onClick = fn
       }
       if (b.editor && b.editor.edits) {
-        let allow = true
+        let allowWidth = true
+        let allowHeight = true
         b.editor.edits.forEach((item, i) => {
           // filter unmanaged edits
           if (
-            (b.size.unit === Unit.unmanaged ||
-              b.size.unit === Unit.unmanagedWidth) &&
+            ( b.blockRect.heightUnit === Unit.unmanaged) &&
             (item.ref === PositionRef.bottom || item.ref === PositionRef.top)
           ) {
-            allow = false
+            allowWidth = false
           }
           if (
-            (b.size.unit === Unit.unmanaged ||
-              b.size.unit === Unit.unmanagedHeight) &&
+            (b.blockRect.widthUnit === Unit.unmanaged) &&
             (item.ref === PositionRef.left || item.ref === PositionRef.right)
           ) {
-            allow = false
+            allowHeight = false
           }
-          if (allow) {
+          if (allowWidth || allowHeight) {
             editors.push(
               <RLGEditLayout
                 key={`edit${b.name + i}`}
@@ -1431,8 +1423,7 @@ export class RLGLayout extends React.Component<
             )
           } else {
             console.error(`Cannot edit ${namedPositionRef(item.ref)} for block 
-            ${name} when size is set to 
-            ${namedUnit(b.size.unit)}`)
+            ${name} when width or height is set to Unit.unmanaged`)
           }
         })
       } else {
