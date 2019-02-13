@@ -1,5 +1,5 @@
 import { DebugOptions, IAttrRect, IPoint, IRect, ISize } from '../types'
-import { IInputRect, IPositionSize } from './Block'
+import { IInputRect } from './blockTypes'
 
 const deepEqual = require('deep-equal')
 
@@ -17,7 +17,6 @@ export type ParamValue =
   | IRect
   | IAttrRect
   | IInputRect
-  | IPositionSize
   | IEditableTextData
 
 export type Save = (prefix: string, key: string, value: ParamValue) => void
@@ -136,6 +135,7 @@ export class Params {
   }
 
   public get(key: string, load?: boolean): ParamValue | undefined {
+    console.log('params', key)
     if (load && this._load) {
       const v = this._load(this._name, key)
       if (v) {

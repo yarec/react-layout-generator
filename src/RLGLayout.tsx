@@ -26,9 +26,7 @@ import {
   namedPositionRef,
   PositionRef,
   Unit,
-  namedUnit,
   OverflowOptions,
-  isUnmanaged,
   rectSize,
   IAnimateProps,
   ILayerOptions
@@ -634,6 +632,8 @@ export class RLGLayout extends React.Component<
   }
 
   private onWindowResize = () => {
+    this._g.params().set('viewport', {width: window.innerWidth, height: window.innerHeight})
+
     if (this.state.devicePixelRatio !== window.devicePixelRatio) {
       // tslint:disable-next-line:no-bitwise
       if (this._debug && this._debug & DebugOptions.info) {

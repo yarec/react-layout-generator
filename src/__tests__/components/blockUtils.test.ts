@@ -2,9 +2,9 @@ import {
   convertInputBlockRect,
   layout,
   IRLGBounds
-} from '../../components/layout'
+} from '../../components/blockUtils'
 
-import { IInputRect, IBlockRect } from '../../components/Block'
+import { IInputRect, IBlockRect } from '../../components/blockTypes'
 import { Unit } from '../../types'
 
 it('convertPositionLocation #1', () => {
@@ -69,7 +69,7 @@ it('convertPositionLocation #4', () => {
     top: 0,
     width: 100,
     height: 100,
-    heightUnit: Unit.u
+    heightUnit: Unit.unmanaged
   })
 })
 
@@ -82,11 +82,11 @@ it('convertPositionLocation #5', () => {
   }
   expect(convertInputBlockRect(arg)).toEqual({
     left: 10.5,
-    leftUnit: Unit.u,
+    leftUnit: Unit.unmanaged,
     top: 0,
     width: 100,
     height: 100,
-    heightUnit: Unit.u
+    heightUnit: Unit.unmanaged
   })
 })
 
@@ -257,7 +257,7 @@ it('layout #9', () => {
     top: 0,
     width: 100,
     height: 100,
-    heightUnit: Unit.u
+    heightUnit: Unit.unmanaged
   }
   expect(layout(arg, bounds)).toEqual({
     x: 10,

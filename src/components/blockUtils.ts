@@ -1,4 +1,4 @@
-import { IBlockRect, IInputRect } from './Block'
+import { IBlockRect, IInputRect } from './blockTypes'
 import { ISize, IRect, Unit } from '../types'
 
 /**
@@ -107,7 +107,7 @@ export function toUnit(data: string) {
       break
     }
     case 'u': {
-      return Unit.u
+      return Unit.unmanaged
     }
   }
   return
@@ -144,7 +144,7 @@ export function namedUnit(unit: Unit | undefined) {
       name = '1% viewport height'
       break
     }
-    case Unit.u: {
+    case Unit.unmanaged: {
       name = 'unmanaged'
       break
     }

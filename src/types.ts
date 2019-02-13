@@ -205,7 +205,7 @@ export enum Unit {
   /**
    * Unmanaged sets the Block to fit it's content.
    */
-  u
+  unmanaged
 }
 
 /**
