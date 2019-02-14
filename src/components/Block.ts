@@ -286,7 +286,7 @@ export class Block {
       const containersize = this._g.params().get('containersize') as ISize
       const viewport = this._g.params().get('viewport') as ISize
       let value = layout(this._blockRect, {
-        local: containersize,
+        container: containersize,
         viewport: viewport
       })
 
@@ -296,7 +296,7 @@ export class Block {
         if (ref) {
           let source = toAlign(ref.rect, this._align.source)
 
-          // Translate to self location
+            // Translate to self location
           ;(source.x += this._align.offset.x),
             (source.y += this._align.offset.y)
 
@@ -385,7 +385,7 @@ export class Block {
       const containersize = this._g.params().get('containersize') as ISize
       const viewport = this._g.params().get('viewport') as ISize
       this._blockRect = inverseLayout(_r, this._blockRect, {
-        local: containersize,
+        container: containersize,
         viewport: viewport
       })
     }

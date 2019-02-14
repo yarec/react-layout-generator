@@ -12,7 +12,7 @@ import { Unit } from '../../types'
 // const viewport = { width: 1000, height: 500 }
 
 // const bounds: IRLGBounds ={
-//   local: containersize,
+//   container: containersize,
 //   viewport
 // }
 
@@ -99,9 +99,14 @@ it('convertPositionLocation #5', () => {
   })
 })
 
+it('convertPositionLocation #6', () => {
+  const arg: IInputRect = {}
+  expect(convertInputBlockRect(arg)).toEqual({})
+})
+
 it('layout #1', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -120,7 +125,7 @@ it('layout #1', () => {
 
 it('layout #2', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -140,7 +145,7 @@ it('layout #2', () => {
 
 it('layout #3', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -159,7 +164,7 @@ it('layout #3', () => {
 
 it('layout #4', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -179,7 +184,7 @@ it('layout #4', () => {
 
 it('layout #5', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -199,7 +204,7 @@ it('layout #5', () => {
 
 it('layout #6', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -218,7 +223,7 @@ it('layout #6', () => {
 
 it('layout #7', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -238,7 +243,7 @@ it('layout #7', () => {
 
 it('layout #8', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -255,7 +260,7 @@ it('layout #8', () => {
 
 it('layout #9', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -273,9 +278,174 @@ it('layout #9', () => {
   })
 })
 
+it('layout #10', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    height: 50
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 50
+  })
+})
+
+it('layout #11', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    bottom: 50
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 50
+  })
+})
+
+it('layout #12', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {}
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100
+  })
+})
+
+it('layout #13', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 100
+  })
+})
+
+it('layout #14', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    right: 10
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 0,
+    width: 90,
+    height: 100
+  })
+})
+
+it('layout #15', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    bottom: 10
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 90
+  })
+})
+
+it('layout #15', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    top: 10,
+    bottom: 10
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 10,
+    width: 100,
+    height: 80
+  })
+})
+
+it('layout #16', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    right: 10,
+    bottom: 10,
+    width: 30,
+    height: 20
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 60,
+    y: 70,
+    width: 30,
+    height: 20
+  })
+})
+
+it('layout #17', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    width: 30,
+    height: 20
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 0,
+    width: 30,
+    height: 20
+  })
+})
+
+it('layout #18', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    height: 20
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 20
+  })
+})
+
 it('inverseLayout #1', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -295,7 +465,7 @@ it('inverseLayout #1', () => {
 
 it('inverseLayout #2', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -316,7 +486,7 @@ it('inverseLayout #2', () => {
 
 it('inverseLayout #3', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
   const arg: IBlockRect = {
@@ -336,7 +506,7 @@ it('inverseLayout #3', () => {
 
 it('inverseLayout #4', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -357,7 +527,7 @@ it('inverseLayout #4', () => {
 
 it('inverseLayout #5', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -378,7 +548,7 @@ it('inverseLayout #5', () => {
 
 it('inverseLayout #6', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -398,7 +568,7 @@ it('inverseLayout #6', () => {
 
 it('inverseLayout #7', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -419,7 +589,7 @@ it('inverseLayout #7', () => {
 
 it('inverseLayout #8', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -439,7 +609,7 @@ it('inverseLayout #8', () => {
 
 it('inverseLayout #9', () => {
   const bounds: IRLGBounds = {
-    local: { width: 100, height: 100 },
+    container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
   const arg: IBlockRect = {
@@ -454,6 +624,205 @@ it('inverseLayout #9', () => {
     y: 0,
     width: 100,
     height: 100
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #10', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    height: 50
+  }
+
+  const r = {
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 50
+  }
+
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+
+  const r2 = {
+    x: 12,
+    y: 0,
+    width: 90,
+    height: 50
+  }
+
+  const arg2: IBlockRect = {
+    left: 12,
+    height: 50
+  }
+
+  expect(inverseLayout(r2, arg, bounds)).toEqual(arg2)
+})
+
+it('inverseLayout #11', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    bottom: 50
+  }
+
+  const r = {
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 50
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #12', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {}
+
+  const r = {
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #13', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10
+  }
+
+  const r = {
+    x: 10,
+    y: 0,
+    width: 90,
+    height: 100
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #14', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    right: 10
+  }
+
+  const r = {
+    x: 0,
+    y: 0,
+    width: 90,
+    height: 100
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #15', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    bottom: 10
+  }
+
+  const r = {
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 90
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #15', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    top: 10,
+    bottom: 10
+  }
+
+  const r = {
+    x: 0,
+    y: 10,
+    width: 100,
+    height: 80
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #16', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    right: 10,
+    bottom: 10,
+    width: 30,
+    height: 20
+  }
+  const r = {
+    x: 60,
+    y: 70,
+    width: 30,
+    height: 20
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #17', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    width: 30,
+    height: 20
+  }
+
+  const r = {
+    x: 0,
+    y: 0,
+    width: 30,
+    height: 20
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+})
+
+it('inverseLayout #18', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    height: 20
+  }
+
+  const r = {
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 20
   }
   expect(inverseLayout(r, arg, bounds)).toEqual(arg)
 })

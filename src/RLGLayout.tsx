@@ -379,15 +379,15 @@ export class RLGLayout extends React.Component<
   }
 
   private frameStart = () => {
-    this._startRendering = now()
+    this._startRendering = performance.now()
     return null
   }
 
   private frameEnd = () => {
     // tslint:disable-next-line:no-bitwise
     if (this._debug & DebugOptions.timing) {
-      const difference = now() - this._startRendering
-      console.log(`frameTime: ${difference.toFixed(2)}ms`)
+      const difference = performance.now() - this._startRendering
+      console.log(`frameTime: ${difference.toFixed(4)}ms`)
     }
     return null
   }
@@ -559,6 +559,10 @@ export class RLGLayout extends React.Component<
     }
     this._g = this.props.g
 
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    this._g.params().set('viewport', {width: w, height: h})
+
     if (this.props.params) {
       const params = this._g.params()
       this.props.params.forEach((value: [string, ParamValue]) => {
@@ -577,7 +581,7 @@ export class RLGLayout extends React.Component<
 
   private animationLoop = (time: number) => {
     if (this.props.animate) {
-      const { active, throttleTime } = this.props.animate
+      const { active, throttleTime, logFrameRate } = this.props.animate
       const params = this._g.params()
       if (active) {
         const {} = this.props.animate
@@ -602,7 +606,13 @@ export class RLGLayout extends React.Component<
             params.set('animate', this.props.animate.active ? 1 : 0)
 
             this.setState(this.state)
+
+            if (logFrameRate) {
+              console.log(`animation loop delta ${(time - this._lastAnimationFrame).toFixed(4)}`)
+            }
+            
             this._lastAnimationFrame = time
+            
           } else {
             const blocks = this._g.blocks()
             if (blocks) {
@@ -625,7 +635,9 @@ export class RLGLayout extends React.Component<
   }
 
   private onWindowResize = () => {
-    this._g.params().set('viewport', {width: window.innerWidth, height: window.innerHeight})
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    this._g.params().set('viewport', {width: w, height: h})
 
     if (this.state.devicePixelRatio !== window.devicePixelRatio) {
       // tslint:disable-next-line:no-bitwise
@@ -1381,10 +1393,12 @@ export class RLGLayout extends React.Component<
         const fn = child.props.onMouseDown as (e: React.MouseEvent) => void
         b.onMouseDown = fn
       }
+
       if (child.props.onClick) {
         const fn = child.props.onClick as (e: React.MouseEvent) => void
         b.onClick = fn
       }
+
       if (b.editor && b.editor.edits) {
         let allowWidth = true
         let allowHeight = true
@@ -1426,7 +1440,7 @@ export class RLGLayout extends React.Component<
             ${name} when width or height is set to Unit.unmanaged`)
           }
         })
-      } else {
+      } else if (b.editor? !b.editor.preventEdit : true) {
         // Add default position
         const edit = { ref: PositionRef.position }
         b.setEditDefaults(edit)

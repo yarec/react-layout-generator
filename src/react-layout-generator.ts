@@ -38,7 +38,7 @@ export {
   rectSize
 } from './types'
 
-export { toPixel } from './components/blockUtils'
+export { toXPixel, toYPixel } from './components/blockUtils'
 
 export {
   EditHelper,

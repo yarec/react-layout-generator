@@ -89,11 +89,11 @@ export function toAlign(p: IRect, origin: IOrigin): IPoint {
  */
 export interface IRLGBounds {
   /**
-   * Local is the size of the containing block in pixels.
+   * Container is the size of the containing block in pixels.
    */
-  local: ISize
+  container: ISize
   /**
-   * Viewport is the user's visible area of a web page. It does not include
+   * Viewport is the user's visible area of a web page. It does include
    * scrollbars. Be sure to set the \<meta\> tag in your web page for correct
    * layout.
    */
@@ -119,17 +119,11 @@ export function convertInputBlockRect(arg: IInputRect): IBlockRect {
 
           if (unit) {
             const value = parseFloat(v)
-            if (
-              unit === Unit.percent ||
-              unit === Unit.vw ||
-              unit === Unit.vh ||
-              unit === Unit.vmin ||
-              unit === Unit.vmax
-            ) {
+            if (unit === Unit.pixel || unit === Unit.unmanaged) {
               // Convert to decimal
-              internal[k] = value * 0.01
-            } else {
               internal[k] = value
+            } else {
+              internal[k] = value * 0.01
             }
             internal[`${k}Unit`] = unit
           }
@@ -151,45 +145,56 @@ export function toUnit(data: string) {
   const d = data.trim()
   switch (d.charAt(d.length - 1)) {
     case 'x': {
-      switch (d.charAt(d.length - 2)) {
-        case 'p': {
-          return Unit.pixel
+      if (d.charAt(d.length - 2) === 'p') {
+        return Unit.pixel
+      }
+      if (d.charAt(d.length - 2) === 'a') {
+        if (d.charAt(d.length - 4) === 'p') {
+          return Unit.pmax
         }
-        case 'a': {
+        if (d.charAt(d.length - 4) === 'v') {
           return Unit.vmax
         }
       }
-      console.error(`data-layout: Unit ${d} not recognized`)
+      break
     }
     case '%': {
       return Unit.percent
     }
     case 'n': {
-      return Unit.vmin
+      if (d.charAt(d.length - 4) === 'v') {
+        return Unit.vmin
+      }
+      if (d.charAt(d.length - 4) === 'p') {
+        return Unit.pmin
+      }
+      break
     }
 
     case 'h': {
-      switch (d.charAt(d.length - 2)) {
-        case 'v': {
-          return Unit.vh
-        }
+      if (d.charAt(d.length - 2) === 'v') {
+        return Unit.vh
       }
-      console.error(`data-layout: Unit ${d} not recognized`)
+      if (d.charAt(d.length - 2) === 'p') {
+        return Unit.ph
+      }
       break
     }
     case 'w': {
-      switch (d.charAt(d.length - 2)) {
-        case 'v': {
-          return Unit.vw
-        }
+      if (d.charAt(d.length - 2) === 'v') {
+        return Unit.vw
       }
-      console.error(`data-layout: Unit ${d} not recognized`)
+      if (d.charAt(d.length - 2) === 'p') {
+        return Unit.pw
+      }
       break
     }
     case 'u': {
       return Unit.unmanaged
     }
   }
+
+  console.error(`data-layout: Unit ${d} not recognized`)
   return
 }
 
@@ -206,6 +211,22 @@ export function namedUnit(unit: Unit | undefined) {
     }
     case Unit.percent: {
       name = 'percent'
+      break
+    }
+    case Unit.pmin: {
+      name = 'max(pw, ph)'
+      break
+    }
+    case Unit.pmin: {
+      name = 'min(pw, ph)'
+      break
+    }
+    case Unit.pw: {
+      name = '1% container width'
+      break
+    }
+    case Unit.ph: {
+      name = '1% container height'
       break
     }
     case Unit.vmin: {
@@ -335,7 +356,12 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   const widthValid = isValid(args.width)
   const heightValid = isValid(args.height)
 
-  const result: IRect = { x: 0, y: 0, width: NaN, height: NaN }
+  const result: IRect = {
+    x: 0,
+    y: 0,
+    width: bounds.container.width,
+    height: bounds.container.height
+  }
 
   //
   // Width Rules
@@ -346,8 +372,8 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (!leftValid && !widthValid && rightValid) {
     // rule#1 width is shrink to fit
     const right = toXPixel(args.right!, args.rightUnit, bounds)
-    result.x = bounds.local.width - right
-    result.width = bounds.local.width - right - result.x
+    result.x = 0
+    result.width = bounds.container.width - right - result.x
   }
 
   // Rule#2: If left and right are auto and width is not auto, then if the direction
@@ -359,7 +385,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   // Assume ltr
   if (!leftValid && !rightValid && widthValid) {
     const width = toXPixel(args.width!, args.widthUnit, bounds)
-    result.x = bounds.local.width - width
+    result.x = 0 // bounds.container.width - width
     result.width = width
   }
 
@@ -368,7 +394,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (!widthValid && !rightValid && leftValid) {
     const left = toXPixel(args.left!, args.leftUnit, bounds)
     result.x = left
-    result.width = bounds.local.width - left
+    result.width = bounds.container.width - left
   }
 
   // Rule#4: If left is auto, width and right are not auto, then solve
@@ -376,7 +402,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (widthValid && rightValid && !leftValid) {
     const right = toXPixel(args.right!, args.rightUnit, bounds)
     const width = toYPixel(args.width!, args.widthUnit, bounds)
-    result.x = bounds.local.width - width - right
+    result.x = bounds.container.width - width - right
     result.width = width
   }
 
@@ -386,7 +412,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
     const left = toXPixel(args.left!, args.leftUnit, bounds)
     const right = toXPixel(args.right!, args.rightUnit, bounds)
     result.x = left
-    result.width = bounds.local.width - left - right
+    result.width = bounds.container.width - left - right
   }
 
   // Rule#6: If right is auto, left and width are not auto, then solve
@@ -408,7 +434,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (!heightValid && !topValid && bottomValid) {
     const bottom = toYPixel(args.bottom!, args.bottomUnit, bounds)
     result.y = 0
-    result.height = bounds.local.height - bottom
+    result.height = bounds.container.height - bottom
   }
 
   // Rule#2: If top and bottom are auto and height is not auto, then
@@ -425,7 +451,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (!heightValid && topValid && !bottomValid) {
     const top = toYPixel(args.top!, args.topUnit, bounds)
     result.y = top
-    result.height = bounds.local.height - top
+    result.height = bounds.container.height - top
   }
 
   // Rule#4: If top is auto, height and bottom are not auto, then
@@ -433,7 +459,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
   if (heightValid && !topValid && bottomValid) {
     const bottom = toYPixel(args.bottom!, args.bottomUnit, bounds)
     const height = toYPixel(args.height!, args.heightUnit, bounds)
-    result.y = bounds.local.height - bottom - height
+    result.y = bounds.container.height - bottom - height
     result.height = args.height!
   }
 
@@ -443,7 +469,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
     const bottom = toYPixel(args.bottom!, args.bottomUnit, bounds)
     const top = toYPixel(args.top!, args.topUnit, bounds)
     result.y = top
-    result.height = bounds.local.height - top - bottom
+    result.height = bounds.container.height - top - bottom
   }
 
   // Rule#6: If bottom is auto, top and height are not auto, then
@@ -502,7 +528,7 @@ export function inverseLayout(
   // shrink-to-fit. Then solve for left.
   if (!leftValid && !widthValid && rightValid) {
     // Solve for right, optionally compute inverse
-    let right = bounds.local.width - r.x - r.width
+    let right = bounds.container.width - r.x - r.width
     if (args.rightUnit) {
       right = inverseXUnit(right, args.rightUnit, bounds)
       result.rightUnit = args.rightUnit
@@ -544,7 +570,7 @@ export function inverseLayout(
   // Rule#4: If left is auto, width and right are not auto, then solve
   // for left.
   if (widthValid && rightValid && !leftValid) {
-    let right = bounds.local.width - r.x - r.width
+    let right = bounds.container.width - r.x - r.width
     let width = r.width
     if (args.rightUnit) {
       right = inverseXUnit(right, args.rightUnit, bounds)
@@ -562,7 +588,7 @@ export function inverseLayout(
   // Rule#5: If width is auto, left and right are not auto, then solve
   // for width.
   if (!widthValid && rightValid && leftValid) {
-    let right = bounds.local.width - r.x - r.width
+    let right = bounds.container.width - r.x - r.width
     let left = r.x
     if (args.rightUnit) {
       right = inverseXUnit(right, args.rightUnit, bounds)
@@ -603,7 +629,7 @@ export function inverseLayout(
   // the height is based on the Auto heights for block formatting
   // context roots, and solve for top.
   if (!heightValid && !topValid && bottomValid) {
-    let bottom = bounds.local.height - r.y - r.height
+    let bottom = bounds.container.height - r.y - r.height
     if (args.bottomUnit) {
       bottom = inverseYUnit(bottom, args.bottomUnit, bounds)
       result.bottomUnit = args.bottomUnit
@@ -640,7 +666,7 @@ export function inverseLayout(
   // Rule#4: If top is auto, height and bottom are not auto, then
   // solve for top.
   if (heightValid && !topValid && bottomValid) {
-    let bottom = bounds.local.height - r.y - r.height
+    let bottom = bounds.container.height - r.y - r.height
     let height = r.height
     if (args.bottomUnit) {
       bottom = inverseYUnit(bottom, args.bottomUnit, bounds)
@@ -658,7 +684,7 @@ export function inverseLayout(
   // Rule#5: If height is auto, top and bottom are not auto, then
   // solve for height.
   if (!heightValid && topValid && bottomValid) {
-    let bottom = bounds.local.height - r.y - r.height
+    let bottom = bounds.container.height - r.y - r.height
     let top = r.y
     if (args.bottomUnit) {
       bottom = inverseYUnit(bottom, args.bottomUnit, bounds)
@@ -705,8 +731,8 @@ export function inverseXUnit(
   let r: number = value
   switch (unit) {
     case Unit.percent: {
-      if (bounds.local.width) {
-        r = value / bounds.local.width
+      if (bounds.container.width) {
+        r = value / bounds.container.width
       }
       break
     }
@@ -753,8 +779,8 @@ export function inverseYUnit(
   let r: number = value
   switch (unit) {
     case Unit.percent: {
-      if (bounds.local.height) {
-        r = value / bounds.local.height
+      if (bounds.container.height) {
+        r = value / bounds.container.height
       }
       break
     }
@@ -800,13 +826,33 @@ export function toXPixel(
   unit: Unit | undefined,
   bounds: IRLGBounds
 ): number {
-  if (!unit) {
+  if (!unit || !bounds) {
     return value
   }
 
+  // if (!bounds.local || !bounds.viewport) {
+  //   return value
+  // }
+
   switch (unit) {
     case Unit.percent: {
-      return value * bounds.local.width
+      return value * bounds.container.width
+    }
+    case Unit.pmin: {
+      const minWidth = Math.min(bounds.container.width, bounds.container.height)
+      return value * minWidth
+      break
+    }
+    case Unit.pmax: {
+      const maxWidth = Math.max(bounds.container.width, bounds.container.height)
+      return value * maxWidth
+      break
+    }
+    case Unit.pw: {
+      return value * bounds.container.width
+    }
+    case Unit.ph: {
+      return value * bounds.container.height
     }
     case Unit.vmin: {
       const minWidth = Math.min(bounds.viewport.width, bounds.viewport.height)
@@ -846,7 +892,23 @@ export function toYPixel(
 
   switch (unit) {
     case Unit.percent: {
-      return value * bounds.local.height
+      return value * bounds.container.height
+    }
+    case Unit.pmin: {
+      const minWidth = Math.min(bounds.container.width, bounds.container.height)
+      return value * minWidth
+      break
+    }
+    case Unit.pmax: {
+      const minWidth = Math.max(bounds.container.width, bounds.container.height)
+      return value * minWidth
+      break
+    }
+    case Unit.pw: {
+      return value * bounds.container.width
+    }
+    case Unit.ph: {
+      return value * bounds.container.height
     }
     case Unit.vmin: {
       const minWidth = Math.min(bounds.viewport.width, bounds.viewport.height)

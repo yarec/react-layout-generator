@@ -80,7 +80,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     // Waste
     const waste: IPosition = {
       location: { 
-        left: stock.location.x! + interval, 
+        left: stock.location.left as number + interval, 
         top: gameMargin, 
         width: cardSize.width + 3 * cardSize.width * cardSpacingRatio.x, 
         height: cardSize.height 
@@ -94,7 +94,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
     for (let i = 4 - foundationStart; i < 8 - foundationStart; i++) {
       const offset = i * interval;
       const p: IPosition = {
-        location: { left: stock.location.x! + offset, top: gameMargin, ...cardSize},
+        location: { left: stock.location.left as number + offset, top: gameMargin, ...cardSize},
         positionChildren: positionFoundationChildren
       }
 
@@ -106,7 +106,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
       const offset = i * interval;
       const p: IPosition = {
         location: { 
-          left: stock.location.x! + offset, 
+          left: stock.location.left as number + offset, 
           top: cardSize.height + 2 * gameMargin,
           width: cardSize.width, 
           height: cardSize.height + maxCards * cardSpacingRatio.y * cardSize.height 
@@ -196,7 +196,7 @@ export default function solitaireGenerator(gArgs: IGeneratorFunctionArgs) {
 
     // These children get placed horizontally based on index
     const child: IPosition = {
-      location: { left: index * computedCardSpacing.x, top: 0, ...cardSize}
+      location: { left: index * computedCardSpacing.x, top: 0, width: cardSize.width, height: cardSize.height}
     };
 
     if (props && props.id) {

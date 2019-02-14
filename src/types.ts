@@ -34,7 +34,7 @@ export interface ILayerOptions {
  */
 export interface IAnimateProps {
   /**
-   * Switch to stop start animation
+   * Switch to stop start animation.
    */
   active: boolean
   /**
@@ -42,6 +42,10 @@ export interface IAnimateProps {
    * zero will let the animation run continuously.
    */
   throttleTime?: number
+  /**
+   * Log delta frame time to the console.
+   */
+  logFrameRate?: boolean
 }
 
 /**
@@ -164,6 +168,16 @@ export interface IOrigin {
 /**
  * Defines the units of location and size passed to data-layout or
  * in [IPosition](iposition.html). Most computation will be done in pixels.
+ *
+ * Percent uses the container size as its basis.
+ *
+ * Viewport uses the document's viewport as it's basis.
+ *
+ * Preserve is similar viewport except that it uses the
+ * container size rather than the viewport as its basis.
+ *
+ * Both Viewport and Preserve units will keep a square as a square. Percent
+ * will only render a square if its basis is also square.
  */
 export enum Unit {
   /**
@@ -172,40 +186,53 @@ export enum Unit {
    * printers and high resolution screens 1px implies multiple
    * device pixels.
    */
-  pixel = 1,
+  pixel = 1, // px
   /**
-   * Percent is relative to the parent size. That means that
-   * if the parent size is rectangular the value will be proportional
-   * to the parent size. In other words a perfect square will
-   * be displayed as a rectangular element unless the parent size is
-   * also square. In RLG the parent is the size of the [Layout](#) block
+   * Percent uses 1/100 of each axis of the container as its basis. Units for
+   * horizontal axis are generally not equal to units for vertical axis.
    */
-  percent,
+  percent, // %
   /**
-   * Vmin is similar percent except that it takes the 1/100 of the shorter
-   * axis of the viewport as the base unit. This means any of the viewport
-   * units will render a square as a square.
+   * PreserveMin uses 1/100 of the shorter axis of the container as its basis.
+   */
+  pmin,
+  /**
+   * PreserveMin uses 1/100 of the longer axis of the container as its basis.
+   */
+  pmax,
+  /**
+   * PreserveWidth uses 1/100 of the horizontal axis of the container as its basis.
+   */
+  pw,
+  /**
+   * PreserveHeight uses 1/100 of the vertical axis of the container as its basis.
+   */
+  ph,
+  /**
+   * Vmin uses 1/100 of the shorter axis of the viewport as the base unit.
    */
   vmin,
   /**
-   * Vmax is similar vmin except that it takes the 1/100 of the longer
-   * axis of the viewport as the base unit.
+   * Vmax uses 1/100 of the shorter axis of the viewport as its basis.
    */
   vmax,
   /*
-   * Vw is same as vmin and vmax except that the horizontal axis is
-   * taken as the basis.
+   * Vw uses 1/100 of the horizontal axis of the viewport as its basis.
    */
   vw,
   /*
-   * Vh is same as vmin and vmax except that the vertical axis is
-   * taken as the basis.
+   * Vh uses 1/100 of the vertical axis of the viewport as its basis.
    */
   vh,
   /**
-   * Unmanaged sets the Block to fit it's content.
+   * Unmanaged sets the Block to fit it's content. Unmanaged can only be
+   * applied to the width and height of location and must be explicitly
+   * specified in location.
+   * ```ts
+   *  location={{left: 50, width: '100u', height:='100%'}}
+   * ```
    */
-  unmanaged
+  unmanaged // u
 }
 
 /**
@@ -221,9 +248,12 @@ export enum Unit {
  * @param unit
  */
 export function unitFactor(unit: Unit | undefined) {
-  let factor = 1
-  if (unit && (Unit.percent || Unit.vmin || Unit.vmax || Unit.vh || Unit.vw)) {
-    factor = 100
+  let factor = 100
+  if (unit && (Unit.pixel || Unit.unmanaged)) {
+    factor = 1
+  }
+  if (!unit) {
+    factor = 1
   }
   return factor
 }

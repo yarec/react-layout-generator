@@ -13,7 +13,8 @@ import {
   RLGPanel, 
   ServiceOptions,
   Status, 
-  toPixel,
+  toXPixel,
+  toYPixel,
   Unit
 } from '../importRLG'
 
@@ -112,9 +113,10 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'grid',
             position: {
-              location: { left: 0, top: 0, width: '100%', height: '100%' }
+              location: { left: 0, top: 0}
             }
           }}
+          data-layer={0}
           style={{ overflow: 'hidden' }}
         >
           {(args: IRLGMetaDataArgs) => {
@@ -134,6 +136,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
               location: { left: 200, top: 50, width: 200, height: 200 }
             }
           }}
+          data-layer={1}
           style={{ backgroundColor: 'tan' }}
         >
           {(args: IRLGMetaDataArgs) => {
@@ -158,7 +161,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
               location: { left: '30%', top: '20%', width: 30, height: 30, unit: Unit.vmin }
             }
           }}
-
+          data-layer={1}
           style={{ backgroundColor: 'LightSkyBlue' }}
         >
           {(args: IRLGMetaDataArgs) => (
@@ -177,6 +180,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
             }
           }}
 
+          data-layer={1}
           style={{ backgroundColor: 'lime' }}
         >
           {(args: IRLGMetaDataArgs) => (
@@ -192,7 +196,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
               location: { left: '50%', top: '50%', width: '20%', height: '20%' }
             }
           }}
-
+          data-layer={1}
           style={{ backgroundColor: 'gold' }}
         >
           {(args: IRLGMetaDataArgs) => (
@@ -234,18 +238,29 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
 
   protected gridLegend = () => {
 
+    const Note = styled.span`
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: '5px';
+      position: absolute;
+      white-space: nowrap;
+      overflow: 'hidden';
+      word-break: keep-all;
+`
+
     return (
       <div
         data-layout={{
           name: 'Legend',
           position: {
             location: { left: '5vmin', top: '20vmin',width: 100, height: 80, unit: Unit.unmanaged},
+            editor: {preventEdit: true}
           }
         }}
+        data-layer={1}
       >
-        <span>{`Grid unit ${this._units}`}</span> <br />
-        <span>{`width: ${this._gridUnitSquare.x.toFixed(2)}px`}</span> <br />
-        <span>{`height: ${this._gridUnitSquare.y.toFixed(2)}px`}</span> <br />
+        <Note>{`Grid unit ${this._units}`}</Note> <br />
+        <Note>{`width: ${this._gridUnitSquare.x.toFixed(2)}px`}</Note> <br />
+        <Note>{`height: ${this._gridUnitSquare.y.toFixed(2)}px`}</Note> <br />
       </div>
     );
   }
@@ -259,7 +274,8 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     const selectedStyle = {
       fontSize: '1rem',
       background: 'white',
-      color: 'black'
+      color: 'black',
+      fontWeight: 700
     }
 
     return (
@@ -270,9 +286,11 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Pixel',
             position: {
-              location: { left: '5vmin', top: '5vmin', width: 90, height: 24 }
+              location: { left: '5pmin', top: '5pmin', width: 90, height: 24 },
+              editor: {preventEdit: true}
             }
           }}
+          data-layer={2}
           style={this._gridUnit === Unit.pixel ? selectedStyle : style}
           onClick={this.setPixel}
         />
@@ -282,9 +300,11 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'Percent',
             position: {
-              location: { left: '5%', top: '10%', width: 90, height: 24 }
+              location: { left: '5pmin', top: '10pmin', width: 90, height: 24 },
+              editor: {preventEdit: true}
             }
           }}
+          data-layer={2}
           style={this._gridUnit === Unit.percent ? selectedStyle : style}
           onClick={this.setPercent}
         />
@@ -294,9 +314,11 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'vmin',
             position: {
-              location: { left: '5vim', top: '15vmin', width: 90, height: 24 }
+              location: { left: '5pmin', top: '15pmin', width: 90, height: 24 },
+              editor: {preventEdit: true}
             }
           }}
+          data-layer={2}
           style={this._gridUnit === Unit.vmin ? selectedStyle : style}
           onClick={this.setvmin}
         />
@@ -326,6 +348,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     const containersize = this._g.params().get('containersize') as ISize;
     const viewport = this._g.params().get('viewport') as ISize;
 
+    const bounds = {container: containersize, viewport}
 
     const w = Math.round(containersize.width);
     const h = Math.round(containersize.height);
@@ -344,41 +367,53 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         switch (unit) {
           case Unit.pixel: {
             this._units = '10px'
-            unitStep = toPixel({ x: 10, y: 10 },
-                {local: containersize, viewport})
+            unitStep = {x: toXPixel(10, Unit.pixel, bounds), y: toYPixel(10, Unit.pixel, bounds) }
             break;
           }
           case Unit.percent: {
             this._units = '1%'
-            unitStep = toPixel(
-              { x: 1, y: 1 },
-              {local: containersize, viewport})
+            unitStep = {x: toXPixel(.01, Unit.percent, bounds), y: toYPixel(.01, Unit.percent, bounds) }
+            break;
+          }
+          case Unit.pmin: {
+            this._units = '1%'
+            unitStep = {x: toXPixel(.01, Unit.pmin, bounds), y: toYPixel(.01, Unit.pmin, bounds) }
+            break;
+          }
+          case Unit.pmax: {
+            this._units = '1%'
+            unitStep = {x: toXPixel(.01, Unit.pmax, bounds), y: toYPixel(.01, Unit.pmax, bounds) }
+            break;
+          }
+          case Unit.ph: {
+            this._units = '1%'
+            unitStep = {x: toXPixel(.01, Unit.ph, bounds), y: toYPixel(.01, Unit.ph, bounds) }
+            break;
+          }
+          case Unit.pw: {
+            this._units = '1%'
+            unitStep = {x: toXPixel(.01, Unit.pw, bounds), y: toYPixel(.01, Unit.pw, bounds) }
             break;
           }
 
           case Unit.vmin: {
             this._units = '1%'
-            unitStep = toPixel(
-              { x: 1, y: 1 },
-              {local: containersize, viewport})
+            unitStep = {x: toXPixel(.01, Unit.vmin, bounds), y: toYPixel(.01, Unit.vmin, bounds) }
             break;
           }
           case Unit.vmax: {
             this._units = '1%'
-            unitStep = toPixel(
-              { x: 1, y: 1 }, {local: containersize, viewport})
+            unitStep = {x: toXPixel(.01, Unit.vmax, bounds), y: toYPixel(.01, Unit.vmax, bounds) }
             break;
           }
           case Unit.vh: {
             this._units = '1%'
-            unitStep = toPixel(
-              { x: 1, y: 1 }, {local: containersize, viewport})
+            unitStep = {x: toXPixel(.01, Unit.vh, bounds), y: toYPixel(.01, Unit.vh, bounds) }
             break;
           }
           case Unit.vw: {
             this._units = '1%'
-            unitStep = toPixel(
-              { x: 1, y: 1 }, {local: containersize, viewport})
+            unitStep = {x: toXPixel(.01, Unit.vw, bounds), y: toYPixel(.01, Unit.vw, bounds) }
             break;
           }
         }

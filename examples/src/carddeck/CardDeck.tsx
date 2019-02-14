@@ -7,8 +7,7 @@ import {
   IEditHelperProps,
   PositionRef,
   RLGLayout,
-  Status,
-  Unit
+  Status
 } from '../importRLG'
 
 import { ServiceOptions } from '../../../src/types';
@@ -96,16 +95,28 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.timing}
         g={this._g}
+        layers={{
+          encapsulate: true
+        }}
       >
         {this.createElements()}
         
-        <Button data-layout={{
-          name: 'shuffle',
-          position: {
-            origin: {x: 100, y: 0},
-            location: { left: 90, top: 80, unit: Unit.percent, width: 100, height: 24 }
-          }
-        }}
+        <Button 
+          data-layout={{
+            name: 'shuffle',
+            position: {
+              origin: {x: 100, y: 0},
+              location: { left: '90%', top: '80%', width: 100, height: 24 },
+              editor: {
+                selectable: false,
+                preventEdit: true
+              }
+            }
+          }}
+          data-layers={{
+            encapsulate: false
+          }}
+          data-layer={1}
           onClick={this.shuffle}
         >
           Shuffle
@@ -114,9 +125,14 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
           name: 'instructions',
           position: {
             origin: {x: 100, y: 0},
-            location: { left: '90%', top: '10%', width: 200, height: '350u' }
+            location: { left: '90%', top: '10%', width: 200, height: '350u' },
+            editor: {
+              selectable: false,
+              preventEdit: true
+            }
           }
         }}
+        data-layer={1}
         >
           <>
             <Description>

@@ -28,8 +28,8 @@ export {
   rectPoint,
   rectSize
 } from '../../src/types'
-export { toPixel, toPercent } from '../../src/components/blockUtils'
-
+export { toXPixel, toYPixel } from '../../src/components/blockUtils'
+export { IPosition } from '../../src/components/blockTypes'
 export { EditHelper, IEditTool, IEditHelperProps, Status } from '../../src/editors/EditHelper'
 export { columnsGenerator } from '../../src/generators/columnsGenerator'
 export { desktopGenerator } from '../../src/generators/desktopGenerator'
@@ -53,7 +53,7 @@ export {
   updateParamWidth
 } from '../../src/editors/update'
 
-export { Block, IPosition } from '../../src/components/Block'
+export { Block } from '../../src/components/Block'
 export { Blocks } from '../../src/components/Blocks'
 export { IEditableTextData, Params, ParamValue } from '../../src/components/Params'
 

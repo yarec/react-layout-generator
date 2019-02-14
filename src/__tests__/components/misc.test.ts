@@ -13,7 +13,7 @@ const params = new Params({
 })
 
 // const bounds: IRLGBounds = {
-//   local: { width: 1000, height: 1000 },
+//   container: { width: 1000, height: 1000 },
 //   viewport: { width: 1000, height: 1000 }
 // }
 

@@ -1,5 +1,5 @@
 import { Unit, IGenericProps, IPoint, IOrigin, PositionRef } from '../types'
-import { Block } from './block'
+import { Block } from './Block'
 import { IGenerator } from '../generators/Generator'
 import { UpdateHandle } from '../editors/updateHandle'
 import { ExtendElement } from '../editors/extendElement'
@@ -253,12 +253,20 @@ export interface IEditor {
    * ```ts
    * editor: {
    *  selectable: false
+   *
    * }
    * ```
    *
    * The default editor allows both selection and movement of a block.
    */
   selectable?: boolean
+  /**
+   * Prevent default editing. The default is false. If this flag is not
+   * set and there are no edit instruction then the default editor will
+   * be installed to allow dragging blocks. If set to true then no default
+   * editor will be activated.
+   */
+  preventEdit?: boolean
   /**
    * This option adds custom commands to the context menu for this block.
    */
