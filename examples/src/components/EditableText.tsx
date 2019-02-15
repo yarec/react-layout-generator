@@ -18,7 +18,7 @@ interface IProps {
 
 export const Editable = styled.div<IProps>`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: ${(p) => p.fontSize.toString()};
+  font-size: ${(p) => p.fontSize.toString()}px;
   position: absolute;
   white-space: nowrap;
   overflow: 'hidden';

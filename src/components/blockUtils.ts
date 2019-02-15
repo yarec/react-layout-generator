@@ -736,6 +736,32 @@ export function inverseXUnit(
       }
       break
     }
+    case Unit.pw: {
+      if (bounds.viewport.width) {
+        r = value / bounds.container.width
+      }
+      break
+    }
+    case Unit.ph: {
+      if (bounds.viewport.height) {
+        r = value / bounds.container.height
+      }
+      break
+    }
+    case Unit.pmin: {
+      if (bounds.viewport.width && bounds.viewport.height) {
+        const min = Math.min(bounds.container.width, bounds.container.height)
+        r = value / min
+      }
+      break
+    }
+    case Unit.pmax: {
+      if (bounds.viewport.width && bounds.viewport.height) {
+        const max = Math.max(bounds.container.width, bounds.container.height)
+        r = value / max
+      }
+      break
+    }
     case Unit.vw: {
       if (bounds.viewport.width) {
         r = value / bounds.viewport.width
@@ -781,6 +807,32 @@ export function inverseYUnit(
     case Unit.percent: {
       if (bounds.container.height) {
         r = value / bounds.container.height
+      }
+      break
+    }
+    case Unit.pw: {
+      if (bounds.container.width) {
+        r = value / bounds.container.width
+      }
+      break
+    }
+    case Unit.ph: {
+      if (bounds.container.height) {
+        r = value / bounds.container.height
+      }
+      break
+    }
+    case Unit.pmin: {
+      if (bounds.container.width && bounds.container.height) {
+        const min = Math.min(bounds.container.width, bounds.container.height)
+        r = value / min
+      }
+      break
+    }
+    case Unit.pmax: {
+      if (bounds.container.width && bounds.container.height) {
+        const max = Math.max(bounds.container.width, bounds.container.height)
+        r = value / max
       }
       break
     }

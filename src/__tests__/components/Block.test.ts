@@ -314,6 +314,56 @@ it('update #2', () => {
   expect(l.rect).toEqual({ x: 250, y: 250, width: 50, height: 50 })
 })
 
+it('update #3', () => {
+  const p = {
+    location: {
+      left: 200,
+      top: 200,
+      width: '25%',
+      height: '30%'
+    }
+  }
+
+  const l = new Block('test', p, g)
+
+  const arg = {
+    left: 200,
+    top: 200,
+    width: 0.25,
+    widthUnit: Unit.percent,
+    height: 0.3,
+    heightUnit: Unit.percent
+  }
+
+  expect(l.blockRect).toEqual(arg)
+})
+
+it('update #4', () => {
+  const p = {
+    location: {
+      left: 200,
+      top: 200,
+      width: '25%',
+      height: '25%'
+    }
+  }
+
+  const l = new Block('test', p, g)
+
+  l.update({ x: 250, y: 250, width: 250, height: 250 })
+
+  const arg1: IBlockRect = {
+    left: 250,
+    top: 250,
+    width: 0.25,
+    widthUnit: Unit.percent,
+    height: 0.25,
+    heightUnit: Unit.percent
+  }
+
+  expect(l.blockRect).toEqual(arg1)
+})
+
 it('align #1', () => {
   const p: IPosition = {
     location: { left: 100, top: 100, width: 100, height: 100 }

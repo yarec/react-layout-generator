@@ -404,6 +404,18 @@ export enum ServiceOptions {
   dnd
 }
 
+/** Enables optional services */
+export enum EditorOptions {
+  /**
+   * No options. This is the default.
+   */
+  none = 0,
+  /**
+   * Pin restricts editing of position and size to the containersize.
+   */
+  pin = 1 << 0
+}
+
 /**
  * IRect specifies the data that defines a rect in terms of its location and size.
  */

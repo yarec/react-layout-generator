@@ -10,6 +10,8 @@ import {
   Status
 } from '../importRLG'
 
+import Button from '../components/Button'
+
 import { ServiceOptions } from '../../../src/types';
 import Deck from '../algos/Deck';
 // import cssColor from '../assets/colors';
@@ -19,6 +21,7 @@ const Description = styled.p`
   font-family: Arial, Helvetica, sans-serif;
   word-break: normal;
   white-space: normal;
+  user-select: none;
 `;
 
 // tslint:disable-next-line:variable-name
@@ -42,13 +45,6 @@ const Container = styled.div`
   background: linear-gradient(top, #f9d835, #f3961c);
   padding: 0;
 `
-
-class Button extends React.Component<React.HTMLProps<HTMLButtonElement>> {
-  public render() {
-    return <button style={this.props.style}>{this.props.children}</button>
-  }
-}
-
 interface ICardDeckState {
   update: number;
 }
@@ -63,6 +59,8 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
   constructor(props: IEditHelperProps) {
     super(props)
     this.state = { update: 0 };
+
+    // this.shuffle = this.shuffle.bind(this)
   }
 
   public componentDidMount() {
@@ -96,12 +94,15 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         debug={DebugOptions.timing}
         g={this._g}
         layers={{
-          encapsulate: true
+          encapsulate: false
         }}
       >
         {this.createElements()}
         
+        <>
         <Button 
+          name='shuffle'
+          key={'shuffle'}
           data-layout={{
             name: 'shuffle',
             position: {
@@ -113,14 +114,13 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
               }
             }
           }}
-          data-layers={{
-            encapsulate: false
-          }}
+          
           data-layer={1}
-          onClick={this.shuffle}
+          onClick={ this.shuffle}
         >
           Shuffle
         </Button>
+        </>
         <Container data-layout={{
           name: 'instructions',
           position: {
@@ -146,9 +146,6 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
             </Description>
             <Description>
               Use context menu align selected cards.
-            </Description>
-            <Description>
-              Use alt-click when in edit mode (when the move cursor is visible) to click on a button.
             </Description>
           </>
         </Container>

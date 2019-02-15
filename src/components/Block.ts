@@ -367,8 +367,8 @@ export class Block {
         const r1 = ref!.rect
         const p1 = connectPoint(r1, this._align.source)
 
-        const r2 = this.rect
-        const p2 = connectPoint(r2, align.self)
+        // Use updated r
+        const p2 = connectPoint(r, align.self)
 
         // Compute new offset
         const offset: IPoint = {

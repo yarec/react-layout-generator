@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 // import Layout from 'src/components/Block';
-import { DebugOptions, IPoint, IRect } from '../types'
+import { DebugOptions, IPoint, IRect, EditorOptions } from '../types'
 import { clone } from '../utils'
 import { IEditor, IEditorProps, IUndo } from './Editor'
 
@@ -134,23 +134,22 @@ export class RLGEditLayout
       const ur: IRect = this.props.edit.extendElement!(r, deltaX, deltaY)
 
       // 2 Pin
-      if (ur.x < this.props.boundary.x) {
-        ur.x = this.props.boundary.x
-      }
-
-      if (ur.x + ur.width > this.props.boundary.x + this.props.boundary.width) {
-        ur.x = this.props.boundary.x + this.props.boundary.width - ur.width
-      }
-
-      if (ur.y < this.props.boundary.y) {
-        ur.y = this.props.boundary.y
-      }
-
-      if (
-        ur.y + ur.height >
-        this.props.boundary.y + this.props.boundary.height
-      ) {
-        ur.y = this.props.boundary.y + this.props.boundary.height - ur.height
+      if (!this.props.editor || this.props.editor & EditorOptions.pin) {
+        if (ur.x < this.props.boundary.x) {
+          ur.x = this.props.boundary.x
+        }
+        if (ur.x + ur.width > this.props.boundary.x + this.props.boundary.width) {
+          ur.x = this.props.boundary.x + this.props.boundary.width - ur.width
+        }
+        if (ur.y < this.props.boundary.y) {
+          ur.y = this.props.boundary.y
+        }
+        if (
+          ur.y + ur.height >
+          this.props.boundary.y + this.props.boundary.height
+        ) {
+          ur.y = this.props.boundary.y + this.props.boundary.height - ur.height
+        }
       }
 
       // 3 Make live

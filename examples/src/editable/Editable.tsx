@@ -159,7 +159,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
         <div data-layout={{
           name: 'note1',
           position: {
-            location: { left: 70, top: 50, width: 250, height: '300u' },
+            location: { left: '70%', top: '50%', width: 250, height: '300u' },
             editor: {
               selectable: true
             }
@@ -170,7 +170,7 @@ export default class Editable extends React.Component<IEditHelperProps, IDeskTop
           <p>To edit the text, first active edit (in the toolbar) and then click on the text.</p>
           <p>Change size of title panel to change font size by dragging the top of the black drag bar.</p>
           <p>The editable text widget does not allow line breaks.</p>
-          <p>Save state enabled and currently can not be disabled.</p>
+          <p>Save state enabled.</p>
         </div>
       </RLGLayout>
     );

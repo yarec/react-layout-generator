@@ -29,7 +29,8 @@ import {
   OverflowOptions,
   rectSize,
   IAnimateProps,
-  ILayerOptions
+  ILayerOptions,
+  EditorOptions
 } from './types'
 import { DragDropService } from './services/DragDropService'
 import { isUnmanaged } from './components/blockUtils';
@@ -161,6 +162,10 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    * of the options as an array. Only the DebugOptions.all includes any other options.
    */
   debug?: DebugOptions | DebugOptionsArray
+  /**
+   * The default is EditorOptions.none. 
+   */
+  editorOptions?: EditorOptions
   /**
    * The generator is required and should be unique for each Layout. Reusing
    * generators is possible but not recommended.

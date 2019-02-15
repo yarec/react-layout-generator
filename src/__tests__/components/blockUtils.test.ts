@@ -2,7 +2,9 @@ import {
   convertInputBlockRect,
   layout,
   IRLGBounds,
-  inverseLayout
+  inverseLayout,
+  inverseXUnit,
+  inverseYUnit
 } from '../../components/blockUtils'
 
 import { IInputRect, IBlockRect } from '../../components/blockTypes'
@@ -443,6 +445,27 @@ it('layout #18', () => {
   })
 })
 
+it('layout #19', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    top: 10,
+    width: 0.2,
+    widthUnit: Unit.percent,
+    height: 0.2,
+    heightUnit: Unit.percent
+  }
+  expect(layout(arg, bounds)).toEqual({
+    x: 10,
+    y: 10,
+    width: 20,
+    height: 20
+  })
+})
+
 it('inverseLayout #1', () => {
   const bounds: IRLGBounds = {
     container: { width: 100, height: 100 },
@@ -827,6 +850,71 @@ it('inverseLayout #18', () => {
   expect(inverseLayout(r, arg, bounds)).toEqual(arg)
 })
 
+it('inverseLayout #19', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+  const arg: IBlockRect = {
+    left: 10,
+    top: 10,
+    width: 0.2,
+    widthUnit: Unit.percent,
+    height: 0.2,
+    heightUnit: Unit.percent
+  }
+  const r = {
+    x: 10,
+    y: 10,
+    width: 20,
+    height: 20
+  }
+  expect(inverseLayout(r, arg, bounds)).toEqual(arg)
+
+  const arg1: IBlockRect = {
+    left: 10,
+    top: 10,
+    width: 0.21,
+    widthUnit: Unit.percent,
+    height: 0.21,
+    heightUnit: Unit.percent
+  }
+  const r1 = {
+    x: 10,
+    y: 10,
+    width: 21,
+    height: 21
+  }
+  expect(inverseLayout(r1, arg, bounds)).toEqual(arg1)
+})
+
+it('inverseXUnit #1', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+
+  expect(inverseXUnit(10, Unit.pixel, bounds)).toEqual(10)
+  expect(inverseXUnit(10, Unit.percent, bounds)).toEqual(0.1)
+  expect(inverseXUnit(10, Unit.vw, bounds)).toEqual(0.01)
+  expect(inverseXUnit(10, Unit.vh, bounds)).toEqual(0.02)
+  expect(inverseXUnit(10, Unit.ph, bounds)).toEqual(0.1)
+  expect(inverseXUnit(10, Unit.pw, bounds)).toEqual(0.1)
+})
+
+it('inverseYUnit #1', () => {
+  const bounds: IRLGBounds = {
+    container: { width: 100, height: 100 },
+    viewport: { width: 1000, height: 500 }
+  }
+
+  expect(inverseYUnit(10, Unit.pixel, bounds)).toEqual(10)
+  expect(inverseYUnit(10, Unit.percent, bounds)).toEqual(0.1)
+  expect(inverseYUnit(10, Unit.vw, bounds)).toEqual(0.01)
+  expect(inverseYUnit(10, Unit.vh, bounds)).toEqual(0.02)
+  expect(inverseYUnit(10, Unit.ph, bounds)).toEqual(0.1)
+  expect(inverseYUnit(10, Unit.pw, bounds)).toEqual(0.1)
+})
 // it('convert toPercent #1', () => {
 //   const p = toPercent(
 //     { x: 50, y: 50 }, Unit.percent,

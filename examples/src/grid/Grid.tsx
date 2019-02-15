@@ -158,7 +158,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(percent, vmin)',
             position: {
-              location: { left: '30%', top: '20%', width: 30, height: 30, unit: Unit.vmin }
+              location: { left: '30%', top: '20%', width: 150, height: 150 }
             }
           }}
           data-layer={1}
@@ -167,7 +167,6 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           {(args: IRLGMetaDataArgs) => (
             <>
             <span>Square (percent, vmin) </span> <br/><br/><br/>
-            <span>Use Alt-click to change grids when editing</span>
             </>
           )}
         </RLGPanel>
@@ -176,7 +175,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(vmin, vmin)',
             position: {
-              location: { left: '60vmin', top: '60min', width: 20, height: 20, unit: Unit.vmin  }
+              location: { left: '60vmin', top: '70vmin', width: 200, height: 200  }
             }
           }}
 
@@ -193,7 +192,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           data-layout={{
             name: 'square(percent, percent)',
             position: {
-              location: { left: '50%', top: '50%', width: '20%', height: '20%' }
+              location: { left: '50%', top: '50%', width: 200, height: 150 }
             }
           }}
           data-layer={1}
