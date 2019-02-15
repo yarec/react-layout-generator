@@ -21,9 +21,8 @@ describe('RLGLayout', () => {
         <div
           data-layout={{
             name: 'block',
-            position: {
-              location: { left: 200, y: 50, width: 200, height: 200 }
-            }
+
+            location: { left: 200, y: 50, width: 200, height: 200 }
           }}
         >
           <span>A test</span>

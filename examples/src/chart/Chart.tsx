@@ -7,7 +7,7 @@ import {
   Generator,
   IEditHelperProps,
   IGenerator,
-  IPosition,
+  IDataLayout,
   IRLGMetaDataArgs,
   ISize,
   Params,
@@ -17,7 +17,7 @@ import {
   ServiceOptions,
   updateParamLocation,
   updateParamOffset,
-  IInputRect
+  IExRect
 } from '../importRLG'
 
 import { t1 } from './tree';
@@ -70,7 +70,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
   public init = (g: IGenerator): Blocks => {
     const node = this._treeMap.lookup(this.state.node);
     const containersize = this._params.get('containersize') as ISize;
-    const aLocation = this._params.get('aLocation') as IInputRect;
+    const aLocation = this._params.get('aLocation') as IExRect;
 
     const blocks = g.blocks();
 
@@ -86,7 +86,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
       // console.log('aLocation', node, aLocation);
 
       // Self
-      const self: IPosition = {
+      const self: IDataLayout = {
         origin: { x: 50, y: 0 }, 
         location: aLocation ? aLocation : { left: '10%', top: '10%', width: 150, height: 100 },
         
@@ -106,7 +106,7 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
         const start = containersize.width / 2 - spacing * node.children.length / 2;
 
         node.children.forEach((name, i) => {
-          const child: IPosition = {
+          const child: IDataLayout = {
             origin: { x: 50, y: 50 }, 
             location: { left: 0, top: 0, width: 150, height: 100 },
             editor: {

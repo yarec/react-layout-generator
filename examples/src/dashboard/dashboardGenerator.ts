@@ -2,9 +2,9 @@ import {
   Block,
   Blocks,
   Generator,
+  IDataLayout,
+  IExRect,
   IGenerator,
-  IInputRect,
-  IPosition,
   ISize,
   Params,
   PositionRef,
@@ -48,7 +48,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     }
 
     const title = (): Block => {
-      let location: IInputRect;
+      let location: IExRect;
       location = {
         left: 0,
         top: 0,
@@ -56,7 +56,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         height: titleHeight
       }
 
-      const p: IPosition = {
+      const p: IDataLayout = {
         editor: {
           edits: [
             { ref: PositionRef.bottom, variable: 'titleHeight', updateParam: updateParamHeight }
@@ -69,7 +69,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     };
 
     const leftSide = (): Block => {
-      let location: IInputRect;
+      let location: IExRect;
       if (fullWidthHeaders) {
         location = {
           left: 0,
@@ -86,7 +86,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
         }
       }
 
-      const p: IPosition = {
+      const p: IDataLayout = {
         editor: {
           edits: [
             { ref: PositionRef.right, variable: 'leftSideWidth', updateParam: updateParamWidth }
@@ -100,7 +100,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     };
 
     const rightSide = (): Block => {
-      let location: IInputRect;
+      let location: IExRect;
 
       if (fullWidthHeaders) {
         location = {
@@ -129,7 +129,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     };
 
     const header = (): Block => {
-      let location: IInputRect
+      let location: IExRect
 
       if (fullWidthHeaders) {
         location = {
@@ -158,7 +158,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     };
 
     const content = (): Block => {
-      let location: IInputRect;
+      let location: IExRect;
       if (fullWidthHeaders) {
         location = {
           left: leftSideWidth,
@@ -182,7 +182,7 @@ export default function RLGDesktop(name: string, parent?: IGenerator) {
     };
 
     const footer = (): Block => {
-      let location: IInputRect
+      let location: IExRect
       if (fullWidthHeaders) {
         location = {
           left: 0,

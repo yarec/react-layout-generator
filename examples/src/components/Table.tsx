@@ -7,9 +7,9 @@ import {
   DebugOptions,
   Generator,
   ICreate, 
+  IDataLayout,
   IGenerator,
   IGenericProps,
-  IPosition,
   IRLGMetaDataArgs,
   ISize,
   Params,
@@ -100,7 +100,7 @@ export default class Table extends React.Component<ITableProps> {
 
     if (containersize) {
 
-      const title: IPosition = {
+      const title: IDataLayout = {
         location: { left: 0, top: 0, width: containersize.width, height: titleHeight },
         editor: {
           edits: [
@@ -112,7 +112,7 @@ export default class Table extends React.Component<ITableProps> {
 
       blocks.set('title', title, g);
 
-      const row: IPosition = {
+      const row: IDataLayout = {
         location: { left: 0, top: titleHeight, width: containersize.width, height: rowHeight },
         positionChildren: this.positionRowChildren
       }
@@ -131,7 +131,7 @@ export default class Table extends React.Component<ITableProps> {
     const titleHeight = this._params.get('titleHeight') as number;
 
     // These children get placed vertically based on index
-    const child: IPosition = {
+    const child: IDataLayout = {
       location: { left: 0, top: titleHeight + index * rowHeight, width: containersize.width, height: rowHeight }
     };
 
@@ -141,11 +141,11 @@ export default class Table extends React.Component<ITableProps> {
 
   private create(args: ICreate): Block {
 
-    if (!args.position) {
+    if (!args.dataLayout) {
       console.error(`TODO default position ${args.name}`);
     }
 
-    const block = args.g.blocks().set(args.name, args.position, args.g);
+    const block = args.g.blocks().set(args.name, args.dataLayout, args.g);
 
     return block;
   }

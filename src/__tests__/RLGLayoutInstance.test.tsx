@@ -7,7 +7,7 @@ import { RLGLayout } from '../RLGLayout'
 import { DebugOptions, ServiceOptions } from '../types'
 // import ReactResizeDetector from 'react-resize-detector'
 
-import * as Enzyme from 'enzyme';
+import * as Enzyme from 'enzyme'
 // import { RLGSelect } from '../editors/RLGSelect';
 
 const { mount } = Enzyme
@@ -25,7 +25,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set(args.name, args.position, args.g)
+    block = blocks.set(args.name, args.dataLayout, args.g)
   }
 
   return block
@@ -34,38 +34,42 @@ function create(args: ICreate) {
 const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
-
   test('it should generate <div instance #1', () => {
-    g.params().set('containersize', { width: 1000, height: 1000 });
+    g.params().set('containersize', { width: 1000, height: 1000 })
     const wrapper = mount(
       <RLGLayout
-        name='instance#3'
+        name="instance#3"
         service={ServiceOptions.edit}
         debug={DebugOptions.all}
         g={g}
         containersize={{ width: 1000, height: 500 }}
       >
-        <div data-layout={{
-          name: 'hello',
-          position: {
+        <div
+          data-layout={{
+            name: 'hello',
             location: { left: 200, top: 50, width: 200, height: 200 }
-          }
-        }}
-          style={{ backgroundColor: 'tan' }} >
+          }}
+          style={{ backgroundColor: 'tan' }}
+        >
           <span>hello</span>
         </div>
       </RLGLayout>
     )
-    const rlgLayout = wrapper.find('RLGLayout').at(0).instance()
+    const rlgLayout = wrapper
+      .find('RLGLayout')
+      .at(0)
+      .instance()
 
     // console.log('rlgLayout:', rlgLayout)
 
-    const hello = wrapper.find("[id='hello']").at(0).instance();
+    const hello = wrapper
+      .find("[id='hello']")
+      .at(0)
+      .instance()
     // if (hello) {
     //   console.log('hello:', hello)
     // }
 
-    expect(rlgLayout && hello).toBeTruthy();
-  });
-
+    expect(rlgLayout && hello).toBeTruthy()
+  })
 })

@@ -1,6 +1,6 @@
 import { IGenerator } from '../generators/Generator'
 import { Block } from './Block'
-import { IPosition } from '../components/blockTypes'
+import { IDataLayout } from '../components/blockTypes'
 
 /**
  * Blocks managed the Block collection.
@@ -78,7 +78,7 @@ export class Blocks {
    * @param p: Params
    * @param g: IGenerator
    */
-  public set(key: string, p: IPosition, g: IGenerator): Block {
+  public set(key: string, p: IDataLayout, g: IGenerator): Block {
     let block = this._blocks.get(key)
     if (block) {
       block.updatePosition(p)

@@ -55,7 +55,7 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     const blocks = args.g.blocks();
 
-    let p = args.position;
+    let p = args.dataLayout;
 
     if (!p) {
       p = {

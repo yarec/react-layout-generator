@@ -2,7 +2,7 @@
 
 *React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.*
 
-RLG is focused on layout and editing of both html and svg components. By taking direct control of the layout it enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
+RLG is focused on layout and editing of both html and svg components. Taking direct control of the layout enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
 A [live demo](https://neq1.io) is available at https://neq1.io. Source is available at [Github](https://github.com/chetmurphy/react-layout-generator) under the MIT license.
 ___
@@ -14,10 +14,6 @@ Another key difference is that since RLG is only using absolute positioning all 
 ___
 
 This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
-
-## Table of Contents
-
-<!-- TOC -->autoauto- [React Layout Generator](#react-layout-generator)auto    - [Table of Contents](#table-of-contents)auto    - [Install](#install)auto        - [Contributing](#contributing)auto    - [TODO](#todo)auto    - [Features](#features)auto    - [Applications](#applications)auto    - [Usage](#usage)auto        - [RLGLayout](#rlglayout)auto            - [Note](#note)auto        - [RLGPanel](#rlgpanel)auto        - [Responsive Layout](#responsive-layout)auto        - [Responsive Desktop Layout](#responsive-desktop-layout)auto        - [Layers](#layers)auto        - [Drag and Drop](#drag-and-drop)auto            - [dragData(id: string) => string[]](#dragdataid-string--string)auto            - [dragImage(ids: string[]) => JSX](#dragimageids-string--jsx)auto            - [dragEnd(ids: string[]) => void](#dragendids-string--void)auto            - [Draggable](#draggable)auto        - [Generator](#generator)auto            - [Animations](#animations)auto            - [Notes](#notes)auto        - [Editor](#editor)auto            - [Edit commands (in examples)](#edit-commands-in-examples)auto            - [Keyboard controls](#keyboard-controls)auto    - [FAQ](#faq)auto        - [Why not build a system based on React refs](#why-not-build-a-system-based-on-react-refs)auto        - [Why is the page flashing](#why-is-the-page-flashing)auto        - [How can I right align blocks](#how-can-i-right-align-blocks)auto        - [How can I persist the Params for distribution](#how-can-i-persist-the-params-for-distribution)autoauto<!-- /TOC -->
 
 ## Install
 
@@ -52,7 +48,6 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## TODO
 
-- Add support for position right and bottom in addition to left(x) and top(y) in IPosition.location.
 - Add move command within a container to drag and drop to allow rearranging draggable blocks).
 - Add React PropTypes for non typescript users.
 - Add grid command as option to toolBar in the Demo.
@@ -407,7 +402,7 @@ function emptyGenerator(name: string) {
 
 emptyGenerator will not generate any elements even if it has children that contains data-layout elements.
 
-To make it a useful dynamic generator we add a create function to the generator. That's how the [dynamicGenerator](globals/dynamicgenerator.html) is defined. It lets you define a layout manually and offers the most flexibility, but only limited responsiveness using just the properties of the [position](interfaces/iposition.html) interface.
+To make it a useful dynamic generator we add a create function to the generator. That's how the [dynamicGenerator](globals/dynamicgenerator.html) is defined. It lets you define a layout manually and offers the most flexibility, but only limited responsiveness using just the properties of the [position](interfaces/IDataLayout.html) interface.
 
 ```jsx
 function dynamicGenerator(name: string): IGenerator {
@@ -513,18 +508,14 @@ One way is to set a block [origin]() of {x: 100, y: 0} with the the same x locat
 ```ts
 data-layout={{
   name: 'block 1',
-  position: {
-    origin: {x: 100, y: 0},
-    location: { left: '90%', top: '10%', width: 200, height: '350u' }
-  }
+  origin: {x: 100, y: 0},
+  location: { left: '90%', top: '10%', width: 200, height: '350u' }
 }}
 
 data-layout={{
   name: 'block 2',
-  position: {
-    origin: {x: 100, top: 0},
-    location: { left: '90%', top: '10%', width: 200, height: 350 }
-  }
+  origin: {x: 100, top: 0},
+  location: { left: '90%', top: '10%', width: 200, height: 350 }
 }}
 
 ```
@@ -534,22 +525,18 @@ data-layout={{
 ```ts
 data-layout={{
   name: 'block 1',
-  position: {
-    location: { left: '90%', top: '10%', width: 200, height: '350u' }
-  }
+  location: { left: '90%', top: '10%', width: 200, height: '350u' }
 }}
 
 data-layout={{
   name: 'block 2',
-  position: {
-    align: {
-      key: 'block 1',
-      offset: { x: 0, y: 10 },
-      source: { x: 100, y: 100 },
-      self: { x: 100, y: 0 }
-    }
-    location: { left: '90%', top: '10%', width: 200, height: '350u' }
+  align: {
+    key: 'block 1',
+    offset: { x: 0, y: 10 },
+    source: { x: 100, y: 100 },
+    self: { x: 100, y: 0 }
   }
+  location: { left: '90%', top: '10%', width: 200, height: '350u' }
 }}
 ```
 

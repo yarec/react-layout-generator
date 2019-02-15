@@ -23,7 +23,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set(args.name, args.position, args.g)
+    block = blocks.set(args.name, args.dataLayout, args.g)
   }
 
   return block
@@ -42,25 +42,22 @@ describe('RLGLayout', () => {
         containersize={{ width: 1000, height: 1000 }}
       >
         <div data-layout={{
-          name: 'a', position: {
-            location: { left: 0, top: 0, width: 100, height: 100, unit: Unit.unmanaged }
-          }
+          name: 'a', 
+          location: { left: 0, top: 0, width: 100, height: 100, unit: Unit.unmanaged }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'b', position: {
-            location: { left: 0, top: 0, width: 100, height: '100u' }
-          }
+          name: 'b',
+          location: { left: 0, top: 0, width: 100, height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'c', position: {
-            location: { left: 0, top: 0, width: '100u', height: 100 }
-          }
+          name: 'c', 
+          location: { left: 0, top: 0, width: '100u', height: 100 }
         }}>
           <span>A test</span>
         </div>
@@ -79,25 +76,22 @@ describe('RLGLayout', () => {
         containersize={{ width: 1000, height: 1000 }}
       >
         <div data-layout={{
-          name: 'a', position: {
-            location: { left: 0, top: 0, width: '100u', height: '100u' }
-          }
+          name: 'a',
+          location: { left: 0, top: 0, width: '100u', height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'b', position: {
-            location: { left: 0, top: 0, width: 100, height: '100u' }
-          }
+          name: 'b',
+          location: { left: 0, top: 0, width: 100, height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'c', position: {
-            location: { left: 0, top: 0, width: '100u', height: 100 }
-          }
+          name: 'c',
+          location: { left: 0, top: 0, width: '100u', height: 100 }
         }}>
           <span>A test</span>
         </div>
@@ -116,25 +110,22 @@ describe('RLGLayout', () => {
         containersize={{ width: 1000, height: 1000 }}
       >
         <div data-layout={{
-          name: 'a', position: {
-            location: { left: 0, top: 0,  width: '100u', height: '100u' }
-          }
+          name: 'a', 
+          location: { left: 0, top: 0,  width: '100u', height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'b', position: {
-            location: { left: 0, top: 0, width: 100, height: '100u' }
-          }
+          name: 'b', 
+          location: { left: 0, top: 0, width: 100, height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'c', position: {
-            location: { left: 0, top: 0, width: '100u', height: 100 }
-          }
+          name: 'c',
+          location: { left: 0, top: 0, width: '100u', height: 100 }
         }}>
           <>
             <span>A test</span>
@@ -156,25 +147,22 @@ describe('RLGLayout', () => {
         containersize={{ width: 1000, height: 500 }}
       >
         <div data-layout={{
-          name: 'a', position: {
-            location: { left: 0, top: 0, width: '100u', height: '100u' }
-          }
+          name: 'a',
+          location: { left: 0, top: 0, width: '100u', height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'b', position: {
-            location: { left: 0, top: 0, width: 100, height: '100u' }
-          }
+          name: 'b', 
+          location: { left: 0, top: 0, width: 100, height: '100u' }
         }}>
           <span>A test</span>
         </div>
 
         <div data-layout={{
-          name: 'c', position: {
-            location: { left: 0, top: 0, width: '100u', height: 100 }
-          }
+          name: 'c',
+          location: { left: 0, top: 0, width: '100u', height: 100 }
         }}>
           <>
             <span>A test</span>
@@ -213,9 +201,7 @@ describe('RLGLayout', () => {
     >
       <div data-layout={{
         name: 'shuffle',
-        position: {
-          location: { left: '80%', top: '80%', width: 100, height: 24 }
-        }
+        location: { left: '80%', top: '80%', width: 100, height: 24 }
       }}>
         <span>Hello</span>
       </div>
@@ -241,9 +227,7 @@ describe('RLGLayout', () => {
     >
       <div data-layout={{
         name: 'shuffle',
-        position: {
-          location: { left: '80%', top: '80%', width: 100, height: 24 }
-        }
+        location: { left: '80%', top: '80%', width: 100, height: 24 }
       }}>
         <span>Hello</span>
       </div>

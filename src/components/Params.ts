@@ -1,5 +1,5 @@
 import { DebugOptions, IAttrRect, IPoint, IRect, ISize } from '../types'
-import { IInputRect } from './blockTypes'
+import { IExRect } from './blockTypes'
 
 const deepEqual = require('deep-equal')
 
@@ -16,7 +16,7 @@ export type ParamValue =
   | ISize
   | IRect
   | IAttrRect
-  | IInputRect
+  | IExRect
   | IEditableTextData
 
 export type Save = (prefix: string, key: string, value: ParamValue) => void

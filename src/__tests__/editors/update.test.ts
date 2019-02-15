@@ -6,7 +6,7 @@ import {
 } from '../../editors/update'
 import { PositionRef } from '../../types'
 import { Block } from '../../components/Block'
-import { IPosition } from '../../components/blockTypes'
+import { IDataLayout } from '../../components/blockTypes'
 import { IGenerator, ICreate, Generator } from '../../generators/Generator'
 import { Params } from '../../components/Params'
 
@@ -23,7 +23,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set('test', args.position, args.g)
+    block = blocks.set('test', args.dataLayout, args.g)
   }
 
   return block
@@ -65,7 +65,7 @@ it('updateParamLocation returns correct value', () => {
 })
 
 it('updateParamOffset returns correct value', () => {
-  const p: IPosition = {
+  const p: IDataLayout = {
     location: { left: 0, top: 10, width: 100, height: 10 },
     editor: {
       edits: [

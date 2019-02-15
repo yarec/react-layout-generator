@@ -7,8 +7,7 @@ const now = require('performance-now')
 import { Block } from './components/Block'
 import {
   IMenuItem,
-  IPosition,
-  PositionChildrenFn 
+  IDataLayout 
 } from './components/blockTypes'
 import { ParamValue } from './components/Params'
 import { RLGContextMenu } from './editors/RLGContextMenu'
@@ -751,8 +750,7 @@ export class RLGLayout extends React.Component<
     index: number,
     count: number,
     name: string,
-    position: IPosition,
-    positionChildren: PositionChildrenFn
+    dataLayout: IDataLayout
   ) => {
     let b = this._g.lookup(name)
     if (!b && this._g.create) {
@@ -761,7 +759,7 @@ export class RLGLayout extends React.Component<
         count,
         name,
         g: this._g,
-        position
+        dataLayout
       })
 
       if (!b) {
@@ -788,8 +786,6 @@ export class RLGLayout extends React.Component<
     index: number,
     count: number,
     name: string,
-    position: IPosition,
-    positionChildren: PositionChildrenFn,
     offset?: IPoint
   ) => {
     const c = this._g.params().get('containersize') as ISize
@@ -924,24 +920,23 @@ export class RLGLayout extends React.Component<
   }
 
   private createLayout = (child: JSX.Element, index: number, count: number) => {
-    const p = child.props['data-layout']
+    const dataLayout = child.props['data-layout'] as IDataLayout
 
-    if (p) {
+    if (dataLayout) {
       // if (p.layout && p.name) {
       //   const ancestor = gLayouts.get(p.layout);
       //   if (ancestor) {
-      //     return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
+      //     return ancestor.createPositionedElement(child, index, count, p.name, p);
       //   }
       // } else
 
-      if (p.name) {
+      if (dataLayout.name) {
         return this.createPositionedElement(
           child,
           index,
           count,
-          p.name,
-          p.position,
-          p.context
+          dataLayout.name,
+          dataLayout,
         )
       }
     }
@@ -954,9 +949,9 @@ export class RLGLayout extends React.Component<
     index: number,
     count: number
   ) => {
-    const p = child.props['data-layout']
+    const dataLayout = child.props['data-layout'] as IDataLayout
 
-    if (p) {
+    if (dataLayout) {
       // if (p.layout && p.name) {
       //   const ancestor = gLayouts.get(p.layout);
       //   if (ancestor) {
@@ -965,19 +960,17 @@ export class RLGLayout extends React.Component<
       //     const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
 
       //     return ancestor.updatePositionedElement(
-      //       child, index, count, p.name, p.position, p.context, offset
+      //       child, index, count, p.name, p, p.context, offset
       //     );
       //   }
       // } else
 
-      if (p.name) {
+      if (dataLayout.name) {
         return this.updatePositionedElement(
           child,
           index,
           count,
-          p.name,
-          p.position,
-          p.context
+          dataLayout.name
         )
       }
     }
@@ -996,7 +989,7 @@ export class RLGLayout extends React.Component<
     return React.cloneElement(
       child,
       {
-        id: `${p.name}`,
+        id: `${dataLayout.name}`,
         ...child.props,
         ...args
       },

@@ -8,7 +8,7 @@ import {
   layout
 } from '../../components/blockUtils'
 import { Unit } from '../../types'
-import { IBlockRect, IPosition } from '../../components/blockTypes'
+import { IBlockRect, IDataLayout } from '../../components/blockTypes'
 // import { Unit } from '../../types'
 
 const params = new Params({
@@ -33,7 +33,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set('test', args.position, args.g)
+    block = blocks.set('test', args.dataLayout, args.g)
   }
 
   return block
@@ -365,11 +365,11 @@ it('update #4', () => {
 })
 
 it('align #1', () => {
-  const p: IPosition = {
+  const p: IDataLayout = {
     location: { left: 100, top: 100, width: 100, height: 100 }
   }
 
-  const pAlign: IPosition = {
+  const pAlign: IDataLayout = {
     location: { left: 0, top: 0, width: 100, height: 80 },
     align: {
       key: 'one',
@@ -413,7 +413,7 @@ it('misc #2', () => {
 })
 
 it('transform #1', () => {
-  const p: IPosition = {
+  const p: IDataLayout = {
     location: { left: '250%', top: '250%', width: 100, height: 50 },
     transform: [{ rotate: 10, origin: { x: 50, y: 50 } }]
   }

@@ -57,7 +57,7 @@ export function columnsGenerator(name: string, exParams?: Params) {
 
     const blocks = args.g.blocks();
 
-    let p = args.position;
+    let p = args.dataLayout;
 
     // console.log('create width', p.size.width);
 

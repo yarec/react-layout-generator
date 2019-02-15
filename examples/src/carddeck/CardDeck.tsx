@@ -1,5 +1,5 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from 'react'
+import styled from 'styled-components'
 
 import {
   DebugOptions,
@@ -12,8 +12,8 @@ import {
 
 import Button from '../components/Button'
 
-import { ServiceOptions } from '../../../src/types';
-import Deck from '../algos/Deck';
+import { ServiceOptions } from '../../../src/types'
+import Deck from '../algos/Deck'
 // import cssColor from '../assets/colors';
 // import Note from '../components/Note';
 
@@ -22,7 +22,7 @@ const Description = styled.p`
   word-break: normal;
   white-space: normal;
   user-select: none;
-`;
+`
 
 // tslint:disable-next-line:variable-name
 // const Title = styled.h3`
@@ -46,36 +46,44 @@ const Container = styled.div`
   padding: 0;
 `
 interface ICardDeckState {
-  update: number;
+  update: number
 }
 
 // tslint:disable-next-line:max-classes-per-file
-export default class CardDeck extends React.Component<IEditHelperProps, ICardDeckState> {
-
-  private _g = dynamicGenerator('example.CardDeck');
-  private _deck = new Deck();
-  private _edit: boolean = true;
+export default class CardDeck extends React.Component<
+  IEditHelperProps,
+  ICardDeckState
+> {
+  private _g = dynamicGenerator('example.CardDeck')
+  private _deck = new Deck()
+  private _edit: boolean = true
 
   constructor(props: IEditHelperProps) {
     super(props)
-    this.state = { update: 0 };
+    this.state = { update: 0 }
 
     // this.shuffle = this.shuffle.bind(this)
   }
 
   public componentDidMount() {
     // console.log('Grid componentDidMount load grid');
-    this.props.editHelper().load([
-      { name: 'edit', command: this.setEdit, status: this._edit ? Status.up : Status.down }
-    ])
+    this.props
+      .editHelper()
+      .load([
+        {
+          name: 'edit',
+          command: this.setEdit,
+          status: this._edit ? Status.up : Status.down
+        }
+      ])
   }
 
   public setEdit = (status: Status) => {
     if (status === Status.down) {
-      status = Status.up;
+      status = Status.up
       this._edit = true
     } else {
-      status = Status.down;
+      status = Status.down
       this._edit = false
     }
 
@@ -83,7 +91,7 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
     // this._g.clear();
     this.setState({ update: this.state.update + 1 })
 
-    return status;
+    return status
   }
 
   public render() {
@@ -98,92 +106,81 @@ export default class CardDeck extends React.Component<IEditHelperProps, ICardDec
         }}
       >
         {this.createElements()}
-        
+
         <>
-        <Button 
-          name='shuffle'
-          key={'shuffle'}
-          data-layout={{
-            name: 'shuffle',
-            position: {
-              origin: {x: 100, y: 0},
+          <Button
+            name="shuffle"
+            key={'shuffle'}
+            data-layout={{
+              name: 'shuffle',
+              origin: { x: 100, y: 0 },
               location: { left: '90%', top: '80%', width: 100, height: 24 },
               editor: {
                 selectable: false,
                 preventEdit: true
               }
-            }
-          }}
-          
-          data-layer={1}
-          onClick={ this.shuffle}
-        >
-          Shuffle
-        </Button>
+            }}
+            data-layer={1}
+            onClick={this.shuffle}
+          >
+            Shuffle
+          </Button>
         </>
-        <Container data-layout={{
-          name: 'instructions',
-          position: {
-            origin: {x: 100, y: 0},
+        <Container
+          data-layout={{
+            name: 'instructions',
+
+            origin: { x: 100, y: 0 },
             location: { left: '90%', top: '10%', width: 200, height: '350u' },
             editor: {
               selectable: false,
               preventEdit: true
             }
-          }
-        }}
-        data-layer={1}
+          }}
+          data-layer={1}
         >
           <>
-            <Description>
-              Edit mode enabled.
-            </Description>
-            <Description>
-              Use the mouse to drag objects.
-            </Description>
-            <Description>
-              Use shift-click to select a card.
-            </Description>
-            <Description>
-              Use context menu align selected cards.
-            </Description>
+            <Description>Edit mode enabled.</Description>
+            <Description>Use the mouse to drag objects.</Description>
+            <Description>Use shift-click to select a card.</Description>
+            <Description>Use context menu align selected cards.</Description>
           </>
         </Container>
       </RLGLayout>
-    );
+    )
   }
 
   private createElement = (card: string) => {
-    const e = require(`../assets/cards/${card}.jpg`);
+    const e = require(`../assets/cards/${card}.jpg`)
 
     return (
       <div
         key={card}
         data-layout={{
           name: card,
-          position: {
-            location: { left: '5%', top: '5%', width: 120, height: 156 },
-            editor: {
-              edits: [{ ref: PositionRef.position }]
-            }
+
+          location: { left: '5%', top: '5%', width: 120, height: 156 },
+          editor: {
+            edits: [{ ref: PositionRef.position }]
           }
-        }} >
+        }}
+      >
         <img width={120} height={156} src={e} />
-      </div >
+      </div>
     )
   }
 
   private createElements = (): any[] => {
-    const a: JSX.Element[] = [];
-    this._deck.cards.forEach((card) => {
-      a.push(this.createElement(card));
+    const a: JSX.Element[] = []
+    this._deck.cards.forEach(card => {
+      a.push(this.createElement(card))
     })
-    return a;
+    return a
   }
 
   private shuffle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    this._deck.shuffle();
-    this._g.clear();
-    this.setState({ update: this.state.update + 1 });
+    this._deck.shuffle()
+    this._g.clear()
+    this.setState({ update: this.state.update + 1 })
   }
 }

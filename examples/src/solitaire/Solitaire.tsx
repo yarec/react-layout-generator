@@ -1,77 +1,81 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import {
-  IEditHelperProps,
-  IGenerator,
-  RLGLayout
-} from '../importRLG'
+import { IEditHelperProps, IGenerator, RLGLayout } from '../importRLG'
 
-import FoundationStack from './FoundationStack';
-import solitaireGenerator from './solitaireGenerator';
-import Stock from './Stock';
-import TableauStack from './TableauStack';
-import Waste from './Waste';
+import FoundationStack from './FoundationStack'
+import solitaireGenerator from './solitaireGenerator'
+import Stock from './Stock'
+import TableauStack from './TableauStack'
+import Waste from './Waste'
 
 /**
  * Names of blocks are based on position not on the card names.
  */
 
 export interface ISolitaireProps {
-  name?: string;
+  name?: string
 }
 
 interface ISolitaireState {
-  update: number;
+  update: number
 }
 
-export default class Solitaire extends React.Component<IEditHelperProps, ISolitaireState> {
+export default class Solitaire extends React.Component<
+  IEditHelperProps,
+  ISolitaireState
+> {
+  private _g: IGenerator = solitaireGenerator({ name: 'example.solitaire' })
 
-  private _g: IGenerator = solitaireGenerator({name: 'example.solitaire'});
-
-  private _stock: Stock;
-  private _waste: Waste;
-  private _foundation: FoundationStack[] = [];
-  private _tableau: TableauStack[] = [];
+  private _stock: Stock
+  private _waste: Waste
+  private _foundation: FoundationStack[] = []
+  private _tableau: TableauStack[] = []
 
   constructor(props: IEditHelperProps) {
-    super(props);
+    super(props)
 
-    this._stock = new Stock(this.update);
-    this._waste = new Waste(this.update);
+    this._stock = new Stock(this.update)
+    this._waste = new Waste(this.update)
     for (let i = 0; i < 4; i++) {
-      this._foundation.push(new FoundationStack(this.update));
+      this._foundation.push(new FoundationStack(this.update))
     }
     for (let i = 0; i < 7; i++) {
       this._tableau.push(new TableauStack(this.update))
     }
 
-    this.state = { update: 0 };
+    this.state = { update: 0 }
 
-    this.newGame.bind(this);
+    this.newGame.bind(this)
   }
 
   public componentDidMount() {
-    this.init();
+    this.init()
   }
 
   public update = () => {
-    this.setState({ update: this.state.update + 1 });
+    this.setState({ update: this.state.update + 1 })
   }
 
   public init() {
-    this._stock.shuffle();
-    this._waste.clear();
-    this._foundation.forEach((foundation) => { foundation.clear() });
-    this._tableau.forEach((tableau) => { tableau.clear() });
-    this._tableau.forEach((tableau, i) => { tableau.populate(this._stock, i) });
-    this.setState({ update: this.state.update + 1 });
+    this._stock.shuffle()
+    this._waste.clear()
+    this._foundation.forEach(foundation => {
+      foundation.clear()
+    })
+    this._tableau.forEach(tableau => {
+      tableau.clear()
+    })
+    this._tableau.forEach((tableau, i) => {
+      tableau.populate(this._stock, i)
+    })
+    this.setState({ update: this.state.update + 1 })
   }
 
   /**
    * Moves the top cards to the tableau after each shuffle.
    */
   public newGame = (event: React.MouseEvent<HTMLButtonElement>) => {
-    this.init();
+    this.init()
   }
 
   /**
@@ -81,20 +85,17 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
   public onPopulateWaste = (event: React.MouseEvent<HTMLDivElement>) => {
     if (this._stock && this._waste) {
       if (this._stock.length) {
-        this._waste.populate(this._stock);
-        this.setState({ update: this.state.update + 1 });
+        this._waste.populate(this._stock)
+        this.setState({ update: this.state.update + 1 })
       }
     }
   }
 
   public render() {
     return (
-      <RLGLayout
-        name='example.Solitaire'
-        g={this._g}
-      >
+      <RLGLayout name="example.Solitaire" g={this._g}>
         <div
-          key='stock'
+          key="stock"
           data-layout={{
             name: 'stock'
           }}
@@ -120,24 +121,22 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
           key={'New Game'}
           data-layout={{
             name: 'New Game',
-            position: {
-              origin: { x: 50, y: 50 },
-              location: { left: '50%', top: '90%', width: 90, height: 24 }
-            }
+
+            origin: { x: 50, y: 50 },
+            location: { left: '50%', top: '90%', width: 90, height: 24 }
           }}
           onClick={this.newGame}
         >
           New Game
         </button>
-
       </RLGLayout>
-    );
+    )
   }
 
   protected foundations = () => {
-    const jsx = [];
+    const jsx = []
     for (let i = 0; i < 4; i++) {
-      const name = `foundation${i + 1}`;
+      const name = `foundation${i + 1}`
       jsx.push(
         <div
           key={name}
@@ -147,15 +146,15 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
         >
           {this._foundation[i].cards()}
         </div>
-      );
+      )
     }
-    return jsx;
+    return jsx
   }
 
   protected tableaus = () => {
-    const jsx = [];
+    const jsx = []
     for (let i = 0; i < 7; i++) {
-      const name = `tableau${i + 1}`;
+      const name = `tableau${i + 1}`
       jsx.push(
         <div
           key={name}
@@ -165,33 +164,31 @@ export default class Solitaire extends React.Component<IEditHelperProps, ISolita
         >
           {this._tableau[i].cards()}
         </div>
-      );
+      )
     }
-    return jsx;
+    return jsx
   }
 
   protected grid = () => {
-    const jsx = [];
+    const jsx = []
 
     for (let i = 0; i < 100; i++) {
       if (i % 2 === 0) {
-        const name = `gridV${i + 1}`;
+        const name = `gridV${i + 1}`
         jsx.push(
           <div
             key={name}
             data-layout={{
               name,
-              position: {
-                location: { left: `${i}%`, top: 0, width: '1%', height: '100%' }
-              }
+
+              location: { left: `${i}%`, top: 0, width: '1%', height: '100%' }
             }}
             style={{ backgroundColor: 'hsl(210,100%,80%)' }}
           />
-        );
+        )
       }
     }
 
-    return jsx;
+    return jsx
   }
 }
-

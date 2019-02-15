@@ -1,4 +1,4 @@
-import { IBlockRect, IInputRect } from './blockTypes'
+import { IBlockRect, IExRect } from './blockTypes'
 import { ISize, IRect, Unit, IPoint, IOrigin } from '../types'
 
 /**
@@ -101,13 +101,13 @@ export interface IRLGBounds {
 }
 
 /**
- * This function converts an [IInputRect](#IInputRect) to a
+ * This function converts an [IExRect](#IExRect) to a
  * [IBlockRect](#IBlockRect) by converting fields with units to fields without
  * unit.
  *
- * @param arg: IInputRect
+ * @param arg: IExRect
  */
-export function convertInputBlockRect(arg: IInputRect): IBlockRect {
+export function convertInputBlockRect(arg: IExRect): IBlockRect {
   const internal: IBlockRect = {}
 
   for (let k in arg) {
@@ -341,7 +341,7 @@ export function namedUnit(unit: Unit | undefined) {
  *
  * Each rule solves for the unknowns in the above equations
  *
- * @param args: IPositionLocation
+ * @param args: IDataLayoutLocation
  * @param containerSize: ISize
  */
 export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
@@ -498,7 +498,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
  *
  * Each rule solves for the unknowns in the above equations
  *
- * @param args: IPositionLocation
+ * @param args: IDataLayoutLocation
  * @param containerSize: ISize
  */
 export function inverseLayout(

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from 'react'
+import styled from 'styled-components'
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
@@ -9,15 +9,14 @@ import {
   EditHelper,
   IEditTool,
   IGenerator,
-  IPosition,
   ISize,
   Params,
   RLGLayout,
   rowsGenerator,
-  Status, 
+  Status
 } from '../importRLG'
 
-import cssColor from '../assets/colors';
+import cssColor from '../assets/colors'
 
 // tslint:disable-next-line:variable-name
 export const Button = styled.button`
@@ -35,102 +34,120 @@ export const SelectedButton = styled.button`
   color: ${cssColor.middle};
 `
 interface IButton {
-  component: (props: any) => JSX.Element;
-  name: string;
+  component: (props: any) => JSX.Element
+  name: string
 }
 
 interface IButtonRef extends IButton {
-  handler: (event: React.MouseEvent) => void;
+  handler: (event: React.MouseEvent) => void
 }
 
 interface IToolBarProps {
-  commands: IButton[];
-  editHelper: EditHelper;
+  commands: IButton[]
+  editHelper: EditHelper
 }
 
 interface IToolBarState {
-  update: number;
+  update: number
 }
 
-export default class ToolBar extends React.Component<IToolBarProps, IToolBarState> implements IEditTool {
-  private _n: IGenerator;
-  private _params: Params;
+export default class ToolBar
+  extends React.Component<IToolBarProps, IToolBarState>
+  implements IEditTool {
+  private _n: IGenerator
+  private _params: Params
 
   constructor(props: IToolBarProps) {
-    super(props);
+    super(props)
 
-    this._n = rowsGenerator({name: 'example.toolBar', editHelper: props.editHelper});
+    this._n = rowsGenerator({
+      name: 'example.toolBar',
+      editHelper: props.editHelper
+    })
 
-    this._params = this._n.params();
-    this._params.set('itemSize', {width: 30, height: 24});
-    this.state = { update: 0 };
+    this._params = this._n.params()
+    this._params.set('itemSize', { width: 30, height: 24 })
+    this.state = { update: 0 }
 
-    this.props.editHelper.register(this);
+    this.props.editHelper.register(this)
   }
 
   public componentWillReceiveProps(props: IToolBarProps) {
-    this.props.editHelper.register(this);
+    this.props.editHelper.register(this)
   }
 
   public updateTool = () => {
-    this.setState({ update: this.state.update + 1 });
+    this.setState({ update: this.state.update + 1 })
   }
 
   public render() {
-    this._n.reset();
+    this._n.reset()
 
     return (
-      <RLGLayout
-        name='ToolBar'
-        debug={DebugOptions.none}
-        g={this._n}
-      >
+      <RLGLayout name="ToolBar" debug={DebugOptions.none} g={this._n}>
         {this.createElements()}
       </RLGLayout>
-    );
+    )
   }
 
   private onClick = (name: string) => {
     return (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      this.props.editHelper.do(name);
-      this.setState({ update: this.state.update + 1 });
+      event.preventDefault()
+      this.props.editHelper.do(name)
+      this.setState({ update: this.state.update + 1 })
     }
   }
 
   private createElements = () => {
-
     const r = this.props.commands.map((e: IButtonRef, i) => {
       // const width = this._size.get(e.name)
 
-   
-      let v: any = null;
-      const fontSize = (this._params.get('itemSize') as ISize).height;
+      let v: any = null
+      const fontSize = (this._params.get('itemSize') as ISize).height
       if (e.name !== '') {
-        const status = this.props.editHelper.status(e.name);
+        const status = this.props.editHelper.status(e.name)
         if (status !== undefined) {
-        
           // console.log(`ToolBar ${e.name} ${status}`);
-          
-          const color = (status === 0) ? cssColor.middle : ((status === Status.down) ? cssColor.light : cssColor.darkMiddle);
-          const background = status === Status.up ? cssColor.light : 'transparent';
-          const props = { color, fontSize, style: {background }}
-         
+
+          const color =
+            status === 0
+              ? cssColor.middle
+              : status === Status.down
+              ? cssColor.light
+              : cssColor.darkMiddle
+          const background =
+            status === Status.up ? cssColor.light : 'transparent'
+          const props = { color, fontSize, style: { background } }
+
           v = (
-            <Button key={e.name} data-layout={{ name: e.name }} onClick={this.onClick(e.name)} style={{background}}>
+            <Button
+              key={e.name}
+              data-layout={{ name: e.name }}
+              onClick={this.onClick(e.name)}
+              style={{ background }}
+            >
               {e.component(props)}
             </Button>
-          );
+          )
         }
       } else {
-        const name1 = `separator${i}`;
-        const p: IPosition = {
-          location: { left: 0, top: 0, width: fontSize, height: fontSize / 2 }
+        const name1 = `separator${i}`
+        const location = {
+          left: 0,
+          top: 0,
+          width: fontSize,
+          height: fontSize / 2
         }
-        v = e.component({ key: name1, 'data-layout': { name: name1, position: p }, color: cssColor.lightMiddle, fontSize })
+
+        v = e.component({
+          key: name1,
+          'data-layout': { name: name1, location },
+          color: cssColor.lightMiddle,
+          fontSize
+        })
       }
-      return v;
-    });
-    return r;
+      return v
+    })
+    return r
   }
 }

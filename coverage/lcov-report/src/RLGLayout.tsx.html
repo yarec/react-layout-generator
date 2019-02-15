@@ -1510,19 +1510,11 @@
 1465
 1466
 1467
-1468
-1469
-1470
-1471
-1472
-1473
-1474
-1475</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+1468</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2272,7 +2264,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">25x</span>
@@ -2303,8 +2294,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2464,7 +2453,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2491,8 +2479,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3000,8 +2986,7 @@ const now = require('performance-now')
 import { Block } from './components/Block'
 import {
   IMenuItem,
-  IPosition,
-  PositionChildrenFn 
+  IDataLayout 
 } from './components/blockTypes'
 import { ParamValue } from './components/Params'
 import { RLGContextMenu } from './editors/RLGContextMenu'
@@ -3744,8 +3729,7 @@ export class RLGLayout extends React.Component&lt;
     index: number,
     count: number,
     name: string,
-    position: IPosition,
-    positionChildren: PositionChildrenFn
+    dataLayout: IDataLayout
   ) =&gt; {
     let b = this._g.lookup(name)
     if (!b &amp;&amp; this._g.create) {
@@ -3754,7 +3738,7 @@ export class RLGLayout extends React.Component&lt;
         count,
         name,
         g: this._g,
-        position
+        dataLayout
       })
 &nbsp;
       <span class="missing-if-branch" title="if path not taken" >I</span>if (!b) {
@@ -3781,8 +3765,6 @@ export class RLGLayout extends React.Component&lt;
     index: number,
     count: number,
     name: string,
-    position: IPosition,
-    positionChildren: PositionChildrenFn,
     offset?: IPoint
   ) =&gt; {
     const c = this._g.params().get('containersize') as ISize
@@ -3917,24 +3899,23 @@ export class RLGLayout extends React.Component&lt;
   }
 &nbsp;
   private createLayout = (child: JSX.Element, index: number, count: number) =&gt; {
-    const p = child.props['data-layout']
+    const dataLayout = child.props['data-layout'] as IDataLayout
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (p) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (dataLayout) {
       // if (p.layout &amp;&amp; p.name) {
       //   const ancestor = gLayouts.get(p.layout);
       //   if (ancestor) {
-      //     return ancestor.createPositionedElement(child, index, count, p.name, p.position, p.context);
+      //     return ancestor.createPositionedElement(child, index, count, p.name, p);
       //   }
       // } else
 &nbsp;
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (p.name) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (dataLayout.name) {
         return this.createPositionedElement(
           child,
           index,
           count,
-          p.name,
-          p.position,
-          p.context
+          dataLayout.name,
+          dataLayout,
         )
       }
     }
@@ -3947,9 +3928,9 @@ export class RLGLayout extends React.Component&lt;
     index: number,
     count: number
   ) =&gt; {
-    const p = child.props['data-layout']
+    const dataLayout = child.props['data-layout'] as IDataLayout
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (p) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (dataLayout) {
       // if (p.layout &amp;&amp; p.name) {
       //   const ancestor = gLayouts.get(p.layout);
       //   if (ancestor) {
@@ -3958,19 +3939,17 @@ export class RLGLayout extends React.Component&lt;
       //     const offset = { x: ancestorLocation.x - location.x, y: ancestorLocation.y - location.y };
 &nbsp;
       //     return ancestor.updatePositionedElement(
-      //       child, index, count, p.name, p.position, p.context, offset
+      //       child, index, count, p.name, p, p.context, offset
       //     );
       //   }
       // } else
 &nbsp;
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (p.name) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (dataLayout.name) {
         return this.updatePositionedElement(
           child,
           index,
           count,
-          p.name,
-          p.position,
-          p.context
+          dataLayout.name
         )
       }
     }
@@ -3989,7 +3968,7 @@ export class RLGLayout extends React.Component&lt;
 <span class="cstat-no" title="statement not covered" >    return React.cloneElement(</span>
       child,
       {
-        id: `${p.name}`,
+        id: `${dataLayout.name}`,
         ...child.props,
         ...args
       },
@@ -4471,7 +4450,7 @@ export class RLGLayout extends React.Component&lt;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Feb 15 2019 09:44:41 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\prettify.js"></script>

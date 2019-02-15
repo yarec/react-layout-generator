@@ -167,7 +167,7 @@ export interface IOrigin {
 
 /**
  * Defines the units of location and size passed to data-layout or
- * in [IPosition](iposition.html). Most computation will be done in pixels.
+ * in [IDataLayout](IDataLayout.html). Most computation will be done in pixels.
  *
  * Percent uses the container size as its basis.
  *

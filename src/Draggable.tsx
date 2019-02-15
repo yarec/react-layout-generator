@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { IPosition } from './components/blockTypes'
+import { IDataLayout } from './components/blockTypes'
 import { IGenerator } from './generators/Generator'
 
 export interface IDraggableProps extends React.HTMLProps<HTMLDivElement> {
@@ -13,7 +13,7 @@ export class Draggable extends React.Component<IDraggableProps> {
   }
 
   componentDidMount() {
-    const p: IPosition = {
+    const p: IDataLayout = {
       location: { left: 0, top: 0, width: 0, height: 0 }
     }
     const block = this.props.g.blocks().set(`${this.props.name}`, p, this.props.g)

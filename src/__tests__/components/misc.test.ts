@@ -1,6 +1,6 @@
 import { Params } from '../../components/Params'
 import { Generator, ICreate, IGenerator } from '../../generators/Generator'
-import { IPosition } from '../../components/blockTypes'
+import { IDataLayout } from '../../components/blockTypes'
 // import { IRLGBounds } from '../../components/blockUtils';
 
 const params = new Params({
@@ -25,7 +25,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set(args.name, args.position, args.g)
+    block = blocks.set(args.name, args.dataLayout, args.g)
   }
 
   return block
@@ -34,11 +34,11 @@ function create(args: ICreate) {
 const g: IGenerator = new Generator('test', init, params, create)
 
 it('align #1', () => {
-  const p: IPosition = {
+  const p: IDataLayout = {
     location: { left: 100, top: 100, width: 100, height: 100 }
   }
 
-  const pAlign: IPosition = {
+  const pAlign: IDataLayout = {
     location: { left: 0, top: 0, width: 100, height: 80 },
     align: {
       key: 'one',

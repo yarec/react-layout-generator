@@ -3,7 +3,7 @@ import { IEdit } from '../components/blockTypes'
 import { IRect, unitFactor } from '../types'
 
 /**
- * UpdateParamLocation computes a [location](interfaces/ipositionlocation.html) update.
+ * UpdateParamLocation computes a [location](interfaces/IDataLayoutlocation.html) update.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   const factorX = unitFactor(block.blockRect.leftUnit)

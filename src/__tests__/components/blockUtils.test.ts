@@ -7,7 +7,7 @@ import {
   inverseYUnit
 } from '../../components/blockUtils'
 
-import { IInputRect, IBlockRect } from '../../components/blockTypes'
+import { IExRect, IBlockRect } from '../../components/blockTypes'
 import { Unit } from '../../types'
 
 // const containersize = { width: 1000, height: 500 }
@@ -19,7 +19,7 @@ import { Unit } from '../../types'
 // }
 
 it('convertPositionLocation #1', () => {
-  const arg: IInputRect = {
+  const arg: IExRect = {
     left: 0,
     top: 0,
     right: 0,
@@ -34,7 +34,7 @@ it('convertPositionLocation #1', () => {
 })
 
 it('convertPositionLocation #2', () => {
-  const arg: IInputRect = {
+  const arg: IExRect = {
     left: '10%',
     top: 0,
     right: 0,
@@ -51,7 +51,7 @@ it('convertPositionLocation #2', () => {
 })
 
 it('convertPositionLocation #3', () => {
-  const arg: IInputRect = {
+  const arg: IExRect = {
     left: '10.5%',
     top: 0,
     right: 0,
@@ -68,7 +68,7 @@ it('convertPositionLocation #3', () => {
 })
 
 it('convertPositionLocation #4', () => {
-  const arg: IInputRect = {
+  const arg: IExRect = {
     left: '10.5%',
     top: 0,
     width: 100,
@@ -85,7 +85,7 @@ it('convertPositionLocation #4', () => {
 })
 
 it('convertPositionLocation #5', () => {
-  const arg: IInputRect = {
+  const arg: IExRect = {
     left: '10.5u',
     top: 0,
     width: 100,
@@ -102,7 +102,7 @@ it('convertPositionLocation #5', () => {
 })
 
 it('convertPositionLocation #6', () => {
-  const arg: IInputRect = {}
+  const arg: IExRect = {}
   expect(convertInputBlockRect(arg)).toEqual({})
 })
 

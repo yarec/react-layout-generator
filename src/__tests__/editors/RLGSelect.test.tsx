@@ -22,17 +22,13 @@ describe('RLGSelect', () => {
         containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 50 ,width: 200, height: 200 }
-          }
+          location: { left: 200, top: 50 ,width: 200, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 50 ,width: 200, height: 200 }
-          }
+          location: { left: 400, top: 50 ,width: 200, height: 200 }
         }}>
           <span>two</span>
         </div>
@@ -65,17 +61,13 @@ describe('RLGSelect', () => {
         containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 50, width: 200, height: 200 }
-          }
+          location: { left: 200, top: 50, width: 200, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 50, width: 200, height: 200 }
-          }
+          location: { left: 400, top: 50, width: 200, height: 200 }
         }}>
           <span>two</span>
         </div>
@@ -108,17 +100,13 @@ describe('RLGSelect', () => {
         containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 200, width: 200, height: 200 }
-          }
+          location: { left: 200, top: 200, width: 200, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 250, width: 200, height: 100 }
-          }
+          location: { left: 400, top: 250, width: 200, height: 100 }
         }}>
           <span>two</span>
         </div>
@@ -148,17 +136,13 @@ describe('RLGSelect', () => {
         containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 200, width: 100, height: 200 }
-          }
+          location: { left: 200, top: 200, width: 100, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 250, width: 200, height: 100 }
-          }
+          location: { left: 400, top: 250, width: 200, height: 100 }
         }}>
           <span>two</span>
         </div>
@@ -188,17 +172,13 @@ describe('RLGSelect', () => {
         containersize={{ width: 1000, height: 1000 }}>
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 200, width: 100, height: 200 }
-          }
+          location: { left: 200, top: 200, width: 100, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 250, width: 200, height: 100 }
-          }
+          location: { left: 400, top: 250, width: 200, height: 100 }
         }}>
           <span>two</span>
         </div>
@@ -229,17 +209,13 @@ describe('RLGSelect', () => {
       >
         <div data-layout={{
           name: 'one',
-          position: {
-            location: { left: 200, top: 200, width: 100, height: 200 }
-          }
+          location: { left: 200, top: 200, width: 100, height: 200 }
         }}>
           <span>one</span>
         </div>
         <div data-layout={{
           name: 'two',
-          position: {
-            location: { left: 400, top: 250, width: 200, height: 100 }
-          }
+          location: { left: 400, top: 250, width: 200, height: 100 }
         }}>
           <span>two</span>
         </div>

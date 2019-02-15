@@ -12,7 +12,7 @@ export { RLGPanel, IRLGMetaDataArgs } from '../../src/RLGPanel'
 export { Draggable } from '../../src/Draggable'
 export { DragDrop } from '../../src/DragDrop'
 
-export {IInputRect} from '../../src/components/blockTypes'
+export {IExRect} from '../../src/components/blockTypes'
 
 export {
   Unit,
@@ -29,7 +29,7 @@ export {
   rectSize
 } from '../../src/types'
 export { toXPixel, toYPixel } from '../../src/components/blockUtils'
-export { IPosition } from '../../src/components/blockTypes'
+export { IDataLayout } from '../../src/components/blockTypes'
 export { EditHelper, IEditTool, IEditHelperProps, Status } from '../../src/editors/EditHelper'
 export { columnsGenerator } from '../../src/generators/columnsGenerator'
 export { desktopGenerator } from '../../src/generators/desktopGenerator'
@@ -77,7 +77,7 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   IEditHelperProps,
 //   IGenerator,
 //   IPoint,
-//   IPosition,
+//   IDataLayout,
 //   IRLGMetaDataArgs,
 //   ISize,
 //   IRect,

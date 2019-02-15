@@ -1,5 +1,5 @@
 import { Block } from '../components/Block'
-import { IPosition } from '../components/blockTypes'
+import { IDataLayout } from '../components/blockTypes'
 import { Blocks } from '../components/Blocks'
 import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
@@ -23,7 +23,7 @@ export type IHook = (g: IGenerator) => void
 export interface ICreate {
   name: string
   g: IGenerator
-  position: IPosition
+  dataLayout: IDataLayout
   index?: number
   count?: number
 }

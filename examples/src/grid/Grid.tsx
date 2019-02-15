@@ -1,28 +1,28 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import { 
+import {
   DebugOptions,
   dynamicGenerator,
   IEditHelperProps,
   IRLGMetaDataArgs,
   ISize,
   rectSize,
-  RLGLayout, 
-  RLGPanel, 
+  RLGLayout,
+  RLGPanel,
   ServiceOptions,
-  Status, 
+  Status,
   toXPixel,
   toYPixel,
   Unit
 } from '../importRLG'
 
-import Button from '../components/Button';
-import Table from '../components/Table';
+import Button from '../components/Button'
+import Table from '../components/Table'
 
 export interface IProps {
-  containersize: ISize;
+  containersize: ISize
 }
 
 const Description = styled.p`
@@ -34,8 +34,8 @@ const Description = styled.p`
 const CalloutBottom = styled.div<IProps>`
   position: absolute;
   color: #000;
-  width: ${(p) => p.containersize.width};
-  height: ${(p) => p.containersize.height};
+  width: ${p => p.containersize.width};
+  height: ${p => p.containersize.height};
   background: #f3961c;
   border-radius: 10px;
   background: linear-gradient(top, #f9d835, #f3961c);
@@ -43,54 +43,62 @@ const CalloutBottom = styled.div<IProps>`
 
 export { CalloutBottom }
 
-export default class Grid extends React.Component<IEditHelperProps, { update: number }> {
-
-  private _g = dynamicGenerator('example.grid');
-  private _grid: HTMLCanvasElement;
-  private _gridUnitSquare = { x: 0, y: 0 };
-  private _gridUnit = Unit.pixel;
-  private _units = '1%';
-  private _edit = false;
+export default class Grid extends React.Component<
+  IEditHelperProps,
+  { update: number }
+> {
+  private _g = dynamicGenerator('example.grid')
+  private _grid: HTMLCanvasElement
+  private _gridUnitSquare = { x: 0, y: 0 }
+  private _gridUnit = Unit.pixel
+  private _units = '1%'
+  private _edit = false
 
   constructor(props: IEditHelperProps) {
-    super(props);
+    super(props)
     this.state = { update: 0 }
   }
 
   public setPixel = (event: React.MouseEvent<HTMLButtonElement>) => {
     this.grid(Unit.pixel)
-    this._g.clear();
-    this._gridUnit = Unit.pixel;
+    this._g.clear()
+    this._gridUnit = Unit.pixel
     this.setState({ update: this.state.update + 1 })
   }
 
   public setPercent = (event: React.MouseEvent<HTMLButtonElement>) => {
     this.grid(Unit.percent)
-    this._g.clear();
-    this._gridUnit = Unit.percent;
+    this._g.clear()
+    this._gridUnit = Unit.percent
     this.setState({ update: this.state.update + 1 })
   }
 
   public setvmin = (event: React.MouseEvent<HTMLButtonElement>) => {
     this.grid(Unit.vmin)
-    this._g.clear();
-    this._gridUnit = Unit.vmin;
+    this._g.clear()
+    this._gridUnit = Unit.vmin
     this.setState({ update: this.state.update + 1 })
   }
 
   public componentDidMount() {
     // console.log('Grid componentDidMount load grid');
-    this.props.editHelper().load([
-      { name: 'edit', command: this.setEdit, status: this._edit ? Status.up : Status.down }
-    ])
+    this.props
+      .editHelper()
+      .load([
+        {
+          name: 'edit',
+          command: this.setEdit,
+          status: this._edit ? Status.up : Status.down
+        }
+      ])
   }
 
   public setEdit = (status: Status) => {
     if (status === Status.down) {
-      status = Status.up;
+      status = Status.up
       this._edit = true
     } else {
-      status = Status.down;
+      status = Status.down
       this._edit = false
     }
 
@@ -98,13 +106,13 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     // this._g.clear();
     this.setState({ update: this.state.update + 1 })
 
-    return status;
+    return status
   }
 
   public render() {
     return (
       <RLGLayout
-        name='example.Grid'
+        name="example.Grid"
         debug={[DebugOptions.none]}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         g={this._g}
@@ -112,29 +120,30 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         <RLGPanel
           data-layout={{
             name: 'grid',
-            position: {
-              location: { left: 0, top: 0}
-            }
+
+            location: { left: 0, top: 0 }
           }}
           data-layer={0}
           style={{ overflow: 'hidden' }}
         >
           {(args: IRLGMetaDataArgs) => {
             return (
-            <canvas
-              ref={(element: HTMLCanvasElement) => { this.setGrid(args, element) }}
-              width={args.container.width}
-              height={args.container.height}
-            />
-            )}}
+              <canvas
+                ref={(element: HTMLCanvasElement) => {
+                  this.setGrid(args, element)
+                }}
+                width={args.container.width}
+                height={args.container.height}
+              />
+            )
+          }}
         </RLGPanel>
 
         <RLGPanel
           data-layout={{
             name: 'square (pixel, pixel)',
-            position: {
-              location: { left: 200, top: 50, width: 200, height: 200 }
-            }
+
+            location: { left: 200, top: 50, width: 200, height: 200 }
           }}
           data-layer={1}
           style={{ backgroundColor: 'tan' }}
@@ -157,16 +166,17 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         <RLGPanel
           data-layout={{
             name: 'square(percent, vmin)',
-            position: {
-              location: { left: '30%', top: '20%', width: 150, height: 150 }
-            }
+
+            location: { left: '30%', top: '20%', width: 150, height: 150 }
           }}
           data-layer={1}
           style={{ backgroundColor: 'LightSkyBlue' }}
         >
           {(args: IRLGMetaDataArgs) => (
             <>
-            <span>Square (percent, vmin) </span> <br/><br/><br/>
+              <span>Square (percent, vmin) </span> <br />
+              <br />
+              <br />
             </>
           )}
         </RLGPanel>
@@ -174,69 +184,58 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         <RLGPanel
           data-layout={{
             name: 'square(vmin, vmin)',
-            position: {
-              location: { left: '60vmin', top: '70vmin', width: 200, height: 200  }
-            }
-          }}
 
+            location: { left: '60vmin', top: '70vmin', width: 200, height: 200 }
+          }}
           data-layer={1}
           style={{ backgroundColor: 'lime' }}
         >
-          {(args: IRLGMetaDataArgs) => (
-            <span>Square (vmin, vmin) </span>
-          )}
-
+          {(args: IRLGMetaDataArgs) => <span>Square (vmin, vmin) </span>}
         </RLGPanel>
 
         <RLGPanel
           data-layout={{
             name: 'square(percent, percent)',
-            position: {
-              location: { left: '50%', top: '50%', width: 200, height: 150 }
-            }
+
+            location: { left: '50%', top: '50%', width: 200, height: 150 }
           }}
           data-layer={1}
           style={{ backgroundColor: 'gold' }}
         >
           {(args: IRLGMetaDataArgs) => (
             <>
-            <span>Square (percent, percent) </span> <br/><br/><br/>
-            <span>Click the edit button to edit. </span> <br/>
+              <span>Square (percent, percent) </span> <br />
+              <br />
+              <br />
+              <span>Click the edit button to edit. </span> <br />
             </>
-
           )}
         </RLGPanel>
 
         <div
           data-layout={{
             name: 'callout',
-            position: {
-              location: { left: '40%', top: '40%', width: 100, height: '80u' },
-              align: {
-                key: 'square(percent, percent)',
-                offset: { x: 20, y: 10 },
-                source: { x: 100, y: 100 },
-                self: { x: 0, y: 0 }
-              }
+
+            location: { left: '40%', top: '40%', width: 100, height: '80u' },
+            align: {
+              key: 'square(percent, percent)',
+              offset: { x: 20, y: 10 },
+              source: { x: 100, y: 100 },
+              self: { x: 0, y: 0 }
             }
           }}
-
           style={{ backgroundColor: 'yellow' }}
         >
-          <Description>
-            Drag Me
-          </Description>
+          <Description>Drag Me</Description>
         </div>
 
         {this.controls()}
         {this.gridLegend()}
-
       </RLGLayout>
-    );
+    )
   }
 
   protected gridLegend = () => {
-
     const Note = styled.span`
       font-family: Arial, Helvetica, sans-serif;
       font-size: '5px';
@@ -244,16 +243,21 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
       white-space: nowrap;
       overflow: 'hidden';
       word-break: keep-all;
-`
+    `
 
     return (
       <div
         data-layout={{
           name: 'Legend',
-          position: {
-            location: { left: '5vmin', top: '20vmin',width: 100, height: 80, unit: Unit.unmanaged},
-            editor: {preventEdit: true}
-          }
+
+          location: {
+            left: '5vmin',
+            top: '20vmin',
+            width: 100,
+            height: 80,
+            unit: Unit.unmanaged
+          },
+          editor: { preventEdit: true }
         }}
         data-layer={1}
       >
@@ -261,7 +265,7 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
         <Note>{`width: ${this._gridUnitSquare.x.toFixed(2)}px`}</Note> <br />
         <Note>{`height: ${this._gridUnitSquare.y.toFixed(2)}px`}</Note> <br />
       </div>
-    );
+    )
   }
 
   protected controls = () => {
@@ -280,14 +284,13 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
     return (
       <>
         <Button
-          name='Pixel'
+          name="Pixel"
           key={'Pixel'}
           data-layout={{
             name: 'Pixel',
-            position: {
-              location: { left: '5pmin', top: '5pmin', width: 90, height: 24 },
-              editor: {preventEdit: true}
-            }
+
+            location: { left: '5pmin', top: '5pmin', width: 90, height: 24 },
+            editor: { preventEdit: true }
           }}
           data-layer={2}
           style={this._gridUnit === Unit.pixel ? selectedStyle : style}
@@ -298,10 +301,9 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           key={'Percent'}
           data-layout={{
             name: 'Percent',
-            position: {
-              location: { left: '5pmin', top: '10pmin', width: 90, height: 24 },
-              editor: {preventEdit: true}
-            }
+
+            location: { left: '5pmin', top: '10pmin', width: 90, height: 24 },
+            editor: { preventEdit: true }
           }}
           data-layer={2}
           style={this._gridUnit === Unit.percent ? selectedStyle : style}
@@ -312,10 +314,9 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
           key={'vmin'}
           data-layout={{
             name: 'vmin',
-            position: {
-              location: { left: '5pmin', top: '15pmin', width: 90, height: 24 },
-              editor: {preventEdit: true}
-            }
+
+            location: { left: '5pmin', top: '15pmin', width: 90, height: 24 },
+            editor: { preventEdit: true }
           }}
           data-layer={2}
           style={this._gridUnit === Unit.vmin ? selectedStyle : style}
@@ -344,126 +345,159 @@ export default class Grid extends React.Component<IEditHelperProps, { update: nu
   }
 
   protected grid = (unit: Unit) => {
-    const containersize = this._g.params().get('containersize') as ISize;
-    const viewport = this._g.params().get('viewport') as ISize;
+    const containersize = this._g.params().get('containersize') as ISize
+    const viewport = this._g.params().get('viewport') as ISize
 
-    const bounds = {container: containersize, viewport}
+    const bounds = { container: containersize, viewport }
 
-    const w = Math.round(containersize.width);
-    const h = Math.round(containersize.height);
+    const w = Math.round(containersize.width)
+    const h = Math.round(containersize.height)
 
-    const lineWidth = 1;
+    const lineWidth = 1
 
-    let unitStep = { x: 1, y: 1 };
+    let unitStep = { x: 1, y: 1 }
 
     if (this._grid) {
-      const ctx = this._grid.getContext("2d")
+      const ctx = this._grid.getContext('2d')
 
       if (ctx) {
-        this.clearCanvas(ctx, this._grid);
+        this.clearCanvas(ctx, this._grid)
 
         // setup axis divisions
         switch (unit) {
           case Unit.pixel: {
             this._units = '10px'
-            unitStep = {x: toXPixel(10, Unit.pixel, bounds), y: toYPixel(10, Unit.pixel, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(10, Unit.pixel, bounds),
+              y: toYPixel(10, Unit.pixel, bounds)
+            }
+            break
           }
           case Unit.percent: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.percent, bounds), y: toYPixel(.01, Unit.percent, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.percent, bounds),
+              y: toYPixel(0.01, Unit.percent, bounds)
+            }
+            break
           }
           case Unit.pmin: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.pmin, bounds), y: toYPixel(.01, Unit.pmin, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.pmin, bounds),
+              y: toYPixel(0.01, Unit.pmin, bounds)
+            }
+            break
           }
           case Unit.pmax: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.pmax, bounds), y: toYPixel(.01, Unit.pmax, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.pmax, bounds),
+              y: toYPixel(0.01, Unit.pmax, bounds)
+            }
+            break
           }
           case Unit.ph: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.ph, bounds), y: toYPixel(.01, Unit.ph, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.ph, bounds),
+              y: toYPixel(0.01, Unit.ph, bounds)
+            }
+            break
           }
           case Unit.pw: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.pw, bounds), y: toYPixel(.01, Unit.pw, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.pw, bounds),
+              y: toYPixel(0.01, Unit.pw, bounds)
+            }
+            break
           }
 
           case Unit.vmin: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.vmin, bounds), y: toYPixel(.01, Unit.vmin, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.vmin, bounds),
+              y: toYPixel(0.01, Unit.vmin, bounds)
+            }
+            break
           }
           case Unit.vmax: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.vmax, bounds), y: toYPixel(.01, Unit.vmax, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.vmax, bounds),
+              y: toYPixel(0.01, Unit.vmax, bounds)
+            }
+            break
           }
           case Unit.vh: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.vh, bounds), y: toYPixel(.01, Unit.vh, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.vh, bounds),
+              y: toYPixel(0.01, Unit.vh, bounds)
+            }
+            break
           }
           case Unit.vw: {
             this._units = '1%'
-            unitStep = {x: toXPixel(.01, Unit.vw, bounds), y: toYPixel(.01, Unit.vw, bounds) }
-            break;
+            unitStep = {
+              x: toXPixel(0.01, Unit.vw, bounds),
+              y: toYPixel(0.01, Unit.vw, bounds)
+            }
+            break
           }
         }
 
-        this._gridUnitSquare = unitStep;
+        this._gridUnitSquare = unitStep
 
         // Horizontal lines
-        let index = -1;
+        let index = -1
         for (let j = 0; j < h; j += unitStep.y) {
-          index += 1;
-          let background = (index % 5 === 0) ? 'hsl(210,100%,75%)' : 'hsl(210,100%,90%)';
-          background = (index % 10 === 0) ? 'hsl(210,100%,60%)' : background;
-          ctx.strokeStyle = background;
-          ctx.lineWidth = lineWidth;
-          ctx.beginPath();
-          ctx.moveTo(0, j);
-          ctx.lineTo(w, j);
-          ctx.stroke();
+          index += 1
+          let background =
+            index % 5 === 0 ? 'hsl(210,100%,75%)' : 'hsl(210,100%,90%)'
+          background = index % 10 === 0 ? 'hsl(210,100%,60%)' : background
+          ctx.strokeStyle = background
+          ctx.lineWidth = lineWidth
+          ctx.beginPath()
+          ctx.moveTo(0, j)
+          ctx.lineTo(w, j)
+          ctx.stroke()
         }
 
         // Vertical lines
-        index = -1;
+        index = -1
         for (let i = 0; i < w; i += unitStep.x) {
-          index += 1;
-          let background = (index % 5 === 0) ? 'hsl(210,100%,75%)' : 'hsl(210,100%,90%)';
-          background = (index % 10 === 0) ? 'hsl(210,100%,60%)' : background;
-          ctx.strokeStyle = background;
-          ctx.lineWidth = lineWidth;
-          ctx.beginPath();
-          ctx.moveTo(i, 0);
-          ctx.lineTo(i, h);
-          ctx.stroke();
+          index += 1
+          let background =
+            index % 5 === 0 ? 'hsl(210,100%,75%)' : 'hsl(210,100%,90%)'
+          background = index % 10 === 0 ? 'hsl(210,100%,60%)' : background
+          ctx.strokeStyle = background
+          ctx.lineWidth = lineWidth
+          ctx.beginPath()
+          ctx.moveTo(i, 0)
+          ctx.lineTo(i, h)
+          ctx.stroke()
         }
       }
     }
   }
 
-  private clearCanvas(context: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    const w = canvas.width;
-    canvas.width = 1;
-    canvas.width = w;
+  private clearCanvas(
+    context: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement
+  ) {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    const w = canvas.width
+    canvas.width = 1
+    canvas.width = w
   }
 
   private setGrid = (args: IRLGMetaDataArgs, element: HTMLCanvasElement) => {
-
     if (this._grid !== element && element) {
-      this._grid = element;
+      this._grid = element
       this.grid(Unit.pixel)
-      this.setState({ update: this.state.update + 1 });
+      this.setState({ update: this.state.update + 1 })
     }
   }
 }
-

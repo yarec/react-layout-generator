@@ -6,78 +6,98 @@ import { ExtendElement } from '../editors/extendElement'
 import { UpdateParam } from '../editors/updateParam'
 
 /**
- * IDataLayout is the property that you use to define a block in React. In React
- * you need to use the css friendly name 'data-layout'.
+ * IDataLayout defines the location, origin, zIndex, link, transform, and editor
+ * rules for elements in RLG.
+ *
+ * A minimal definition that completely fills its parent is:
  *
  * ```ts
+ *
  *  <RLGLayout ... >
- *    <div data-layout={{
- *      name: '<block name>'
- *    }} >
+ *    <div
+ *      data-layout={{
+ *        name: '<block name>'
+ *      }}
+ *    >
  *      { content }
  *    </div>
  *  </RLGLayout>
  *
+ *
  * ```
- * In addition to the name you will need to add a position field if the block is
- * not already defined in a generator.
  */
 export interface IDataLayout {
   /**
    * The name of the block. It must be unique within each RLGLayout. Failure
    * to be unique will result in children of RLGLayout overwriting each other.
+   * Temporary blocks can be created without a name.
    */
-  name: string
-  /**
-   * IPosition specifies the rules and data needed to create a Block. If the
-   * Block already exists then that block will be used. Position must be defined
-   * either in a generator or when used with a child of RLGLayout.
-   */
-  position?: IPosition
-}
+  name?: string
 
-/**
- * IPosition defines the location, origin, zIndex, link, transform, and editor
- * rules for elements in RLG.
- *
- * A minimal definition that completely fills its parent is:
- * ```ts
- *  <RLGLayout ... >
- *    <div data-layout={{
- *      name: '<block name>'
- *      position: {
- *        location: { left: 0, right: 0 }
- *      }
- *    }} >
- *      { content }
- *    </div>
- *  </RLGLayout>
- *
- *
- * ```
- */
-export interface IPosition {
   /**
    * Specifies the location of this block. Location is position of the block
-   * relative to the origin. With a default
-   * origin `{x: 0, y: 0}`, the location is the `(left top)` of the rect.
+   * relative to the origin. The default location fills its parent container.
+   *
+   * Location is specified using left, right, top, bottom, width and height.
+   * All are optional. Each field specifies a constraint. Left, top, right, and
+   * bottom are units from the respective container side.
+   *
+   * For example just setting {left: 10} specifies a block that starts 10 units
+   * from the left side of its container:
+   *
+   *
+   *   ←        Parent container       →
+   *  ┌┈┈┈┈┈┈┌──────────────────────────┐
+   *  ┆  10 →│   Block                  │
+   *  ┆      │      left: 10            │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  └ ┈┈┈┈┈└──────────────────────────┘
+   *
+   *  Changing to {left: 10, bottom: 10} results in this block:
+   *
+   *   <-       Parent container      ->
+   *  ┌┈┈┈┈┈ ┌──────────────────────────┐
+   *  ┆  10 →│   Block                  │
+   *  ┆      │      left: 10            │
+   *  ┆      │      bottom: 10          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      │                          │
+   *  ┆      └──────────────────────────┘
+   *  ┆       ↑                         ┆
+   *  ┆       10                        ┆
+   *  └┈┈┈┈┈──┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈─┘
+   *
    */
-  location: IInputRect
+  location: IExRect
+
   /**
    *  Specifies another block that this block is attached to.
    */
+
   align?: IAlign
+
   /**
    * Specifies a user supplied function will calculate the Position data for 'children'.
    * It will be supplied with the index of the child and it should compute the
    * child's position returning a new Block. The child should be jsx.
    */
   positionChildren?: PositionChildrenFn
+
   /**
    * This defines the editor that will be available to the user when [RLGLayout
    * service](irlglayoutprops.html) property is set the ServiceOptions.edit.
    */
   editor?: IEditor
+
   /**
    * zIndex is the same as css z-index. The default is 0.
    *
@@ -85,6 +105,7 @@ export interface IPosition {
    * using the key `${block.name}ZIndex`.
    */
   zIndex?: number
+
   /**
    * Origin defines the point that the location will use when positioning a
    * block. For example an origin of { x: 50, y: 50 } will center the block
@@ -95,8 +116,7 @@ export interface IPosition {
   /**
    * Additional transforms to add to this block. Note that you can also transform
    * the contents of a block separately. Warning do not add a style with any transforms
-   * for this block. This feature is experimental and subject
-   * to change.
+   * for this block.
    */
   transform?: Transform[]
 }
@@ -116,17 +136,17 @@ export interface IPosition {
  * Passing this point to the function [toPixel](#toPixel) will return a 
  * point that is centered in the container.
  */
-export interface IInputPoint {
+export interface IExPoint {
   x: number | string
   y: number | string
 }
 
 /**
- * This interface defines the data for a block's location and size. Its data and behavior
- * is based on css properties [size-and-position](https://www.w3.org/TR/css-position-3/)
+ * This interface defines the block's location and size. Its behavior
+ * is based on css [size-and-position](https://www.w3.org/TR/css-position-3/)
  * rules. The default units are pixels.
  */
-export interface IInputRect {
+export interface IExRect {
   left?: number | string
   right?: number | string
   top?: number | string
@@ -136,7 +156,7 @@ export interface IInputRect {
 }
 
 /**
- * This interface defines the preprocessed IInputRect.
+ * This interface defines the preprocessed IExRect.
  */
 export interface IBlockRect {
   left?: number
@@ -222,7 +242,7 @@ export interface IAlign {
  *  const computedCardSpacing = g.params().get('computedCardSpacing') as IPoint;
  *
  *  // These children get placed horizontally based on index
- *  const child: IPosition = {
+ *  const child: IDataLayout = {
  *   location: { left: index * computedCardSpacing.x, y: 0 },
  *   size: cardSize
  *  };

@@ -34,7 +34,7 @@ it('generator #3', () => {
 })
 
 it('generator #4', () => {
-  const p = {
+  const dataLayout = {
     location: { left: 0, top: 10, width: 100, height: 10 }
   }
 
@@ -45,7 +45,7 @@ it('generator #4', () => {
       count: 0,
       name: '',
       g: g,
-      position: p
+      dataLayout
     })
   ).toBe(undefined)
 })

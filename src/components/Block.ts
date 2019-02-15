@@ -2,7 +2,7 @@ import { IGenerator } from '../generators/Generator'
 import { toAlign, fromAlign } from './blockUtils'
 import { Rect, IOrigin, ISize, IPoint, IRect } from '../types'
 import {
-  IPosition,
+  IDataLayout,
   IBlockRect,
   IAlign,
   IEditor,
@@ -33,7 +33,7 @@ import { clone } from '../utils'
  */
 export class Block {
   private readonly _name: string
-  private readonly _position: IPosition
+  private readonly _position: IDataLayout
   private readonly _g: IGenerator
 
   private _localParent: Block | undefined = undefined
@@ -53,7 +53,7 @@ export class Block {
   private _changed: boolean = true
   private _cached: Rect
 
-  constructor(name: string, p: IPosition, g: IGenerator) {
+  constructor(name: string, p: IDataLayout, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
     this._position = p
@@ -225,7 +225,7 @@ export class Block {
     }
   }
 
-  public updatePosition(p: IPosition) {
+  public updatePosition(p: IDataLayout) {
     if (!p) {
       return
     }
@@ -424,7 +424,7 @@ export class Block {
     return ref
   }
 
-  private validate(p: IPosition) {
+  private validate(p: IDataLayout) {
     // if (p.editor && p.editor.edits) {
     //   // p.editor.edits.forEach((edit) => {
     //   //   if (edit.ref === PositionRef.position) {

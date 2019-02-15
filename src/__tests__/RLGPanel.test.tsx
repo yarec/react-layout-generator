@@ -5,8 +5,8 @@ import { Generator, ICreate, IGenerator } from '../generators/Generator'
 import { RLGLayout } from '../RLGLayout'
 import { DebugOptions, ServiceOptions } from '../types'
 
-import * as Enzyme from 'enzyme';
-import { RLGPanel, IRLGMetaDataArgs } from '../RLGPanel';
+import * as Enzyme from 'enzyme'
+import { RLGPanel, IRLGMetaDataArgs } from '../RLGPanel'
 
 const { mount } = Enzyme
 
@@ -23,7 +23,7 @@ function create(args: ICreate) {
   let block
   const blocks = args.g.blocks()
   if (blocks) {
-    block = blocks.set(args.name, args.position, args.g)
+    block = blocks.set(args.name, args.dataLayout, args.g)
   }
 
   return block
@@ -33,15 +33,22 @@ const g: IGenerator = new Generator('test', init, params, create)
 
 describe('RLGLayout', () => {
   test('it should allow props to be set #1', () => {
-    const wrapper = mount(<RLGLayout name='test#1' service={ServiceOptions.edit} debug={DebugOptions.all} g={g} />)
-    expect(wrapper.props().debug).toEqual(DebugOptions.all);
-  });
+    const wrapper = mount(
+      <RLGLayout
+        name="test#1"
+        service={ServiceOptions.edit}
+        debug={DebugOptions.all}
+        g={g}
+      />
+    )
+    expect(wrapper.props().debug).toEqual(DebugOptions.all)
+  })
 
   test('RLGPanel test #1', () => {
     g.reset()
     const wrapper = mount(
       <RLGLayout
-        name='panelTest#2'
+        name="panelTest#2"
         service={ServiceOptions.edit}
         g={g}
         containersize={{ width: 1000, height: 1000 }}
@@ -50,23 +57,25 @@ describe('RLGLayout', () => {
           key={'a'}
           data-layout={{
             name: 'a',
-            position: {
-              location: {left: 10, top: 10, width: 100, height: 100}
-            }
+
+            location: { left: 10, top: 10, width: 100, height: 100 }
           }}
         >
           {(args: IRLGMetaDataArgs) => (
             <div>
-              <span >Panel</span>
+              <span>Panel</span>
             </div>
           )}
         </RLGPanel>
       </RLGLayout>
     )
 
-    const panel = wrapper.find(RLGPanel).at(0).instance() as RLGPanel
+    const panel = wrapper
+      .find(RLGPanel)
+      .at(0)
+      .instance() as RLGPanel
 
-    expect(panel.props['data-layout'].name).toEqual('a');
-    expect(wrapper.props().service).toEqual(ServiceOptions.edit);
-  });
+    expect(panel.props['data-layout'].name).toEqual('a')
+    expect(wrapper.props().service).toEqual(ServiceOptions.edit)
+  })
 })

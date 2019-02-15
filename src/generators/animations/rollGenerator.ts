@@ -102,14 +102,14 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
   }
 
   function create(args: ICreate): Block {
-    if (!args.position) {
-      console.error(`You need to pass a position (IPosition) object 
+    if (!args.dataLayout) {
+      console.error(`You need to pass a position (IDataLayout) object 
       for ${args.name} in generator rollGenerator ${args.g.name()}`)
     }
 
     args.g.params().set('update', 1)
 
-    return args.g.blocks().set(args.name, args.position, args.g)
+    return args.g.blocks().set(args.name, args.dataLayout, args.g)
   }
 
   return new Generator(name, init, _params, create)
