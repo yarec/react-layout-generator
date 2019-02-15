@@ -26,6 +26,7 @@ export {
   Unit,
   DebugOptions,
   ServiceOptions,
+  EditorOptions,
   IGenericProps,
   ILayerOptions,
   ISize,
@@ -70,6 +71,7 @@ export {
 } from './editors/update'
 
 export { Blocks } from './components/Blocks'
+export {} from './components/blockUtils'
 export { IEditableTextData, Params, ParamValue } from './components/Params'
 
 //

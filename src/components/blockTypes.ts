@@ -137,8 +137,6 @@ export interface IInputRect {
 
 /**
  * This interface defines the preprocessed IInputRect.
- * Internal use only.
- * @ignore
  */
 export interface IBlockRect {
   left?: number
