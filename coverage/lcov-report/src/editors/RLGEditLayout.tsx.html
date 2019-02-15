@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30.46% </span>
+        <span class="strong">30.26% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>46/151</span>
+        <span class='fraction'>46/152</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8.43% </span>
+        <span class="strong">8.05% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>7/83</span>
+        <span class='fraction'>7/87</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">22.73% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>5/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30% </span>
+        <span class="strong">29.8% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>45/150</span>
+        <span class='fraction'>45/151</span>
       </div>
     </div>
   </div>
@@ -434,9 +434,7 @@
 389
 390
 391
-392
-393
-394</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+392</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
@@ -574,15 +572,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -594,17 +590,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -832,7 +828,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react'
 &nbsp;
 // import Layout from 'src/components/Block';
-import { DebugOptions, IPoint, IRect } from '../types'
+import { DebugOptions, IPoint, IRect, EditorOptions } from '../types'
 import { clone } from '../utils'
 import { IEditor, IEditorProps, IUndo } from './Editor'
 &nbsp;
@@ -905,7 +901,7 @@ export class RLGEditLayout
 &nbsp;
     this._handle = { x: 0, y: 0, width: 0, height: 0 }
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this.props.edit.updateHandle) {
-      const r = props.block.rect()
+      const r = props.block.rect
       this._handle = this.props.edit.updateHandle(r)
     }
 &nbsp;
@@ -937,7 +933,7 @@ export class RLGEditLayout
 &nbsp;
 <span class="fstat-no" title="function not covered" >  public initUpdate(</span>x: number, y: number) {
 <span class="cstat-no" title="statement not covered" >    this._startOrigin = { x, y }</span>
-    const r = <span class="cstat-no" title="statement not covered" >this.props.block.rect()</span>
+    const r = <span class="cstat-no" title="statement not covered" >this.props.block.rect</span>
 <span class="cstat-no" title="statement not covered" >    this._handle = this.props.edit.updateHandle!(r)</span>
 <span class="cstat-no" title="statement not covered" >    this._startRect = clone(this.props.handle)</span>
 <span class="cstat-no" title="statement not covered" >    console.log(`initUpdate ${r.y + r.height} ${this._handle.y}`)</span>
@@ -965,23 +961,22 @@ export class RLGEditLayout
       const ur: IRect = <span class="cstat-no" title="statement not covered" >this.props.edit.extendElement!(r, deltaX, deltaY)</span>
 &nbsp;
       // 2 Pin
-<span class="cstat-no" title="statement not covered" >      if (ur.x &lt; this.props.boundary.x) {</span>
-<span class="cstat-no" title="statement not covered" >        ur.x = this.props.boundary.x</span>
-      }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      if (ur.x + ur.width &gt; this.props.boundary.x + this.props.boundary.width) {</span>
-<span class="cstat-no" title="statement not covered" >        ur.x = this.props.boundary.x + this.props.boundary.width - ur.width</span>
-      }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      if (ur.y &lt; this.props.boundary.y) {</span>
-<span class="cstat-no" title="statement not covered" >        ur.y = this.props.boundary.y</span>
-      }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      if (</span>
-        ur.y + ur.height &gt;
-        this.props.boundary.y + this.props.boundary.height
-      ) {
-<span class="cstat-no" title="statement not covered" >        ur.y = this.props.boundary.y + this.props.boundary.height - ur.height</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.props.editor || this.props.editor &amp; EditorOptions.pin) {</span>
+<span class="cstat-no" title="statement not covered" >        if (ur.x &lt; this.props.boundary.x) {</span>
+<span class="cstat-no" title="statement not covered" >          ur.x = this.props.boundary.x</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (ur.x + ur.width &gt; this.props.boundary.x + this.props.boundary.width) {</span>
+<span class="cstat-no" title="statement not covered" >          ur.x = this.props.boundary.x + this.props.boundary.width - ur.width</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (ur.y &lt; this.props.boundary.y) {</span>
+<span class="cstat-no" title="statement not covered" >          ur.y = this.props.boundary.y</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (</span>
+          ur.y + ur.height &gt;
+          this.props.boundary.y + this.props.boundary.height
+        ) {
+<span class="cstat-no" title="statement not covered" >          ur.y = this.props.boundary.y + this.props.boundary.height - ur.height</span>
+        }
       }
 &nbsp;
       // 3 Make live
@@ -997,8 +992,7 @@ export class RLGEditLayout
       }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      this.props.block.update(</span>
-        { x: ur.x, y: ur.y },
-        { width: ur.width, height: ur.height }
+        { x: ur.x, y: ur.y, width: ur.width, height: ur.height }
       )
 &nbsp;
       // update params if needed
@@ -1106,8 +1100,8 @@ export class RLGEditLayout
 <span class="cstat-no" title="statement not covered" >        event.stopPropagation()</span>
 <span class="cstat-no" title="statement not covered" >        if (this.props.select) {</span>
           let select: boolean | undefined = <span class="cstat-no" title="statement not covered" >true</span>
-<span class="cstat-no" title="statement not covered" >          if (this.props.block.position.editor) {</span>
-            const editor = <span class="cstat-no" title="statement not covered" >this.props.block.position.editor</span>
+<span class="cstat-no" title="statement not covered" >          if (this.props.block.editor) {</span>
+            const editor = <span class="cstat-no" title="statement not covered" >this.props.block.editor</span>
 <span class="cstat-no" title="statement not covered" >            select = editor.selectable</span>
 <span class="cstat-no" title="statement not covered" >            if (select === undefined) {</span>
 <span class="cstat-no" title="statement not covered" >              select = true</span>
@@ -1194,8 +1188,8 @@ export class RLGEditLayout
 <span class="cstat-no" title="statement not covered" >        this.setState({ contextMenu: false })</span>
       } else {
         const block = <span class="cstat-no" title="statement not covered" >this.props.block</span>
-        const r = <span class="cstat-no" title="statement not covered" >block.rect()</span>
-<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height })</span>
+        const r = <span class="cstat-no" title="statement not covered" >block.rect</span>
+<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: r.y, width: r.width, height: r.height })</span>
       }
 <span class="cstat-no" title="statement not covered" >      this.props.onUpdate(true)</span>
     }
@@ -1228,7 +1222,7 @@ export class RLGEditLayout
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

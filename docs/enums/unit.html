@@ -916,25 +916,34 @@ img { max-width: 100%; }
 					<a href="unit.html#percent" class="tsd-kind-icon">percent</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+					<a href="unit.html#ph" class="tsd-kind-icon">ph</a>
+				</li>
+				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 					<a href="unit.html#pixel" class="tsd-kind-icon">pixel</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="unit.html#preserve" class="tsd-kind-icon">preserve</a>
+					<a href="unit.html#pmax" class="tsd-kind-icon">pmax</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="unit.html#preserveheight" class="tsd-kind-icon">preserve<wbr>Height</a>
+					<a href="unit.html#pmin" class="tsd-kind-icon">pmin</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="unit.html#preservewidth" class="tsd-kind-icon">preserve<wbr>Width</a>
+					<a href="unit.html#pw" class="tsd-kind-icon">pw</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 					<a href="unit.html#unmanaged" class="tsd-kind-icon">unmanaged</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="unit.html#unmanagedheight" class="tsd-kind-icon">unmanaged<wbr>Height</a>
+					<a href="unit.html#vh" class="tsd-kind-icon">vh</a>
 				</li>
 				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-					<a href="unit.html#unmanagedwidth" class="tsd-kind-icon">unmanaged<wbr>Width</a>
+					<a href="unit.html#vmax" class="tsd-kind-icon">vmax</a>
+				</li>
+				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+					<a href="unit.html#vmin" class="tsd-kind-icon">vmin</a>
+				</li>
+				<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+					<a href="unit.html#vw" class="tsd-kind-icon">vw</a>
 				</li>
 			</ul>
 		</li>
@@ -948,6 +957,12 @@ img { max-width: 100%; }
 					<p>Defines the units of location and size passed to data-layout or
 					in <a href="iposition.html">IPosition</a>. Most computation will be done in pixels.</p>
 				</div>
+				<p>Percent uses the container size as its basis.</p>
+				<p>Viewport uses the document&#39;s viewport as it&#39;s basis.</p>
+				<p>Preserve is similar viewport except that it uses the
+				container size rather than the viewport as its basis.</p>
+				<p>Both Viewport and Preserve units will keep a square as a square. Percent
+				will only render a square if its basis is also square.</p>
 			</div>
 		</section>
 		<section class="tsd-panel-group tsd-index-group">
@@ -958,13 +973,16 @@ img { max-width: 100%; }
 						<h3>Enumeration members</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#percent" class="tsd-kind-icon">percent</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#ph" class="tsd-kind-icon">ph</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#pixel" class="tsd-kind-icon">pixel</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#preserve" class="tsd-kind-icon">preserve</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#preserveheight" class="tsd-kind-icon">preserve<wbr>Height</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#preservewidth" class="tsd-kind-icon">preserve<wbr>Width</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#pmax" class="tsd-kind-icon">pmax</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#pmin" class="tsd-kind-icon">pmin</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#pw" class="tsd-kind-icon">pw</a></li>
 							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#unmanaged" class="tsd-kind-icon">unmanaged</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#unmanagedheight" class="tsd-kind-icon">unmanaged<wbr>Height</a></li>
-							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#unmanagedwidth" class="tsd-kind-icon">unmanaged<wbr>Width</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#vh" class="tsd-kind-icon">vh</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#vmax" class="tsd-kind-icon">vmax</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#vmin" class="tsd-kind-icon">vmin</a></li>
+							<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="unit.html#vw" class="tsd-kind-icon">vw</a></li>
 						</ul>
 					</section>
 				</div>
@@ -978,15 +996,28 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">percent<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L182">types.ts:182</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L194">types.ts:194</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Percent is relative to the parent size. That means that
-							if the parent size is rectangular the value will be proportional
-							to the parent size. In other words a perfect square will
-						be displayed as a rectangular element.</p>
+						<p>Percent uses 1/100 of each axis of the container as its basis. Units for
+						horizontal axis are generally not equal to units for vertical axis.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+				<a name="ph" class="tsd-anchor"></a>
+				<h3>ph</h3>
+				<div class="tsd-signature tsd-kind-icon">ph<span class="tsd-signature-symbol">:</span> </div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L210">types.ts:210</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>PreserveHeight uses 1/100 of the vertical axis of the container as its basis.</p>
 					</div>
 				</div>
 			</section>
@@ -996,7 +1027,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">pixel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L175">types.ts:175</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L189">types.ts:189</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1009,53 +1040,47 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="preserve" class="tsd-anchor"></a>
-				<h3>preserve</h3>
-				<div class="tsd-signature tsd-kind-icon">preserve<span class="tsd-signature-symbol">:</span> </div>
+				<a name="pmax" class="tsd-anchor"></a>
+				<h3>pmax</h3>
+				<div class="tsd-signature tsd-kind-icon">pmax<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L190">types.ts:190</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L202">types.ts:202</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Preserve is similar percent except that it takes the shorter
-							axis to define the value of a 1% pixel and then applies that
-							to the other axis. This means that a perfect square will still
-							be presented as a square. Preserve is also similar to css&#39;s vw,
-						vh, vmin, and vmax units.</p>
+						<p>PreserveMin uses 1/100 of the longer axis of the container as its basis.</p>
 					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="preserveheight" class="tsd-anchor"></a>
-				<h3>preserve<wbr>Height</h3>
-				<div class="tsd-signature tsd-kind-icon">preserve<wbr>Height<span class="tsd-signature-symbol">:</span> </div>
+				<a name="pmin" class="tsd-anchor"></a>
+				<h3>pmin</h3>
+				<div class="tsd-signature tsd-kind-icon">pmin<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L200">types.ts:200</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L198">types.ts:198</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>PreserveHeight is same as Preserve except that Vertical axis is
-						taken as the basis.</p>
+						<p>PreserveMin uses 1/100 of the shorter axis of the container as its basis.</p>
 					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="preservewidth" class="tsd-anchor"></a>
-				<h3>preserve<wbr>Width</h3>
-				<div class="tsd-signature tsd-kind-icon">preserve<wbr>Width<span class="tsd-signature-symbol">:</span> </div>
+				<a name="pw" class="tsd-anchor"></a>
+				<h3>pw</h3>
+				<div class="tsd-signature tsd-kind-icon">pw<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L195">types.ts:195</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L206">types.ts:206</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>PreserveWidth is same as Preserve except that horizontal axis is
-						taken as the basis.</p>
+						<p>PreserveWidth uses 1/100 of the horizontal axis of the container as its basis.</p>
 					</div>
 				</div>
 			</section>
@@ -1065,48 +1090,67 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">unmanaged<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L210">types.ts:210</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L235">types.ts:235</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Unmanaged is only usable for the size of an element. The actual
-						value is the natural size of the content as determined by the browser.</p>
-					</div>
-					<p>Unmanaged applies to both width and height.</p>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="unmanagedheight" class="tsd-anchor"></a>
-				<h3>unmanaged<wbr>Height</h3>
-				<div class="tsd-signature tsd-kind-icon">unmanaged<wbr>Height<span class="tsd-signature-symbol">:</span> </div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L220">types.ts:220</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>UnmanagedHeight is the same as Unmanaged except it only applies to the
-						height.</p>
+						<p>Unmanaged sets the Block to fit it&#39;s content. Unmanaged can only be
+							applied to the width and height of location and must be explicitly
+						specified in location.</p>
+						<pre><code class="language-ts"> location={{left: <span class="hljs-number">50</span>, width: <span class="hljs-string">'100u'</span>, height:=<span class="hljs-string">'100%'</span>}}</code></pre>
 					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-				<a name="unmanagedwidth" class="tsd-anchor"></a>
-				<h3>unmanaged<wbr>Width</h3>
-				<div class="tsd-signature tsd-kind-icon">unmanaged<wbr>Width<span class="tsd-signature-symbol">:</span> </div>
+				<a name="vh" class="tsd-anchor"></a>
+				<h3>vh</h3>
+				<div class="tsd-signature tsd-kind-icon">vh<span class="tsd-signature-symbol">:</span> </div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/types.ts#L215">types.ts:215</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L226">types.ts:226</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+				<a name="vmax" class="tsd-anchor"></a>
+				<h3>vmax</h3>
+				<div class="tsd-signature tsd-kind-icon">vmax<span class="tsd-signature-symbol">:</span> </div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L218">types.ts:218</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>UnmanagedWidth is the same as Unmanaged except it only applies to the
-						width.</p>
+						<p>Vmax uses 1/100 of the shorter axis of the viewport as its basis.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+				<a name="vmin" class="tsd-anchor"></a>
+				<h3>vmin</h3>
+				<div class="tsd-signature tsd-kind-icon">vmin<span class="tsd-signature-symbol">:</span> </div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L214">types.ts:214</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Vmin uses 1/100 of the shorter axis of the viewport as the base unit.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+				<a name="vw" class="tsd-anchor"></a>
+				<h3>vw</h3>
+				<div class="tsd-signature tsd-kind-icon">vw<span class="tsd-signature-symbol">:</span> </div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/types.ts#L222">types.ts:222</a></li>
+					</ul>
+				</aside>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

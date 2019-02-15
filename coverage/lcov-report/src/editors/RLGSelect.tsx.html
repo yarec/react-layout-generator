@@ -502,7 +502,9 @@
 457
 458
 459
-460</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+460
+461</td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -963,7 +965,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
 &nbsp;
-import { Block, IMenuItem } from '../components/Block';
+import { Block } from '../components/Block';
+import { IMenuItem } from '../components/blockTypes';
 import { IGenerator } from '../generators/Generator';
 import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
@@ -1199,10 +1202,10 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
 <span class="cstat-no" title="statement not covered" >    data.forEach(<span class="fstat-no" title="function not covered" >(</span>saved: ISavedPosition) =&gt; {</span>
       const block = <span class="cstat-no" title="statement not covered" >blocks.get(saved.name);</span>
 <span class="cstat-no" title="statement not covered" >      if (block) {</span>
-<span class="cstat-no" title="statement not covered" >        oldData.push({name: saved.name, value: clone(block.rect())});</span>
+<span class="cstat-no" title="statement not covered" >        oldData.push({name: saved.name, value: clone(block.rect)});</span>
         const r = <span class="cstat-no" title="statement not covered" >saved.value;</span>
 <span class="cstat-no" title="statement not covered" >        console.log(`Select restore ${saved.name} ${saved.value.x} ${saved.value.y}`);</span>
-<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: r.y }, { width: r.width, height: r.height });</span>
+<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: r.y, width: r.width, height: r.height });</span>
 <span class="cstat-no" title="statement not covered" >        this._selected.set(block.name, block);</span>
       }
     });
@@ -1230,7 +1233,7 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
     const data: IUndoRedo = []
     this._selected.forEach((block: Block) =&gt; {
       // save a clone of block.rect
-      data.push({ name: block.name, value: clone(block.rect()) });
+      data.push({ name: block.name, value: clone(block.rect) });
     })
     this._undo.push(data);
   }
@@ -1241,11 +1244,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
     this.pushRectState();
 &nbsp;
     this._selected.forEach((block: Block) =&gt; {
-      const r = block.rect();
+      const r = block.rect;
       if (center === undefined) {
         center = r.x + .5 * r.width;
       } else {
-        block.update({ x: center - r.width / 2, y: r.y }, { width: r.width, height: r.height })
+        block.update({ x: center - r.width / 2, y: r.y, width: r.width, height: r.height })
       }
     });
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this._selected.size) {
@@ -1259,11 +1262,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
 <span class="cstat-no" title="statement not covered" >    this.pushRectState();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this._selected.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-      const r = <span class="cstat-no" title="statement not covered" >block.rect();</span>
+      const r = <span class="cstat-no" title="statement not covered" >block.rect;</span>
 <span class="cstat-no" title="statement not covered" >      if (middle === undefined) {</span>
 <span class="cstat-no" title="statement not covered" >        middle = r.y + .5 * r.height;</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: middle - r.height / 2 }, { width: r.width, height: r.height })</span>
+<span class="cstat-no" title="statement not covered" >        block.update({ x: r.x, y: middle - r.height / 2, width: r.width, height: r.height })</span>
       }
     });
 <span class="cstat-no" title="statement not covered" >    if (this._selected.size) {</span>
@@ -1277,11 +1280,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
     this.pushRectState();
 &nbsp;
     this._selected.forEach((block: Block) =&gt; {
-      const r = block.rect();
+      const r = block.rect;
       if (top === undefined) {
         top = r.y;
       }
-      block.update({ x: r.x, y: top }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: top, width: r.width, height: r.height })
     });
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this._selected.size) {
       this.props.onUpdate();
@@ -1294,11 +1297,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
     this.pushRectState();
 &nbsp;
     this._selected.forEach((block: Block) =&gt; {
-      const r = block.rect();
+      const r = block.rect;
       if (left === undefined) {
         left = r.x;
       }
-      block.update({ x: left, y: r.y }, { width: r.width, height: r.height })
+      block.update({ x: left, y: r.y, width: r.width, height: r.height })
     });
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this._selected.size) {
       this.props.onUpdate();
@@ -1311,11 +1314,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
     this.pushRectState();
 &nbsp;
     this._selected.forEach((block: Block) =&gt; {
-      const r = block.rect();
+      const r = block.rect;
       if (bottom === undefined) {
         bottom = r.y + r.height;
       }
-      block.update({ x: r.x, y: bottom - r.height }, { width: r.width, height: r.height })
+      block.update({ x: r.x, y: bottom - r.height, width: r.width, height: r.height })
     });
     <span class="missing-if-branch" title="else path not taken" >E</span>if (this._selected.size) {
       this.props.onUpdate();
@@ -1328,11 +1331,11 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
 <span class="cstat-no" title="statement not covered" >    this.pushRectState();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this._selected.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-      const r = <span class="cstat-no" title="statement not covered" >block.rect();</span>
+      const r = <span class="cstat-no" title="statement not covered" >block.rect;</span>
 <span class="cstat-no" title="statement not covered" >      if (right === undefined) {</span>
 <span class="cstat-no" title="statement not covered" >        right = r.x + r.width;</span>
       }
-<span class="cstat-no" title="statement not covered" >      block.update({ x: right - r.width, y: r.y }, { width: r.width, height: r.height })</span>
+<span class="cstat-no" title="statement not covered" >      block.update({ x: right - r.width, y: r.y, width: r.width, height: r.height })</span>
     });
 <span class="cstat-no" title="statement not covered" >    if (this._selected.size) {</span>
 <span class="cstat-no" title="statement not covered" >      this.props.onUpdate();</span>
@@ -1426,7 +1429,7 @@ export class RLGSelect extends React.Component&lt;IRLGSelectProps, IRLGSelectSta
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

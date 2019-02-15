@@ -928,9 +928,6 @@ img { max-width: 100%; }
 					<a href="iposition.html#positionchildren" class="tsd-kind-icon">position<wbr>Children</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="iposition.html#size" class="tsd-kind-icon">size</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="iposition.html#transform" class="tsd-kind-icon">transform</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -945,13 +942,22 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>IPosition defines the positioning, zIndex, and editor rules for elements in RLG.</p>
+					<p>IPosition defines the location, origin, zIndex, link, transform, and editor
+					rules for elements in RLG.</p>
 				</div>
-				<p>A minimal definition is:</p>
-				<pre><code class="language-ts"> position: {
-   location: { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span> },
-   size: { width: <span class="hljs-number">100</span>, height: <span class="hljs-number">100</span> }
- }</code></pre>
+				<p>A minimal definition that completely fills its parent is:</p>
+				<pre><code class="language-ts"> &lt;RLGLayout ... &gt;
+   &lt;div data-layout={{
+     name: '&lt;block name&gt;'
+     position: {
+       location: { left: 0, right: 0 }
+     }
+   }} &gt;
+     { content }
+   &lt;/div&gt;
+ &lt;/RLGLayout&gt;
+
+</code></pre>
 			</div>
 		</section>
 		<section class="tsd-panel tsd-hierarchy">
@@ -974,7 +980,6 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#location" class="tsd-kind-icon">location</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#origin" class="tsd-kind-icon">origin</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#positionchildren" class="tsd-kind-icon">position<wbr>Children</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#size" class="tsd-kind-icon">size</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#transform" class="tsd-kind-icon">transform</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iposition.html#zindex" class="tsd-kind-icon">z<wbr>Index</a></li>
 						</ul>
@@ -990,12 +995,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">align<span class="tsd-signature-symbol">:</span> <a href="ialign.html" class="tsd-signature-type">IAlign</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L300">components/Block.ts:300</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L69">components/blockTypes.ts:69</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p> align defines the other element that this one is attached to.</p>
+						<p> Specifies another block that this block is attached to.</p>
 					</div>
 				</div>
 			</section>
@@ -1005,7 +1010,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">editor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IEditor</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L311">components/Block.ts:311</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L80">components/blockTypes.ts:80</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1018,15 +1023,16 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="location" class="tsd-anchor"></a>
 				<h3>location</h3>
-				<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="ipositionlocation.html" class="tsd-signature-type">IPositionLocation</a></div>
+				<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="iinputrect.html" class="tsd-signature-type">IInputRect</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L329">components/Block.ts:329</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L65">components/blockTypes.ts:65</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Location is position of the block relative to the origin. With a default
+						<p>Specifies the location of this block. Location is position of the block
+							relative to the origin. With a default
 						origin <code>{x: 0, y: 0}</code>, the location is the <code>(left top)</code> of the rect.</p>
 					</div>
 				</div>
@@ -1037,7 +1043,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L324">components/Block.ts:324</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L93">components/blockTypes.ts:93</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1051,32 +1057,17 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="positionchildren" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> position<wbr>Children</h3>
-				<div class="tsd-signature tsd-kind-icon">position<wbr>Children<span class="tsd-signature-symbol">:</span> <a href="../globals.html#positionchildren" class="tsd-signature-type">PositionChildren</a></div>
+				<div class="tsd-signature tsd-kind-icon">position<wbr>Children<span class="tsd-signature-symbol">:</span> <a href="../globals.html#positionchildrenfn" class="tsd-signature-type">PositionChildrenFn</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L306">components/Block.ts:306</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L75">components/blockTypes.ts:75</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This user supplied function will calculate the Position data for &#39;children&#39;.
+						<p>Specifies a user supplied function will calculate the Position data for &#39;children&#39;.
 							It will be supplied with the index of the child and it should compute the
 						child&#39;s position returning a new Block. The child should be jsx.</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="size" class="tsd-anchor"></a>
-				<h3>size</h3>
-				<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <a href="ipositionsize.html" class="tsd-signature-type">IPositionSize</a></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L333">components/Block.ts:333</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Size specifies the width and height of a blocks rect.</p>
 					</div>
 				</div>
 			</section>
@@ -1086,14 +1077,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">:</span> <a href="../globals.html#transform" class="tsd-signature-type">Transform</a><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L340">components/Block.ts:340</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L101">components/blockTypes.ts:101</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Additional transforms to add to this block. Note that you can also transform
-							the contents of a block separately. Warning do not include any transforms in
-							the style property for this block. This feature is experimental and subject
+							the contents of a block separately. Warning do not add a style with any transforms
+							for this block. This feature is experimental and subject
 						to change.</p>
 					</div>
 				</div>
@@ -1104,7 +1095,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L318">components/Block.ts:318</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L87">components/blockTypes.ts:87</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">

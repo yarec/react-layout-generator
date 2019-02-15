@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">93.75% </span>
+        <span class="strong">94.44% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>15/16</span>
+        <span class='fraction'>17/18</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">93.75% </span>
+        <span class="strong">94.44% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>15/16</span>
+        <span class='fraction'>17/18</span>
       </div>
     </div>
   </div>
@@ -109,7 +109,10 @@
 64
 65
 66
-67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,7 +121,7 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,6 +135,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,20 +179,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Block, IEdit } from '../components/Block'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Block } from '../components/Block'
+import { IEdit } from '../components/blockTypes'
 import { IRect, unitFactor } from '../types'
 &nbsp;
 /**
- * UpdateParamLocation computes the [location](interfaces/ipositionlocation.html) update.
+ * UpdateParamLocation computes a [location](interfaces/ipositionlocation.html) update.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factorX = unitFactor(block.blockRect.leftUnit)
+  const factorY = unitFactor(block.blockRect.topUnit)
   return {
     name: edit.variable!,
     value: {
-      x: block.position.location.x * factor,
-      y: block.position.location.y * factor,
-      unit: block.position.size.unit
+      x: updated.x * factorX,
+      y: updated.y * factorY
     }
   }
 }
@@ -198,7 +203,8 @@ export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
  */
 &nbsp;
 export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factorX = unitFactor(block.blockRect.leftUnit)
+  const factorY = unitFactor(block.blockRect.topUnit)
   let r = {
     name: edit.variable!,
     value: {
@@ -206,12 +212,12 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
       y: 0
     }
   }
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (block.position.align) {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (block.align) {
 <span class="cstat-no" title="statement not covered" >    r = {</span>
       name: edit.variable!,
       value: {
-        x: block.position.align!.offset.x * factor,
-        y: block.position.align!.offset.y * factor
+        x: block.align.offset.x * factorX,
+        y: block.align.offset.y * factorY
       }
     }
   }
@@ -223,7 +229,7 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
  * a generator directly uses the width in computing a layout.
  */
 export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factor = unitFactor(block.blockRect.widthUnit)
   return {
     name: edit.variable!,
     value: updated.width * factor
@@ -235,7 +241,7 @@ export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
  * a generator directly uses the height in computing a layout.
  */
 export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
-  const factor = unitFactor(block.position.size.unit)
+  const factor = unitFactor(block.blockRect.heightUnit)
   return {
     name: edit.variable!,
     value: updated.height * factor
@@ -247,7 +253,7 @@ export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

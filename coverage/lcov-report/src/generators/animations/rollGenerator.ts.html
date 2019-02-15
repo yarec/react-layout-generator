@@ -157,18 +157,16 @@
 112
 113
 114
-115</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+115
+116
+117</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,6 +230,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -271,18 +274,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-&nbsp;
-import { Block } from '../../components/Block'
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Block } from '../../components/Block'
 import { Blocks } from '../../components/Blocks'
 import { Params, ParamValue } from '../../components/Params'
 import { Generator, ICreate, IGenerator } from '../Generator'
 import { ISize, IPoint } from '../../types'
 &nbsp;
 export function rollGenerator(name: string, exParams?: Params): IGenerator {
-  const values: Array&lt;[string, ParamValue]&gt; = [
-    ['animationLast', 0]
-  ]
+  const values: Array&lt;[string, ParamValue]&gt; = [['animationLast', 0]]
 &nbsp;
   const _params = exParams
     ? <span class="branch-0 cbranch-no" title="branch not covered" >exParams.restore(name, values)</span>
@@ -320,18 +320,18 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
         let maxX = Number.MIN_SAFE_INTEGER
         let maxY = Number.MIN_SAFE_INTEGER
         layer0.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {
-          const rect = <span class="cstat-no" title="statement not covered" >block.rect()</span>
+          const rect = <span class="cstat-no" title="statement not covered" >block.rect</span>
 <span class="cstat-no" title="statement not covered" >          if (rect.x &lt; minX) {</span>
 <span class="cstat-no" title="statement not covered" >            minX = rect.x</span>
           }
 <span class="cstat-no" title="statement not covered" >          if (rect.x + rect.width &gt; maxX) {</span>
-<span class="cstat-no" title="statement not covered" >            maxX = rect.x + rect.width </span>
+<span class="cstat-no" title="statement not covered" >            maxX = rect.x + rect.width</span>
           }
 <span class="cstat-no" title="statement not covered" >          if (rect.y &lt; minY) {</span>
 <span class="cstat-no" title="statement not covered" >            minY = rect.y</span>
           }
 <span class="cstat-no" title="statement not covered" >          if (rect.y + rect.height &gt; maxY) {</span>
-<span class="cstat-no" title="statement not covered" >            maxY = rect.y + rect.height </span>
+<span class="cstat-no" title="statement not covered" >            maxY = rect.y + rect.height</span>
           }
         })
         params.set('update', 0)
@@ -343,8 +343,13 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
 &nbsp;
       <span class="missing-if-branch" title="if path not taken" >I</span>if (animate) {
 <span class="cstat-no" title="statement not covered" >        layer0.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-          const rect = <span class="cstat-no" title="statement not covered" >block.rect()</span>
-          let location = <span class="cstat-no" title="statement not covered" >{ x: rect.x - velocity.x * deltaTime, y: rect.y - velocity.y * deltaTime }</span>
+          const rect = <span class="cstat-no" title="statement not covered" >block.rect</span>
+          let location = <span class="cstat-no" title="statement not covered" >{</span>
+            x: rect.x - velocity.x * deltaTime,
+            y: rect.y - velocity.y * deltaTime,
+            width: rect.width,
+            height: rect.height
+          }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          if (Math.sign(velocity.x) === 1) {</span>
 <span class="cstat-no" title="statement not covered" >            if (location.x + rect.width &lt; 0) {</span>
@@ -357,15 +362,15 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
           }
 <span class="cstat-no" title="statement not covered" >          if (Math.sign(velocity.y) === 1) {</span>
 <span class="cstat-no" title="statement not covered" >            if (location.y + rect.height &lt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >              location.y += frameHeight </span>
+<span class="cstat-no" title="statement not covered" >              location.y += frameHeight</span>
             }
           } else {
 <span class="cstat-no" title="statement not covered" >            if (location.y &gt; containersize.height) {</span>
-<span class="cstat-no" title="statement not covered" >              location.y -= frameHeight </span>
+<span class="cstat-no" title="statement not covered" >              location.y -= frameHeight</span>
             }
           }
-    
-<span class="cstat-no" title="statement not covered" >          block.update(location, { width: rect.width, height: rect.height })</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          block.update(location)</span>
         })
       }
     }
@@ -385,13 +390,14 @@ export function rollGenerator(name: string, exParams?: Params): IGenerator {
   }
 &nbsp;
   return new Generator(name, init, _params, create)
-}</pre></td></tr>
+}
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>

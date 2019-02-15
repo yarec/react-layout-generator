@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IValue | react-layout-generator</title>
+	<title>IRLGBounds | react-layout-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -910,13 +910,13 @@ img { max-width: 100%; }
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class="current tsd-kind-interface">
-			<a href="ivalue.html" class="tsd-kind-icon">IValue</a>
+			<a href="irlgbounds.html" class="tsd-kind-icon">IRLGBounds</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ivalue.html#unit" class="tsd-kind-icon">unit</a>
+					<a href="irlgbounds.html#container" class="tsd-kind-icon">container</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="ivalue.html#value" class="tsd-kind-icon">value</a>
+					<a href="irlgbounds.html#viewport" class="tsd-kind-icon">viewport</a>
 				</li>
 			</ul>
 		</li>
@@ -924,11 +924,21 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>IRLGBounds provides the local and viewport bounds. It is updated by Layout
+						on every render. Both are in pixel units. Local is used for computing the
+						layout of each <a href="#Block">Block</a>. Both local and viewport are used to
+					in converting units to pixels depending upon the unit specified.</p>
+				</div>
+			</div>
+		</section>
 		<section class="tsd-panel tsd-hierarchy">
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="target">IValue</span>
+					<span class="target">IRLGBounds</span>
 				</li>
 			</ul>
 		</section>
@@ -939,8 +949,8 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalue.html#unit" class="tsd-kind-icon">unit</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalue.html#value" class="tsd-kind-icon">value</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlgbounds.html#container" class="tsd-kind-icon">container</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlgbounds.html#viewport" class="tsd-kind-icon">viewport</a></li>
 						</ul>
 					</section>
 				</div>
@@ -949,24 +959,36 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="unit" class="tsd-anchor"></a>
-				<h3>unit</h3>
-				<div class="tsd-signature tsd-kind-icon">unit<span class="tsd-signature-symbol">:</span> <a href="../enums/unit.html" class="tsd-signature-type">Unit</a></div>
+				<a name="container" class="tsd-anchor"></a>
+				<h3>container</h3>
+				<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <a href="isize.html" class="tsd-signature-type">ISize</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/utils.ts#L19">utils.ts:19</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockUtils.ts#L94">components/blockUtils.ts:94</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Container is the size of the containing block in pixels.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="value" class="tsd-anchor"></a>
-				<h3>value</h3>
-				<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a><span class="tsd-signature-symbol"> | </span><a href="isize.html" class="tsd-signature-type">ISize</a></div>
+				<a name="viewport" class="tsd-anchor"></a>
+				<h3>viewport</h3>
+				<div class="tsd-signature tsd-kind-icon">viewport<span class="tsd-signature-symbol">:</span> <a href="isize.html" class="tsd-signature-type">ISize</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/utils.ts#L20">utils.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockUtils.ts#L100">components/blockUtils.ts:100</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Viewport is the user&#39;s visible area of a web page. It does include
+							scrollbars. Be sure to set the <meta> tag in your web page for correct
+						layout.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

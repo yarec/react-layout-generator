@@ -152,7 +152,19 @@
 107
 108
 109
-110</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,12 +187,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -190,13 +198,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -207,6 +210,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -234,6 +253,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -264,9 +288,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Block } from '../../components/Block'
 // import { Params, ParamValue } from '../../components/Params'
 import { IGenerator } from '../Generator'
-import { IPoint, ISize } from '../../types'
-import { fnHook } from '../../components/Hooks';
-import { ParamValue } from '../../components/Params';
+import { IPoint, ISize, IRect } from '../../types'
+import { fnHook } from '../../components/Hooks'
+import { ParamValue } from '../../components/Params'
 &nbsp;
 type Values = {
   [key: string]: ParamValue
@@ -274,16 +298,19 @@ type Values = {
 &nbsp;
 /**
  * This is an optional hook that can be used to animate a level in Blocks.
- * 
- * The prefix is used to make keys unique in Params. The initialValues is an object 
+ *
+ * The prefix is used to make keys unique in Params. The initialValues is an object
  * with params that will be made available to the hook.
- * 
- * @param prefix: string 
- * @param initialValues: Values 
- * @param g: IGenerator 
+ *
+ * @param prefix: string
+ * @param initialValues: Values
+ * @param g: IGenerator
  */
-export function <span class="fstat-no" title="function not covered" >rollHook(</span>prefix: string, initialValues: Values, g: IGenerator): fnHook {
-&nbsp;
+export function <span class="fstat-no" title="function not covered" >rollHook(</span>
+  prefix: string,
+  initialValues: Values,
+  g: IGenerator
+): fnHook {
   const frameWidthKey = `${<span class="cstat-no" title="statement not covered" >prefix}frameWidth`</span>
   const frameHeightKey = `${<span class="cstat-no" title="statement not covered" >prefix}frameHeight`</span>
 &nbsp;
@@ -291,8 +318,12 @@ export function <span class="fstat-no" title="function not covered" >rollHook(</
 <span class="cstat-no" title="statement not covered" >  _params.set(frameWidthKey, 0)</span>
 <span class="cstat-no" title="statement not covered" >  _params.set(frameHeightKey, 0)</span>
 &nbsp;
-  const velocity: IPoint = <span class="cstat-no" title="statement not covered" >initialValues['velocity'] as IPoint ? initialValues['velocity'] as IPoint : {x: 0.01, y: 0}</span>
-  const layer: number = <span class="cstat-no" title="statement not covered" >initialValues['layer'] as number ? initialValues['velocity'] as number : 2</span>
+  const velocity: IPoint = (<span class="cstat-no" title="statement not covered" >initialValues['velocity'] as IPoint)</span>
+    ? (initialValues['velocity'] as IPoint)
+    : { x: 0.01, y: 0 }
+  const layer: number = (<span class="cstat-no" title="statement not covered" >initialValues['layer'] as number)</span>
+    ? (initialValues['velocity'] as number)
+    : 2
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return function <span class="fstat-no" title="function not covered" >hook(</span>g: IGenerator) {</span>
     const params = <span class="cstat-no" title="statement not covered" >g.params()</span>
@@ -319,31 +350,36 @@ export function <span class="fstat-no" title="function not covered" >rollHook(</
       let maxX = <span class="cstat-no" title="statement not covered" >Number.MIN_SAFE_INTEGER</span>
       let maxY = <span class="cstat-no" title="statement not covered" >Number.MIN_SAFE_INTEGER</span>
 <span class="cstat-no" title="statement not covered" >      layer0.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-        const rect = <span class="cstat-no" title="statement not covered" >block.rect()</span>
+        const rect = <span class="cstat-no" title="statement not covered" >block.rect</span>
 <span class="cstat-no" title="statement not covered" >        if (rect.x &lt; minX) {</span>
 <span class="cstat-no" title="statement not covered" >          minX = rect.x</span>
         }
 <span class="cstat-no" title="statement not covered" >        if (rect.x + rect.width &gt; maxX) {</span>
-<span class="cstat-no" title="statement not covered" >          maxX = rect.x + rect.width </span>
+<span class="cstat-no" title="statement not covered" >          maxX = rect.x + rect.width</span>
         }
 <span class="cstat-no" title="statement not covered" >        if (rect.y &lt; minY) {</span>
 <span class="cstat-no" title="statement not covered" >          minY = rect.y</span>
         }
 <span class="cstat-no" title="statement not covered" >        if (rect.y + rect.height &gt; maxY) {</span>
-<span class="cstat-no" title="statement not covered" >          maxY = rect.y + rect.height </span>
+<span class="cstat-no" title="statement not covered" >          maxY = rect.y + rect.height</span>
         }
       })
 <span class="cstat-no" title="statement not covered" >      params.set('update', 0)</span>
 <span class="cstat-no" title="statement not covered" >      frameWidth = Math.max(containersize.width, maxX - minX)</span>
-<span class="cstat-no" title="statement not covered" >      frameHeight =  Math.max(containersize.height, maxY - minY)</span>
+<span class="cstat-no" title="statement not covered" >      frameHeight = Math.max(containersize.height, maxY - minY)</span>
 <span class="cstat-no" title="statement not covered" >      params.set(frameWidthKey, frameWidth)</span>
 <span class="cstat-no" title="statement not covered" >      params.set(frameHeightKey, frameHeight)</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (animate) {</span>
 <span class="cstat-no" title="statement not covered" >        layer0.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-          const rect = <span class="cstat-no" title="statement not covered" >block.rect()</span>
-          let location = <span class="cstat-no" title="statement not covered" >{ x: rect.x - velocity.x * deltaTime, y: rect.y - velocity.y * deltaTime }</span>
-         
+          const rect = <span class="cstat-no" title="statement not covered" >block.rect</span>
+          let location: IRect = <span class="cstat-no" title="statement not covered" >{</span>
+            x: rect.x - velocity.x * deltaTime,
+            y: rect.y - velocity.y * deltaTime,
+            width: rect.width,
+            height: rect.height
+          }
+&nbsp;
           // Wrap as needed
 <span class="cstat-no" title="statement not covered" >          if (Math.sign(velocity.x) === 1) {</span>
 <span class="cstat-no" title="statement not covered" >            if (location.x + rect.width &lt; 0) {</span>
@@ -356,15 +392,15 @@ export function <span class="fstat-no" title="function not covered" >rollHook(</
           }
 <span class="cstat-no" title="statement not covered" >          if (Math.sign(velocity.y) === 1) {</span>
 <span class="cstat-no" title="statement not covered" >            if (location.y + rect.height &lt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >              location.y += frameHeight </span>
+<span class="cstat-no" title="statement not covered" >              location.y += frameHeight</span>
             }
           } else {
 <span class="cstat-no" title="statement not covered" >            if (location.y &gt; containersize.height) {</span>
-<span class="cstat-no" title="statement not covered" >              location.y -= frameHeight </span>
+<span class="cstat-no" title="statement not covered" >              location.y -= frameHeight</span>
             }
           }
-    
-<span class="cstat-no" title="statement not covered" >          block.update(location, { width: rect.width, height: rect.height })</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          block.update(location)</span>
         })
       }
     }
@@ -376,7 +412,7 @@ export function <span class="fstat-no" title="function not covered" >rollHook(</
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>

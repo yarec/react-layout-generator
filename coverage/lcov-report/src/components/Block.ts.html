@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.58% </span>
+        <span class="strong">78.07% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>243/365</span>
+        <span class='fraction'>178/228</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">58.17% </span>
+        <span class="strong">58.57% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>89/153</span>
+        <span class='fraction'>41/70</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">72.88% </span>
+        <span class="strong">76.19% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>43/59</span>
+        <span class='fraction'>32/42</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.11% </span>
+        <span class="strong">77.58% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>238/360</span>
+        <span class='fraction'>173/223</span>
       </div>
     </div>
   </div>
@@ -524,695 +524,9 @@
 479
 480
 481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
-609
-610
-611
-612
-613
-614
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629
-630
-631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773
-774
-775
-776
-777
-778
-779
-780
-781
-782
-783
-784
-785
-786
-787
-788
-789
-790
-791
-792
-793
-794
-795
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838
-839
-840
-841
-842
-843
-844
-845
-846
-847
-848
-849
-850
-851
-852
-853
-854
-855
-856
-857
-858
-859
-860
-861
-862
-863
-864
-865
-866
-867
-868
-869
-870
-871
-872
-873
-874
-875
-876
-877
-878
-879
-880
-881
-882
-883
-884
-885
-886
-887
-888
-889
-890
-891
-892
-893
-894
-895
-896
-897
-898
-899
-900
-901
-902
-903
-904
-905
-906
-907
-908
-909
-910
-911
-912
-913
-914
-915
-916
-917
-918
-919
-920
-921
-922
-923
-924
-925
-926
-927
-928
-929
-930
-931
-932
-933
-934
-935
-936
-937
-938
-939
-940
-941
-942
-943
-944
-945
-946
-947
-948
-949
-950
-951
-952
-953
-954
-955
-956
-957
-958
-959
-960
-961
-962
-963
-964
-965
-966
-967
-968
-969
-970
-971
-972
-973
-974
-975
-976
-977
-978
-979
-980
-981
-982
-983
-984
-985
-986
-987
-988
-989
-990
-991
-992
-993
-994
-995
-996
-997
-998
-999
-1000
-1001
-1002
-1003
-1004
-1005
-1006
-1007
-1008
-1009
-1010
-1011
-1012
-1013
-1014
-1015
-1016
-1017
-1018
-1019
-1020
-1021
-1022
-1023
-1024
-1025
-1026
-1027
-1028
-1029
-1030
-1031
-1032
-1033
-1034
-1035
-1036
-1037
-1038
-1039
-1040
-1041
-1042
-1043
-1044
-1045
-1046
-1047
-1048
-1049
-1050
-1051
-1052
-1053
-1054
-1055
-1056
-1057
-1058
-1059
-1060
-1061
-1062
-1063
-1064
-1065
-1066
-1067
-1068
-1069
-1070
-1071
-1072
-1073
-1074
-1075
-1076
-1077
-1078
-1079
-1080
-1081
-1082
-1083
-1084
-1085
-1086
-1087
-1088
-1089
-1090
-1091
-1092
-1093
-1094
-1095
-1096
-1097
-1098
-1099
-1100
-1101
-1102
-1103
-1104
-1105
-1106
-1107
-1108
-1109
-1110
-1111
-1112
-1113
-1114
-1115
-1116
-1117
-1118
-1119
-1120
-1121
-1122
-1123
-1124
-1125
-1126
-1127
-1128
-1129
-1130
-1131
-1132
-1133
-1134
-1135
-1136
-1137
-1138
-1139
-1140
-1141
-1142
-1143
-1144
-1145
-1146
-1147
-1148
-1149
-1150
-1151
-1152
-1153
-1154</td><td class="line-coverage quiet"><span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+482</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1224,6 +538,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1231,6 +546,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1238,494 +557,75 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">71x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">192x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">37x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">59x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">55x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">55x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">193x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">88x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1733,7 +633,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1741,351 +641,154 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">176x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">28x</span>
-<span class="cline-any cline-yes">28x</span>
-<span class="cline-any cline-yes">28x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">59x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">58x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">58x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">53x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">65x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">195x</span>
-<span class="cline-any cline-yes">195x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">130x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">123x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">109x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">398x</span>
-<span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">77x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">87x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">87x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">86x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">83x</span>
-<span class="cline-any cline-yes">83x</span>
-<span class="cline-any cline-yes">83x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
@@ -2093,13 +796,58 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">426x</span>
+<span class="cline-any cline-yes">213x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">68x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2111,139 +859,45 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">115x</span>
-<span class="cline-any cline-yes">115x</span>
-<span class="cline-any cline-yes">115x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2252,84 +906,25 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">121x</span>
+<span class="cline-any cline-yes">121x</span>
+<span class="cline-any cline-yes">121x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2337,408 +932,154 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { cursor } from '../editors/cursor'
-import { getExtendElement, ExtendElement } from '../editors/extendElement'
-import { getUpdateHandle, UpdateHandle } from '../editors/updateHandle'
-import { UpdateParam } from '../editors/updateParam'
-import { IGenerator } from '../generators/Generator'
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IGenerator } from '../generators/Generator'
+import { toAlign, fromAlign } from './blockUtils'
+import { Rect, IOrigin, ISize, IPoint, IRect } from '../types'
 import {
-  IPoint,
-  IOrigin,
-  ISize,
-  Unit,
-  PositionRef,
-  Rect,
-  isUnmanaged,
-  namedUnit,
-  Props
-} from '../types'
+  IPosition,
+  IBlockRect,
+  IAlign,
+  IEditor,
+  PositionChildrenFn,
+  IEdit,
+  IRotate,
+  IScale,
+  ISkew
+} from './blockTypes'
+import {
+  convertInputBlockRect,
+  layout,
+  fromOrigin,
+  inverseLayout,
+  toOrigin,
+  connectPoint
+} from './blockUtils'
+import { cursor } from '../editors/cursor'
+import { getUpdateHandle } from '../editors/updateHandle'
+import { getExtendElement } from '../editors/extendElement'
 import { clone } from '../utils'
 &nbsp;
 /**
- * IDataLayout is the property that you use when defining children of RLGLayout. It
- * applies to both HTML elements and React Components. It's purpose is to
- * specify the rules and data needed to create a Block and optionally its children.
- * When specified on a child use the css friendly name 'data-layout'. If the Block
- * is already defined in a generator you just need the name in a child.
- */
-export interface IDataLayout {
-  /**
-   * The name of the block. It must be unique within each RLGLayout. Failure
-   * to be unique will result in children of RLGLayout overwriting each other.
-   */
-  name: string
-  /**
-   * IPosition includes the rules and data needed to create a Block. If the
-   * Block already exists then that block will be used. Position must be defined
-   * either in a generator or when used with a child of RLGLayout.
-   */
-  position?: IPosition
-}
-&nbsp;
-/**
- * The purpose of this interface is to allow specification of links between blocks. It lets
- * you link 'self' block to 'source' block by name and offset. The link means that the 'self' block
- * location is computed based on the location and size of the 'source' block.
+ * The purpose of Block is to specify the location and size of an element. This, of course,
+ * can be done in css and React. The purpose in RLG to support dynamic computation of
+ * the location and size of an element.
  *
- * ```
- * ┌────────┐
- * │ source │
- * └────────o  (X: 100, y: 100)
- *          │
- *          │
- *          └─&gt; t──────┐ (x: 0, y: 0)
- *              │ self │
- *              └──────┘
- * ```
- * In the diagram above 'self' block is linked to 'source' block
- * with the offset from 'o' to 't'.
- *
- * ```ts
- *  align: {
- *    key: 'source'
- *    offset: {x: 20, y: 30}
- *    source: {x: 100, y: 100}
- *    self: {x: 0, y: 0}
- *  }
- * ```
- */
-export interface IAlign {
-  /**
-   * This is the name of 'source' Block (same as the name in data-layout={name: 'someName', ...)
-   */
-  key: string | number
-  /**
-   * Offset describes the x offset and y offset from the
-   * handle on 'source'' block to the handle on 'self' block.
-   * It goes from the connection handle on the 'source' block to
-   * the connection handle on 'self' block so if the 'source' block
-   * moves the 'self' block also moves.
-   *
-   * Note that align can be used to place 'self' block over/behind
-   * 'source' block.
-   */
-  offset: IPoint
-  /**
-   * This defines the location of the connection handle on the 'source' block.
-   * The units are in percent of the block size starting at the left top of the
-   * block.
-   */
-  source: IOrigin
-  /**
-   * This defines the location of the connection handle on 'self'' block.
-   */
-  self: IOrigin
-}
-&nbsp;
-/**
- * IMenuItem describes a command in a menu.
- *
- * ```ts
- * const menuCommands: IMenuItem[] = [
- *     { name: 'undo', disabled: true, command: this.undo },
- *      ...
- *     { name: 'bring forward', disabled: false, command: this.bringForward }
- *  ]
- *
- * ...
- *
- * public bringForward = () =&gt; {
- *    const stacking = this.props.g.stacking();
- *    this._selected.forEach((block: Block) =&gt; {
- *      stacking.bringForward(block)
- *    });
- *    if (this._selected.size) {
- *      this.props.onUpdate();
- *    }
- * }
- * ```
- */
-export interface IMenuItem {
-  /**
-   * This is the name of the item. If it is empty then a menu separator
-   * will be displayed.
-   */
-  name: string
-  /** If true then draw the item disabled. */
-  disabled?: boolean
-  /** If checked then draw the item 'on' */
-  checked?: boolean
-  /** This is the command to be executed when the item is selected.  */
-  command?: () =&gt; void
-}
-&nbsp;
-export interface IEdit {
-  /**
-   * PositionRef specifies the part of a rectangle that can be edited.
-   */
-  ref: PositionRef
-  /**
-   * This is the name of the variable that will be stored in [Params](classes/params.html).
-   * If this is not specified then edit changes will not be saved.
-   */
-  variable?: string
-  /**
-   * Optional name of a cursor. If not specified then the default cursor for this
-   * PositionRef will be used.
-   */
-  cursor?: string
-  /**
-   * Optional updateHandle used to update the hit area for editing a PositionRef block.
-   * If not specified then the default will be used.
-   */
-  updateHandle?: UpdateHandle
-  /**
-   * Optional extendElement used to compute the update for a block.
-   * If not specified then the default will be used.
-   */
-  extendElement?: ExtendElement
-  /**
-   * If defined this function computes the data that should be stored
-   * persistent storage. See [updateParamLocation](../globals.html#updateParamLocation),
-   * [updateParamOffset](../globals.html#updateParamOffset),
-   * [updateParamWidth](../globals.html#updateParamWidth), and
-   * [updateParamHeight](../globals.html#updateParamHeight).
-   *
-   * If necessary you can use a custom function. If not defined then no data
-   * will be stored.
-   */
-  updateParam?: UpdateParam
-  /**
-   * This is an array of custom editing options for a block.
-   */
-  contextMenu?: IMenuItem[]
-}
-&nbsp;
-/**
- * IEditor defines the edit options for a Block.
- */
-export interface IEditor {
-  /**
-   * If set to false then the Block will not be selectable. The default is true.
-   * Note that this option only allows or prevents selection, it does not effect other edit options.
-   * To prevent an element from being selected or edited define this as:
-   *
-   * ```ts
-   * editor: {
-   *  selectable: false
-   * }
-   * ```
-   *
-   * The default editor allows both selection and movement of a block.
-   */
-  selectable?: boolean
-  /**
-   * This option adds custom commands to the context menu for this block.
-   */
-  contextMenu?: IMenuItem[]
-  /**
-   * IEdit lets you specify editors for a block.
-   *
-   * ```ts
-   * edits: [
-   *  {
-   *    ref: PositionRef.top,
-   *    variable: 'footerHeight',
-   *    updateParam: updateParamHeight
-   *  }
-   * ]
-   * ```
-   */
-  edits?: IEdit[]
-}
-&nbsp;
-/**
- * This is a user supplied function that defines a child of a block.
- *
- * The following example places the children horizontally. This implementation
- * is used in the solitaire game to distribute up to 3 cards in the 'waste'.
- *
- * ```ts
- * function positionWasteChildren(block: Block, g: Generator, index: number) {
- *  // Return a Block relative to parent block starting at position at (0, 0)
- *
- *  const cardSize = g.params().get('cardSize') as ISize;
- *  const computedCardSpacing = g.params().get('computedCardSpacing') as IPoint;
- *
- *  // These children get placed horizontally based on index
- *  const child: IPosition = {
- *   location: { x: index * computedCardSpacing.x, y: 0 },
- *   size: cardSize
- *  };
- *
- *  // This block is temp and will not be stored in blocks
- *  return new Block('temp', child, g);
- * }
- * ```
- */
-export type PositionChildren = (
-  block: Block,
-  g: IGenerator,
-  index: number,
-  props: Props
-) =&gt; Block | undefined
-&nbsp;
-// export interface IHandlers {
-//   onMouseDown?: () =&gt; void
-// }
-&nbsp;
-/**
- * Extends IPoint to add optional unit
- */
-export interface IPositionLocation extends IPoint {
-  x: number
-  y: number
-  unit?: Unit
-}
-&nbsp;
-/**
- * Extends ISize to add optional unit
- */
-export interface IPositionSize {
-  width: number
-  height: number
-  unit?: Unit
-}
-&nbsp;
-export interface IRotate {
-  origin: IOrigin
-  rotate: number | IPoint
-}
-&nbsp;
-export interface IScale {
-  scale: number | IPoint
-}
-&nbsp;
-export interface ISkew {
-  skew: number | IPoint
-}
-&nbsp;
-export type Transform = IRotate | IScale | ISkew
-&nbsp;
-/**
- * IPosition defines the positioning, zIndex, and editor rules for elements in RLG.
- *
- * A minimal definition is:
- * ```ts
- *  position: {
- *    location: { x: 0, y: 0 },
- *    size: { width: 100, height: 100 }
- *  }
- * ```
- */
-export interface IPosition {
-  /**
-   *  align defines the other element that this one is attached to.
-   */
-  align?: IAlign
-  /**
-   * This user supplied function will calculate the Position data for 'children'.
-   * It will be supplied with the index of the child and it should compute the
-   * child's position returning a new Block. The child should be jsx.
-   */
-  positionChildren?: PositionChildren
-  /**
-   * This defines the editor that will be available to the user when [RLGLayout
-   * service](irlglayoutprops.html) property is set the ServiceOptions.edit.
-   */
-  editor?: IEditor
-  /**
-   * zIndex is the same as css z-index. The default is 0.
-   *
-   * If you use the editor to change the zIndex it will be stored in Params
-   * using the key `${block.name}ZIndex`.
-   */
-  zIndex?: number
-  /**
-   * Origin defines the point that the location will use when positioning a
-   * block. For example an origin of { x: 50, y: 50 } will center the block
-   * at the specified location.
-   */
-  origin?: IOrigin
-  /**
-   * Location is position of the block relative to the origin. With a default
-   * origin `{x: 0, y: 0}`, the location is the `(left top)` of the rect.
-   */
-  location: IPositionLocation
-  /**
-   * Size specifies the width and height of a blocks rect.
-   */
-  size: IPositionSize
-  /**
-   * Additional transforms to add to this block. Note that you can also transform
-   * the contents of a block separately. Warning do not include any transforms in
-   * the style property for this block. This feature is experimental and subject
-   * to change.
-   */
-  transform?: Transform[]
-}
-&nbsp;
-/**
- * Defines the location and size using
- * specified origin and units. Supports edit handles
- * defined by IAlign (.eg left center, right bottom)
  */
 export class Block {
-  get name() {
-    return this._name
-  }
+  private readonly _name: string
+  private readonly _position: IPosition
+  private readonly _g: IGenerator
 &nbsp;
-  get editor() {
-    return this._position.editor
-  }
+  private _localParent: Block | undefined = undefined
+  private _blockRect: IBlockRect
+  private _align: IAlign | undefined = undefined
+  private _origin: IOrigin | undefined = undefined
+  private _editor: IEditor | undefined = undefined
+  private _zIndex: number | undefined = undefined
+  private _positionChildren: PositionChildrenFn | undefined = undefined
+  private _transform: string = ''
+  private _transformOrigin: string = ''
+  private _handlers: Map&lt;string, any&gt; = new Map()
+  private _onMouseDown: (e: React.MouseEvent) =&gt; void
+  private _onClick: (e: React.MouseEvent) =&gt; void
+  private _siblings: Map&lt;string, boolean&gt; = new Map()
 &nbsp;
-  get location() {
-    return this._position.location
-  }
+  private _changed: boolean = true
+  private _cached: Rect
 &nbsp;
-  get size() {
-    return this._position.size
-  }
-&nbsp;
-  get resize() {
-    return this.onResize
-  }
-&nbsp;
-  get generator() {
-    return this._g
-  }
-&nbsp;
-  get positionChildren() {
-    return this._positionChildren
-  }
-&nbsp;
-  get position() {
-    return this._position
-  }
-&nbsp;
-  set position(p: IPosition) {
+  constructor(name: string, p: IPosition, g: IGenerator) {
+    // console.log(`initialize Layout ${name}`)
+    this._name = name
     this._position = p
+    this._g = g
+&nbsp;
+    this._blockRect = {}
+    this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
+    this._onMouseDown = this.noop
+    this._onClick = this.noop
+&nbsp;
+    this.updatePosition(p)
   }
 &nbsp;
-  set sibling(key: string) {
-    this._siblings.set(key, true)
+  public get editor() {
+    return this._editor
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get transform(): Transform[] | undefined {</span>
-<span class="cstat-no" title="statement not covered" >    return this._position.transform</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  set transform(</span>transform: Transform[] | undefined) {
-<span class="cstat-no" title="statement not covered" >    this._position.transform = transform</span>
-<span class="cstat-no" title="statement not covered" >    this.transformToReactCss()</span>
+  public get positionChildren() {
+    return this._positionChildren
   }
 &nbsp;
   get reactTransform() {
@@ -2747,6 +1088,58 @@ export class Block {
 &nbsp;
   get reactTransformOrigin() {
     return this._transformOrigin
+  }
+&nbsp;
+  public get name() {
+    return this._name
+  }
+&nbsp;
+  public set sibling(name: string) {
+    this._siblings.set(name, true)
+  }
+&nbsp;
+  public setHandler(name: string, value: any) {
+    this._handlers.set(name, value)
+  }
+&nbsp;
+  public getHandler(name: string) {
+    return this._handlers.get(name)
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public get onMouseDown() {</span>
+<span class="cstat-no" title="statement not covered" >    return this._onMouseDown</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public set onMouseDown(</span>fn: (e: React.MouseEvent) =&gt; void) {
+<span class="cstat-no" title="statement not covered" >    this._onMouseDown = fn</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public get onClick() {</span>
+<span class="cstat-no" title="statement not covered" >    return this._onClick</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  public set onClick(</span>fn: (e: React.MouseEvent) =&gt; void) {
+<span class="cstat-no" title="statement not covered" >    this._onClick = fn</span>
+  }
+&nbsp;
+  public get zIndex() {
+    return this._zIndex ? this._zIndex : 0
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  get localParent(): Block | undefined {</span>
+<span class="cstat-no" title="statement not covered" >    return this._localParent</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  set localParent(</span>parent: Block | undefined) {
+<span class="cstat-no" title="statement not covered" >    this._localParent = parent</span>
+  }
+&nbsp;
+  public touch() {
+    this.changed()
+  }
+&nbsp;
+  get generator() {
+    return this._g
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  get x() {</span>
@@ -2759,12 +1152,12 @@ export class Block {
 <span class="cstat-no" title="statement not covered" >    return this._cached.y</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  get localParent(): Block | undefined {</span>
-<span class="cstat-no" title="statement not covered" >    return this._localParent</span>
+  get blockRect() {
+    return this._blockRect
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  set localParent(</span>parent: Block | undefined) {
-<span class="cstat-no" title="statement not covered" >    this._localParent = parent</span>
+  get align() {
+    return this._align
   }
 &nbsp;
   /**
@@ -2824,78 +1217,9 @@ export class Block {
     return b
   }
 &nbsp;
-  public setHandler(name: string, value: any) {
-    this._handlers.set(name, value)
-  }
-&nbsp;
-  public getHandler(name: string) {
-    return this._handlers.get(name)
-  }
-&nbsp;
-  private _siblings: Map&lt;string, boolean&gt; = new Map()
-  private _name: string
-  private _position: IPosition
-  private _changed: boolean
-  private _cached: Rect
-  private _g: IGenerator
-  private _localParent: Block | undefined
-  private _positionChildren: PositionChildren | undefined
-  private _zIndex: number
-  private _transform: string = ''
-  private _transformOrigin: string = ''
-  private _handlers: Map&lt;string, any&gt; = new Map()
-  private _onMouseDown: (e: React.MouseEvent) =&gt; void
-  private _onClick: (e: React.MouseEvent) =&gt; void
-&nbsp;
-  constructor(name: string, p: IPosition, g: IGenerator) {
-    // console.log(`initialize Layout ${name}`)
-    this._name = name
-    if (p) {
-      this._position = clone(p)
-    } else {
-      this.position = {
-        location: { x: 0, y: 0 },
-        size: { width: 100, height: 100 }
-      }
-    }
-    this._g = g
-    this._localParent = undefined
-    this.updatePosition(this._position)
-    if (this._position.zIndex) {
-      this.zIndex = this._position.zIndex
-    }
-    this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
-    this._changed = true
-    this._positionChildren = this._position.positionChildren
-    this._onMouseDown = this.noop
-    this._onClick = this.noop
-  }
-&nbsp;
-  /**
-   * Noop handler used for initialization.
-   */
-  public noop = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    console.error('Event handler not defined')</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  public get onMouseDown() {</span>
-<span class="cstat-no" title="statement not covered" >    return this._onMouseDown</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  public set onMouseDown(</span>fn: (e: React.MouseEvent) =&gt; void) {
-<span class="cstat-no" title="statement not covered" >    this._onMouseDown = fn</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  public get onClick() {</span>
-<span class="cstat-no" title="statement not covered" >    return this._onClick</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  public set onClick(</span>fn: (e: React.MouseEvent) =&gt; void) {
-<span class="cstat-no" title="statement not covered" >    this._onClick = fn</span>
-  }
-&nbsp;
-  public get zIndex() {
-    return this._zIndex ? this._zIndex : 0
+  public get rect() {
+    this.updateRect()
+    return this._cached
   }
 &nbsp;
   public set zIndex(value: number) {
@@ -2908,348 +1232,100 @@ export class Block {
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public get layer() {</span>
-<span class="cstat-no" title="statement not covered" >    return this.getHandler('$layer')</span>
-  }
-&nbsp;
-  public connectionHandles = () =&gt; {
-    const align = this._position.align
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (align) {
-      const ref = <span class="cstat-no" title="statement not covered" >this.getRef()</span>
-<span class="cstat-no" title="statement not covered" >      if (ref) {</span>
-        const p1: IPoint = <span class="cstat-no" title="statement not covered" >ref.fromLocation()</span>
-        const s1: ISize = <span class="cstat-no" title="statement not covered" >ref.fromSize()</span>
-&nbsp;
-        const r1 = <span class="cstat-no" title="statement not covered" >this.getConnectPoint(p1, s1, align.source)</span>
-&nbsp;
-        const p2: IPoint = <span class="cstat-no" title="statement not covered" >this.fromLocation()</span>
-        const s2: ISize = <span class="cstat-no" title="statement not covered" >this.fromSize()</span>
-&nbsp;
-        const r2 = <span class="cstat-no" title="statement not covered" >this.getConnectPoint(p2, s2, align.self)</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        return [r1, r2]</span>
-      }
-    }
-    return []
-  }
-&nbsp;
-  /**
-   * Converts location to pixels
-   */
-  public fromLocation = (): IPoint =&gt; {
-    // Handle align - ignore actual value of location
-    if (this._position.align) {
-      const ref = this.getRef()
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (ref) {
-        const p: IPoint = ref.fromLocation()
-        const s: ISize = ref.fromSize()
-        const source: IPoint = this.toAlign(p, s, this._position.align.source)
-        const offset: IPoint = {
-          x: source.x + this._position.align.offset.x,
-          y: source.y + this._position.align.offset.y
-        }
-        return this.fromAlign(
-          offset,
-          this.fromSize(),
-          this._position.align.self
-        )
-      }
-    }
-&nbsp;
-    const point = this.scale(this._position.location) as IPositionLocation
-&nbsp;
-    if (this._position.origin) {
-      return this.fromOrigin(point, this._position.origin, this.fromSize())
-    }
-    return point
-  }
-&nbsp;
-  /**
-   * Converts size to pixels
-   */
-  public fromSize = () =&gt; {
-    // console.log('size ' + this._position.size.width)
-    return this.scale(this._position.size) as IPositionSize
-  }
-&nbsp;
-  public rect = (force?: boolean) =&gt; {
-    this.updateRect(force)
-    return this._cached
-  }
-&nbsp;
-  public touch = () =&gt; {
-    this.changed()
-  }
-&nbsp;
-  /**
-   * Change the block state
-   */
-  public update = (location: IPoint, size?: ISize) =&gt; {
-    // Takes in world coordinates
-    // console.log(`Position update x: ${location.x} y: ${location.y}`)
-&nbsp;
-    const _location: IPositionLocation = {
-      ...location,
-      unit: this._position.location.unit
-    }
-&nbsp;
-    const _itemSize: IPositionSize = {
-      ...(size ? size : <span class="branch-1 cbranch-no" title="branch not covered" >this.fromSize())</span>,
-      unit: this._position.size.unit
-    }
-&nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._position.align &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.getRef())</span> {
-      const align = <span class="cstat-no" title="statement not covered" >this._position.align</span>
-      // Get source and self points
-      const ref = <span class="cstat-no" title="statement not covered" >this.getRef()</span>
-      const p1: IPoint = <span class="cstat-no" title="statement not covered" >ref!.fromLocation()</span>
-      const s1: ISize = <span class="cstat-no" title="statement not covered" >ref!.fromSize()</span>
-&nbsp;
-      const r1 = <span class="cstat-no" title="statement not covered" >this.getConnectPoint(p1, s1, align.source)</span>
-&nbsp;
-      const p = <span class="cstat-no" title="statement not covered" >this.toOrigin(_location, this._position.origin, _itemSize)</span>
-      // const p2 = this.inverseScale(p, this._position.units.location) as IPoint;
-      const s2 = <span class="cstat-no" title="statement not covered" >this.inverseScale(_itemSize) as ISize</span>
-&nbsp;
-      const r2 = <span class="cstat-no" title="statement not covered" >this.getConnectPoint(p, s2, align.self)</span>
-&nbsp;
-      // Compute new offset
-      const offset: IPoint = <span class="cstat-no" title="statement not covered" >{</span>
-        x: r2.x - r1.x,
-        y: r2.y - r1.y
-      }
-&nbsp;
-      // Update align offset
-<span class="cstat-no" title="statement not covered" >      align.offset = offset</span>
-    } else {
-      const p = this.toOrigin(_location, this._position.origin, _itemSize)
-      this._position.location = this.inverseScale(p) as IPositionLocation
-      this._position.size = this.inverseScale(_itemSize) as IPositionSize
-    }
-&nbsp;
-    this.changed()
-  }
-&nbsp;
-  public updateSize = <span class="fstat-no" title="function not covered" >(</span>size: IPositionSize) =&gt; {
-    // Takes in world coordinates
-<span class="cstat-no" title="statement not covered" >    this._position.size = this.inverseScale(size) as ISize</span>
-<span class="cstat-no" title="statement not covered" >    this.changed()</span>
-  }
-&nbsp;
-  /**
-   * Take unit and convert to real world
-   */
-  public scale = (
-    input: IPositionLocation | IPositionSize
-  ): IPositionLocation | IPositionSize =&gt; {
-    switch (input.unit) {
-      case Unit.percent: {
-        const size = this._g.params().get('containersize') as ISize
-        if ('x' in input) {
-          const p = input as IPoint
-          return {
-            x: p.x * size.width,
-            y: p.y * size.height
-          }
-        } else {
-          const s = input as ISize
-          return {
-            width: s.width * size.width,
-            height: s.height * size.height
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-1 cbranch-no" title="branch not covered" >      case Unit.preserve: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-&nbsp;
-        const minWidth = <span class="cstat-no" title="statement not covered" >size.width &lt; size.height ? size.width : size.height</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        if ('x' in input) {</span>
-          const p = <span class="cstat-no" title="statement not covered" >input as IPoint</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            x: p.x * minWidth,
-            y: p.y * minWidth
-          }
-        } else {
-          const s = <span class="cstat-no" title="statement not covered" >input as ISize</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            width: s.width * minWidth,
-            height: s.height * minWidth
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-2 cbranch-no" title="branch not covered" >      case Unit.preserveWidth: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-&nbsp;
-        const factor = <span class="cstat-no" title="statement not covered" >size.width</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        if ('x' in input) {</span>
-          const p = <span class="cstat-no" title="statement not covered" >input as IPoint</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            x: p.x * factor,
-            y: p.y * factor
-          }
-        } else {
-          const s = <span class="cstat-no" title="statement not covered" >input as ISize</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            width: s.width * factor,
-            height: s.height * factor
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-3 cbranch-no" title="branch not covered" >      case Unit.preserveHeight: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-&nbsp;
-        const factor = <span class="cstat-no" title="statement not covered" >size.height</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        if ('x' in input) {</span>
-          const p = <span class="cstat-no" title="statement not covered" >input as IPoint</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            x: p.x * factor,
-            y: p.y * factor
-          }
-        } else {
-          const s = <span class="cstat-no" title="statement not covered" >input as ISize</span>
-<span class="cstat-no" title="statement not covered" >          return {</span>
-            width: s.width * factor,
-            height: s.height * factor
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-    }
-    // default no translation needed
-    return input
-  }
-&nbsp;
-  public onResize = <span class="fstat-no" title="function not covered" >(</span>width: number, height: number) =&gt; {
-<span class="cstat-no" title="statement not covered" >    if (</span>
-      this._position.size.width !== width ||
-      this._position.size.height !== height
-    ) {
-<span class="cstat-no" title="statement not covered" >      this._position.size.width = width</span>
-<span class="cstat-no" title="statement not covered" >      this._position.size.height = height</span>
-<span class="cstat-no" title="statement not covered" >      this.changed()</span>
-    }
-  }
-&nbsp;
-  private updateRect(<span class="missing-if-branch" title="else path not taken" >E</span>force: boolean = false) {
-    if (this._changed || force) {
-      this._changed = false
-      const value = { ...this.fromLocation(), ...this.fromSize() }
-      this._cached.update({
-        x: value.x,
-        y: value.y,
-        width: value.width,
-        height: value.height
-      })
-    }
-  }
-&nbsp;
-  public validate(p: IPosition) {
-    if (p.editor &amp;&amp; p.editor.edits) {
-      // p.editor.edits.forEach((edit) =&gt; {
-      //   if (edit.ref === PositionRef.position) {
-      //   }
-      // })
-&nbsp;
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (isUnmanaged(p.location.unit)) {
-<span class="cstat-no" title="statement not covered" >        console.error(`Position ${namedUnit(p.location.unit)} in </span>
-        ${this.name} is NOT supported
-        for location. It is only supported for size.
-        `)
-      }
-    }
-  }
-&nbsp;
   public updatePosition(p: IPosition) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!p) {
+<span class="cstat-no" title="statement not covered" >      return</span>
+    }
     this.validate(p)
-    if (this._position.origin &amp;&amp; p.origin) {
-      this._position.origin.x = p.origin.x * 0.01
-      this._position.origin.y = p.origin.y * 0.01
+    this._origin = { x: 0, y: 0 }
+    if (p.origin) {
+      this._origin.x = p.origin.x * 0.01
+      this._origin.y = p.origin.y * 0.01
     }
+&nbsp;
+    this._blockRect = convertInputBlockRect(p.location)
 &nbsp;
     // Convert percents to decimal
-&nbsp;
-    const locUnit = (this._position.location.unit = p.location.unit)
-    if (
-      locUnit === Unit.percent ||
-      locUnit === Unit.preserve ||
-      locUnit === Unit.preserveWidth ||
-      locUnit === Unit.preserveHeight
-    ) {
-      this._position.location.x = p.location.x * 0.01
-      this._position.location.y = p.location.y * 0.01
-    } else if (locUnit === Unit.pixel) {
-      this._position.location.x = p.location.x
-      this._position.location.y = p.location.y
-    } else <span class="missing-if-branch" title="if path not taken" >I</span>if (
-      locUnit === Unit.unmanaged ||
-      locUnit === Unit.unmanagedWidth ||
-      locUnit === Unit.unmanagedHeight
-    ) {
-<span class="cstat-no" title="statement not covered" >      console.error(</span>
-        'Block.updatePosition unmanaged ignored. Not supported for Location'
-      )
-    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (locUnit === undefined) {
-      this._position.location.x = p.location.x
-      this._position.location.y = p.location.y
-    } else {
-<span class="cstat-no" title="statement not covered" >      console.error('Block.updatePosition add support for new unit')</span>
+    if (p.align) {
+      this._align = {
+        key: p.align.key,
+        source: {
+          x: p.align.source.x * 0.01,
+          y: p.align.source.y * 0.01
+        },
+        self: {
+          x: p.align.self.x * 0.01,
+          y: p.align.self.y * 0.01
+        },
+        offset: {
+          x: p.align.offset.x,
+          y: p.align.offset.y
+        }
+      }
     }
 &nbsp;
-    // Convert percents to decimal
-    const sizeUnit = (this._position.size.unit = p.size.unit)
-&nbsp;
-    if (
-      sizeUnit === Unit.percent ||
-      sizeUnit === Unit.preserve ||
-      sizeUnit === Unit.preserveWidth ||
-      sizeUnit === Unit.preserveHeight
-    ) {
-      this._position.size.width = p.size.width * 0.01
-      this._position.size.height = p.size.height * 0.01
-    } else <span class="missing-if-branch" title="if path not taken" >I</span>if (sizeUnit === Unit.pixel) {
-<span class="cstat-no" title="statement not covered" >      this._position.size.width = p.size.width</span>
-<span class="cstat-no" title="statement not covered" >      this._position.size.height = p.size.height</span>
-    } else if (sizeUnit === Unit.unmanaged) {
-      // Nothing to do
-    } else if (sizeUnit === Unit.unmanagedWidth) {
-      this._position.size.height = p.size.height
-    } else if (sizeUnit === Unit.unmanagedHeight) {
-      this._position.size.width = p.size.width
-    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (sizeUnit === undefined) {
-      this._position.size.width = p.size.width
-      this._position.size.height = p.size.height
-    } else {
-<span class="cstat-no" title="statement not covered" >      console.error('Block.updatePosition add support for new unit')</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._position.positionChildren) {
+<span class="cstat-no" title="statement not covered" >      this._positionChildren = this._position.positionChildren</span>
     }
 &nbsp;
-    // Convert percents to decimal
-    if (this._position.align &amp;&amp; p.align) {
-      this._position.align.source.x = p.align!.source.x * 0.01
-      this._position.align.source.y = p.align!.source.y * 0.01
-      this._position.align.self.x = p.align!.self.x * 0.01
-      this._position.align.self.y = p.align!.self.y * 0.01
-      this._position.align.offset.x = p.align!.offset.x
-      this._position.align.offset.y = p.align!.offset.y
-    }
-&nbsp;
-    if (this._position.editor) {
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (this._position.editor.edits) {
-        this._position.editor.edits.forEach((edit, i) =&gt; {
+    if (p.editor) {
+      this._editor = clone(p.editor)
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (this._editor &amp;&amp; this._editor.edits) {
+        this._editor.edits.forEach((edit, i) =&gt; {
           this.setEditDefaults(edit)
         })
       }
+    }
+&nbsp;
+    if (p.zIndex) {
+      this._zIndex = this._position.zIndex
     }
 &nbsp;
     this.transformToReactCss()
 &nbsp;
     // console.log('Layout updatePosition', this._name, this._position);
     this.changed()
+  }
+&nbsp;
+  private updateRect(<span class="missing-if-branch" title="else path not taken" >E</span>force: boolean = false) {
+    if (this._changed || force) {
+      this._changed = false
+      const containersize = this._g.params().get('containersize') as ISize
+      const viewport = this._g.params().get('viewport') as ISize
+      let value = layout(this._blockRect, {
+        container: containersize,
+        viewport: viewport
+      })
+&nbsp;
+      // Handle align - ignore actual value of location
+      if (this._align) {
+        const ref = this.getRef()
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (ref) {
+          let source = toAlign(ref.rect, this._align.source)
+&nbsp;
+            // Translate to self location
+          ;(source.x += this._align.offset.x),
+            (source.y += this._align.offset.y)
+&nbsp;
+          // Get left top point
+          const self = fromAlign(
+            { ...source, width: value.width, height: value.height },
+            this._align.self
+          )
+&nbsp;
+          // Update cache
+          this._cached.update({
+            ...self,
+            width: value.width,
+            height: value.height
+          })
+          return
+        }
+      }
+&nbsp;
+      value = fromOrigin(value, this._origin)
+      this._cached.update(value)
+    }
   }
 &nbsp;
   public setEditDefaults(edit: IEdit) {
@@ -3262,6 +1338,112 @@ export class Block {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (!edit.extendElement) {
       edit.extendElement = getExtendElement(edit.ref)
     }
+  }
+&nbsp;
+  public connectionHandles = () =&gt; {
+    const align = this._align
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (align) {
+      const ref = <span class="cstat-no" title="statement not covered" >this.getRef()</span>
+<span class="cstat-no" title="statement not covered" >      if (ref) {</span>
+        const r1: IRect = <span class="cstat-no" title="statement not covered" >ref.rect</span>
+&nbsp;
+        const c1 = <span class="cstat-no" title="statement not covered" >connectPoint(r1, align.source)</span>
+&nbsp;
+        const r2 = <span class="cstat-no" title="statement not covered" >this.rect</span>
+&nbsp;
+        const c2 = <span class="cstat-no" title="statement not covered" >connectPoint(r2, align.self)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return [c1, c2]</span>
+      }
+    }
+    return []
+  }
+&nbsp;
+  /**
+   * Change the block state
+   */
+  public update = (r: IRect) =&gt; {
+    // Takes in world coordinates
+    // console.log(`Position update x: ${location.x} y: ${location.y}`)
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._align &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.getRef())</span> {
+      const align = <span class="cstat-no" title="statement not covered" >this._align</span>
+      // Get source and self points
+      const ref = <span class="cstat-no" title="statement not covered" >this.getRef()</span>
+<span class="cstat-no" title="statement not covered" >      if (ref) {</span>
+        const r1 = <span class="cstat-no" title="statement not covered" >ref!.rect</span>
+        const p1 = <span class="cstat-no" title="statement not covered" >connectPoint(r1, this._align.source)</span>
+&nbsp;
+        // Use updated r
+        const p2 = <span class="cstat-no" title="statement not covered" >connectPoint(r, align.self)</span>
+&nbsp;
+        // Compute new offset
+        const offset: IPoint = <span class="cstat-no" title="statement not covered" >{</span>
+          x: p2.x - p1.x,
+          y: p2.y - p1.y
+        }
+&nbsp;
+        // Update align offset
+<span class="cstat-no" title="statement not covered" >        this._align.offset = offset</span>
+      }
+    } else {
+      const _r = toOrigin(r, this._origin)
+&nbsp;
+      const containersize = this._g.params().get('containersize') as ISize
+      const viewport = this._g.params().get('viewport') as ISize
+      this._blockRect = inverseLayout(_r, this._blockRect, {
+        container: containersize,
+        viewport: viewport
+      })
+    }
+&nbsp;
+    this.changed()
+  }
+&nbsp;
+  private changed() {
+    this._changed = true
+    this._siblings.forEach(<span class="fstat-no" title="function not covered" >(</span>value: boolean, key: string) =&gt; {
+      const l = <span class="cstat-no" title="statement not covered" >this._g.lookup(key)</span>
+<span class="cstat-no" title="statement not covered" >      if (l) {</span>
+<span class="cstat-no" title="statement not covered" >        l.touch()</span>
+      }
+    })
+  }
+&nbsp;
+  /**
+   * Returns the block that is linked to this block
+   */
+  private getRef = () =&gt; {
+    let ref
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._align) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof this._align.key === 'string') {
+        ref = this._g.lookup(this._align.key as string)
+      } else {
+        const blocks = <span class="cstat-no" title="statement not covered" >this._g.blocks()</span>
+<span class="cstat-no" title="statement not covered" >        if (blocks) {</span>
+<span class="cstat-no" title="statement not covered" >          ref = blocks.find(this._align.key as number)</span>
+        }
+      }
+    }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (ref) {
+      ref.sibling = this.name
+    }
+    return ref
+  }
+&nbsp;
+  private validate(p: IPosition) {
+    // if (p.editor &amp;&amp; p.editor.edits) {
+    //   // p.editor.edits.forEach((edit) =&gt; {
+    //   //   if (edit.ref === PositionRef.position) {
+    //   //   }
+    //   // })
+    //   if (p.location.unit)) {
+    //     console.error(`Position ${namedUnit(p.location.unit)} in
+    //     ${this.name} is NOT supported
+    //     for location. It is only supported for size.
+    //     `)
+    //   }
+    // }
   }
 &nbsp;
   private transformToReactCss() {
@@ -3296,210 +1478,12 @@ export class Block {
     }
   }
 &nbsp;
-  private changed() {
-    this._changed = true
-    this._siblings.forEach(<span class="fstat-no" title="function not covered" >(</span>value: boolean, key: string) =&gt; {
-      const l = <span class="cstat-no" title="statement not covered" >this._g.lookup(key)</span>
-<span class="cstat-no" title="statement not covered" >      if (l) {</span>
-<span class="cstat-no" title="statement not covered" >        l.touch()</span>
-      }
-    })
-  }
-&nbsp;
   /**
-   * Returns the block that is linked to this block
+   * Noop handler used for initialization.
+   * @Ignore
    */
-  private getRef = () =&gt; {
-    let ref
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._position.align) {
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof this._position.align.key === 'string') {
-        ref = this._g.lookup(this._position.align.key as string)
-      } else {
-        const l = <span class="cstat-no" title="statement not covered" >this._g.blocks()</span>
-<span class="cstat-no" title="statement not covered" >        if (l) {</span>
-<span class="cstat-no" title="statement not covered" >          ref = l.find(this._position.align.key as number)</span>
-        }
-      }
-    }
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (ref) {
-      ref.sibling = this.name
-    }
-    return ref
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  private getConnectPoint(</span>l: IPoint, s: ISize, a: IOrigin) {
-<span class="cstat-no" title="statement not covered" >    return { x: l.x + s.width * a.x, y: l.y + s.height * a.y }</span>
-  }
-&nbsp;
-  /**
-   * Take pixels and convert to percent
-   */
-  private inverseScale = (
-    input: IPositionLocation | IPositionSize
-  ): IPositionLocation | IPositionSize =&gt; {
-    switch (input.unit) {
-      case Unit.percent: {
-        const size = this._g.params().get('containersize') as ISize
-        <span class="missing-if-branch" title="else path not taken" >E</span>if (size.width &amp;&amp; size.height) {
-          if ('x' in input) {
-            const p = input as IPositionLocation
-            return {
-              x: p.x / size.width,
-              y: p.y / size.height,
-              unit: p.unit
-            }
-          } else {
-            const s = input as IPositionSize
-            return {
-              width: s.width / size.width,
-              height: s.height / size.height,
-              unit: s.unit
-            }
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-1 cbranch-no" title="branch not covered" >      case Unit.preserve: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-&nbsp;
-        const minWidth = <span class="cstat-no" title="statement not covered" >size.width &lt; size.height ? size.width : size.height</span>
-<span class="cstat-no" title="statement not covered" >        if (minWidth) {</span>
-<span class="cstat-no" title="statement not covered" >          if ('x' in input) {</span>
-            const p = <span class="cstat-no" title="statement not covered" >input as IPositionLocation</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              x: p.x / minWidth,
-              y: p.y / minWidth,
-              unit: p.unit
-            }
-          } else {
-            const s = <span class="cstat-no" title="statement not covered" >input as IPositionSize</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              width: s.width / minWidth,
-              height: s.height / minWidth,
-              unit: s.unit
-            }
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-2 cbranch-no" title="branch not covered" >      case Unit.preserveWidth: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-        const factor = <span class="cstat-no" title="statement not covered" >size.width</span>
-<span class="cstat-no" title="statement not covered" >        if (factor) {</span>
-<span class="cstat-no" title="statement not covered" >          if ('x' in input) {</span>
-            const p = <span class="cstat-no" title="statement not covered" >input as IPositionLocation</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              x: p.x / factor,
-              y: p.y / factor,
-              unit: p.unit
-            }
-          } else {
-            const s = <span class="cstat-no" title="statement not covered" >input as IPositionSize</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              width: s.width / factor,
-              height: s.height / factor,
-              unit: s.unit
-            }
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-<span class="branch-3 cbranch-no" title="branch not covered" >      case Unit.preserveHeight: {</span>
-        const size = <span class="cstat-no" title="statement not covered" >this._g.params().get('containersize') as ISize</span>
-        const factor = <span class="cstat-no" title="statement not covered" >size.height</span>
-<span class="cstat-no" title="statement not covered" >        if (factor) {</span>
-<span class="cstat-no" title="statement not covered" >          if ('x' in input) {</span>
-            const p = <span class="cstat-no" title="statement not covered" >input as IPositionLocation</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              x: p.x / factor,
-              y: p.y / factor,
-              unit: p.unit
-            }
-          } else {
-            const s = <span class="cstat-no" title="statement not covered" >input as IPositionSize</span>
-<span class="cstat-no" title="statement not covered" >            return {</span>
-              width: s.width / factor,
-              height: s.height / factor,
-              unit: s.unit
-            }
-          }
-        }
-<span class="cstat-no" title="statement not covered" >        break</span>
-      }
-    }
-&nbsp;
-    // default
-    return input
-  }
-&nbsp;
-  /**
-   * Defines the origin of location in percent
-   * If the origin is (50,50) then the top left is
-   * (p.x - .50 * s.x, p.y - .50 * s.y)
-   *
-   *  x----------------
-   *  |               |
-   *  |       o       |
-   *  |               |
-   *  ----------------
-   *  o: origin
-   *  x: left top
-   */
-  private fromOrigin = (
-    p: IPositionLocation,
-    origin: IPoint,
-    s: ISize
-  ): IPositionLocation =&gt; {
-    return {
-      x: p.x - origin.x * s.width,
-      y: p.y - origin.y * s.height,
-      unit: p.unit
-    }
-  }
-&nbsp;
-  /**
-   * reverses fromOrigin
-   */
-  private toOrigin = (
-    p: IPositionLocation,
-    origin: IPoint | undefined,
-    s: ISize
-  ): IPositionLocation =&gt; {
-    if (origin) {
-      return {
-        x: p.x + origin.x * s.width,
-        y: p.y + origin.y * s.height,
-        unit: p.unit
-      }
-    }
-    return p
-  }
-&nbsp;
-  /**
-   * Compute left top point of rectangle based on align value
-   * If p represents the bottom center point then the top left
-   * position is (p.x - s.x / 2, p.y - s.y;)
-   * Inverse of toAlign.
-   */
-  private fromAlign = (p: IPoint, s: ISize, origin: IOrigin): IPoint =&gt; {
-    return {
-      x: p.x - origin.x * s.width,
-      y: p.y - origin.y * s.height
-    }
-  }
-&nbsp;
-  /**
-   * Gets the point of an handle given an origin and size
-   * if align is left top then return (rect.left, rect.top)
-   * if align if bottom center then return
-   * (r.left + r.halfWidth, r.bottom;)
-   *  Inverse of fromAlign.
-   */
-  private toAlign = (p: IPoint, s: ISize, align: IOrigin): IPoint =&gt; {
-    return {
-      x: p.x + align.x * s.width,
-      y: p.y + align.y * s.height
-    }
+  private noop = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.error('Block: Event handler not defined')</span>
   }
 }
 &nbsp;</pre></td></tr>
@@ -3508,7 +1492,7 @@ export class Block {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 07 2019 08:48:24 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 14 2019 20:50:02 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

@@ -927,12 +927,19 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>IDataLayout is the property that you use when defining children of RLGLayout. It
-						applies to both HTML elements and React Components. It&#39;s purpose is to
-						specify the rules and data needed to create a Block and optionally its children.
-						When specified on a child use the css friendly name &#39;data-layout&#39;. If the Block
-					is already defined in a generator you just need the name in a child.</p>
+					<p>IDataLayout is the property that you use to define a block in React. In React
+					you need to use the css friendly name &#39;data-layout&#39;.</p>
 				</div>
+				<pre><code class="language-ts"> &lt;RLGLayout ... &gt;
+   &lt;div data-layout={{
+     name: '&lt;block name&gt;'
+   }} &gt;
+     { content }
+   &lt;/div&gt;
+ &lt;/RLGLayout&gt;
+</code></pre>
+				<p>In addition to the name you will need to add a position field if the block is
+				not already defined in a generator.</p>
 			</div>
 		</section>
 		<section class="tsd-panel tsd-hierarchy">
@@ -965,7 +972,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L31">components/Block.ts:31</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L30">components/blockTypes.ts:30</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -981,12 +988,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <a href="iposition.html" class="tsd-signature-type">IPosition</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/8eeabf4/src/components/Block.ts#L37">components/Block.ts:37</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L36">components/blockTypes.ts:36</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>IPosition includes the rules and data needed to create a Block. If the
+						<p>IPosition specifies the rules and data needed to create a Block. If the
 							Block already exists then that block will be used. Position must be defined
 						either in a generator or when used with a child of RLGLayout.</p>
 					</div>
