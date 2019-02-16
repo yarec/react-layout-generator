@@ -1,14 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-import {
-  DebugOptions,
-  dynamicGenerator,
-  IEditHelperProps,
-  PositionRef,
-  RLGLayout,
-  Status
-} from '../importRLG'
+import * as RLG from '../importRLG'
 
 import Button from '../components/Button'
 
@@ -51,14 +44,14 @@ interface ICardDeckState {
 
 // tslint:disable-next-line:max-classes-per-file
 export default class CardDeck extends React.Component<
-  IEditHelperProps,
+  RLG.IEditHelperProps,
   ICardDeckState
 > {
-  private _g = dynamicGenerator('example.CardDeck')
+  private _g = RLG.dynamicGenerator('example.CardDeck')
   private _deck = new Deck()
   private _edit: boolean = true
 
-  constructor(props: IEditHelperProps) {
+  constructor(props: RLG.IEditHelperProps) {
     super(props)
     this.state = { update: 0 }
 
@@ -73,17 +66,17 @@ export default class CardDeck extends React.Component<
         {
           name: 'edit',
           command: this.setEdit,
-          status: this._edit ? Status.up : Status.down
+          status: this._edit ? RLG.Status.up : RLG.Status.down
         }
       ])
   }
 
-  public setEdit = (status: Status) => {
-    if (status === Status.down) {
-      status = Status.up
+  public setEdit = (status: RLG.Status) => {
+    if (status === RLG.Status.down) {
+      status = RLG.Status.up
       this._edit = true
     } else {
-      status = Status.down
+      status = RLG.Status.down
       this._edit = false
     }
 
@@ -96,10 +89,10 @@ export default class CardDeck extends React.Component<
 
   public render() {
     return (
-      <RLGLayout
+      <RLG.Layout
         name={'example.cardDeck'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
-        debug={DebugOptions.timing}
+        debug={RLG.DebugOptions.timing}
         g={this._g}
         layers={{
           encapsulate: false
@@ -146,7 +139,7 @@ export default class CardDeck extends React.Component<
             <Description>Use context menu align selected cards.</Description>
           </>
         </Container>
-      </RLGLayout>
+      </RLG.Layout>
     )
   }
 
@@ -161,7 +154,7 @@ export default class CardDeck extends React.Component<
 
           location: { left: '5%', top: '5%', width: 120, height: 156 },
           editor: {
-            edits: [{ ref: PositionRef.position }]
+            edits: [{ ref: RLG.PositionRef.position }]
           }
         }}
       >

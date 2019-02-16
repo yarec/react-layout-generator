@@ -7,15 +7,15 @@ import {
   desktopGenerator,
   IEditHelperProps,
   IGenerator,
-  IRLGMetaDataArgs,
+  IMetaDataArgs,
   ISize,
   loadFromLocalStorage,
   OverflowOptions,
   Params,
   ParamValue,
   rectSize,
-  RLGLayout,
-  RLGPanel,
+  Layout,
+  Panel,
   saveToLocalStorage,
   ServiceOptions,
   Status
@@ -132,19 +132,19 @@ export default class Editable extends React.Component<
 
   public render() {
     return (
-      <RLGLayout
-        name={'RLGLayout.ETemplate.example'}
+      <Layout
+        name={'Layout.ETemplate.example'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={[DebugOptions.timing]}
         overflowX={OverflowOptions.hidden}
         overflowY={OverflowOptions.hidden}
         g={this.g}
       >
-        <RLGPanel
+        <Panel
           data-layout={{ name: 'title' }}
           style={{ backgroundColor: 'hsl(200,100%,80%)' }}
         >
-          {(args: IRLGMetaDataArgs) => (
+          {(args: IMetaDataArgs) => (
             <EditableText
               edit={args.service === ServiceOptions.edit}
               debug={args.debug}
@@ -153,19 +153,19 @@ export default class Editable extends React.Component<
               containersize={rectSize(args.container)}
             />
           )}
-        </RLGPanel>
+        </Panel>
 
         <div
           data-layout={{ name: 'header' }}
           style={{ backgroundColor: 'hsl(210,100%,10%)' }}
         />
 
-        <RLGPanel
+        <Panel
           data-layout={{ name: 'content' }}
           style={{ backgroundColor: 'hsl(220,100%,80%)' }}
         >
-          {(args: IRLGMetaDataArgs) => <div />}
-        </RLGPanel>
+          {(args: IMetaDataArgs) => <div />}
+        </Panel>
 
         <div
           data-layout={{
@@ -191,7 +191,7 @@ export default class Editable extends React.Component<
           <p>The editable text widget does not allow line breaks.</p>
           <p>Save state enabled.</p>
         </div>
-      </RLGLayout>
+      </Layout>
     )
   }
 }

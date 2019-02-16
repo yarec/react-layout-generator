@@ -7,8 +7,8 @@
  */
 
  
-export { RLGLayout } from '../../src/RLGLayout'
-export { RLGPanel, IRLGMetaDataArgs } from '../../src/RLGPanel'
+export { Layout } from '../../src/Layout'
+export { Panel, IMetaDataArgs } from '../../src/Panel'
 export { Draggable } from '../../src/Draggable'
 export { DragDrop } from '../../src/DragDrop'
 
@@ -78,7 +78,7 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   IGenerator,
 //   IPoint,
 //   IDataLayout,
-//   IRLGMetaDataArgs,
+//   IMetaDataArgs,
 //   ISize,
 //   IRect,
 //   loadFromLocalStorage,
@@ -86,8 +86,8 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   ParamValue, 
 //   PositionRef,
 //   rectSize,
-//   RLGLayout,
-//   RLGPanel,
+//   Layout,
+//   Panel,
 //   rowsGenerator,
 //   saveToLocalStorage,  
 //   Status,

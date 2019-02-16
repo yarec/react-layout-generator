@@ -12,9 +12,9 @@ import {
   desktopGenerator,
   EditHelper,
   IGenerator,
-  IRLGMetaDataArgs,
-  RLGLayout,
-  RLGPanel,
+  IMetaDataArgs,
+  Layout,
+  Panel,
   ServiceOptions
 } from './importRLG'
 
@@ -54,7 +54,7 @@ const Title = styled.h2`
   word-break: keep-all;
 `
 
-// function RLGDivElement(n: string) {
+// function DivElement(n: string) {
 //   return <div data-layout={{name: n}}  
 // }
 
@@ -100,7 +100,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
   public render() {
     return (
       <ErrorBoundary>
-        <RLGLayout
+        <Layout
           name='framework'
           debug={DebugOptions.none}
           service={ServiceOptions.none}
@@ -108,11 +108,11 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
           overflowX={OverflowOptions.hidden}
           overflowY={OverflowOptions.hidden}
         >
-          <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
-            {(args: IRLGMetaDataArgs) => (
+          <Panel data-layout={{ name: 'title' }} style={{ backgroundColor: cssColor.dark, textAlign: 'center' }} >
+            {(args: IMetaDataArgs) => (
               <Title>React Layout Generator Examples</Title>
             )}
-          </RLGPanel>
+          </Panel>
 
           <div data-layout={{ name: 'header' }} style={{ backgroundColor: cssColor.dark }}>
             <NavBar elements={[
@@ -150,7 +150,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
           <div data-layout={{ name: 'content' }} >
             {this.state.app}
           </div>
-        </RLGLayout>
+        </Layout>
       </ErrorBoundary >
     );
 

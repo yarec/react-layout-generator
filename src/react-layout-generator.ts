@@ -2,8 +2,8 @@
 // import "core-js/fn/array.find"
 // ...
 
-export { RLGLayout, IRLGLayoutProps } from './RLGLayout'
-export { RLGPanel, IRLGMetaDataArgs } from './RLGPanel'
+export { Layout, ILayoutProps } from './Layout'
+export { Panel, IMetaDataArgs } from './Panel'
 export { Draggable, IDraggableProps } from './Draggable'
 export { DragDrop, IDragDropProps } from './DragDrop'
 export { Block } from './components/Block'

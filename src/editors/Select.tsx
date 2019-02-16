@@ -12,11 +12,11 @@ import { ParamValue } from '../components/Params';
  * internal use only
  * @ignore
  */
-export interface IRLGSelectProps {
+export interface ISelectProps {
   name: string;
   boundary: IRect;
   debug?: DebugOptions;
-  selectCallback: (instance: RLGSelect) => void;
+  selectCallback: (instance: Select) => void;
   onUpdate: (reset?: boolean) => void;
   g: IGenerator;
 }
@@ -25,7 +25,7 @@ export interface IRLGSelectProps {
  * internal use only
  * @ignore
  */
-export interface IRLGSelectState {
+export interface ISelectState {
   contextMenu: boolean; 
 }
 
@@ -88,14 +88,14 @@ class Command implements ICommand {
  * @ignore
  */
 // tslint:disable-next-line:max-classes-per-file
-export class RLGSelect extends React.Component<IRLGSelectProps, IRLGSelectState> {
+export class Select extends React.Component<ISelectProps, ISelectState> {
 
   private _editHelper: EditHelper | undefined;
   private _selected: Map<string, Block> = new Map([]);
   private _undo: IUndoRedo[] = [];
   private _redo: IUndoRedo[] = [];
 
-  constructor(props: IRLGSelectProps) {
+  constructor(props: ISelectProps) {
     super(props);
     // set instance
     this.props.selectCallback(this);

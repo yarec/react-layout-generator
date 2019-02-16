@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
-import { RLGLayout } from '../RLGLayout'
+import { Layout } from '../Layout'
 import { DebugOptions, ServiceOptions } from '../types'
 
 import * as Enzyme from 'enzyme'
-import { RLGPanel, IRLGMetaDataArgs } from '../RLGPanel'
+import { Panel, IMetaDataArgs } from '../Panel'
 
 const { mount } = Enzyme
 
@@ -31,10 +31,10 @@ function create(args: ICreate) {
 
 const g: IGenerator = new Generator('test', init, params, create)
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should allow props to be set #1', () => {
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="test#1"
         service={ServiceOptions.edit}
         debug={DebugOptions.all}
@@ -44,16 +44,16 @@ describe('RLGLayout', () => {
     expect(wrapper.props().debug).toEqual(DebugOptions.all)
   })
 
-  test('RLGPanel test #1', () => {
+  test('Panel test #1', () => {
     g.reset()
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="panelTest#2"
         service={ServiceOptions.edit}
         g={g}
         containersize={{ width: 1000, height: 1000 }}
       >
-        <RLGPanel
+        <Panel
           key={'a'}
           data-layout={{
             name: 'a',
@@ -61,19 +61,19 @@ describe('RLGLayout', () => {
             location: { left: 10, top: 10, width: 100, height: 100 }
           }}
         >
-          {(args: IRLGMetaDataArgs) => (
+          {(args: IMetaDataArgs) => (
             <div>
               <span>Panel</span>
             </div>
           )}
-        </RLGPanel>
-      </RLGLayout>
+        </Panel>
+      </Layout>
     )
 
     const panel = wrapper
-      .find(RLGPanel)
+      .find(Panel)
       .at(0)
-      .instance() as RLGPanel
+      .instance() as Panel
 
     expect(panel.props['data-layout'].name).toEqual('a')
     expect(wrapper.props().service).toEqual(ServiceOptions.edit)

@@ -5,7 +5,7 @@ import {
   DragDrop,
   IEditHelperProps,
   IGenerator,
-  RLGLayout,
+  Layout,
   ServiceOptions
 } from '../importRLG'
 
@@ -107,7 +107,7 @@ export default class Solitaire extends React.Component<
 
   public render() {
     return (
-      <RLGLayout
+      <Layout
         name="example.Solitaire"
         g={this._g}
         service={ServiceOptions.dnd}
@@ -160,7 +160,7 @@ export default class Solitaire extends React.Component<
             New Game
           </button>
         </div>
-      </RLGLayout>
+      </Layout>
     )
   }
 

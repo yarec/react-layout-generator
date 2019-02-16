@@ -7,9 +7,8 @@ import { IGenerator, ICreate, Generator } from '../../generators/Generator'
 import {
   dynamicGenerator,
   ServiceOptions,
-  RLGLayout
+  Layout
 } from '../../react-layout-generator'
-// import { RLGSelect } from '../editors/RLGSelect';
 
 const { mount } = Enzyme
 
@@ -40,7 +39,7 @@ it('editHelper #1', () => {
   g.params().set('containersize', { width: 1000, height: 1000 })
   const wrapper = mount(<Intro editHelper={h} />)
   const rlgLayout = wrapper
-    .find('RLGLayout')
+    .find('Layout')
     .at(0)
     .instance()
 
@@ -99,8 +98,8 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
 
   public render() {
     return (
-      <RLGLayout
-        name={'RLGLayout.intro.example'}
+      <Layout
+        name={'Layout.intro.example'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         // debug={[DebugOptions.data, DebugOptions.mouseEvents, DebugOptions.error]}
         g={this._g}
@@ -114,7 +113,7 @@ class Intro extends React.Component<IEditHelperProps, IIntroState> {
         >
           <p>A typescript library with a small runtime (~50K).</p>
         </div>
-      </RLGLayout>
+      </Layout>
     )
   }
 }

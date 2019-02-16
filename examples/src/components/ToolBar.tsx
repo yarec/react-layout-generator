@@ -10,8 +10,8 @@ import {
   IEditTool,
   IGenerator,
   ISize,
+  Layout,
   Params,
-  RLGLayout,
   rowsGenerator,
   Status
 } from '../importRLG'
@@ -84,9 +84,9 @@ export default class ToolBar
     this._n.reset()
 
     return (
-      <RLGLayout name="ToolBar" debug={DebugOptions.none} g={this._n}>
+      <Layout name="ToolBar" debug={DebugOptions.none} g={this._n}>
         {this.createElements()}
-      </RLGLayout>
+      </Layout>
     )
   }
 

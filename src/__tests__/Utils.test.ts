@@ -1,11 +1,11 @@
 import { Unit } from '../types'
 import { clone } from '../utils'
-import { toXPixel, toYPixel, IRLGBounds } from '../components/blockUtils'
+import { toXPixel, toYPixel, IBounds } from '../components/blockUtils'
 
 const containersize = { width: 100, height: 100 }
 const viewport = { width: 1000, height: 500 }
 
-const bounds: IRLGBounds = {
+const bounds: IBounds = {
   container: containersize,
   viewport
 }

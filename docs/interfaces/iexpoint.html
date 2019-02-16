@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IRLGLayoutState | react-layout-generator</title>
+	<title>IExPoint | react-layout-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -910,25 +910,13 @@ img { max-width: 100%; }
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class="current tsd-kind-interface">
-			<a href="irlglayoutstate.html" class="tsd-kind-icon">IRLGLayout<wbr>State</a>
+			<a href="iexpoint.html" class="tsd-kind-icon">IEx<wbr>Point</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#contextmenu" class="tsd-kind-icon">context<wbr>Menu</a>
+					<a href="iexpoint.html#x" class="tsd-kind-icon">x</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#contextmenuactive" class="tsd-kind-icon">context<wbr>Menu<wbr>Active</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#devicepixelratio" class="tsd-kind-icon">device<wbr>Pixel<wbr>Ratio</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#height" class="tsd-kind-icon">height</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#update" class="tsd-kind-icon">update</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="irlglayoutstate.html#width" class="tsd-kind-icon">width</a>
+					<a href="iexpoint.html#y" class="tsd-kind-icon">y</a>
 				</li>
 			</ul>
 		</li>
@@ -936,11 +924,24 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>This interface defines an input point that can include <a href="#Unit">units</a>.</p>
+				</div>
+				<p>The following example specifies a point at the center of the container:</p>
+				<pre><code> const p = {
+   <span class="hljs-symbol">x</span>: <span class="hljs-string">'50%'</span>,
+   <span class="hljs-symbol">y</span>: <span class="hljs-string">'50%'</span>
+ }</code></pre><p>Passing this point to the function <a href="#toPixel">toPixel</a> will return a
+				point that is centered in the container.</p>
+			</div>
+		</section>
 		<section class="tsd-panel tsd-hierarchy">
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="target">IRLGLayoutState</span>
+					<span class="target">IExPoint</span>
 				</li>
 			</ul>
 		</section>
@@ -951,12 +952,8 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#contextmenu" class="tsd-kind-icon">context<wbr>Menu</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#contextmenuactive" class="tsd-kind-icon">context<wbr>Menu<wbr>Active</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#devicepixelratio" class="tsd-kind-icon">device<wbr>Pixel<wbr>Ratio</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#height" class="tsd-kind-icon">height</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#update" class="tsd-kind-icon">update</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="irlglayoutstate.html#width" class="tsd-kind-icon">width</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iexpoint.html#x" class="tsd-kind-icon">x</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iexpoint.html#y" class="tsd-kind-icon">y</a></li>
 						</ul>
 					</section>
 				</div>
@@ -965,62 +962,22 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="contextmenu" class="tsd-anchor"></a>
-				<h3>context<wbr>Menu</h3>
-				<div class="tsd-signature tsd-kind-icon">context<wbr>Menu<span class="tsd-signature-symbol">:</span> <a href="../classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
+				<a name="x" class="tsd-anchor"></a>
+				<h3>x</h3>
+				<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L275">RLGLayout.tsx:275</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L140">components/blockTypes.ts:140</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="contextmenuactive" class="tsd-anchor"></a>
-				<h3>context<wbr>Menu<wbr>Active</h3>
-				<div class="tsd-signature tsd-kind-icon">context<wbr>Menu<wbr>Active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<a name="y" class="tsd-anchor"></a>
+				<h3>y</h3>
+				<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L276">RLGLayout.tsx:276</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="devicepixelratio" class="tsd-anchor"></a>
-				<h3>device<wbr>Pixel<wbr>Ratio</h3>
-				<div class="tsd-signature tsd-kind-icon">device<wbr>Pixel<wbr>Ratio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L277">RLGLayout.tsx:277</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="height" class="tsd-anchor"></a>
-				<h3>height</h3>
-				<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L273">RLGLayout.tsx:273</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="update" class="tsd-anchor"></a>
-				<h3>update</h3>
-				<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L274">RLGLayout.tsx:274</a></li>
-					</ul>
-				</aside>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="width" class="tsd-anchor"></a>
-				<h3>width</h3>
-				<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/RLGLayout.tsx#L272">RLGLayout.tsx:272</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L141">components/blockTypes.ts:141</a></li>
 					</ul>
 				</aside>
 			</section>

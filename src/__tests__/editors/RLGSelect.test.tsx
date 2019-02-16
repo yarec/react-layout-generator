@@ -1,21 +1,21 @@
 import * as React from 'react'
 import * as Enzyme from 'enzyme';
 
-import { RLGLayout } from '../../RLGLayout';
+import { Layout } from '../../Layout';
 import { DebugOptions, ServiceOptions } from '../../types';
 import { dynamicGenerator, Block } from '../../react-layout-generator';
-import { RLGSelect } from '../../editors/RLGSelect';
+import { Select } from '../../editors/Select';
 
 const { mount } = Enzyme
 
 const g = dynamicGenerator('example.CardDeck');
 
-describe('RLGSelect', () => {
-  test('RLGSelect #1', () => {
+describe('Select', () => {
+  test('Select #1', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -32,12 +32,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
@@ -50,11 +50,11 @@ describe('RLGSelect', () => {
     expect(one.zIndex).toEqual(Math.max(0, Math.min(z1, z2) - 1))
     expect(two.zIndex).toEqual(Math.max(0, Math.min(z1, z2) - 1))
   })
-  test('RLGSelect #2', () => {
+  test('Select #2', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -71,12 +71,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
@@ -89,11 +89,11 @@ describe('RLGSelect', () => {
     expect(one.zIndex).toEqual(Math.max(z1, z2) + 1)
     expect(two.zIndex).toEqual(Math.max(z1, z2) + 1)
   })
-  test('RLGSelect #3', () => {
+  test('Select #3', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -110,12 +110,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
@@ -125,11 +125,11 @@ describe('RLGSelect', () => {
     expect(one.rect).toEqual({ x: 200, y: 200, width: 200, height: 200 })
     expect(two.rect).toEqual({ x: 400, y: 300, width: 200, height: 100 })
   })
-  test('RLGSelect #4', () => {
+  test('Select #4', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -146,12 +146,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
@@ -161,11 +161,11 @@ describe('RLGSelect', () => {
     expect(one.rect).toEqual({ x: 200, y: 200, width: 100, height: 200 })
     expect(two.rect).toEqual({ x: 150, y: 250, width: 200, height: 100 })
   })
-  test('RLGSelect #5', () => {
+  test('Select #5', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -182,12 +182,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     const one = select!.select('one') as Block
     const two = select!.select('two') as Block
@@ -197,11 +197,11 @@ describe('RLGSelect', () => {
     expect(one.rect).toEqual({ x: 200, y: 200, width: 100, height: 200 })
     expect(two.rect).toEqual({ x: 200, y: 250, width: 200, height: 100 })
   })
-  test('RLGSelect #6', () => {
+  test('Select #6', () => {
     g.clear()
     const wrapper = mount(
-      <RLGLayout
-        name='RLGSelect#1'
+      <Layout
+        name='Select#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={g}
@@ -219,12 +219,12 @@ describe('RLGSelect', () => {
         }}>
           <span>two</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
-    // const layout = wrapper.instance() as RLGLayout
+    // const layout = wrapper.instance() as Layout
 
-    const select = wrapper.find(RLGSelect).at(0).instance() as RLGSelect
+    const select = wrapper.find(Select).at(0).instance() as Select
 
     select!.clear()
     const one = select!.select('one') as Block

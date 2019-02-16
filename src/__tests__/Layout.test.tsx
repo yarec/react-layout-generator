@@ -3,7 +3,7 @@ import * as ReactTestUtils from 'react-dom/test-utils'
 
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
-import { RLGLayout } from '../RLGLayout'
+import { Layout } from '../Layout'
 import { DebugOptions, ServiceOptions, Unit, OverflowOptions } from '../types'
 
 import * as Enzyme from 'enzyme';
@@ -31,10 +31,10 @@ function create(args: ICreate) {
 
 const g: IGenerator = new Generator('test', init, params, create)
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should allow props to be set #1', () => {
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name='test#1'
         debug={DebugOptions.info}
         g={g}
@@ -61,14 +61,14 @@ describe('RLGLayout', () => {
         }}>
           <span>A test</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
     expect(wrapper.props().debug).toEqual(DebugOptions.info);
   });
 
   test('it should allow props to be set #2', () => {
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name='test#2'
         debug={DebugOptions.mouseEvents}
         g={g}
@@ -95,14 +95,14 @@ describe('RLGLayout', () => {
         }}>
           <span>A test</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
     expect(wrapper.props().debug).toEqual(DebugOptions.mouseEvents);
   });
 
   test('it should allow props to be set #3', () => {
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name='test#3'
         debug={DebugOptions.all}
         g={g}
@@ -131,14 +131,14 @@ describe('RLGLayout', () => {
             <span>A test</span>
           </>
         </div>
-      </RLGLayout>
+      </Layout>
     )
     expect(wrapper.props().debug).toEqual(DebugOptions.all);
   });
 
   test('it should allow props to be set #4', () => {
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name='test#4'
         debug={[DebugOptions.all]}
         g={g}
@@ -168,14 +168,14 @@ describe('RLGLayout', () => {
             <span>A test</span>
           </>
         </div>
-      </RLGLayout>
+      </Layout>
     )
     expect(wrapper.props().debug).toEqual([DebugOptions.all]);
   });
 
 
   test('it should allow props to be set #2', () => {
-    const wrapper = mount(<RLGLayout
+    const wrapper = mount(<Layout
       name='test#3'
       service={ServiceOptions.edit}
       g={g}
@@ -185,14 +185,14 @@ describe('RLGLayout', () => {
   });
 
   test('methods #1', () => {
-    const layout = new RLGLayout({ name: 'methods #1', service: ServiceOptions.edit, g })
+    const layout = new Layout({ name: 'methods #1', service: ServiceOptions.edit, g })
 
     expect(layout.select).toEqual(undefined)
     expect(layout.getBoundingLeftTop()).toEqual({ x: 0, y: 0 })
   });
 
   test('methods #2', () => {
-    const wrapper = mount(<RLGLayout
+    const wrapper = mount(<Layout
       name='test#5'
       service={ServiceOptions.edit}
       debug={DebugOptions.all}
@@ -205,8 +205,8 @@ describe('RLGLayout', () => {
       }}>
         <span>Hello</span>
       </div>
-    </RLGLayout>)
-    const element: RLGLayout = wrapper.instance() as RLGLayout
+    </Layout>)
+    const element: Layout = wrapper.instance() as Layout
     if (element.root) {
       expect(element.getBoundingLeftTop()).toEqual({ x: 0, y: 0 })
       ReactTestUtils.Simulate.mouseDown(element.root, { button: 2 });
@@ -218,7 +218,7 @@ describe('RLGLayout', () => {
   })
 
   test('methods #3', () => {
-    const wrapper = mount(<RLGLayout
+    const wrapper = mount(<Layout
       name='test#5'
       service={ServiceOptions.edit}
       debug={DebugOptions.all}
@@ -231,8 +231,8 @@ describe('RLGLayout', () => {
       }}>
         <span>Hello</span>
       </div>
-    </RLGLayout>)
-    const element: RLGLayout = wrapper.instance() as RLGLayout
+    </Layout>)
+    const element: Layout = wrapper.instance() as Layout
     if (element.select) {
       // element.select.
 

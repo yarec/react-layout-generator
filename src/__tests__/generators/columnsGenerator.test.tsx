@@ -1,17 +1,17 @@
 import * as React from 'react'
 
 import { columnsGenerator } from '../../generators/columnsGenerator'
-import { RLGLayout } from '../../RLGLayout'
+import { Layout } from '../../Layout'
 import { mount } from 'enzyme'
 import { DebugOptions } from '../../types'
 
 const g = columnsGenerator('columnsGenerator')
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 })
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="instance#3"
         debug={DebugOptions.none}
         g={g}
@@ -27,7 +27,7 @@ describe('RLGLayout', () => {
         >
           <span>hello</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
     const hello = wrapper

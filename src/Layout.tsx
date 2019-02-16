@@ -10,11 +10,11 @@ import {
   IDataLayout 
 } from './components/blockTypes'
 import { ParamValue } from './components/Params'
-import { RLGContextMenu } from './editors/RLGContextMenu'
-import { RLGEditLayout } from './editors/RLGEditLayout'
-import { RLGSelect } from './editors/RLGSelect'
+import { ContextMenu } from './editors/ContextMenu'
+import { EditLayout } from './editors/EditLayout'
+import { Select } from './editors/Select'
 import { IGenerator } from './generators/Generator'
-import { IRLGMetaDataArgs } from './RLGPanel'
+import { IMetaDataArgs } from './Panel'
 import {
   DebugOptions,
   DebugOptionsArray,
@@ -132,7 +132,7 @@ export let gInProgress: number = 0
  * internal use only
  * @ignore
  */
-let gRoot: RLGLayout
+let gRoot: Layout
 
 /**
  * internal use only
@@ -141,13 +141,13 @@ let gRoot: RLGLayout
 export const gContext: Map<string, any> = new Map()
 
 /**
- * Props for RLGLayout.
+ * Props for Layout.
  *
  * Note that you can add a separate style property that will be merged
  * internally for the root element.
  * @noInheritDoc
  */
-export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
+export interface ILayoutProps extends React.HTMLProps<HTMLElement> {
   /**
    * Unique name is required.
    */
@@ -206,12 +206,12 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    * It is also useful for tests.
    *
    * ```ts
-   *  <RLGLayout
+   *  <Layout
    *    ... >
-   *    <RLGPanel
+   *    <Panel
    *      ... >
-   *      {(args: IRLGMetaDataArgs) => (
-   *        <RLGLayout
+   *      {(args: IMetaDataArgs) => (
+   *        <Layout
    *          ...
    *          containersize={{width: args.container.width, height: args.container.height}}
    *        >
@@ -233,7 +233,7 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
    *
    *  ...
    *
-   *  <RLGLayout
+   *  <Layout
    *    ...
    *    params={[
    *      ...data['rlg.intro'] as Array<[string, ParamValue]>,
@@ -267,7 +267,7 @@ export interface IRLGLayoutProps extends React.HTMLProps<HTMLElement> {
   onUpdate?: () => void
 }
 
-export interface IRLGLayoutState {
+export interface ILayoutState {
   width: number
   height: number
   update: number
@@ -277,22 +277,22 @@ export interface IRLGLayoutState {
 }
 
 /**
- * RLGLayout manages a layout. See [IRLGLayoutProps](interfaces/irlglayoutprops.html)
+ * Layout manages a layout. See [ILayoutProps](interfaces/irlglayoutprops.html)
  * for detail properties.
  * Usage:
  * ```ts
- *  <RLGLayout
+ *  <Layout
  *    name={'Layout Name'}
  *    g={ generator }
  *  >
  *    { content }
- *  </RLGLayout>
+ *  </Layout>
  * ```
  * @noInheritDoc
  */
-export class RLGLayout extends React.Component<
-  IRLGLayoutProps,
-  IRLGLayoutState
+export class Layout extends React.Component<
+  ILayoutProps,
+  ILayoutState
 > {
   get select() {
     return this._select
@@ -306,12 +306,12 @@ export class RLGLayout extends React.Component<
   private _startRendering: number = now()
 
   private _count: number = 0
-  private _select: RLGSelect | undefined = undefined
+  private _select: Select | undefined = undefined
   private _menuLocation: IPoint = { x: 0, y: 0 }
   private _rafId: number = 0
   private _lastAnimationFrame: number = 0
 
-  constructor(props: IRLGLayoutProps) {
+  constructor(props: ILayoutProps) {
     super(props)
     this.state = {
       height: props.containersize ? props.containersize.height : 0,
@@ -324,7 +324,7 @@ export class RLGLayout extends React.Component<
 
     if (this._debug & DebugOptions.warning) {
       if (props.g && props.g.blocks().size !== 0) {
-        console.warn(`RLGLayout: Did you intend on reusing this generator in ${
+        console.warn(`Layout: Did you intend on reusing this generator in ${
           props.name
         }? 
         If so you should clear it first by calling g.clear()`)
@@ -343,7 +343,7 @@ export class RLGLayout extends React.Component<
   public componentDidMount() {
     // if (gLayouts.get(this.props.name) !== undefined) {
     //   console.error(`
-    //   Did you reuse the name ${this.props.name}?. Each RLGLayout name must be unique.
+    //   Did you reuse the name ${this.props.name}?. Each Layout name must be unique.
     //   `)
     // }
 
@@ -359,7 +359,7 @@ export class RLGLayout extends React.Component<
     }
   }
 
-  public componentWillReceiveProps(props: IRLGLayoutProps) {
+  public componentWillReceiveProps(props: ILayoutProps) {
     if (
       this.props.debug !== props.debug ||
       this.props.service !== props.service
@@ -462,7 +462,7 @@ export class RLGLayout extends React.Component<
             {this.content()}
 
             {this.state.contextMenuActive ? (
-              <RLGContextMenu
+              <ContextMenu
                 commands={this.generateContextMenu(this.state.contextMenu)}
                 location={this._menuLocation}
                 bounds={{ width: this.state.width, height: this.state.height }}
@@ -548,7 +548,7 @@ export class RLGLayout extends React.Component<
     return mainStyle
   }
 
-  private initProps(props: IRLGLayoutProps) {
+  private initProps(props: ILayoutProps) {
     this._debug = DebugOptions.none
     if (props.debug) {
       if (Array.isArray(props.debug)) {
@@ -722,7 +722,7 @@ export class RLGLayout extends React.Component<
         const blocks = this._g.blocks()
 
         console.log(
-          `RLGLayout debug for ${
+          `Layout debug for ${
             this.props.name
           } with generator ${this._g.name()}`
         )
@@ -763,7 +763,7 @@ export class RLGLayout extends React.Component<
       })
 
       if (!b) {
-        throw new Error(
+        console.error (
           `The component ${name} in layout ${
             this.props.name
           } could not be created`
@@ -831,7 +831,7 @@ export class RLGLayout extends React.Component<
                 g: this.props.g
               }
             : {}
-          const metaDataArgs: IRLGMetaDataArgs = {
+          const metaDataArgs: IMetaDataArgs = {
             container: rect,
             block: b,
             service: this._edit ? ServiceOptions.edit : this.props.service!,
@@ -1001,7 +1001,7 @@ export class RLGLayout extends React.Component<
     // tslint:disable-next-line:no-bitwise
     if (this._debug && this._debug & DebugOptions.mouseEvents) {
       console.log(
-        `RLGLayout onParentMouseDown ${this.props.name} ${event.target}`
+        `Layout onParentMouseDown ${this.props.name} ${event.target}`
       )
     }
 
@@ -1020,7 +1020,7 @@ export class RLGLayout extends React.Component<
       // tslint:disable-next-line:no-bitwise
       if (this._debug && this._debug & DebugOptions.mouseEvents) {
         console.log(
-          `RLGLayout onParentContextMenu ${this.props.name} ${event.target}`
+          `Layout onParentContextMenu ${this.props.name} ${event.target}`
         )
       }
 
@@ -1049,7 +1049,7 @@ export class RLGLayout extends React.Component<
       // tslint:disable-next-line:no-bitwise
       if (this._debug && this._debug & DebugOptions.mouseEvents) {
         console.log(
-          `RLGLayout onHtmlMouseUp ${this.props.name} ${event.target}`
+          `Layout onHtmlMouseUp ${this.props.name} ${event.target}`
         )
       }
 
@@ -1074,7 +1074,7 @@ export class RLGLayout extends React.Component<
     document.removeEventListener('mouseup', this.onHtmlMouseUp)
   }
 
-  private selectCallback = (instance: RLGSelect) => {
+  private selectCallback = (instance: Select) => {
     this._select = instance
   }
 
@@ -1083,7 +1083,7 @@ export class RLGLayout extends React.Component<
       this.props.onUpdate()
     } else {
       this.setState({ update: this.state.update + 1 })
-      console.log(`update ${this.state.update}`)
+      // console.log(`update ${this.state.update}`)
     }
   }
 
@@ -1203,7 +1203,7 @@ export class RLGLayout extends React.Component<
 
     if (elements && this._edit) {
       elements.unshift(
-        <RLGSelect
+        <Select
           name={`select-${name}`}
           key={`select-${name}`}
           debug={this._debug}
@@ -1416,7 +1416,7 @@ export class RLGLayout extends React.Component<
           }
           if (allowWidth || allowHeight) {
             editors.push(
-              <RLGEditLayout
+              <EditLayout
                 key={`edit${b.name + i}`}
                 edit={item}
                 block={b!}
@@ -1443,7 +1443,7 @@ export class RLGLayout extends React.Component<
         const edit = { ref: PositionRef.position }
         b.setEditDefaults(edit)
         editors.push(
-          <RLGEditLayout
+          <EditLayout
             key={`edit${b.name}`}
             edit={edit}
             block={b!}

@@ -1,17 +1,17 @@
 import * as React from 'react'
 
 import { dynamicGenerator } from '../../generators/dynamicGenerator'
-import { RLGLayout } from '../../RLGLayout'
+import { Layout } from '../../Layout'
 import { mount } from 'enzyme'
 import { DebugOptions } from '../../types'
 
 const g = dynamicGenerator('dynamicGenerator')
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 })
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="instance#1"
         debug={DebugOptions.none}
         g={g}
@@ -26,7 +26,7 @@ describe('RLGLayout', () => {
         >
           <span>A test</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
     const hello = wrapper
@@ -49,7 +49,7 @@ describe('RLGLayout', () => {
       g
     )
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="instance#2"
         debug={DebugOptions.none}
         g={g}
@@ -73,7 +73,7 @@ describe('RLGLayout', () => {
         >
           <span>A test 2</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
     const test1 = wrapper

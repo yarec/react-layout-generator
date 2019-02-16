@@ -51,7 +51,7 @@ export interface IAnimateProps {
 /**
  * This defines the overflow property that are passed to css.
  * The options have the same meaning as the css overflow options.
- * These options only apply to RLGLayout.
+ * These options only apply to Layout.
  *
  * This property specifies whether to clip content or to add
  * scrollbars when an element's content is too big to fit in a
@@ -248,14 +248,15 @@ export enum Unit {
  * @param unit
  */
 export function unitFactor(unit: Unit | undefined) {
-  let factor = 100
-  if (unit && (Unit.pixel || Unit.unmanaged)) {
-    factor = 1
-  }
   if (!unit) {
-    factor = 1
+    return 1
   }
-  return factor
+
+  if (unit === Unit.pixel || unit === Unit.unmanaged) {
+    return 1
+  }
+
+  return 100
 }
 
 /**

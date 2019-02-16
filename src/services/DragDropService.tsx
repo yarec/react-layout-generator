@@ -158,7 +158,7 @@ export class DragDropService
   public onMouseDown = (event: React.MouseEvent) => {
      // tslint:disable-next-line:no-bitwise
     if (this._debug & DebugOptions.mouseEvents && event.target) {
-      console.log(`RLGDragDrop onMouseDown ${(event.target as HTMLElement).id}`)
+      console.log(`DragDrop onMouseDown ${(event.target as HTMLElement).id}`)
     }
 
     if (event.button === 2) {

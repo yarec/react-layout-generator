@@ -5,7 +5,7 @@ import cssColor from '../assets/colors'
 
 // These paths are for the examples only. In an application you
 // would get these by importing from 'react-layout-generator'
-import { columnsGenerator, DebugOptions, RLGLayout } from '../importRLG'
+import { columnsGenerator, DebugOptions, Layout } from '../importRLG'
 
 // tslint:disable-next-line:variable-name
 export const Button = styled.button`
@@ -81,9 +81,9 @@ export default class NavBar extends React.Component<
     this.n.reset()
 
     return (
-      <RLGLayout name="navbar" debug={DebugOptions.none} g={this.n}>
+      <Layout name="navbar" debug={DebugOptions.none} g={this.n}>
         {this.createElements()}
-      </RLGLayout>
+      </Layout>
     )
   }
 

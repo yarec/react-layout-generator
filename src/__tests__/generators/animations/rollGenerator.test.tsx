@@ -1,17 +1,17 @@
 import * as React from 'react'
 
 import { rollGenerator } from '../../../generators/animations/rollGenerator'
-import { RLGLayout } from '../../../RLGLayout'
+import { Layout } from '../../../Layout'
 import { mount } from 'enzyme'
 import { DebugOptions } from '../../../types'
 
 const g = rollGenerator('rollGenerator')
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 })
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="instance#1"
         debug={DebugOptions.none}
         g={g}
@@ -27,7 +27,7 @@ describe('RLGLayout', () => {
         >
           <span>A test</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
     const block = wrapper

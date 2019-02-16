@@ -6,13 +6,13 @@ import {
   DebugOptions,
   desktopGenerator,
   IEditHelperProps,
-  IRLGMetaDataArgs,
+  IMetaDataArgs,
   ISize,
   Params,
   ParamValue,
   rectSize, 
-  RLGLayout, 
-  RLGPanel,
+  Layout, 
+  Panel,
   ServiceOptions,
   Status
 } from '../importRLG'
@@ -111,41 +111,41 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
     // const contentcontainersize = this.g.containersize('content');
 
     return (
-      <RLGLayout
-        name={'RLGLayout.desktop.example'}
+      <Layout
+        name={'Layout.desktop.example'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.timing}
         g={this.g}
       >
-        <RLGPanel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'leftSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+          {(args: IMetaDataArgs) => (
             <>
               <span>LeftSide</span>
               {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'leftSideWidth')) : null}
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'header' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
+          {(args: IMetaDataArgs) => (
             <>
               <span>Header</span>
               {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'headerHeight')) : null}
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel data-layout={{ name: 'footer' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'footer' }} style={{ backgroundColor: 'hsl(210,100%,80%)' }} >
+          {(args: IMetaDataArgs) => (
             <>
               <span>Footer</span>
               {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'footerHeight')) : null}
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)', overflow: 'hidden' }}>
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'content' }} style={{ backgroundColor: 'hsl(215,100%,80%)', overflow: 'hidden' }}>
+          {(args: IMetaDataArgs) => (
             <>
               <span>Desktop Content</span>
               <List containersize={rectSize(args.container)}>
@@ -171,17 +171,17 @@ export default class DeskTop extends React.Component<IEditHelperProps, IDeskTopS
               </List>
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel data-layout={{ name: 'rightSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'rightSide' }} style={{ backgroundColor: 'hsl(200,100%,80%)' }} >
+          {(args: IMetaDataArgs) => (
             <>
               <span>RightSide</span>
               {args.service === ServiceOptions.edit ? (this.closeButton(rectSize(args.container), 'rightSideWidth')) : null}
             </>
           )}
-        </RLGPanel>
-      </RLGLayout>
+        </Panel>
+      </Layout>
     );
   }
 

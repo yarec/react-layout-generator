@@ -357,7 +357,7 @@ export class Block {
    */
   public update = (r: IRect) => {
     // Takes in world coordinates
-    // console.log(`Position update x: ${location.x} y: ${location.y}`)
+    // console.log(`Position update x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`)
 
     if (this._align && this.getRef()) {
       const align = this._align

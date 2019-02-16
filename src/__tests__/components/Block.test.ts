@@ -3,7 +3,7 @@ import { Params } from '../../components/Params'
 import { Generator, ICreate, IGenerator } from '../../generators/Generator'
 import {
   toXPixel,
-  IRLGBounds,
+  IBounds,
   toYPixel,
   layout
 } from '../../components/blockUtils'
@@ -20,7 +20,7 @@ const params = new Params({
   ]
 })
 
-const bounds: IRLGBounds = {
+const bounds: IBounds = {
   container: { width: 1000, height: 1000 },
   viewport: { width: 1000, height: 1000 }
 }

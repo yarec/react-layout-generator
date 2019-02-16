@@ -1,17 +1,17 @@
 import * as React from 'react'
 
 import { desktopGenerator } from '../../generators/desktopGenerator'
-import { RLGLayout } from '../../RLGLayout';
+import { Layout } from '../../Layout';
 import { mount } from 'enzyme';
 import { DebugOptions, ServiceOptions } from '../../types';
 
 const g = desktopGenerator('desktopGenerator')
 
-describe('RLGSelect', () => {
+describe('Select', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 });
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name='instance#1'
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
@@ -21,7 +21,7 @@ describe('RLGSelect', () => {
         <div data-layout={{ name: 'header' }}>
           <span>A test</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
 
     const hello = wrapper.find("[id='header']").at(0).instance();

@@ -3,7 +3,7 @@ import { IDataLayout } from '../components/blockTypes'
 import { Blocks } from '../components/Blocks'
 import { Params } from '../components/Params'
 import { EditHelper } from '../editors/EditHelper'
-import { RLGSelect } from '../editors/RLGSelect'
+import { Select } from '../editors/Select'
 import { Stacking } from '../components/Stacking'
 import { Hooks } from '../components/Hooks'
 
@@ -88,7 +88,7 @@ export class Generator implements IGenerator {
   private _params: Params
   private _blocks: Blocks
   private _stacking: Stacking
-  private _select: RLGSelect
+  private _select: Select
   private _init: IInit
   private _hooks: Hooks
   private _create: Create | undefined
@@ -134,7 +134,7 @@ export class Generator implements IGenerator {
     return this._stacking
   }
 
-  public select = (): RLGSelect => {
+  public select = (): Select => {
     return this._select
   }
 

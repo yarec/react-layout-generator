@@ -4,7 +4,7 @@ import { Block } from './components/Block';
 import { IGenerator } from './generators/Generator';
 import { DebugOptions, IRect, ServiceOptions } from './types';
 
-export interface IRLGMetaDataArgs {
+export interface IMetaDataArgs {
   container: IRect;
   block: Block;
   service: ServiceOptions;
@@ -15,7 +15,7 @@ export interface IRLGMetaDataArgs {
 }
 
 // props must be optional to allow them to be injected
-interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
+interface IPanelProps extends React.HTMLProps<HTMLDivElement> {
   container?: IRect;
   block?: Block;
   service?: ServiceOptions;
@@ -25,12 +25,12 @@ interface IRLGPanelProps extends React.HTMLProps<HTMLDivElement> {
   // update?: () => void;
 }
 
-interface IRLGPanelState {
+interface IPanelState {
   rect: IRect;
 }
 
-export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
-  constructor(props: IRLGPanelProps) {
+export class Panel extends React.Component<IPanelProps, IPanelState> {
+  constructor(props: IPanelProps) {
     super(props);
 
     if (this.props.container) {
@@ -44,7 +44,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
     }
   }
 
-  public componentWillReceiveProps(props: IRLGPanelProps) {
+  public componentWillReceiveProps(props: IPanelProps) {
     if (props.container !== this.state.rect) {
       if (props.container) {
         this.setState({
@@ -55,7 +55,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
   }
 
   public render() {
-    const args: IRLGMetaDataArgs = {
+    const args: IMetaDataArgs = {
       container: this.state.rect,
       block: this.props.block!,
       service: this.props.service!,
@@ -69,7 +69,7 @@ export class RLGPanel extends React.Component<IRLGPanelProps, IRLGPanelState> {
 
     return (
       <div style={this.props.style}>
-        {(this.props.children as (args: IRLGMetaDataArgs) => JSX.Element)(
+        {(this.props.children as (args: IMetaDataArgs) => JSX.Element)(
           args)}
       </div>
     );

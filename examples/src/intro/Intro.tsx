@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { DebugOptions, OverflowOptions } from '../../../src/types'
 import {
   IEditHelperProps,
+  Layout,
   ParamValue,
-  RLGLayout,
   rollGenerator,
   rollHook,
   ServiceOptions,
@@ -79,8 +79,8 @@ export default class Intro extends React.Component<
 
   public render() {
     return (
-      <RLGLayout
-        name={'RLGLayout.intro.example'}
+      <Layout
+        name={'Layout.intro.example'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.none}
         params={[
@@ -105,7 +105,7 @@ export default class Intro extends React.Component<
         >
           <span>Second Animation</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
   }
 

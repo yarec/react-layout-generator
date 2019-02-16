@@ -1,7 +1,7 @@
 import {
   convertInputBlockRect,
   layout,
-  IRLGBounds,
+  IBounds,
   inverseLayout,
   inverseXUnit,
   inverseYUnit
@@ -13,7 +13,7 @@ import { Unit } from '../../types'
 // const containersize = { width: 1000, height: 500 }
 // const viewport = { width: 1000, height: 500 }
 
-// const bounds: IRLGBounds ={
+// const bounds: IBounds ={
 //   container: containersize,
 //   viewport
 // }
@@ -107,7 +107,7 @@ it('convertPositionLocation #6', () => {
 })
 
 it('layout #1', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -126,7 +126,7 @@ it('layout #1', () => {
 })
 
 it('layout #2', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -146,7 +146,7 @@ it('layout #2', () => {
 })
 
 it('layout #3', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -165,7 +165,7 @@ it('layout #3', () => {
 })
 
 it('layout #4', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -185,7 +185,7 @@ it('layout #4', () => {
 })
 
 it('layout #5', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -205,7 +205,7 @@ it('layout #5', () => {
 })
 
 it('layout #6', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -224,7 +224,7 @@ it('layout #6', () => {
 })
 
 it('layout #7', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -244,7 +244,7 @@ it('layout #7', () => {
 })
 
 it('layout #8', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -261,7 +261,7 @@ it('layout #8', () => {
 })
 
 it('layout #9', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -281,7 +281,7 @@ it('layout #9', () => {
 })
 
 it('layout #10', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -298,7 +298,7 @@ it('layout #10', () => {
 })
 
 it('layout #11', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -315,7 +315,7 @@ it('layout #11', () => {
 })
 
 it('layout #12', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -329,7 +329,7 @@ it('layout #12', () => {
 })
 
 it('layout #13', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -345,7 +345,7 @@ it('layout #13', () => {
 })
 
 it('layout #14', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -361,7 +361,7 @@ it('layout #14', () => {
 })
 
 it('layout #15', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -377,7 +377,7 @@ it('layout #15', () => {
 })
 
 it('layout #15', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -394,7 +394,7 @@ it('layout #15', () => {
 })
 
 it('layout #16', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -413,7 +413,7 @@ it('layout #16', () => {
 })
 
 it('layout #17', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -430,7 +430,7 @@ it('layout #17', () => {
 })
 
 it('layout #18', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -446,7 +446,7 @@ it('layout #18', () => {
 })
 
 it('layout #19', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -467,7 +467,7 @@ it('layout #19', () => {
 })
 
 it('inverseLayout #1', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -487,7 +487,7 @@ it('inverseLayout #1', () => {
 })
 
 it('inverseLayout #2', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -508,7 +508,7 @@ it('inverseLayout #2', () => {
 })
 
 it('inverseLayout #3', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 1000 }
   }
@@ -528,7 +528,7 @@ it('inverseLayout #3', () => {
 })
 
 it('inverseLayout #4', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -549,7 +549,7 @@ it('inverseLayout #4', () => {
 })
 
 it('inverseLayout #5', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -570,7 +570,7 @@ it('inverseLayout #5', () => {
 })
 
 it('inverseLayout #6', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -590,7 +590,7 @@ it('inverseLayout #6', () => {
 })
 
 it('inverseLayout #7', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -611,7 +611,7 @@ it('inverseLayout #7', () => {
 })
 
 it('inverseLayout #8', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -631,7 +631,7 @@ it('inverseLayout #8', () => {
 })
 
 it('inverseLayout #9', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -652,7 +652,7 @@ it('inverseLayout #9', () => {
 })
 
 it('inverseLayout #10', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -686,7 +686,7 @@ it('inverseLayout #10', () => {
 })
 
 it('inverseLayout #11', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -705,7 +705,7 @@ it('inverseLayout #11', () => {
 })
 
 it('inverseLayout #12', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -721,7 +721,7 @@ it('inverseLayout #12', () => {
 })
 
 it('inverseLayout #13', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -739,7 +739,7 @@ it('inverseLayout #13', () => {
 })
 
 it('inverseLayout #14', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -757,7 +757,7 @@ it('inverseLayout #14', () => {
 })
 
 it('inverseLayout #15', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -775,7 +775,7 @@ it('inverseLayout #15', () => {
 })
 
 it('inverseLayout #15', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -794,7 +794,7 @@ it('inverseLayout #15', () => {
 })
 
 it('inverseLayout #16', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -814,7 +814,7 @@ it('inverseLayout #16', () => {
 })
 
 it('inverseLayout #17', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -833,7 +833,7 @@ it('inverseLayout #17', () => {
 })
 
 it('inverseLayout #18', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -851,7 +851,7 @@ it('inverseLayout #18', () => {
 })
 
 it('inverseLayout #19', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -889,7 +889,7 @@ it('inverseLayout #19', () => {
 })
 
 it('inverseXUnit #1', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }
@@ -903,7 +903,7 @@ it('inverseXUnit #1', () => {
 })
 
 it('inverseYUnit #1', () => {
-  const bounds: IRLGBounds = {
+  const bounds: IBounds = {
     container: { width: 100, height: 100 },
     viewport: { width: 1000, height: 500 }
   }

@@ -80,12 +80,12 @@ Finally send a [GitHub Pull Request](https://github.com/chetmurphy/react-layout-
 
 ## Usage
 
-### RLGLayout
+### Layout
 
-Use RLGLayout as a parent element followed by one or more elements with a [data-layout](interfaces/idatalayout.html) property.
+Use Layout as a parent element followed by one or more elements with a [data-layout](interfaces/idatalayout.html) property.
 
 ```ts
-<RLGLayout name='layoutName' ... />
+<Layout name='layoutName' ... />
   <div data-layout={{name: 'name1', ...}} >
     elements...
   </div>
@@ -93,16 +93,16 @@ Use RLGLayout as a parent element followed by one or more elements with a [data-
   <div data-layout={{name: 'nameN', ...}} >
     elements...
   </div>
-</RLGLayout>
+</Layout>
 ```
 
-RLGLayout can contain instances of RLGLayout. And as usual with React, children of RLGLayout can be programmatically generated.
+Layout can contain instances of Layout. And as usual with React, children of Layout can be programmatically generated.
 
 #### Note
 
-Do not use generic React components with a data-layout property as direct children of RLGLayout. This is because the generated style needs to applied to the outer most element in the component. Otherwise, the component will not be positioned correctly. This does not apply to styled-components.
+Do not use generic React components with a data-layout property as direct children of Layout. This is because the generated style needs to applied to the outer most element in the component. Otherwise, the component will not be positioned correctly. This does not apply to styled-components.
 
-A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [RLGPanel](#RLGPanel) and/or Unit.unmanaged)
+A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [Panel](#Panel) and/or Unit.unmanaged)
 
 You can only use react components as direct children that apply the style property in their render method like this:
 
@@ -117,19 +117,19 @@ You can only use react components as direct children that apply the style proper
   }
 ```
 
-### RLGPanel
+### Panel
 
-Use [RLGPanel](classes/rlgpanel.html) as a direct child of RLGLayout when its children need access their location, size and other information.
+Use [Panel](classes/rlgpanel.html) as a direct child of Layout when its children need access their location, size and other information.
 
 ```ts
-  <RLGPanel data-layout={{ name: 'content' }}>
-    {(args: IRLGMetaDataArgs) => (
+  <Panel data-layout={{ name: 'content' }}>
+    {(args: IMetaDataArgs) => (
        ...
     )}
-  </RLGPanel>
+  </Panel>
 ```
 
-The function (args: [IRLGMetaDataArgs](interfaces/IRLGMetaDataArgs.html)) => () makes its args available to all the jsx included. These args are updated by RLGLayout on every render pass allowing elements to respond to changes including animation.
+The function (args: [IMetaDataArgs](interfaces/IMetaDataArgs.html)) => () makes its args available to all the jsx included. These args are updated by Layout on every render pass allowing elements to respond to changes including animation.
 
 One way to utilize these args is to use Styled-components with a Style defined like this:
 
@@ -142,7 +142,7 @@ One way to utilize these args is to use Styled-components with a Style defined l
 
 then just pass the args to \<Item containersize={args.containersize} \>
 
-RLGPanel is also useful for svg since it can pass the width and height to svg.
+Panel is also useful for svg since it can pass the width and height to svg.
 
 ```ts
   <svg
@@ -160,13 +160,13 @@ In the above snippet the viewBox defines the coordinates system used by svg elem
 If you have more than one child you will need to use a [React Fragment](https://reactjs.org/docs/fragments.html) or add a <div wrapper.
 
 ```ts
-  <RLGPanel data-layout={{ name: 'content' }}>
-    {(args: IRLGMetaDataArgs) => (
+  <Panel data-layout={{ name: 'content' }}>
+    {(args: IMetaDataArgs) => (
       <> // React fragment shortcut
        ... // multiple children
       </>
     )}
-  </RLGPanel>
+  </Panel>
 ```
 
 ### Responsive Layout
@@ -180,7 +180,7 @@ On approach is to define all the elements in a generator as a function of the co
 An example of a responsive generator is defined by the [desktopGenerator](globals#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired. It can used like this:
 
 ```ts
-<RLGLayout
+<Layout
   name={'example'}
   g={desktopGenerator(...)}
 >
@@ -207,7 +207,7 @@ An example of a responsive generator is defined by the [desktopGenerator](global
    <div data-layout={{ name: 'footer' }} >
     <span>Footer content</span>
   </div>
-</RLGLayout>
+</Layout>
 ```
 
 ### Layers
@@ -215,7 +215,7 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. You can also specify negative values for Layers. These are used as control layers that set on top any services activated.
 
 Note: Layers are NOT related to z-index. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if
-[encapsulation](#RLGLayout) is on in layers.
+[encapsulation](#Layout) is on in layers.
 
 Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
 
@@ -231,10 +231,10 @@ To specify the layer of a block and all its content add the data-layer property 
 >
 ```
 
-To manage the layers add a layers property in RLGLayout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
+To manage the layers add a layers property in Layout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
 
 ```ts
-<RLGLayout
+<Layout
         name='name'
         ...
         layers={{
@@ -263,10 +263,10 @@ The reason for having a control layer is that services manage the interactions o
 
 ### Drag and Drop
 
-Drag and drop allows you to drag items from one container to another container within a Layout. To activate drag and drop, add the ServiceOptions.dnd to the service property of RLGLayout:
+Drag and drop allows you to drag items from one container to another container within a Layout. To activate drag and drop, add the ServiceOptions.dnd to the service property of Layout:
 
 ```ts
-      <RLGLayout
+      <Layout
         name='name'
         service={ServiceOptions.dnd}
         ...
@@ -438,7 +438,7 @@ function dynamicGenerator(name: string): IGenerator {
 
 #### Animations
 
-Generators can also be used for animations if they compute the layout blocks as a function of time. Here is an example of an [animation](globals.html#rollgenerator) that scrolls up all the children of a RLGLayout in an endless loop.
+Generators can also be used for animations if they compute the layout blocks as a function of time. Here is an example of an [animation](globals.html#rollgenerator) that scrolls up all the children of a Layout in an endless loop.
 
 ```ts
 function init (...) {
@@ -459,7 +459,7 @@ function init (...) {
 }
 ```
 
-To activate animation behavior in RLGLayout just pass the optional [animate](interfaces/ianimateprops) property and use a generator that is animation aware.
+To activate animation behavior in Layout just pass the optional [animate](interfaces/ianimateprops) property and use a generator that is animation aware.
 
 #### Notes
 
@@ -483,7 +483,7 @@ Before you can edit any of the pages you need to first make sure that the editor
 
 - Dump params [ctrl + alt + p]. This command dumps the values of the params in a JSON format to the debug console that is suitable for persisting. It can also just be used in debugging.
 
-An example is implemented in the examples sub-folder in Intro.tsx. The persisted data is stored in the params.json file in the assets folder. It is imported in Intro.tsx using `import * as data from '../assets/data/params.json'` and then added to the `params` prop of RLGLayout.
+An example is implemented in the examples sub-folder in Intro.tsx. The persisted data is stored in the params.json file in the assets folder. It is imported in Intro.tsx using `import * as data from '../assets/data/params.json'` and then added to the `params` prop of Layout.
 
 - Select blocks is done by using [shift + click].
 
@@ -497,7 +497,7 @@ RLG does use refs internally but only to get information. Placement of elements 
 
 ### Why is the page flashing
 
-This can occur when any element extends beyond the borders. Finding those elements changing their size and or location will fix the problem. Another choice is the add overflowX and overflowY hidden property  to the appropriate RLGLayout.
+This can occur when any element extends beyond the borders. Finding those elements changing their size and or location will fix the problem. Another choice is the add overflowX and overflowY hidden property  to the appropriate Layout.
 
 ### How can I right align blocks
 
@@ -591,8 +591,8 @@ import * as data from '../assets/data/params.json'
 ```ts
 public render() {
     return (
-      <RLGLayout
-        name={'RLGLayout.intro.example'}
+      <Layout
+        name={'Layout.intro.example'}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         debug={DebugOptions.none}
         params={[

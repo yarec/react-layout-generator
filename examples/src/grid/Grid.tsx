@@ -6,11 +6,11 @@ import {
   DebugOptions,
   dynamicGenerator,
   IEditHelperProps,
-  IRLGMetaDataArgs,
+  IMetaDataArgs,
   ISize,
+  Layout,
+  Panel,
   rectSize,
-  RLGLayout,
-  RLGPanel,
   ServiceOptions,
   Status,
   toXPixel,
@@ -111,13 +111,13 @@ export default class Grid extends React.Component<
 
   public render() {
     return (
-      <RLGLayout
+      <Layout
         name="example.Grid"
         debug={[DebugOptions.none]}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         g={this._g}
       >
-        <RLGPanel
+        <Panel
           data-layout={{
             name: 'grid',
 
@@ -126,7 +126,7 @@ export default class Grid extends React.Component<
           data-layer={0}
           style={{ overflow: 'hidden' }}
         >
-          {(args: IRLGMetaDataArgs) => {
+          {(args: IMetaDataArgs) => {
             return (
               <canvas
                 ref={(element: HTMLCanvasElement) => {
@@ -137,9 +137,9 @@ export default class Grid extends React.Component<
               />
             )
           }}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel
+        <Panel
           data-layout={{
             name: 'square (pixel, pixel)',
 
@@ -148,7 +148,7 @@ export default class Grid extends React.Component<
           data-layer={1}
           style={{ backgroundColor: 'tan' }}
         >
-          {(args: IRLGMetaDataArgs) => {
+          {(args: IMetaDataArgs) => {
             return (
               <Table
                 name={args.block.name}
@@ -161,9 +161,9 @@ export default class Grid extends React.Component<
               />
             )
           }}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel
+        <Panel
           data-layout={{
             name: 'square(percent, vmin)',
 
@@ -172,16 +172,16 @@ export default class Grid extends React.Component<
           data-layer={1}
           style={{ backgroundColor: 'LightSkyBlue' }}
         >
-          {(args: IRLGMetaDataArgs) => (
+          {(args: IMetaDataArgs) => (
             <>
               <span>Square (percent, vmin) </span> <br />
               <br />
               <br />
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
-        <RLGPanel
+        <Panel
           data-layout={{
             name: 'square(vmin, vmin)',
 
@@ -190,10 +190,10 @@ export default class Grid extends React.Component<
           data-layer={1}
           style={{ backgroundColor: 'lime' }}
         >
-          {(args: IRLGMetaDataArgs) => <span>Square (vmin, vmin) </span>}
-        </RLGPanel>
+          {(args: IMetaDataArgs) => <span>Square (vmin, vmin) </span>}
+        </Panel>
 
-        <RLGPanel
+        <Panel
           data-layout={{
             name: 'square(percent, percent)',
 
@@ -202,7 +202,7 @@ export default class Grid extends React.Component<
           data-layer={1}
           style={{ backgroundColor: 'gold' }}
         >
-          {(args: IRLGMetaDataArgs) => (
+          {(args: IMetaDataArgs) => (
             <>
               <span>Square (percent, percent) </span> <br />
               <br />
@@ -210,7 +210,7 @@ export default class Grid extends React.Component<
               <span>Click the edit button to edit. </span> <br />
             </>
           )}
-        </RLGPanel>
+        </Panel>
 
         <div
           data-layout={{
@@ -231,7 +231,7 @@ export default class Grid extends React.Component<
 
         {this.controls()}
         {this.gridLegend()}
-      </RLGLayout>
+      </Layout>
     )
   }
 
@@ -493,7 +493,7 @@ export default class Grid extends React.Component<
     canvas.width = w
   }
 
-  private setGrid = (args: IRLGMetaDataArgs, element: HTMLCanvasElement) => {
+  private setGrid = (args: IMetaDataArgs, element: HTMLCanvasElement) => {
     if (this._grid !== element && element) {
       this._grid = element
       this.grid(Unit.pixel)

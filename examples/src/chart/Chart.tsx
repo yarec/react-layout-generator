@@ -1,44 +1,43 @@
-import * as React from 'react';
+import * as React from 'react'
 
 import {
   Block,
-  Blocks, 
+  Blocks,
   DebugOptions,
   Generator,
+  ICreate,
   IEditHelperProps,
   IGenerator,
-  IDataLayout,
-  IRLGMetaDataArgs,
-  ISize,
+  IMetaDataArgs,
+  Layout,
+  Panel,
   Params,
   PositionRef,
-  RLGLayout, 
-  RLGPanel, 
   ServiceOptions,
-  updateParamLocation,
-  updateParamOffset,
-  IExRect
+  updateParamLocation
 } from '../importRLG'
 
-import { t1 } from './tree';
-import TreeMap from './TreeMap';
+// import { t1 } from './tree'
+// import TreeMap from './TreeMap'
 
 interface IChartState {
-  node: string;
+  node: string
 }
 
-export default class Chart extends React.Component<IEditHelperProps, IChartState> {
-
+export default class Chart extends React.Component<
+  IEditHelperProps,
+  IChartState
+> {
   private _g: IGenerator
-  private _params: Params = new Params({ name: 'chart' });
-  private _treeMap: TreeMap;
+  private _params: Params = new Params({ name: 'chart' })
+  // protected _treeMap: TreeMap
 
   constructor(props: IEditHelperProps) {
     super(props)
 
-    this._g = new Generator('chart', this.init.bind(this), this._params);
+    this._g = new Generator('chart', this.init.bind(this), this._params, this.create.bind(this))
 
-    this._treeMap = t1;
+    // this._treeMap = t1
     this.state = {
       node: 'a'
     }
@@ -46,101 +45,77 @@ export default class Chart extends React.Component<IEditHelperProps, IChartState
 
   public render() {
     return (
-      <RLGLayout
-        name='example.Chart'
+      <Layout
+        name="example.Chart"
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={this._g}
       >
-        <RLGPanel
+        <Panel
           key={this.state.node}
-          data-layout={{ name: this.state.node }}
+          data-layout={{
+            name: this.state.node,
+            origin: { x: 50, y: 0 }, 
+            location:  { left: '50%', top: '50%', width: 150, height: 100 },
+            
+            transform: [{rotate: 10, origin: {x: 50, y: 50}}],
+            editor: {
+              edits: [
+                { ref: PositionRef.position, variable: `${this.state.node}Location`, updateParam: updateParamLocation }
+              ]
+            },
+          }}
           style={{ backgroundColor: 'hsl(200,100%,80%)' }}
         >
-          {(args: IRLGMetaDataArgs) => (
+          {(args: IMetaDataArgs) => (
             <div>
-              <span >{this.state.node}</span>
+              <span>{this.state.node}</span>
             </div>
           )}
-        </RLGPanel>
-      </RLGLayout>
+        </Panel>
+      </Layout>
     )
   }
 
   public init = (g: IGenerator): Blocks => {
-    const node = this._treeMap.lookup(this.state.node);
-    const containersize = this._params.get('containersize') as ISize;
-    const aLocation = this._params.get('aLocation') as IExRect;
+    // const node = this._treeMap.lookup(this.state.node)
+    // const containersize = this._params.get('containersize') as ISize
+    // const aLocation = this._params.get('aLocation') as IPoint
 
-    const blocks = g.blocks();
+    const blocks = g.blocks()
 
     if (this._params.changed()) {
       // update Layout for each update
-      blocks.map.forEach((block) => {
-        block.touch();
-      });
+      blocks.map.forEach(block => {
+        block.touch()
+      })
     }
 
-    if (node && containersize) {
+    return blocks
+  }
 
-      // console.log('aLocation', node, aLocation);
+  protected create(args: ICreate): Block {
 
-      // Self
-      const self: IDataLayout = {
-        origin: { x: 50, y: 0 }, 
-        location: aLocation ? aLocation : { left: '10%', top: '10%', width: 150, height: 100 },
-        
-        transform: [{rotate: 10, origin: {x: 50, y: 50}}],
-        editor: {
-          edits: [
-            { ref: PositionRef.position, variable: `${node.name}Location`, updateParam: updateParamLocation }
-          ]
-        },
-      }
-      // console.log('cardSize', cardSize);
-
-      blocks.set(this.state.node, self, g);
-
-      if (0 && node.children.length) {
-        const spacing = containersize.width / node.children.length;
-        const start = containersize.width / 2 - spacing * node.children.length / 2;
-
-        node.children.forEach((name, i) => {
-          const child: IDataLayout = {
-            origin: { x: 50, y: 50 }, 
-            location: { left: 0, top: 0, width: 150, height: 100 },
-            editor: {
-              edits: [
-                { ref: PositionRef.position, variable: `${name}Offset`, updateParam: updateParamOffset }
-              ]
-            },
-            align: {
-              key: this.state.node,
-              offset: { x: -start + i * spacing, y: 100 },
-              source: { x: 50, y: 100 },
-              self: { x: 50, y: 0 }
-            }
-          }
-          blocks.set(name, child, g);
-        });
-      }
+    if (!args.dataLayout) {
+      console.error(`TODO default position ${args.name}`);
     }
 
-    return blocks;
+    const block = args.g.blocks().set(args.name, args.dataLayout, args.g);
+
+    return block;
   }
 
   protected createElements() {
-
     // Display parent and children with connections
 
-    return null;
+    return null
   }
 
   protected renderConnection(block: Block) {
-    const p = block.connectionHandles();
+    const p = block.connectionHandles()
     if (p.length) {
-      return null;
+      return null
     }
-    return null;
+    return null
   }
 }

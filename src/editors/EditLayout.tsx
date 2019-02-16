@@ -51,7 +51,7 @@ interface IEditLayoutState {
  * internal use only
  * @ignore
  */
-export class RLGEditLayout
+export class EditLayout
   extends React.Component<IEditorProps, IEditLayoutState>
   implements IEditor {
   public _startRect: IRect
@@ -158,7 +158,7 @@ export class RLGEditLayout
       if (this.props.debug && this.props.debug & DebugOptions.trace) {
         const name = this.props.block.name
         console.log(
-          `RLGEditLayout update location ${name} (x: ${r.x}, y: ${
+          `EditLayout update location ${name} (x: ${r.x}, y: ${
             r.y
           }) to (x: ${ur.x} y: ${ur.y})`
         )
@@ -255,7 +255,7 @@ export class RLGEditLayout
     // tslint:disable-next-line:no-bitwise
     if (this._debug & DebugOptions.mouseEvents) {
       // tslint:disable-next-line:no-string-literal
-      console.log(`RLGEditLayout onMouseDown ${event.target['id']}`)
+      console.log(`EditLayout onMouseDown ${event.target['id']}`)
     }
 
     if (!this.state.contextMenu) {
@@ -320,7 +320,6 @@ export class RLGEditLayout
     // https://stackoverflow.com/questions/17130940/retrieve-the-same-offsetx-on-touch-like-mouse-event
     // Use tap+hold or longtap event to trigger context menu
     // See https://github.com/yahoo/react-dnd-touch-backend
-    // TODO configure RLG to use react-dnd back ends?
   }
 
   // public onContextMenu = (event: React.MouseEvent) => {
@@ -350,7 +349,7 @@ export class RLGEditLayout
     if (this.props.debug && this.props.debug & DebugOptions.mouseEvents) {
       // tslint:disable-next-line:no-string-literal
       const id = event && event.target && event.target['id']
-      console.log(`RLGEditLayout onHtmlMouseUp ${id ? id : ''}`)
+      console.log(`EditLayout onHtmlMouseUp ${id ? id : ''}`)
     }
 
     if (event) {
@@ -383,7 +382,7 @@ export class RLGEditLayout
   }
 
   public componentWillReceiveProps = (props: IEditorProps) => {
-    // console.log(`RLGEditLayout componentWillReceiveProps ${props.handle.x} ${props.handle.y}`);
+    // console.log(`EditLayout componentWillReceiveProps ${props.handle.x} ${props.handle.y}`);
     if (this.props.edit.updateHandle) {
       this._handle = this.props.edit.updateHandle(props.handle)
     }

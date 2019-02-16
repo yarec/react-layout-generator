@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { IEditHelperProps, IGenerator, RLGLayout } from '../importRLG'
+import { IEditHelperProps, IGenerator, Layout } from '../importRLG'
 
 import FoundationStack from './FoundationStack'
 import solitaireGenerator from './solitaireGenerator'
@@ -93,7 +93,7 @@ export default class Solitaire extends React.Component<
 
   public render() {
     return (
-      <RLGLayout name="example.Solitaire" g={this._g}>
+      <Layout name="example.Solitaire" g={this._g}>
         <div
           key="stock"
           data-layout={{
@@ -129,7 +129,7 @@ export default class Solitaire extends React.Component<
         >
           New Game
         </button>
-      </RLGLayout>
+      </Layout>
     )
   }
 

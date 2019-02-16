@@ -3,12 +3,12 @@ import * as React from 'react'
 
 import { Params } from '../components/Params'
 import { Generator, ICreate, IGenerator } from '../generators/Generator'
-import { RLGLayout } from '../RLGLayout'
+import { Layout } from '../Layout'
 import { DebugOptions, ServiceOptions } from '../types'
 // import ReactResizeDetector from 'react-resize-detector'
 
 import * as Enzyme from 'enzyme'
-// import { RLGSelect } from '../editors/RLGSelect';
+// import { Select } from '../editors/Select';
 
 const { mount } = Enzyme
 
@@ -33,11 +33,11 @@ function create(args: ICreate) {
 
 const g: IGenerator = new Generator('test', init, params, create)
 
-describe('RLGLayout', () => {
+describe('Layout', () => {
   test('it should generate <div instance #1', () => {
     g.params().set('containersize', { width: 1000, height: 1000 })
     const wrapper = mount(
-      <RLGLayout
+      <Layout
         name="instance#3"
         service={ServiceOptions.edit}
         debug={DebugOptions.all}
@@ -53,10 +53,10 @@ describe('RLGLayout', () => {
         >
           <span>hello</span>
         </div>
-      </RLGLayout>
+      </Layout>
     )
     const rlgLayout = wrapper
-      .find('RLGLayout')
+      .find('Layout')
       .at(0)
       .instance()
 

@@ -82,12 +82,12 @@ export function toAlign(p: IRect, origin: IOrigin): IPoint {
 }
 
 /**
- * IRLGBounds provides the local and viewport bounds. It is updated by Layout
+ * IBounds provides the local and viewport bounds. It is updated by Layout
  * on every render. Both are in pixel units. Local is used for computing the
  * layout of each [Block](#Block). Both local and viewport are used to
  * in converting units to pixels depending upon the unit specified.
  */
-export interface IRLGBounds {
+export interface IBounds {
   /**
    * Container is the size of the containing block in pixels.
    */
@@ -256,9 +256,9 @@ export function namedUnit(unit: Unit | undefined) {
 // /**
 //  * Convert [point strings](#IInputPoint) with units to a pixel point.
 //  * @param v: IInputPoint
-//  * @param bounds: IRLGBounds
+//  * @param bounds: IBounds
 //  */
-// export function toPixel(v: IInputPoint, bounds: IRLGBounds): IPoint {
+// export function toPixel(v: IInputPoint, bounds: IBounds): IPoint {
 //   let xV = v.x
 //   let xU = Unit.pixel
 //   if (typeof v.x === 'string') {
@@ -302,7 +302,7 @@ export function namedUnit(unit: Unit | undefined) {
 //   }
 // }
 
-// export function toPercent(v: IPoint, unit: Unit, bounds: IRLGBounds): IPoint {
+// export function toPercent(v: IPoint, unit: Unit, bounds: IBounds): IPoint {
 //   switch (unit) {
 //     case Unit.unmanaged:
 //     case Unit.pixel: {
@@ -344,7 +344,7 @@ export function namedUnit(unit: Unit | undefined) {
  * @param args: IDataLayoutLocation
  * @param containerSize: ISize
  */
-export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
+export function layout(args: IBlockRect, bounds: IBounds): IRect {
   function isValid(x: number | undefined) {
     return x !== undefined && !isNaN(x)
   }
@@ -480,7 +480,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
     result.y = top
     result.height = height
   }
-
+  // console.log('layout args', args, 'result', result)
   return result
 }
 
@@ -504,7 +504,7 @@ export function layout(args: IBlockRect, bounds: IRLGBounds): IRect {
 export function inverseLayout(
   r: IRect,
   args: IBlockRect,
-  bounds: IRLGBounds
+  bounds: IBounds
 ): IBlockRect {
   function isValid(x: number | undefined) {
     return x !== undefined && !isNaN(x)
@@ -725,7 +725,7 @@ export function inverseLayout(
 export function inverseXUnit(
   value: number,
   unit: Unit,
-  bounds: IRLGBounds
+  bounds: IBounds
 ): number {
   // Default is Unit.pixel
   let r: number = value
@@ -799,7 +799,7 @@ export function inverseXUnit(
 export function inverseYUnit(
   value: number,
   unit: Unit,
-  bounds: IRLGBounds
+  bounds: IBounds
 ): number {
   // Default is Unit.pixel
   let r: number = value
@@ -876,7 +876,7 @@ export function inverseYUnit(
 export function toXPixel(
   value: number,
   unit: Unit | undefined,
-  bounds: IRLGBounds
+  bounds: IBounds
 ): number {
   if (!unit || !bounds) {
     return value
@@ -936,7 +936,7 @@ export function toXPixel(
 export function toYPixel(
   value: number,
   unit: Unit | undefined,
-  bounds: IRLGBounds
+  bounds: IBounds
 ) {
   if (!unit) {
     return value

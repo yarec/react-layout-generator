@@ -913,10 +913,28 @@ img { max-width: 100%; }
 			<a href="idatalayout.html" class="tsd-kind-icon">IData<wbr>Layout</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#align" class="tsd-kind-icon">align</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#editor" class="tsd-kind-icon">editor</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#location" class="tsd-kind-icon">location</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="idatalayout.html#name" class="tsd-kind-icon">name</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="idatalayout.html#position" class="tsd-kind-icon">position</a>
+					<a href="idatalayout.html#origin" class="tsd-kind-icon">origin</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#positionchildren" class="tsd-kind-icon">position<wbr>Children</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#transform" class="tsd-kind-icon">transform</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="idatalayout.html#zindex" class="tsd-kind-icon">z<wbr>Index</a>
 				</li>
 			</ul>
 		</li>
@@ -927,19 +945,22 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>IDataLayout is the property that you use to define a block in React. In React
-					you need to use the css friendly name &#39;data-layout&#39;.</p>
+					<p>IDataLayout defines the location, origin, zIndex, link, transform, and editor
+					rules for elements in RLG.</p>
 				</div>
-				<pre><code class="language-ts"> &lt;RLGLayout ... &gt;
-   &lt;div data-layout={{
-     name: '&lt;block name&gt;'
-   }} &gt;
+				<p>A minimal definition that completely fills its parent is:</p>
+				<pre><code class="language-ts">
+ &lt;Layout ... &gt;
+   &lt;div
+     data-layout={{
+       name: '&lt;block name&gt;'
+     }}
+   &gt;
      { content }
    &lt;/div&gt;
- &lt;/RLGLayout&gt;
+ &lt;/Layout&gt;
+
 </code></pre>
-				<p>In addition to the name you will need to add a position field if the block is
-				not already defined in a generator.</p>
 			</div>
 		</section>
 		<section class="tsd-panel tsd-hierarchy">
@@ -957,8 +978,14 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#align" class="tsd-kind-icon">align</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#editor" class="tsd-kind-icon">editor</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#location" class="tsd-kind-icon">location</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#name" class="tsd-kind-icon">name</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#position" class="tsd-kind-icon">position</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#origin" class="tsd-kind-icon">origin</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#positionchildren" class="tsd-kind-icon">position<wbr>Children</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#transform" class="tsd-kind-icon">transform</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatalayout.html#zindex" class="tsd-kind-icon">z<wbr>Index</a></li>
 						</ul>
 					</section>
 				</div>
@@ -967,36 +994,169 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="name" class="tsd-anchor"></a>
-				<h3>name</h3>
-				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<a name="align" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> align</h3>
+				<div class="tsd-signature tsd-kind-icon">align<span class="tsd-signature-symbol">:</span> <a href="ialign.html" class="tsd-signature-type">IAlign</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L30">components/blockTypes.ts:30</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L86">components/blockTypes.ts:86</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The name of the block. It must be unique within each RLGLayout. Failure
-						to be unique will result in children of RLGLayout overwriting each other.</p>
+						<p> Specifies another block that this block is attached to.</p>
 					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="position" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> position</h3>
-				<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <a href="iposition.html" class="tsd-signature-type">IPosition</a></div>
+				<a name="editor" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> editor</h3>
+				<div class="tsd-signature tsd-kind-icon">editor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IEditor</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/f09acce/src/components/blockTypes.ts#L36">components/blockTypes.ts:36</a></li>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L99">components/blockTypes.ts:99</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>IPosition specifies the rules and data needed to create a Block. If the
-							Block already exists then that block will be used. Position must be defined
-						either in a generator or when used with a child of RLGLayout.</p>
+						<p>This defines the editor that will be available to the user when <a href="irlglayoutprops.html">Layout
+						service</a> property is set the ServiceOptions.edit.</p>
 					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="location" class="tsd-anchor"></a>
+				<h3>location</h3>
+				<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="iexrect.html" class="tsd-signature-type">IExRect</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L80">components/blockTypes.ts:80</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Specifies the location of this block. Location is position of the block
+						relative to the origin. The default location fills its parent container.</p>
+					</div>
+					<p>Location is specified using left, right, top, bottom, width and height.
+						All are optional. Each field specifies a constraint. Left, top, right, and
+					bottom are units from the respective container side.</p>
+					<p>For example just setting {left: 10} specifies a block that starts 10 units
+					from the left side of its container:</p>
+					<pre><code>  ←        Parent container       →
+ ┌┈┈┈┈┈┈┌──────────────────────────┐
+ ┆  <span class="hljs-number">10</span> →│   Block                  │
+ ┆      │      left: <span class="hljs-number">10</span>            │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ └ ┈┈┈┈┈└──────────────────────────┘
+
+ Changing to {left: <span class="hljs-number">10</span>, bottom: <span class="hljs-number">10</span>} results <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> block:
+
+  &lt;-       Parent container      -&gt;
+ ┌┈┈┈┈┈ ┌──────────────────────────┐
+ ┆  <span class="hljs-number">10</span> →│   Block                  │
+ ┆      │      left: <span class="hljs-number">10</span>            │
+ ┆      │      bottom: <span class="hljs-number">10</span>          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      │                          │
+ ┆      └──────────────────────────┘
+ ┆       ↑                         ┆
+ ┆       <span class="hljs-number">10</span>                        ┆
+ └┈┈┈┈┈──┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈─┘</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="name" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L35">components/blockTypes.ts:35</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The name of the block. It must be unique within each Layout. Failure
+							to be unique will result in children of Layout overwriting each other.
+						Temporary blocks can be created without a name.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="origin" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> origin</h3>
+				<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L114">components/blockTypes.ts:114</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Origin defines the point that the location will use when positioning a
+							block. For example an origin of { x: 50, y: 50 } will center the block
+						at the specified location.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="positionchildren" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> position<wbr>Children</h3>
+				<div class="tsd-signature tsd-kind-icon">position<wbr>Children<span class="tsd-signature-symbol">:</span> <a href="../globals.html#positionchildrenfn" class="tsd-signature-type">PositionChildrenFn</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L93">components/blockTypes.ts:93</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Specifies a user supplied function will calculate the Position data for &#39;children&#39;.
+							It will be supplied with the index of the child and it should compute the
+						child&#39;s position returning a new Block. The child should be jsx.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="transform" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> transform</h3>
+				<div class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">:</span> <a href="../globals.html#transform" class="tsd-signature-type">Transform</a><span class="tsd-signature-symbol">[]</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L121">components/blockTypes.ts:121</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Additional transforms to add to this block. Note that you can also transform
+							the contents of a block separately. Warning do not add a style with any transforms
+						for this block.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="zindex" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> z<wbr>Index</h3>
+				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/c015060/src/components/blockTypes.ts#L107">components/blockTypes.ts:107</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>zIndex is the same as css z-index. The default is 0.</p>
+					</div>
+					<p>If you use the editor to change the zIndex it will be stored in Params
+					using the key <code>${block.name}ZIndex</code>.</p>
 				</div>
 			</section>
 		</section>

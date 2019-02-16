@@ -10,12 +10,12 @@ import {
   IDataLayout,
   IGenerator,
   IGenericProps,
-  IRLGMetaDataArgs,
+  IMetaDataArgs,
   ISize,
-  Params,
-  PositionRef, 
-  RLGLayout, 
-  RLGPanel,
+  Layout,
+  Panel, 
+  Params, 
+  PositionRef,
   updateParamLocation,
 } from '../importRLG'
 
@@ -60,21 +60,21 @@ export default class Table extends React.Component<ITableProps> {
   public render() {
 
     return (
-      <RLGLayout
+      <Layout
         name={this.props.name}
         debug={DebugOptions.none}
         g={this._g}
         containersize={this.props.containersize}
       >
-        <RLGPanel data-layout={{ name: 'title' }} style={{ backgroundColor: 'black' }} >
-          {(args: IRLGMetaDataArgs) => (
+        <Panel data-layout={{ name: 'title' }} style={{ backgroundColor: 'black' }} >
+          {(args: IMetaDataArgs) => (
               <>
                 <Title>{this.props.name}</Title>
                 {this.createRows()}
               </>
          )}
-        </RLGPanel>
-      </RLGLayout>
+        </Panel>
+      </Layout>
     );
   }
 

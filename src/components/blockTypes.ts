@@ -13,7 +13,7 @@ import { UpdateParam } from '../editors/updateParam'
  *
  * ```ts
  *
- *  <RLGLayout ... >
+ *  <Layout ... >
  *    <div
  *      data-layout={{
  *        name: '<block name>'
@@ -21,15 +21,15 @@ import { UpdateParam } from '../editors/updateParam'
  *    >
  *      { content }
  *    </div>
- *  </RLGLayout>
+ *  </Layout>
  *
  *
  * ```
  */
 export interface IDataLayout {
   /**
-   * The name of the block. It must be unique within each RLGLayout. Failure
-   * to be unique will result in children of RLGLayout overwriting each other.
+   * The name of the block. It must be unique within each Layout. Failure
+   * to be unique will result in children of Layout overwriting each other.
    * Temporary blocks can be created without a name.
    */
   name?: string
@@ -45,7 +45,7 @@ export interface IDataLayout {
    * For example just setting {left: 10} specifies a block that starts 10 units
    * from the left side of its container:
    *
-   *
+   *```
    *   ←        Parent container       →
    *  ┌┈┈┈┈┈┈┌──────────────────────────┐
    *  ┆  10 →│   Block                  │
@@ -75,7 +75,7 @@ export interface IDataLayout {
    *  ┆       ↑                         ┆
    *  ┆       10                        ┆
    *  └┈┈┈┈┈──┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈─┘
-   *
+   *```
    */
   location: IExRect
 
@@ -93,7 +93,7 @@ export interface IDataLayout {
   positionChildren?: PositionChildrenFn
 
   /**
-   * This defines the editor that will be available to the user when [RLGLayout
+   * This defines the editor that will be available to the user when [Layout
    * service](irlglayoutprops.html) property is set the ServiceOptions.edit.
    */
   editor?: IEditor

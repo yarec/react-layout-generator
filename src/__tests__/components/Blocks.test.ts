@@ -19,7 +19,7 @@ function create(args: ICreate) {
   const blocks = args.g.blocks()
 
   if (blocks) {
-    block = blocks.set(args.name, args.position, g)
+    block = blocks.set(args.name, args.dataLayout, g)
   }
 
   return block
