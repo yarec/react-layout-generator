@@ -684,48 +684,7 @@
 639
 640
 641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+642</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -866,46 +825,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -975,7 +894,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1414,7 +1332,7 @@
 /**
  * Layers specification for controlling layers. The default is to
  * ignore layer values and render all children as specified. To access the specification
- * use the layers property attached to the [generator](#generator).
+ * use the layers property attached to the [generator](classes/generator.html).
  */
 export interface ILayerOptions {
   /**
@@ -1491,47 +1409,7 @@ export enum OverflowOptions {
  * IOrigin specifies the position within an element that location
  * uses to position the element. What this says is that if you place
  * a block at (10,10) then it is the origin that is placed at (10,10).
- * For example all the blocks below are placed at (100,100):
- *
- *  ┌───────────────────────────────┐
- *  │  A: origin: (x: 0, y: 0)      │
- *  │                               │
- *  │                               │
- *  │              o───────┐        │
- *  │              │       │        │
- *  │              │       │        │
- *  │              │       │        │
- *  │              └───────┘        │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
- *
- *  ┌───────────────────────────────┐
- *  │  B: origin: (x: 100, y: 0)    │
- *  │                               │
- *  │                               │
- *  │      ┌───────o                │
- *  │      │       │                │
- *  │      │       │                │
- *  │      │       │                │
- *  │      └───────┘                │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
- *
- *  ┌───────────────────────────────┐
- *  │   C: origin: (x: 50, y: 50)   │
- *  │          ┌───────┐            │
- *  │          │       │            │
- *  │          │   o   │            │
- *  │          │       │            │
- *  │          └───────┘            │
- *  │                               │
- *  │                               │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
- *
+ * 
  * IOrigin is expressed in percent of the width and height of
  * an element. An origin of (0, 0) specifies the left top
  * position of the element. An origin of (50,50) specifies
@@ -1539,7 +1417,7 @@ export enum OverflowOptions {
  *
  * Generally origins are between 0 and 100 for each axis, but values
  * outside of the 0 to 100 range are allowed. (This will also be useful
- * when other tranformations are used other than just x and y.
+ * when other transformations are used other than just translation.
  *
  *  ```
  * origin: (x: 0, y: 0) - left top, the default
@@ -1576,7 +1454,7 @@ export interface IOrigin {
 &nbsp;
 /**
  * Defines the units of location and size passed to data-layout or
- * in [IDataLayout](IDataLayout.html). Most computation will be done in pixels.
+ * in [IDataLayout](interfaces/idatalayout.html). Most computation will be done in pixels.
  *
  * Percent uses the container size as its basis.
  *
@@ -1657,7 +1535,6 @@ export enum Unit {
  * @param unit
  */
 export function unitFactor(unit: Unit | undefined) {
-&nbsp;
   <span class="missing-if-branch" title="else path not taken" >E</span>if (!unit) {
     return 1
   }
@@ -1665,7 +1542,7 @@ export function unitFactor(unit: Unit | undefined) {
 <span class="cstat-no" title="statement not covered" >  if (unit === Unit.pixel || unit === Unit.unmanaged) {</span>
 <span class="cstat-no" title="statement not covered" >    return 1</span>
   }
-  
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return 100</span>
 }
 &nbsp;
@@ -2095,7 +1972,7 @@ export function difference&lt;T&gt;(setA: Set&lt;T&gt;, setB: Set&lt;T&gt;) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Feb 15 2019 16:30:30 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Feb 16 2019 14:01:40 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\prettify.js"></script>

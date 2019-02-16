@@ -5,7 +5,7 @@ export interface IGenericProps {
 /**
  * Layers specification for controlling layers. The default is to
  * ignore layer values and render all children as specified. To access the specification
- * use the layers property attached to the [generator](#generator).
+ * use the layers property attached to the [generator](classes/generator.html).
  */
 export interface ILayerOptions {
   /**
@@ -82,46 +82,6 @@ export enum OverflowOptions {
  * IOrigin specifies the position within an element that location
  * uses to position the element. What this says is that if you place
  * a block at (10,10) then it is the origin that is placed at (10,10).
- * For example all the blocks below are placed at (100,100):
- *
- *  ┌───────────────────────────────┐
- *  │  A: origin: (x: 0, y: 0)      │
- *  │                               │
- *  │                               │
- *  │              o───────┐        │
- *  │              │       │        │
- *  │              │       │        │
- *  │              │       │        │
- *  │              └───────┘        │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
- *
- *  ┌───────────────────────────────┐
- *  │  B: origin: (x: 100, y: 0)    │
- *  │                               │
- *  │                               │
- *  │      ┌───────o                │
- *  │      │       │                │
- *  │      │       │                │
- *  │      │       │                │
- *  │      └───────┘                │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
- *
- *  ┌───────────────────────────────┐
- *  │   C: origin: (x: 50, y: 50)   │
- *  │          ┌───────┐            │
- *  │          │       │            │
- *  │          │   o   │            │
- *  │          │       │            │
- *  │          └───────┘            │
- *  │                               │
- *  │                               │
- *  │                               │
- *  │                               │
- *  └───────────────────────────────┘
  *
  * IOrigin is expressed in percent of the width and height of
  * an element. An origin of (0, 0) specifies the left top
@@ -130,7 +90,7 @@ export enum OverflowOptions {
  *
  * Generally origins are between 0 and 100 for each axis, but values
  * outside of the 0 to 100 range are allowed. (This will also be useful
- * when other tranformations are used other than just x and y.
+ * when other transformations are used other than just translation.
  *
  *  ```
  * origin: (x: 0, y: 0) - left top, the default
@@ -167,7 +127,7 @@ export interface IOrigin {
 
 /**
  * Defines the units of location and size passed to data-layout or
- * in [IDataLayout](IDataLayout.html). Most computation will be done in pixels.
+ * in [IDataLayout](interfaces/idatalayout.html). Most computation will be done in pixels.
  *
  * Percent uses the container size as its basis.
  *

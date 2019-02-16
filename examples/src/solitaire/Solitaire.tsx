@@ -93,12 +93,19 @@ export default class Solitaire extends React.Component<
 
   public render() {
     return (
-      <Layout name="example.Solitaire" g={this._g}>
+      <Layout 
+        name="example.Solitaire" 
+        g={this._g}
+        
+      >
         <div
           key="stock"
           data-layout={{
-            name: 'stock'
+            name: 'stock',
+            
           }}
+         
+          
           onClick={this.onPopulateWaste}
         >
           {this._stock.cards()}

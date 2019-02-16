@@ -6,9 +6,9 @@ import { IService, IServiceProps, IUndo } from './Service'
 import { Block } from '../components/Block'
 // import { Control } from '../Control'
 
-const rbush = require('rbush')
+// const rbush = require('rbush')
 
-export { rbush }
+// export { rbush }
 
 
 // const gXIndex = 10
@@ -40,7 +40,7 @@ export class DragDropService
 
   private _jsx: JSX.Element | undefined
 
-  private _rbush: any
+  // private _rbush: any
   private _root: React.RefObject<HTMLDivElement>
   private _dragData: string[] = []
   private _prevDroppable: Set<Block> = new Set()
@@ -61,16 +61,16 @@ export class DragDropService
       this._debug = props.debug
     }
 
-    this._rbush = rbush()
+    // this._rbush = rbush()
     this._root = React.createRef()
   }
 
   componentDidMount() {}
 
-  private loadDropContainers() {
+  protected hitTest(r: Rect) {
     const blocks = this.props.g.blocks()
     const items: Block[] = []
-    this._rbush.clear()
+    // this._rbush.clear()
     const dragBlockParent = this._dragBlock!.localParent
     if (dragBlockParent) {
       blocks.map.forEach(block => {
@@ -78,12 +78,32 @@ export class DragDropService
           block.getHandler('canDrop') &&
           dragBlockParent.name !== block.name
         ) {
-          items.push(block)
-          // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
+            if (r.intersect(block.rect)) {
+              items.push(block)
+            }
         }
       })
     }
-    this._rbush.load(items)
+    return items
+  }
+
+  private loadDropContainers() {
+    // const blocks = this.props.g.blocks()
+    // const items: Block[] = []
+    // this._rbush.clear()
+    // const dragBlockParent = this._dragBlock!.localParent
+    // if (dragBlockParent) {
+    //   blocks.map.forEach(block => {
+    //     if (
+    //       block.getHandler('canDrop') &&
+    //       dragBlockParent.name !== block.name
+    //     ) {
+    //       items.push(block)
+    //       // console.log(` DragDrop load block ${block.name} ${block.minX} ${block.minY}`)
+    //     }
+    //   })
+    // }
+    // this._rbush.load(items)
   }
 
   public componentWillUnmount() {
@@ -191,9 +211,11 @@ export class DragDropService
 
           this._dragBlock = block
 
-          this._jsx = block.getHandler('dragImage') as JSX.Element
-
-          // console.log(`this._jsx block dragImage defined for ${block.name} `, this._jsx ? true : false)
+          const dragImage = block.getHandler('dragImage')
+          if (dragImage) {
+            this._jsx = dragImage(this._dragData)
+            // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
+          }
         }
       }
 
@@ -276,7 +298,7 @@ export class DragDropService
         }
         const candidates = this.collisions(new Rect(ur))
 
-        if (this.props.debug && this.props.debug & DebugOptions.mouseEvents & DebugOptions.trace) {
+        if (this.props.debug && this.props.debug & (DebugOptions.mouseEvents | DebugOptions.trace)) {
           console.log(`candidates.length ${candidates.length}`)
           candidates.forEach((b) => {
             console.log(`   block ${b.name}`)
@@ -325,12 +347,13 @@ export class DragDropService
 
     // Current block container already ignored
     // TODO fix this when allowing DnD to be used within a container.
-    const candidates = this._rbush.search({
-      minX: r.x,
-      minY: r.y,
-      maxX: r.right,
-      maxY: r.bottom
-    })
+    const candidates = this.hitTest(r)
+    // this._rbush.search({
+    //   minX: r.x,
+    //   minY: r.y,
+    //   maxX: r.right,
+    //   maxY: r.bottom
+    // })
 
     const verified: Block[] = []
     candidates.forEach((b: Block) => {
@@ -345,7 +368,7 @@ export class DragDropService
     let deltaX = x - this._startOrigin.x
     let deltaY = y - this._startOrigin.y
 
-    // console.log(`moveUpdate ${deltaX} ${deltaY}`)
+    console.log(`moveUpdate ${deltaX} ${deltaY}`)
 
     if (this._ctrlKey) {
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
@@ -386,14 +409,15 @@ export class DragDropService
       }
 
       // 3 CanDrop
-      const candidates = this._rbush.search({
-        minX: ur.x,
-        minY: ur.y,
-        maxX: ur.x + ur.width,
-        maxY: ur.y + ur.height
-      })
+      const candidates = this.hitTest(new Rect(ur))
+      // this._rbush.search({
+      //   minX: ur.x,
+      //   minY: ur.y,
+      //   maxX: ur.x + ur.width,
+      //   maxY: ur.y + ur.height
+      // })
 
-      if (this.props.debug && this.props.debug & DebugOptions.mouseEvents & DebugOptions.trace) {
+      if (this.props.debug && this.props.debug & (DebugOptions.mouseEvents | DebugOptions.trace)) {
         console.log(`Drop target containers for ${this.props.name}`)
         candidates.forEach((block: Block) => {
           console.log(`  drop target ${block.name}`)

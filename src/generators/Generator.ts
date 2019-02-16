@@ -36,21 +36,21 @@ export interface IGenerator {
    */
   name: () => string
   /**
-   * Returns the [params](#Params) that used with this Generator.
+   * Returns the [params](classes/params.html) that used with this Generator.
    */
   params: () => Params
   /**
-   * Returns the [Blocks](#Blocks) manager for this Generator.
+   * Returns the [Blocks](classes/blocks.html) manager for this Generator.
    */
   blocks: () => Blocks
   /**
-   * This component provides methods to manipulate the [stacking](#Stacking)
+   * This component provides methods to manipulate the [stacking](classes/stacking.html)
    * order within a layer.
    */
   stacking: () => Stacking
   /**
-   * Reset invokes the [init function](#IInit) in a Generator. It is called at the
-   * beginning of each render. It will also call any [hook functions](#fnHook)
+   * Reset invokes the [init function](globase.html#init) in a Generator. It is called at the
+   * beginning of each render. It will also call any defined [hook functions](classes/generator.html#hooks)
    * at the same time.
    */
   reset: () => void
@@ -64,9 +64,9 @@ export interface IGenerator {
    */
   clear: () => void
   /**
-   * This will return the [Hooks](#Hooks) for this generator. A Hook is a function that
+   * This will return the [Hooks](classes/hooks.html) for this generator. A Hook is a function that
    * is called each time reset is called at the beginning of each render. One use a Hook
-   * to perform animation on a layer. See [rollHook](#rollHook) as a an example.
+   * to perform animation on a layer. See [rollHook](globals.html#rollHook) as a an example.
    */
   hooks: () => Hooks
   /**
@@ -75,14 +75,12 @@ export interface IGenerator {
    */
   create?: Create
   /**
-   * [EditHelper](#EditHelper) is used to sync builtin edit commands with a custom Editor.
+   * [EditHelper](classes/edithelper.html) is used to sync builtin edit commands with a custom Editor.
    */
   editor?: () => EditHelper | undefined
 }
 
 export class Generator implements IGenerator {
-  public currentLayout: Block | undefined
-
   private _name: string
   private _editHelper: EditHelper | undefined
   private _params: Params

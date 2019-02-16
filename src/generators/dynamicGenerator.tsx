@@ -29,12 +29,6 @@ export function dynamicGenerator(
   }
 
   function create(args: ICreate): Block {
-
-    if (!args.dataLayout) {
-      console.error(`You need to pass a position (IDataLayout) object 
-      for ${args.name} in generator ${args.g.name()}`)
-    }
-
     return args.g.blocks().set(args.name, args.dataLayout, args.g);
   }
 

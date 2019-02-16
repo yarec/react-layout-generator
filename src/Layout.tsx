@@ -277,7 +277,7 @@ export interface ILayoutState {
 }
 
 /**
- * Layout manages a layout. See [ILayoutProps](interfaces/irlglayoutprops.html)
+ * Layout manages a layout. See [ILayoutProps](interfaces/ilayoutprops.html)
  * for detail properties.
  * Usage:
  * ```ts
@@ -427,10 +427,12 @@ export class Layout extends React.Component<
           }
         } else {
           const l = mapper(layer)
-          if (l && l >= 0) {
-            push(l, c)
-          } else if (l) {
-            push(-1, c)
+          if (l !== undefined) {
+            if(l >= 0) {
+              push(l, c)
+            } else {
+              push(-1, c)
+            }
           }
         }
       }
@@ -1131,8 +1133,8 @@ export class Layout extends React.Component<
       left: 0,
       top: 0,
       right: 0,
-      bottom: 0
-      // pointerEvents: 'none' as 'none'
+      bottom: 0,
+      pointerEvents: 'none' as 'none'
     }
 
     const topLayerStyle = {

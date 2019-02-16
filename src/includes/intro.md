@@ -1,17 +1,20 @@
-# React Layout Generator
+# React Layout Generator 0.5.0-alpha.2
 
-*React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.*
+_React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly._
 
-RLG is focused on layout and editing of both html and svg components. Taking direct control of the layout enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
+RLG is focused on layout and position and size editing of both html and svg components. Taking direct control of the layout enables precise and continuous control of responsive layouts. You're no longer limited to just css and the linear flow of elements.
 
-A [live demo](https://neq1.io) is available at https://neq1.io. Source is available at [Github](https://github.com/chetmurphy/react-layout-generator) under the MIT license.
-___
-A key difference from traditional layout is that RLG specifies the layout topdown. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
+A [live demo](<https://neq1.io/>) is available at <https://neq1.io>. Source is available at [Github](<https://github.com/chetmurphy/react-layout-generator/>) under the MIT license.
+
+---
+
+A key difference from traditional layout is that RLG specifies the layout top down. This means that the layout is passed down to React components using props rather than letting the browser determine the layout during the rendering process.
 
 Of course, this also means that the author needs to know how the content will fit into the allocated space. We'll add notes on how we are dealing with this as we continue with the development of RLG. Note that this is not always a problem that needs solving.
 
 Another key difference is that since RLG is only using absolute positioning all the blocks are independent of other blocks. This lets us manipulate the blocks. One use of this is to build a flexible layering system that allows rearranging, hiding, and animating layers. It also enables optional services to be added such as editing and drag and drop. The layering system also features a control layers that is excluded from the services.
-___
+
+---
 
 This project was initially inspired by [react-grid-layout](https://www.npmjs.com/package/react-grid-layout).
 
@@ -38,7 +41,7 @@ git clone `https://github.com/YOUR-USERNAME/react-layout-generator`
 
 After cloning go to your install directory and use `npm` or `yarn` to initialize node_modules.
 
-RLG includes an examples sub-project so it too will need to be initialized using npm or yarn. 
+RLG includes an examples sub-project so it too will need to be initialized using npm or yarn.
 
 See the package.json for scripts supported.
 
@@ -102,7 +105,7 @@ Layout can contain instances of Layout. And as usual with React, children of Lay
 
 Do not use generic React components with a data-layout property as direct children of Layout. This is because the generated style needs to applied to the outer most element in the component. Otherwise, the component will not be positioned correctly. This does not apply to styled-components.
 
-A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [Panel](#Panel) and/or Unit.unmanaged)
+A common choice is to wrap a react component with a div element. A disadvantage of this approach is that your content will not have access to meta data. Even so it is also possible that a generic React component will not render correctly within the space allocated (this can be mitigated by using [Panel](classes/panel.html) and/or [Unit.unmanaged](enums/unit.html#unmanaged))
 
 You can only use react components as direct children that apply the style property in their render method like this:
 
@@ -119,7 +122,7 @@ You can only use react components as direct children that apply the style proper
 
 ### Panel
 
-Use [Panel](classes/rlgpanel.html) as a direct child of Layout when its children need access their location, size and other information.
+Use [Panel](classes/panel.html) as a direct child of Layout when its children need access their location, size and other information.
 
 ```ts
   <Panel data-layout={{ name: 'content' }}>
@@ -134,9 +137,9 @@ The function (args: [IMetaDataArgs](interfaces/IMetaDataArgs.html)) => () makes 
 One way to utilize these args is to use Styled-components with a Style defined like this:
 
 ```ts
-  const Item = styled.li<{containersize: ISize}>`
-    max-width:  ${p => p.containersize.width};
-    white-space: wrap;
+const Item = styled.li<{ containersize: ISize }>`
+  max-width: ${p => p.containersize.width};
+  white-space: wrap;
 `
 ```
 
@@ -145,14 +148,19 @@ then just pass the args to \<Item containersize={args.containersize} \>
 Panel is also useful for svg since it can pass the width and height to svg.
 
 ```ts
-  <svg
-    width={args.containersize.width}
-    height={args.containersize.height}
-    viewBox="0 0 50 20"
-  >
-    <rect x="20" y="10" width="10" height="5"
-      style="stroke: #000000; fill:none;"/>
-  </svg>
+<svg
+  width={args.containersize.width}
+  height={args.containersize.height}
+  viewBox="0 0 50 20"
+>
+  <rect
+    x="20"
+    y="10"
+    width="10"
+    height="5"
+    style="stroke: #000000; fill:none;"
+  />
+</svg>
 ```
 
 In the above snippet the viewBox defines the coordinates system used by svg elements which will now be mapped to the containersize.
@@ -160,13 +168,11 @@ In the above snippet the viewBox defines the coordinates system used by svg elem
 If you have more than one child you will need to use a [React Fragment](https://reactjs.org/docs/fragments.html) or add a <div wrapper.
 
 ```ts
-  <Panel data-layout={{ name: 'content' }}>
-    {(args: IMetaDataArgs) => (
-      <> // React fragment shortcut
-       ... // multiple children
-      </>
-    )}
-  </Panel>
+<Panel data-layout={{ name: 'content' }}>
+  {(args: IMetaDataArgs) => (
+    <> // React fragment shortcut ... // multiple children</>
+  )}
+</Panel>
 ```
 
 ### Responsive Layout
@@ -177,7 +183,7 @@ RLG provides a number of features to help make layouts responsive.
 
 On approach is to define all the elements in a generator as a function of the containersize.
 
-An example of a responsive generator is defined by the [desktopGenerator](globals#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired. It can used like this:
+An example of a responsive generator is defined by the [desktopGenerator](globals.html#desktopgenerator). This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired. It can used like this:
 
 ```ts
 <Layout
@@ -214,8 +220,8 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 
 RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. You can also specify negative values for Layers. These are used as control layers that set on top any services activated.
 
-Note: Layers are NOT related to z-index. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if
-[encapsulation](#Layout) is on in layers.
+Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if
+[encapsulation](interfaces/ilayeroptions.html) is on in layers.
 
 Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
 
@@ -231,35 +237,32 @@ To specify the layer of a block and all its content add the data-layer property 
 >
 ```
 
-To manage the layers add a layers property in Layout. It consists of a maximum layer and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
+To manage the layers add a [layers](interfaces/ilayeroptions.html) property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
 
 ```ts
 <Layout
-        name='name'
-        ...
-        layers={{
-          maximum: 5,
-          service: 4,
-          mapper: (layer: number) => {
-            if (layer === 3) {
-              // hide layer 3
-              return undefined
-            }
-            if (layer > 4) {
-              // combine all layers greater than 5
-              return 5
-            }
-            return layer
-          }
-        }}
-        ...
+  name='name'
+  ...
+  layers={{
+    encapsulation: false,
+    mapper: (layer: number) => {
+      if (layer === 3) {
+        // hide layer 3
+        return undefined
+      }
+      if (layer > 4) {
+        // combine all layers greater than 5
+        return 5
+      }
+      return layer
+    }
+  }}
+  ...
 ```
 
-In this example any services specified will use layer 4. All layers above 4 will be treated as a control layer.
+To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator#generator). Other animations can be running on other layers or even on the same layer (see [rollHook](globals.html#rollHook).
 
-To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator](#generator). Other animations can be running on other layers.
-
-The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers. 
+The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers.
 
 ### Drag and Drop
 
@@ -270,35 +273,61 @@ Drag and drop allows you to drag items from one container to another container w
         name='name'
         service={ServiceOptions.dnd}
         ...
+      >
+        <Draggable name={'...'} g={this._g} >
+          { content to drag }
+        </Draggable>
+
+        ...
+
+        <DragDrop // source and/or destination
+          name={'...'}}
+          key={'...'}
+          data-layout={{
+            name: '...'
+          }}
+          data-layer={1}
+          dragData={this.dragData}  // dragData(id: string) => string[]
+          dragImage={this.dragImage} // Optional dragImage(ids: string[]) => JSX
+          canDrop={this.canDrop} // canDrop(data: string[]) => boolean
+          drop={this.drop} //  drop(data: string[]) => void
+          endDrop={this.endDrop} // dragEnd(ids: string[]) => void
+          dragEnter={this.dragEnter}  // Optional dragEnter() => void
+          dragLeave={this.dragLeave}  // Optional dragLeave() => void
+          g={this._g}
+        >
+          { content to drag }
+        </Draggable>
+
 ```
 
 Then wrap your draggable elements and components using Draggable and DragDrop
 
 1. Container Source:
 
-```
+```ts
   Handler                Required
-  
+
   dragData                [no]
   dragImage               [no]
   dragEnd                 [yes]
 ```
 
-2. Draggable:
+  Draggable:
 
-```
+```ts
   Handler                Required
-  
+
   drag                    [no]
   draggable               [yes]
   dragImage               [yes]
 ```
 
-3. Droppable:
+  Droppable:
 
-```
+```ts
   Handler                Required
-  
+
   droppable               [yes]
   canDrop                 [yes]
   drop                    [yes]
@@ -318,7 +347,7 @@ Uses include: preventing a drag, returning a different block, or a list of block
 
 Fired once when the user starts dragging a component.
 
-Optional: default is the draggable component content. Can be used to provide an image for all ids. Returned value must JSX.
+Optional: default is the draggable component content.
 
 #### dragEnd(ids: string[]) => void
 
@@ -332,107 +361,97 @@ The implementation follows this logic:
 
 1. mouse down
 
-    a. start if a draggable component is found
+   a. start if a draggable component is found
 
 2. drag start
 
-    a. [optional] get DragDrop container
+   a. [optional] get DragDrop container
 
-    b. [optional] calls container.dragStart(id: string) => ids: string[]
+   b. [optional] calls container.dragStart(id: string) => ids: string[]
 
-    c. default is Draggable id
+   c. default is Draggable id
 
 3. get drop image
 
-    a. [optional] calls container.getDragJSX(ids: string[]) => JSX
+   a. [optional] calls container.getDragJSX(ids: string[]) => JSX
 
-    b. default is Draggable content
+   b. default is Draggable content
 
 4. drag
 
-    a. look for containers
+   a. look for containers
 
-    b. calls container.canDrop(ids: string[]) => boolean
+   b. calls container.canDrop(ids: string[]) => boolean
 
-    c. [optional] calls container.dragEnter(ids: string[]) => void
+   c. [optional] calls container.dragEnter(ids: string[]) => void
 
-    d. [optional] alls container.dragLeave(ids: string[]) => void
+   d. [optional] alls container.dragLeave(ids: string[]) => void
 
 5. release mouse
 
-    a. calls container.drop(ids: string[]) => void
+   a. calls container.drop(ids: string[]) => void
 
-    b. calls container.endDrop(ids: string[]) => void
+   b. calls container.endDrop(ids: string[]) => void
 
 #### Draggable
 
-
-
 ### Generator
 
-*See columnsGenerator, desktopGenerator, and dynamicGenerator for examples.*
+_See columnsGenerator, desktopGenerator, and dynamicGenerator for examples._
 
 A generator is just a function that returns an instance of Generator. A generator function must define its parameter storage, contain an init function and an optional create function. Here is a minimal Empty generator:
 
 ```javascript
 function emptyGenerator(name: string) {
-
   // The following code is only executed once
   const params = new Params([
     // containersize will automatically be updated
-    ['containersize', {width: 0, height: 0}]
+    ['containersize', { width: 0, height: 0 }]
   ])
 
   // init will be called by the Generator as needed
-  // It defines the static named parts of the generator 
+  // It defines the static named parts of the generator
   // and computes any needed layouts.
   function init(g: IGenerator): Layouts {
-    const layouts = g.layouts();
+    const layouts = g.layouts()
 
     // Define static parts of the layout
 
     // Update layouts as needed
 
-    return layouts;
+    return layouts
   }
 
-  return new Generator(name, init, params);
+  return new Generator(name, init, params)
 }
 ```
 
 emptyGenerator will not generate any elements even if it has children that contains data-layout elements.
 
-To make it a useful dynamic generator we add a create function to the generator. That's how the [dynamicGenerator](globals/dynamicgenerator.html) is defined. It lets you define a layout manually and offers the most flexibility, but only limited responsiveness using just the properties of the [position](interfaces/IDataLayout.html) interface.
+To make it a useful dynamic generator we add a create function to the generator. That's how the [dynamicGenerator](globals.html/dynamicgenerator) is defined. It lets you define a layout manually and offers the most flexibility, but only limited responsiveness using just the properties of the [position](interfaces/IDataLayout.html) interface.
 
 ```jsx
 function dynamicGenerator(name: string): IGenerator {
-  const _params = new Params([
-    ['containersize', { width: 0, height: 0 }]
-  ])
+  const _params = new Params([['containersize', { width: 0, height: 0 }]])
 
   function init(g: IGenerator): Layouts {
-    const params = g.params();
-    const layouts = g.layouts();
+    const params = g.params()
+    const layouts = g.layouts()
 
     if (params.changed()) {
       // update Layout for each update
-      layouts.map.forEach((layout) => {
-        layout.touch(true);
-      });
+      layouts.map.forEach(layout => {
+        layout.touch(true)
+      })
     }
-    return layouts;
+    return layouts
   }
 
   function create(args: ICreate): Layout {
-
-    if (!args.position) {
-      console.error(`${args.name} dynamicGenerator requires that a position is defined`)
-    }
-
-    return args.g.layouts().set(layout.name, args.position, args.g)
+    return args.g.layouts().set(layout.name, args.dataLayout, args.g)
   }
 
-  return new Generator(name, init, _params, create);
+  return new Generator(name, init, _params, create)
 }
 ```
 
@@ -459,7 +478,7 @@ function init (...) {
 }
 ```
 
-To activate animation behavior in Layout just pass the optional [animate](interfaces/ianimateprops) property and use a generator that is animation aware.
+To activate animation behavior in Layout just pass the optional [animate](interfaces/ianimateprops.html) property and use a generator that is animation aware.
 
 #### Notes
 
@@ -474,8 +493,6 @@ Note that generators do not have to be packaged as a function. It is easy to imp
 The toolbar on the left provides common commands. There is also a context menu which has commands for undo, redo, align, and layer commands.
 
 Before you can edit any of the pages you need to first make sure that the editor is on. This is the topmost command in the toolbar. Just click to toggle on and off. Note that if the data is not persisted then turning the editor off will reset the Layout to it previous state.
-
-
 
 #### Keyboard controls
 
@@ -497,13 +514,13 @@ RLG does use refs internally but only to get information. Placement of elements 
 
 ### Why is the page flashing
 
-This can occur when any element extends beyond the borders. Finding those elements changing their size and or location will fix the problem. Another choice is the add overflowX and overflowY hidden property  to the appropriate Layout.
+This can occur when any element extends beyond the borders. Finding those elements changing their size and or location will fix the problem. Another choice is the add overflowX and overflowY hidden property to the appropriate Layout.
 
 ### How can I right align blocks
 
-One way is to set a block [origin]() of {x: 100, y: 0} with the the same x location in all the blocks you wish to have right aligned. A second way is to use the align property. A third way is to use the editor with the align right command. Then persist the Params.
+One way is to set a block [origin](interfaces/iorigin.html) of {x: 100, y: 0} with the the same x location in all the blocks you wish to have right aligned. A second way is to use the align property. A third way is to use the editor with the align right command. Then persist the Params.
 
-  First way:
+First way:
 
 ```ts
 data-layout={{
@@ -520,7 +537,7 @@ data-layout={{
 
 ```
 
- Second way:
+Second way:
 
 ```ts
 data-layout={{
@@ -542,7 +559,7 @@ data-layout={{
 
 Block 2 will be linked to Block 1 and be 10 units below Block 1 and right aligned.
 
-```
+```ts
  ┌────────┐
  │ 1      │
  └────────o Offset: {X: 100, y: 100}

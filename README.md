@@ -14,7 +14,7 @@ RLG can do more than layout. It can be used to visually connect components that 
 
 ## Examples
 
-See [Live examples](https://neq1.io). 
+See [Live examples](https://neq1.io).
 
 ## Documentation
 

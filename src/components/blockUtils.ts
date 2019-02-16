@@ -84,7 +84,7 @@ export function toAlign(p: IRect, origin: IOrigin): IPoint {
 /**
  * IBounds provides the local and viewport bounds. It is updated by Layout
  * on every render. Both are in pixel units. Local is used for computing the
- * layout of each [Block](#Block). Both local and viewport are used to
+ * layout of each [Block](classes/block.html). Both local and viewport are used to
  * in converting units to pixels depending upon the unit specified.
  */
 export interface IBounds {
@@ -101,8 +101,8 @@ export interface IBounds {
 }
 
 /**
- * This function converts an [IExRect](#IExRect) to a
- * [IBlockRect](#IBlockRect) by converting fields with units to fields without
+ * This function converts an [IExRect](interfaces/iexrect.html) to a
+ * [IBlockRect](interfaces/iblockRect.html) by converting fields with units to fields without
  * unit.
  *
  * @param arg: IExRect
@@ -252,80 +252,6 @@ export function namedUnit(unit: Unit | undefined) {
   }
   return name
 }
-
-// /**
-//  * Convert [point strings](#IInputPoint) with units to a pixel point.
-//  * @param v: IInputPoint
-//  * @param bounds: IBounds
-//  */
-// export function toPixel(v: IInputPoint, bounds: IBounds): IPoint {
-//   let xV = v.x
-//   let xU = Unit.pixel
-//   if (typeof v.x === 'string') {
-//     const u = toUnit(v.x)
-//     xU = u ? u : Unit.pixel
-//     if (
-//       xU === Unit.percent ||
-//       xU === Unit.vw ||
-//       xU === Unit.vh ||
-//       xU === Unit.vmin ||
-//       xU === Unit.vmax
-//     ) {
-//       xV = parseFloat(v.x as string) / 100
-//     } else {
-//       xV = parseFloat(v.x as string)
-//     }
-//   }
-
-//   let yV = v.y
-//   let yU = Unit.pixel
-//   if (typeof v.x === 'string') {
-//     const u = toUnit(v.x)
-//     yU = u ? u : Unit.pixel
-//     if (
-//       yU === Unit.percent ||
-//       yU === Unit.vw ||
-//       yU === Unit.vh ||
-//       yU === Unit.vmin ||
-//       yU === Unit.vmax
-//     ) {
-//       yV = parseFloat(v.x as string) / 100
-//     } else {
-//       yV = parseFloat(v.x as string)
-//     }
-//   }
-//   yV = parseFloat(v.y as string)
-
-//   return {
-//     x: toXPixel(xV as number, xU, bounds),
-//     y: toYPixel(yV as number, yU, bounds)
-//   }
-// }
-
-// export function toPercent(v: IPoint, unit: Unit, bounds: IBounds): IPoint {
-//   switch (unit) {
-//     case Unit.unmanaged:
-//     case Unit.pixel: {
-//       return {
-//         x: (v.x / bounds.local.width) * 100,
-//         y: (v.y / bounds.local.height) * 100
-//       }
-//     }
-//     case Unit.percent: {
-//       return v
-//     }
-//     case Unit.vmin: {
-//       return v
-//     }
-//     case Unit.vw: {
-//       return v
-//     }
-//     case Unit.vh: {
-//       return v
-//     }
-//   }
-//   return v
-// }
 
 /**
  * Layout calculates the x, y, width and height of a Block. The

@@ -57,10 +57,8 @@ export function rowsGenerator(gen: IGeneratorFunctionArgs) {
 
     let p = args.dataLayout;
 
-    if (!p) {
-      p = {
-        location: { left: 0, top: 0, ...size }
-      }
+    if (p && !p.location) {
+      p.location = { left: 0, top: 0, ...size }
     }
 
     const margin = params.get('itemMargin') as IAttrRect;

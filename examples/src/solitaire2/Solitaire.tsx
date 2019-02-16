@@ -59,6 +59,12 @@ export default class Solitaire extends React.Component<
 
   public componentDidMount() {
     this.init()
+    window.addEventListener('resize', this.onWindowResize)
+  }
+
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize)
   }
 
   public update = () => {
@@ -114,7 +120,7 @@ export default class Solitaire extends React.Component<
         layers={{
           encapsulate: false
         }}
-        debug={[DebugOptions.none]}
+        debug={[DebugOptions.mouseEvents, DebugOptions.trace]}
         onUpdate={this.update}
       >
         <StockButton
@@ -199,7 +205,6 @@ export default class Solitaire extends React.Component<
           name={name}
           key={name}
           dragData={this._tableau[i].dragData}
-          // dragImage ={this._tableau[i].dragImage}
           canDrop={this._tableau[i].canDrop}
           drop={this._tableau[i].drop}
           endDrop={this._tableau[i].endDrop}
@@ -238,6 +243,11 @@ export default class Solitaire extends React.Component<
 
     return jsx
   }
+
+  private onWindowResize = () => {
+    this._g.reset()
+  }
+    
 }
 
 export interface IStockButtonProps extends React.HTMLProps<HTMLDivElement> {}

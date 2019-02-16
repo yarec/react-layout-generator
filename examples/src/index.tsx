@@ -42,6 +42,7 @@ import { OverflowOptions } from '../../src/types';
 // tslint:disable-next-line:variable-name
 const Title = styled.h2`
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
   background: transparent;
   color: ${cssColor.light};
   margin: 0;

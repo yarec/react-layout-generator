@@ -385,9 +385,9 @@ export interface IEdit {
   /**
    * If defined this function computes the data that should be stored
    * persistent storage. See [updateParamLocation](../globals.html#updateParamLocation),
-   * [updateParamOffset](../globals.html#updateParamOffset),
-   * [updateParamWidth](../globals.html#updateParamWidth), and
-   * [updateParamHeight](../globals.html#updateParamHeight).
+   * [updateParamOffset](../globals.html#updateparamoffset),
+   * [updateParamWidth](../globals.html#updateparamwidth), and
+   * [updateParamHeight](../globals.html#updateparamheight).
    *
    * If necessary you can use a custom function. If not defined then no data
    * will be stored.

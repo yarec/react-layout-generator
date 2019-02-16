@@ -116,6 +116,7 @@ export default class Grid extends React.Component<
         debug={[DebugOptions.none]}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         g={this._g}
+        layers={{encapsulate: true}}
       >
         <Panel
           data-layout={{
@@ -292,7 +293,7 @@ export default class Grid extends React.Component<
             location: { left: '5pmin', top: '5pmin', width: 90, height: 24 },
             editor: { preventEdit: true }
           }}
-          data-layer={2}
+          data-layer={-1}
           style={this._gridUnit === Unit.pixel ? selectedStyle : style}
           onClick={this.setPixel}
         />
@@ -305,7 +306,7 @@ export default class Grid extends React.Component<
             location: { left: '5pmin', top: '10pmin', width: 90, height: 24 },
             editor: { preventEdit: true }
           }}
-          data-layer={2}
+          data-layer={-1}
           style={this._gridUnit === Unit.percent ? selectedStyle : style}
           onClick={this.setPercent}
         />
@@ -318,7 +319,7 @@ export default class Grid extends React.Component<
             location: { left: '5pmin', top: '15pmin', width: 90, height: 24 },
             editor: { preventEdit: true }
           }}
-          data-layer={2}
+          data-layer={-1}
           style={this._gridUnit === Unit.vmin ? selectedStyle : style}
           onClick={this.setvmin}
         />

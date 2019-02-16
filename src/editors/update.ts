@@ -3,7 +3,8 @@ import { IEdit } from '../components/blockTypes'
 import { IRect, unitFactor } from '../types'
 
 /**
- * UpdateParamLocation computes a [location](interfaces/IDataLayoutlocation.html) update.
+ * UpdateParamLocation computes a [location](interfaces/iexrect.html) update. This is used
+ * by the editor to store changes in Params.
  */
 export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
   const factorX = unitFactor(block.blockRect.leftUnit)
@@ -18,9 +19,8 @@ export function updateParamLocation(updated: IRect, edit: IEdit, block: Block) {
 }
 
 /**
- * updateParamOffset computes the [offset](interfaces/ialign.html) update.
+ * updateParamOffset computes the [offset](interfaces/ialign.html) update. This is used by the editor to store changes in Params.
  */
-
 export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
   const factorX = unitFactor(block.blockRect.leftUnit)
   const factorY = unitFactor(block.blockRect.topUnit)
@@ -44,8 +44,8 @@ export function updateParamOffset(updated: IRect, edit: IEdit, block: Block) {
 }
 
 /**
- * updateParamWidth computes the width update. Only use this UpdateParam if
- * a generator directly uses the width in computing a layout.
+ * updateParamWidth computes the width update. Use only if a generator directly uses the width
+ * in computing a layout. This is used by the editor to store changes in Params.
  */
 export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.blockRect.widthUnit)
@@ -56,8 +56,8 @@ export function updateParamWidth(updated: IRect, edit: IEdit, block: Block) {
 }
 
 /**
- * updateParamWidth computes the height update. Only use this UpdateParam if
- * a generator directly uses the height in computing a layout.
+ * updateParamWidth computes the height update. Use only if
+ * a generator directly uses the height in computing a layout. This is used by the editor to store changes in Params.
  */
 export function updateParamHeight(updated: IRect, edit: IEdit, block: Block) {
   const factor = unitFactor(block.blockRect.heightUnit)

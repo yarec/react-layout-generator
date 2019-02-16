@@ -249,9 +249,6 @@ export function desktopGenerator(name: string, exParams?: Params) {
   }
 
   function create(args: ICreate): Block {
-    if (!args.dataLayout) {
-      console.error(`TODO default position ${args.name}`)
-    }
 
     return args.g.blocks().set(args.name, args.dataLayout, args.g)
   }
