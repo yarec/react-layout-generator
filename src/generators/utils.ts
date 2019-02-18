@@ -1,10 +1,10 @@
 import { ParamValue } from '../components/Params'
 
 /**
- * Store params in localStorage
+ * Load param by key from localStorage
+ * @param prefix
+ * @param key
  */
-
-// Load key value
 export function loadFromLocalStorage(prefix: string, key: string) {
   const v: string | null = localStorage.getItem(prefix + '.' + key)
   if (v) {
@@ -13,7 +13,12 @@ export function loadFromLocalStorage(prefix: string, key: string) {
   return undefined
 }
 
-// Save key value
+/**
+ * Store params by key to localStorage
+ * @param prefix
+ * @param key
+ * @param value
+ */
 export function saveToLocalStorage(
   prefix: string,
   key: string,

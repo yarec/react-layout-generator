@@ -2,41 +2,64 @@ import { IBlockRect, IExRect } from './blockTypes'
 import { ISize, IRect, Unit, IPoint, IOrigin } from '../types'
 
 /**
- * returns the connect point for the given rect and origin in local
- * pixel coordinates.
- * @param r: IRect
- * @param origin: IOrigin
+ * Returns the connect point for the given rect and origin in local
+ * decimal coordinates.
  */
 export function connectPoint(r: IRect, origin: IOrigin) {
   return { x: r.x + r.width * origin.x, y: r.y + r.height * origin.y }
 }
 /**
- * Defines the origin of location in percent
+ * Shifts the topLeft of the rect up and to the left.
  * If the origin is (50,50) then the top left is
- * (p.x - .50 * s.x, p.y - .50 * s.y)
+ * (p.x - .50 * p.width, p.y - .50 * p.height). The rect
+ * is now centered. Origin must be in decimal units.
  *
+ *
+ *
+ * ```
  *  x----------------
  *  |               |
- *  |       o       |
- *  |               |
- *  ----------------
- *  o: origin
- *  x: left top
+ *  |       o----------------
+ *  |       |               |
+ *  --------|               |
+ *          |               |
+ *          ----------------
+ *  o: original rect
+ *  x: shifted rect
+ * ```
+ *
+ * See [toOrigin](globals.html#toorigin)
  */
-export function fromOrigin(p: IRect, origin: IPoint | undefined): IRect {
+export function fromOrigin(r: IRect, origin: IPoint | undefined): IRect {
   if (origin) {
     return {
-      x: p.x - origin.x * p.width,
-      y: p.y - origin.y * p.height,
-      width: p.width,
-      height: p.height
+      x: r.x - origin.x * r.width,
+      y: r.y - origin.y * r.height,
+      width: r.width,
+      height: r.height
     }
   }
-  return p
+  return r
 }
 
 /**
- * reverses fromOrigin
+ * Shifts the rect down and to the right. If the origin is (50,50), then the topLeft
+ * of the rect is now (p.x + .50 * p.width, p.y + .50 * p.height). Origin must be
+ * in decimal units corresponding to percents.
+ *
+ * ```
+ *  o----------------
+ *  |               |
+ *  |       x----------------
+ *  |       |               |
+ *  --------|               |
+ *          |               |
+ *          ----------------
+ *  o: original rect
+ *  x: shifted rect
+ * ```
+ *
+ * See [fromOrigin](globals.html#fromorigin)
  */
 export function toOrigin(p: IRect, origin: IPoint | undefined): IRect {
   if (origin) {

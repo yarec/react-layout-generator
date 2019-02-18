@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.22% </span>
+        <span class="strong">97.37% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>35/36</span>
+        <span class='fraction'>37/38</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">91.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>11/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">90% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>9/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.14% </span>
+        <span class="strong">97.3% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>34/35</span>
+        <span class='fraction'>36/37</span>
       </div>
     </div>
   </div>
@@ -135,10 +135,7 @@
 90
 91
 92
-93
-94
-95
-96</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+93</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -163,17 +160,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
@@ -197,7 +196,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -207,12 +205,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">124x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -255,19 +249,21 @@ export class Blocks {
 &nbsp;
   /**
    * This method returns the array of Blocks that match the
-   * specified layer. If there is layer for a Block it is treated
+   * specified layer. If there is no layer for a Block it is treated
    * as having layer 0.
-   * @param layer: number
    */
   public layers(layer: number): Block[] {
+    if (this._blocks.size === 0) {
+      console.error(``)
+    }
     const blocks: Block[] = []
     this._blocks.forEach(block =&gt; {
-      const blockLayer = block.getHandler('$layer')
+      const blockLayer = block.layer
       if (blockLayer) {
         if (layer === blockLayer) {
           blocks.push(block)
         }
-      } else if (layer === 0) {
+      } else <span class="missing-if-branch" title="else path not taken" >E</span>if (layer === 0) {
         blocks.push(block)
       }
     })
@@ -291,7 +287,6 @@ export class Blocks {
 &nbsp;
   /**
    * This method returns the i th block in insert order.
-   * @param i: number
    */
   public find(i: number) {
     // console.log(Object.keys(this._blocks))
@@ -301,7 +296,6 @@ export class Blocks {
 &nbsp;
   /**
    * This method returns the block by name.
-   * @param key
    */
   public get(key: string) {
     return this._blocks.get(key)
@@ -309,9 +303,6 @@ export class Blocks {
 &nbsp;
   /**
    * Set will create block if it does not exist otherwise it will just update the block.
-   * @param name: string
-   * @param p: Params
-   * @param g: IGenerator
    */
   public set(key: string, p: IDataLayout, g: IGenerator): Block {
     let block = this._blocks.get(key)
@@ -334,7 +325,7 @@ export class Blocks {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Feb 16 2019 14:01:40 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 17 2019 22:02:36 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

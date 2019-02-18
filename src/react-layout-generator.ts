@@ -60,6 +60,7 @@ export {
 export { rowsGenerator } from './generators/rowsGenerator'
 export { rollGenerator } from './generators/animations/rollGenerator'
 export { rollHook } from './generators/animations/rollHook'
+export { vectorHook } from './generators/animations/vectorHook'
 
 export { saveToLocalStorage, loadFromLocalStorage } from './generators/utils'
 

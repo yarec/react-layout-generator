@@ -1,4 +1,4 @@
-# React Layout Generator 0.5.0-alpha.2
+# React Layout Generator 0.5.1-alpha.2
 
 _React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly._
 
@@ -225,15 +225,16 @@ Note: Layers are NOT related to z-index even though they can achieve similar eff
 
 Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
 
-To specify the layer of a block and all its content add the data-layer property to component.
+To specify the layer of a block and all its content add the layer property to its data-layout.
 
 ```ts
 <div
   key={name}
   data-layout={{
-    name
+    name,
+    ...
+    layer: 2
   }}
-  data-layer={2}
 >
 ```
 
@@ -284,9 +285,10 @@ Drag and drop allows you to drag items from one container to another container w
           name={'...'}}
           key={'...'}
           data-layout={{
-            name: '...'
+            name: '...',
+            ...
+            layer: 1
           }}
-          data-layer={1}
           dragData={this.dragData}  // dragData(id: string) => string[]
           dragImage={this.dragImage} // Optional dragImage(ids: string[]) => JSX
           canDrop={this.canDrop} // canDrop(data: string[]) => boolean
@@ -355,7 +357,7 @@ Fired once when the user is ending a drag.
 
 This function is called on the source container when a drag has been completed. It must remove the blocks from this container.
 
-Then mark layers. Only controls need have data-layer value greater then 0. Then enable both drag and drop and a [layers](#layers) property if needed.
+Then mark layers by adding a layer property. Then enable both drag and drop and a [layers](#layers) property if needed.
 
 The implementation follows this logic:
 

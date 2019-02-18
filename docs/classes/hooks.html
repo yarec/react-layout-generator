@@ -66,6 +66,27 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The Hook class manages the collection of hooks for a generator. Each hook is called just before each render.
+							It could be used animate a collection of blocks, to visually connect blocks, or to layer notes on a page. Its
+						major benefit is to separate its behavior from other logic or components. It is also easy to turn on or off.</p>
+					</div>
+					<p>Hooks are a function with the signature of <code>(g: IGenerator) =&gt; void</code>. We recommend that hooks be written as
+					an closure:</p>
+					<p><code></code>ts
+					function initHook (...): fnHook {</p>
+					<p>   let velocity = {x: .2, y: .1}</p>
+					<p>   return function hook (g: IGenerator) {
+						...
+						const delta = {x: block.x * velocity.x, y: block.y * velocity.y}
+						...
+						}
+						}
+					<code>`</code></p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -102,7 +123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e7ee375/src/components/Hooks.ts#L15">components/Hooks.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/components/Hooks.ts#L36">components/Hooks.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -128,7 +149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e7ee375/src/components/Hooks.ts#L19">components/Hooks.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/components/Hooks.ts#L40">components/Hooks.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e7ee375/src/components/Hooks.ts#L23">components/Hooks.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/components/Hooks.ts#L44">components/Hooks.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -174,7 +195,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/e7ee375/src/components/Hooks.ts#L11">components/Hooks.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/components/Hooks.ts#L32">components/Hooks.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

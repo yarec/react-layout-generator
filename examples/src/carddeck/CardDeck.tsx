@@ -111,9 +111,9 @@ export default class CardDeck extends React.Component<
               editor: {
                 selectable: false,
                 preventEdit: true
-              }
+              },
+              layer: 1
             }}
-            data-layer={1}
             onClick={this.shuffle}
           >
             Shuffle
@@ -128,9 +128,9 @@ export default class CardDeck extends React.Component<
             editor: {
               selectable: false,
               preventEdit: true
-            }
+            },
+            layer: 1
           }}
-          data-layer={1}
         >
           <>
             <Description>Edit mode enabled.</Description>

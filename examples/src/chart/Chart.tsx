@@ -50,6 +50,8 @@ export default class Chart extends React.Component<
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={this._g}
+        
+        layers={{encapsulate: true}}
       >
         <Panel
           key={this.state.node}

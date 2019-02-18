@@ -126,9 +126,9 @@ export default class Solitaire extends React.Component<
         <StockButton
           key="stock"
           data-layout={{
-            name: 'stock'
+            name: 'stock',
+            layer: -1
           }}
-          data-layer={-1}
           data-click={this.onPopulateWaste}
         />
 
@@ -136,9 +136,9 @@ export default class Solitaire extends React.Component<
           name={'waste'}
           key={'waste'}
           data-layout={{
-            name: 'waste'
+            name: 'waste',
+            layer: 1
           }}
-          data-layer={1}
           dragData={this._waste.dragData}
           canDrop={this._waste.canDrop}
           drop={this._waste.drop}
@@ -157,10 +157,9 @@ export default class Solitaire extends React.Component<
             name: 'New Game',
 
             origin: { x: 50, y: 50 },
-            location: { left: '50%', top: '90%', width: 90, height: 24 }
-            // zIndex: 10
+            location: { left: '50%', top: '90%', width: 90, height: 24 },
+            layer: -1
           }}
-          data-layer={-1}
         >
           <button key={'New Game'} onClick={this.newGame}>
             New Game
@@ -183,9 +182,9 @@ export default class Solitaire extends React.Component<
           drop={this._foundation[i].drop}
           endDrop={this._foundation[i].endDrop}
           data-layout={{
-            name
+            name,
+            layer: 1
           }}
-          data-layer={1}
           g={this._g}
         >
           {this._foundation[i].cards()}
@@ -209,9 +208,9 @@ export default class Solitaire extends React.Component<
           drop={this._tableau[i].drop}
           endDrop={this._tableau[i].endDrop}
           data-layout={{
-            name
+            name,
+            layer: 1
           }}
-          data-layer={1}
           g={this._g}
         >
           {this._tableau[i].cards()}

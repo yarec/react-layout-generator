@@ -107,6 +107,11 @@ export interface IDataLayout {
   zIndex?: number
 
   /**
+   * Layer specifies the layer for this block. The default is 0.
+   */
+  layer?: number
+
+  /**
    * Origin defines the point that the location will use when positioning a
    * block. For example an origin of { x: 50, y: 50 } will center the block
    * at the specified location.

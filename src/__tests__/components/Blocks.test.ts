@@ -110,21 +110,21 @@ it('Layouts layers returns the valid layers #1', () => {
 
 it('Layouts layers returns the valid layers #2', () => {
   const p = {
-    location: { left: 0, top: 10, width: 100, height: 10 }
+    location: { left: 0, top: 10, width: 100, height: 10 },
+    layer: 1
   }
 
   const l = new Blocks([])
-  const b1 = l.set('t1', p, g)
-  b1.setHandler('$layer', 1)
+  l.set('t1', p, g)
 
   l.set('t2', p, g)
   l.set('t3', p, g)
 
   const blocks1 = l.layers(0)
-  expect(blocks1 && blocks1.length).toBe(2)
+  expect(blocks1 && blocks1.length).toBe(0)
 
   const blocks2 = l.layers(1)
-  expect(blocks2 && blocks2.length).toBe(1)
+  expect(blocks2 && blocks2.length).toBe(3)
 
   const blocks3 = l.layers(2)
   expect(blocks3 && blocks3.length).toBe(0)

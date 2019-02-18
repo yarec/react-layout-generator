@@ -64,7 +64,7 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="react-layout-generator-0-5-0-alpha-2">React Layout Generator 0.5.0-alpha.2</h1>
+				<h1 id="react-layout-generator-0-5-1-alpha-2">React Layout Generator 0.5.1-alpha.2</h1>
 				<p><em>React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.</em></p>
 				<p>RLG is focused on layout and position and size editing of both html and svg components. Taking direct control of the layout enables precise and continuous control of responsive layouts. You&#39;re no longer limited to just css and the linear flow of elements.</p>
 				<p>A <a href="https://neq1.io/">live demo</a> is available at <a href="https://neq1.io">https://neq1.io</a>. Source is available at <a href="https://github.com/chetmurphy/react-layout-generator/">Github</a> under the MIT license.</p>
@@ -221,13 +221,14 @@
 				<p>Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer&#39;s stacking context if
 				<a href="interfaces/ilayeroptions.html">encapsulation</a> is on in layers.</p>
 				<p>Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.</p>
-				<p>To specify the layer of a block and all its content add the data-layer property to component.</p>
+				<p>To specify the layer of a block and all its content add the layer property to its data-layout.</p>
 				<pre><code class="language-ts">&lt;div
   key={name}
   data-layout={{
-    name
+    name,
+    ...
+    layer: <span class="hljs-number">2</span>
   }}
-  data-layer={<span class="hljs-number">2</span>}
 &gt;</code></pre>
 				<p>To manage the layers add a <a href="interfaces/ilayeroptions.html">layers</a> property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.</p>
 				<pre><code class="language-ts">&lt;Layout
@@ -267,9 +268,10 @@
           name={'...'}}
           key={'...'}
           data-layout={{
-            name: '...'
+            name: '...',
+            ...
+            layer: 1
           }}
-          data-layer={1}
           dragData={this.dragData}  // dragData(id: string) =&gt; string[]
           dragImage={this.dragImage} // Optional dragImage(ids: string[]) =&gt; JSX
           canDrop={this.canDrop} // canDrop(data: string[]) =&gt; boolean
@@ -315,7 +317,7 @@
 				<h4 id="dragend-ids-string-void">dragEnd(ids: string[]) =&gt; void</h4>
 				<p>Fired once when the user is ending a drag.</p>
 				<p>This function is called on the source container when a drag has been completed. It must remove the blocks from this container.</p>
-				<p>Then mark layers. Only controls need have data-layer value greater then 0. Then enable both drag and drop and a <a href="#layers">layers</a> property if needed.</p>
+				<p>Then mark layers by adding a layer property. Then enable both drag and drop and a <a href="#layers">layers</a> property if needed.</p>
 				<p>The implementation follows this logic:</p>
 				<ol>
 					<li><p>mouse down</p>
@@ -887,6 +889,9 @@ data-layout={{
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#updateparamwidth" class="tsd-kind-icon">update<wbr>Param<wbr>Width</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#vectorhook" class="tsd-kind-icon">vector<wbr>Hook</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
 						<a href="globals.html#bounds" class="tsd-kind-icon">bounds</a>

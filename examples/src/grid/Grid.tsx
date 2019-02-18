@@ -116,15 +116,15 @@ export default class Grid extends React.Component<
         debug={[DebugOptions.none]}
         service={this._edit ? ServiceOptions.edit : ServiceOptions.none}
         g={this._g}
-        layers={{encapsulate: true}}
+        layers={{encapsulate: false}}
       >
         <Panel
           data-layout={{
             name: 'grid',
 
-            location: { left: 0, top: 0 }
+            location: { left: 0, top: 0 },
+            layer: 0
           }}
-          data-layer={0}
           style={{ overflow: 'hidden' }}
         >
           {(args: IMetaDataArgs) => {
@@ -143,10 +143,10 @@ export default class Grid extends React.Component<
         <Panel
           data-layout={{
             name: 'square (pixel, pixel)',
-
-            location: { left: 200, top: 50, width: 200, height: 200 }
+            origin: {x: -150, y: 0},
+            location: { left: 200, top: 50, width: 200, height: 200 },
+            layer: 1
           }}
-          data-layer={1}
           style={{ backgroundColor: 'tan' }}
         >
           {(args: IMetaDataArgs) => {
@@ -168,9 +168,9 @@ export default class Grid extends React.Component<
           data-layout={{
             name: 'square(percent, vmin)',
 
-            location: { left: '30%', top: '20%', width: 150, height: 150 }
+            location: { left: '30%', top: '20%', width: 150, height: 150 },
+            layer: 1
           }}
-          data-layer={1}
           style={{ backgroundColor: 'LightSkyBlue' }}
         >
           {(args: IMetaDataArgs) => (
@@ -186,9 +186,9 @@ export default class Grid extends React.Component<
           data-layout={{
             name: 'square(vmin, vmin)',
 
-            location: { left: '60vmin', top: '70vmin', width: 200, height: 200 }
+            location: { left: '60vmin', top: '70vmin', width: 200, height: 200 },
+            layer: 1
           }}
-          data-layer={1}
           style={{ backgroundColor: 'lime' }}
         >
           {(args: IMetaDataArgs) => <span>Square (vmin, vmin) </span>}
@@ -198,9 +198,9 @@ export default class Grid extends React.Component<
           data-layout={{
             name: 'square(percent, percent)',
 
-            location: { left: '50%', top: '50%', width: 200, height: 150 }
+            location: { left: '50%', top: '50%', width: 200, height: 150 },
+            layer: 1
           }}
-          data-layer={1}
           style={{ backgroundColor: 'gold' }}
         >
           {(args: IMetaDataArgs) => (
@@ -258,9 +258,9 @@ export default class Grid extends React.Component<
             height: 80,
             unit: Unit.unmanaged
           },
-          editor: { preventEdit: true }
+          editor: { preventEdit: true },
+          layer: 1
         }}
-        data-layer={1}
       >
         <Note>{`Grid unit ${this._units}`}</Note> <br />
         <Note>{`width: ${this._gridUnitSquare.x.toFixed(2)}px`}</Note> <br />
@@ -291,9 +291,9 @@ export default class Grid extends React.Component<
             name: 'Pixel',
 
             location: { left: '5pmin', top: '5pmin', width: 90, height: 24 },
-            editor: { preventEdit: true }
+            editor: { preventEdit: true },
+            layer: -1
           }}
-          data-layer={-1}
           style={this._gridUnit === Unit.pixel ? selectedStyle : style}
           onClick={this.setPixel}
         />
@@ -304,9 +304,9 @@ export default class Grid extends React.Component<
             name: 'Percent',
 
             location: { left: '5pmin', top: '10pmin', width: 90, height: 24 },
-            editor: { preventEdit: true }
+            editor: { preventEdit: true },
+            layer: -1
           }}
-          data-layer={-1}
           style={this._gridUnit === Unit.percent ? selectedStyle : style}
           onClick={this.setPercent}
         />
@@ -317,9 +317,9 @@ export default class Grid extends React.Component<
             name: 'vmin',
 
             location: { left: '5pmin', top: '15pmin', width: 90, height: 24 },
-            editor: { preventEdit: true }
+            editor: { preventEdit: true },
+            layer: -1
           }}
-          data-layer={-1}
           style={this._gridUnit === Unit.vmin ? selectedStyle : style}
           onClick={this.setvmin}
         />

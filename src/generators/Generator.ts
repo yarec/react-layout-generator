@@ -30,6 +30,10 @@ export interface ICreate {
 
 export type Create = (args: ICreate) => Block | undefined
 
+/**
+ * This is the interface for a low level generator. By conforming to it the
+ * a custom Generator could replace the builtin Generator.
+ */
 export interface IGenerator {
   /**
    * Name of the generator.

@@ -416,29 +416,40 @@ export class Layout extends React.Component<
     React.Children.map(this.props.children, child => {
       const c = child as React.ReactElement<any>
       if (c) {
-        const layer: number | undefined = c.props['data-layer']
-        if (!layer) {
-          push(0, child as React.ReactChild)
-        } else if (typeof layer === 'string') {
-          const _layer = parseInt(layer as string, 10)
-          const l = mapper(_layer)
-          if (l) {
-            push(l, c)
-          }
+        if (c.type === React.Fragment) {
+          React.Children.map(c.props.children, (nChild) => {
+            this.processLayer(nChild, push, child, mapper);
+          })
         } else {
-          const l = mapper(layer)
-          if (l !== undefined) {
-            if(l >= 0) {
-              push(l, c)
-            } else {
-              push(-1, c)
-            }
-          }
+        this.processLayer(c, push, child, mapper);
         }
       }
     })
 
     return jsx
+  }
+
+  private processLayer(c: React.ReactElement<any>, 
+    push: (layer: number, child: React.ReactChild) => void, 
+    child: React.ReactChild, 
+    mapper: (layer: number) => number | undefined
+    ) {
+    const dataLayout = c.props['data-layout'];
+    const layer: number | undefined = dataLayout ? dataLayout.layer : 0;
+    if (!layer) {
+      push(0, child as React.ReactChild);
+    }
+    else {
+      const l = mapper(layer);
+      if (l !== undefined) {
+        if (l >= 0) {
+          push(l, c);
+        }
+        else {
+          push(-1, c);
+        }
+      }
+    }
   }
 
   public render(): React.ReactNode {
@@ -729,8 +740,8 @@ export class Layout extends React.Component<
           } with generator ${this._g.name()}`
         )
         console.log('params')
-        params.map.forEach((value, key) => {
-          console.log(`  ${key} ${JSON.stringify(value)}`)
+        params.data.forEach((item) => {
+          console.log(`  ${item[0]} ${JSON.stringify(item[1])}`)
         })
         console.log('blocks (computed position rects)')
         blocks.map.forEach((value, key) => {
@@ -770,15 +781,6 @@ export class Layout extends React.Component<
             this.props.name
           } could not be created`
         )
-      }
-    }
-
-    if (b) {
-      const layer = child.props['data-layer']
-      if (layer) {
-        if (typeof layer === 'number') {
-          b.setHandler('$layer', layer)
-        }
       }
     }
   }

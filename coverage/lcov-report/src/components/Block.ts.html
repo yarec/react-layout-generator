@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">78.07% </span>
+        <span class="strong">77.39% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>178/228</span>
+        <span class='fraction'>178/230</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">58.57% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>41/70</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">72.09% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>32/42</span>
+        <span class='fraction'>31/43</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.58% </span>
+        <span class="strong">76.89% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>173/223</span>
+        <span class='fraction'>173/225</span>
       </div>
     </div>
   </div>
@@ -524,7 +524,25 @@
 479
 480
 481
-482</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -550,6 +568,12 @@
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -614,27 +638,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1036,6 +1072,12 @@ import { clone } from '../utils'
  * The purpose of Block is to specify the location and size of an element. This, of course,
  * can be done in css and React. The purpose in RLG to support dynamic computation of
  * the location and size of an element.
+ * 
+ * There are two ways to manipulate its position and size. The first is a css like 
+ * [block specification](interfaces/IExRect.html) - left, top, right, bottom, width, and 
+ * height all with optional units. The second is just updating its 
+ * [result rect](classes/block.html#update) in pixels. The two are automatically kept 
+ * in sync.
  *
  */
 export class Block {
@@ -1094,30 +1136,42 @@ export class Block {
     return this._name
   }
 &nbsp;
+  public get layer() {
+    return this._position.layer
+  }
+&nbsp;
   public set sibling(name: string) {
     this._siblings.set(name, true)
   }
 &nbsp;
-  public setHandler(name: string, value: any) {
-    this._handlers.set(name, value)
+<span class="fstat-no" title="function not covered" >  public setHandler(</span>name: string, value: any) {
+<span class="cstat-no" title="statement not covered" >    this._handlers.set(name, value)</span>
   }
 &nbsp;
-  public getHandler(name: string) {
-    return this._handlers.get(name)
+<span class="fstat-no" title="function not covered" >  public getHandler(</span>name: string) {
+<span class="cstat-no" title="statement not covered" >    return this._handlers.get(name)</span>
   }
-&nbsp;
+  /**
+   * @Ignore
+   */
 <span class="fstat-no" title="function not covered" >  public get onMouseDown() {</span>
 <span class="cstat-no" title="statement not covered" >    return this._onMouseDown</span>
   }
-&nbsp;
+  /**
+   * @Ignore
+   */
 <span class="fstat-no" title="function not covered" >  public set onMouseDown(</span>fn: (e: React.MouseEvent) =&gt; void) {
 <span class="cstat-no" title="statement not covered" >    this._onMouseDown = fn</span>
   }
-&nbsp;
+  /**
+   * @Ignore
+   */
 <span class="fstat-no" title="function not covered" >  public get onClick() {</span>
 <span class="cstat-no" title="statement not covered" >    return this._onClick</span>
   }
-&nbsp;
+  /**
+   * @Ignore
+   */
 <span class="fstat-no" title="function not covered" >  public set onClick(</span>fn: (e: React.MouseEvent) =&gt; void) {
 <span class="cstat-no" title="statement not covered" >    this._onClick = fn</span>
   }
@@ -1492,7 +1546,7 @@ export class Block {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Feb 16 2019 14:01:40 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 17 2019 22:02:36 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

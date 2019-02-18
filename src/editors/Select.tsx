@@ -6,7 +6,6 @@ import { IGenerator } from '../generators/Generator';
 import { DebugOptions, IRect } from '../types';
 import { clone } from '../utils';
 import {EditHelper, ICommand, Status} from './EditHelper';
-import { ParamValue } from '../components/Params';
 
 /**
  * internal use only
@@ -156,8 +155,8 @@ export class Select extends React.Component<ISelectProps, ISelectState> {
 
     console.log(`Params ------------------------------------`)
     console.log(`"${this.props.g.name()}": [`)
-    params.map.forEach((value: ParamValue, key: string) => {
-      console.log(` ["${key}", ${JSON.stringify(value)}],`)
+    params.data.forEach((item) => {
+      console.log(` ["${item[0]}", ${JSON.stringify(item[1])}],`)
     })
     console.log(`]`)
     console.log(`End Params --------------------------------`)

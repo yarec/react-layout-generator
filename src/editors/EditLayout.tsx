@@ -34,7 +34,8 @@ function editStyle(args: IEditHandleProps): React.CSSProperties {
     zIndex: args.zIndex,
     borderWidth: '4px',
     outline: 'none',
-    userSelect: 'none'
+    userSelect: 'none',
+    pointerEvents: 'auto'
   })
 }
 

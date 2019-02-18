@@ -9,7 +9,8 @@ import {
   rollGenerator,
   rollHook,
   ServiceOptions,
-  Status
+  Status,
+  vectorHook,
 } from '../importRLG'
 
 import * as data from '../assets/data/params.json'
@@ -45,6 +46,11 @@ export default class Intro extends React.Component<
     hooks.set(
       'layer2',
       rollHook('layer2', { velocity: { x: 0.25, y: -0.5 } }, this._g)
+    )
+
+    hooks.set(
+      'layer3',
+      vectorHook('layer3', 3, { x: 0.0, y: 0.001 }, {x: .5, y: 0}, 200, this._g)
     )
   }
 
@@ -99,11 +105,35 @@ export default class Intro extends React.Component<
             name: 'implementation',
 
             origin: { x: 100, y: 100 },
-            location: { left: '50%', top: '50%', width: 140, height: 24 }
+            location: { left: '50%', top: '50%', width: 140, height: 24 },
+            layer: 2
           }}
-          data-layer={2}
         >
           <span>Second Animation</span>
+        </div>
+
+        <div
+          data-layout={{
+            name: 'animation3.1',
+
+            origin: { x: 50, y: 50 },
+            location: { left: '50%', top: '50%', width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #1</span>
+        </div>
+
+        <div
+          data-layout={{
+            name: 'animation3.2',
+
+            origin: { x: 50, y: 50 },
+            location: { left: '50%', top: '50%', width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #2</span>
         </div>
       </Layout>
     )

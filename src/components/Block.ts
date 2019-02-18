@@ -30,6 +30,12 @@ import { clone } from '../utils'
  * can be done in css and React. The purpose in RLG to support dynamic computation of
  * the location and size of an element.
  *
+ * There are two ways to manipulate its position and size. The first is a css like
+ * [block specification](interfaces/IExRect.html) - left, top, right, bottom, width, and
+ * height all with optional units. The second is just updating its
+ * [result rect](classes/block.html#update) in pixels. The two are automatically kept
+ * in sync.
+ *
  */
 export class Block {
   private readonly _name: string
@@ -87,6 +93,10 @@ export class Block {
     return this._name
   }
 
+  public get layer() {
+    return this._position.layer
+  }
+
   public set sibling(name: string) {
     this._siblings.set(name, true)
   }
@@ -98,19 +108,27 @@ export class Block {
   public getHandler(name: string) {
     return this._handlers.get(name)
   }
-
+  /**
+   * @Ignore
+   */
   public get onMouseDown() {
     return this._onMouseDown
   }
-
+  /**
+   * @Ignore
+   */
   public set onMouseDown(fn: (e: React.MouseEvent) => void) {
     this._onMouseDown = fn
   }
-
+  /**
+   * @Ignore
+   */
   public get onClick() {
     return this._onClick
   }
-
+  /**
+   * @Ignore
+   */
   public set onClick(fn: (e: React.MouseEvent) => void) {
     this._onClick = fn
   }

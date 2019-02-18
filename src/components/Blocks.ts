@@ -20,14 +20,16 @@ export class Blocks {
 
   /**
    * This method returns the array of Blocks that match the
-   * specified layer. If there is layer for a Block it is treated
+   * specified layer. If there is no layer for a Block it is treated
    * as having layer 0.
-   * @param layer: number
    */
   public layers(layer: number): Block[] {
+    if (this._blocks.size === 0) {
+      console.error(``)
+    }
     const blocks: Block[] = []
     this._blocks.forEach(block => {
-      const blockLayer = block.getHandler('$layer')
+      const blockLayer = block.layer
       if (blockLayer) {
         if (layer === blockLayer) {
           blocks.push(block)
@@ -56,7 +58,6 @@ export class Blocks {
 
   /**
    * This method returns the i th block in insert order.
-   * @param i: number
    */
   public find(i: number) {
     // console.log(Object.keys(this._blocks))
@@ -66,7 +67,6 @@ export class Blocks {
 
   /**
    * This method returns the block by name.
-   * @param key
    */
   public get(key: string) {
     return this._blocks.get(key)
@@ -74,9 +74,6 @@ export class Blocks {
 
   /**
    * Set will create block if it does not exist otherwise it will just update the block.
-   * @param name: string
-   * @param p: Params
-   * @param g: IGenerator
    */
   public set(key: string, p: IDataLayout, g: IGenerator): Block {
     let block = this._blocks.get(key)
