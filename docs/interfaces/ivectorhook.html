@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IAlign | react-layout-generator</title>
+	<title>IVectorHook | react-layout-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ialign.html">IAlign</a>
+					<a href="ivectorhook.html">IVectorHook</a>
 				</li>
 			</ul>
-			<h1>Interface IAlign</h1>
+			<h1>Interface IVectorHook</h1>
 		</div>
 	</div>
 </header>
@@ -69,32 +69,57 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The purpose of this interface is to allow specification of links between blocks. It lets
-							you link &#39;this&#39; block (called &#39;self&#39;) to &#39;source&#39; block by name and offset. The link means that the &#39;this&#39;
-						block&#39;s location is computed based on the location and size of the &#39;source&#39; block.</p>
+						<p>This is an optional hook that can be used to animate a vector of blocks.
+							It will render as a an animation with the blocks in an infinite loop until
+							the animation is stopped. When a block is moved outside of the container
+						it will be placed at the beginning of the vector.</p>
 					</div>
-					<pre><code>┌────────┐
-│ <span class="hljs-selector-tag">source</span> │
-└────────<span class="hljs-selector-tag">o</span>  (<span class="hljs-attribute">X</span>: <span class="hljs-number">100</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">100</span>)
-         │
-         │
-         └─&gt; <span class="hljs-selector-tag">t</span>──────┐ (<span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>)
-             │ <span class="hljs-selector-tag">self</span> │
-             └──────┘</code></pre><p>In the diagram above &#39;self&#39; block is linked to &#39;source&#39; block
-					with the offset from &#39;o&#39; to &#39;t&#39;.</p>
-					<pre><code class="language-ts"> align: {
-   key: <span class="hljs-string">'source'</span>
-   offset: {x: <span class="hljs-number">20</span>, y: <span class="hljs-number">30</span>}
-   source: {x: <span class="hljs-number">100</span>, y: <span class="hljs-number">100</span>}
-   self: {x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>}
- }</code></pre>
+					<p>The following is an example of a vertical vector with blocks distributed
+						on it. The center of each block is <code>spacing</code> distance from the previous
+						and following block. The velocity is {x: 0, y: .1} ~ 6 pixels per second
+					downward.</p>
+					<pre><code><span class="hljs-selector-tag">container</span> <span class="hljs-selector-tag">with</span> <span class="hljs-selector-tag">handle</span> <span class="hljs-selector-tag">set</span> <span class="hljs-selector-tag">to</span> {<span class="hljs-attribute">x</span>: <span class="hljs-number">50</span>, y: <span class="hljs-number">0</span>}
+┌─────────────────<span class="hljs-selector-tag">x</span>─────────────────┐
+│                 │                 │
+│               ┌─│─┐               │
+│               │ │ │               │
+│               └─│─┘               │
+│                 │                 │
+│               ┌─│─┐               │
+│               │ │ │               │
+│               └─│─┘               │
+│                 ↓                 │
+└───────────────────────────────────┘</code></pre>
+					<dl class="tsd-comment-tags">
+						<dt>params</dt>
+						<dd><p>Prefix is used to specify unique keys in Params. This can be used
+							for persisting state in <a href="../classes/params.html">Params</a>.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>Layer is the mapped number of the layer.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>Velocity is the speed of the animation in pixels per second.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>Handle is a point within the block that the vector will pass through.
+							Note that it is the starting point for distributing the blocks on the vector.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>Placement is where each block will be placed. To center the placement use
+							{x: .5, y: .5}.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>Spacing the distance between centered blocks on the vector.</p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IAlign</span>
+						<span class="target">IVectorHook</span>
 					</li>
 				</ul>
 			</section>
@@ -105,10 +130,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#key" class="tsd-kind-icon">key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#offset" class="tsd-kind-icon">offset</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#self" class="tsd-kind-icon">self</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#source" class="tsd-kind-icon">source</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#g" class="tsd-kind-icon">g</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#handle" class="tsd-kind-icon">handle</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#layer" class="tsd-kind-icon">layer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#placement" class="tsd-kind-icon">placement</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#prefix" class="tsd-kind-icon">prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#spacing" class="tsd-kind-icon">spacing</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#velocity" class="tsd-kind-icon">velocity</a></li>
 							</ul>
 						</section>
 					</div>
@@ -117,72 +145,74 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="key" class="tsd-anchor"></a>
-					<h3>key</h3>
-					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="g" class="tsd-anchor"></a>
+					<h3>g</h3>
+					<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="igenerator.html" class="tsd-signature-type">IGenerator</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L194">components/blockTypes.ts:194</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L49">generators/animations/vectorHook.ts:49</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This is the name of &#39;source&#39; Block (same as the name in data-layout={name: &#39;someName&#39;, ...)</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="offset" class="tsd-anchor"></a>
-					<h3>offset</h3>
-					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a></div>
+					<a name="handle" class="tsd-anchor"></a>
+					<h3>handle</h3>
+					<div class="tsd-signature tsd-kind-icon">handle<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L205">components/blockTypes.ts:205</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L46">generators/animations/vectorHook.ts:46</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Offset describes the x offset and y offset from the
-								handle on &#39;source&#39;&#39; block to the handle on &#39;self&#39; block.
-								It goes from the connection handle on the &#39;source&#39; block to
-								the connection handle on &#39;self&#39; block so if the &#39;source&#39; block
-							moves the &#39;self&#39; block also moves.</p>
-						</div>
-						<p>Note that align can be used to place &#39;self&#39; block over/behind
-						&#39;source&#39; block.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="self" class="tsd-anchor"></a>
-					<h3>self</h3>
-					<div class="tsd-signature tsd-kind-icon">self<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+					<a name="layer" class="tsd-anchor"></a>
+					<h3>layer</h3>
+					<div class="tsd-signature tsd-kind-icon">layer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L215">components/blockTypes.ts:215</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L44">generators/animations/vectorHook.ts:44</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This defines the location of the connection handle on &#39;self&#39;&#39; block.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="source" class="tsd-anchor"></a>
-					<h3>source</h3>
-					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+					<a name="placement" class="tsd-anchor"></a>
+					<h3>placement</h3>
+					<div class="tsd-signature tsd-kind-icon">placement<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L211">components/blockTypes.ts:211</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L47">generators/animations/vectorHook.ts:47</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This defines the location of the connection handle on the &#39;source&#39; block.
-								The units are in percent of the block size starting at the left top of the
-							block.</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3>prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L43">generators/animations/vectorHook.ts:43</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="spacing" class="tsd-anchor"></a>
+					<h3>spacing</h3>
+					<div class="tsd-signature tsd-kind-icon">spacing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L48">generators/animations/vectorHook.ts:48</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="velocity" class="tsd-anchor"></a>
+					<h3>velocity</h3>
+					<div class="tsd-signature tsd-kind-icon">velocity<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/generators/animations/vectorHook.ts#L45">generators/animations/vectorHook.ts:45</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -199,19 +229,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ialign.html" class="tsd-kind-icon">IAlign</a>
+						<a href="ivectorhook.html" class="tsd-kind-icon">IVector<wbr>Hook</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#key" class="tsd-kind-icon">key</a>
+								<a href="ivectorhook.html#g" class="tsd-kind-icon">g</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#offset" class="tsd-kind-icon">offset</a>
+								<a href="ivectorhook.html#handle" class="tsd-kind-icon">handle</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#self" class="tsd-kind-icon">self</a>
+								<a href="ivectorhook.html#layer" class="tsd-kind-icon">layer</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#source" class="tsd-kind-icon">source</a>
+								<a href="ivectorhook.html#placement" class="tsd-kind-icon">placement</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ivectorhook.html#prefix" class="tsd-kind-icon">prefix</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ivectorhook.html#spacing" class="tsd-kind-icon">spacing</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ivectorhook.html#velocity" class="tsd-kind-icon">velocity</a>
 							</li>
 						</ul>
 					</li>

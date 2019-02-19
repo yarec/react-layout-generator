@@ -57,10 +57,10 @@ export default class Chart extends React.Component<
           key={this.state.node}
           data-layout={{
             name: this.state.node,
-            origin: { x: 50, y: 0 }, 
+            origin: { x: .50, y: 0 }, 
             location:  { left: '50%', top: '50%', width: 150, height: 100 },
             
-            transform: [{rotate: 10, origin: {x: 50, y: 50}}],
+            transform: [{rotate: 10, origin: {x: .50, y: .50}}],
             editor: {
               edits: [
                 { ref: PositionRef.position, variable: `${this.state.node}Location`, updateParam: updateParamLocation }

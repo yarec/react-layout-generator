@@ -10,7 +10,7 @@ import {
   rollHook,
   ServiceOptions,
   Status,
-  vectorHook,
+  vectorHook
 } from '../importRLG'
 
 import * as data from '../assets/data/params.json'
@@ -50,21 +50,27 @@ export default class Intro extends React.Component<
 
     hooks.set(
       'layer3',
-      vectorHook('layer3', 3, { x: 0.0, y: 0.001 }, {x: .5, y: 0}, 200, this._g)
+      vectorHook({
+        prefix: 'layer3',
+        layer: 3,
+        velocity: { x: 0.01, y: 0.01 },
+        handle: { x: 0.1, y: 0 },
+        placement: { x: 0.5, y: 0 },
+        spacing: 200,
+        g: this._g
+      })
     )
   }
 
   public componentDidMount() {
     // console.log('EditHelpers load Intro');
-    this.props
-      .editHelper()
-      .load([
-        {
-          name: 'edit',
-          command: this.setEdit,
-          status: this._edit ? Status.up : Status.down
-        }
-      ])
+    this.props.editHelper().load([
+      {
+        name: 'edit',
+        command: this.setEdit,
+        status: this._edit ? Status.up : Status.down
+      }
+    ])
   }
 
   public setEdit = (status: Status) => {
@@ -104,7 +110,7 @@ export default class Intro extends React.Component<
           data-layout={{
             name: 'implementation',
 
-            origin: { x: 100, y: 100 },
+            origin: { x: 1, y: 1 },
             location: { left: '50%', top: '50%', width: 140, height: 24 },
             layer: 2
           }}
@@ -116,7 +122,7 @@ export default class Intro extends React.Component<
           data-layout={{
             name: 'animation3.1',
 
-            origin: { x: 50, y: 50 },
+            origin: { x: .50, y: .50 },
             location: { left: '50%', top: '50%', width: 140, height: 24 },
             layer: 3
           }}
@@ -128,12 +134,24 @@ export default class Intro extends React.Component<
           data-layout={{
             name: 'animation3.2',
 
-            origin: { x: 50, y: 50 },
+            origin: { x: .50, y: .50 },
             location: { left: '50%', top: '50%', width: 140, height: 24 },
             layer: 3
           }}
         >
           <span>Third Animation #2</span>
+        </div>
+
+        <div
+          data-layout={{
+            name: 'animation3.3',
+
+            origin: { x: .50, y: .50 },
+            location: { left: '50%', top: '50%', width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #3</span>
         </div>
       </Layout>
     )
@@ -204,7 +222,7 @@ export default class Intro extends React.Component<
           data-layout={{
             name,
 
-            origin: { x: 50, y: 50 },
+            origin: { x: .50, y: .50 },
             location: {
               left: `${col}%`,
               top: `${i * 5}%`,

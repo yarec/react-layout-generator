@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.16% </span>
+        <span class="strong">79.27% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>300/379</span>
+        <span class='fraction'>302/381</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75.73% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>234/309</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.24% </span>
+        <span class="strong">88.89% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>15/17</span>
+        <span class='fraction'>16/18</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.16% </span>
+        <span class="strong">79.27% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>300/379</span>
+        <span class='fraction'>302/381</span>
       </div>
     </div>
   </div>
@@ -976,7 +976,8 @@
 931
 932
 933
-934</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+934
+935</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1117,15 +1118,8 @@
 <span class="cline-any cline-yes">401x</span>
 <span class="cline-any cline-yes">401x</span>
 <span class="cline-any cline-yes">43x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-yes">43x</span>
-<span class="cline-any cline-yes">43x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">37x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1136,6 +1130,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">102x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1914,31 +1916,31 @@ import { ISize, IRect, Unit, IPoint, IOrigin } from '../types'
 &nbsp;
 /**
  * Returns the connect point for the given rect and origin in local
- * decimal coordinates. 
+ * decimal coordinates.
  */
 export function <span class="fstat-no" title="function not covered" >connectPoint(</span>r: IRect, origin: IOrigin) {
 <span class="cstat-no" title="statement not covered" >  return { x: r.x + r.width * origin.x, y: r.y + r.height * origin.y }</span>
 }
 /**
- * Shifts the topLeft of the rect up and to the left. 
+ * Shifts the topLeft of the rect up and to the left.
  * If the origin is (50,50) then the top left is
- * (p.x - .50 * p.width, p.y - .50 * p.height). The rect 
+ * (p.x - .50 * p.width, p.y - .50 * p.height). The rect
  * is now centered. Origin must be in decimal units.
- * 
- * 
+ *
+ *
  *
  * ```
  *  x----------------
  *  |               |
- *  |       o----------------      
+ *  |       o----------------
  *  |       |               |
  *  --------|               |
  *          |               |
- *          ----------------   
+ *          ----------------
  *  o: original rect
  *  x: shifted rect
  * ```
- * 
+ *
  * See [toOrigin](globals.html#toorigin)
  */
 export function fromOrigin(r: IRect, origin: IPoint | undefined): IRect {
@@ -1955,21 +1957,21 @@ export function fromOrigin(r: IRect, origin: IPoint | undefined): IRect {
 &nbsp;
 /**
  * Shifts the rect down and to the right. If the origin is (50,50), then the topLeft
- * of the rect is now (p.x + .50 * p.width, p.y + .50 * p.height). Origin must be 
+ * of the rect is now (p.x + .50 * p.width, p.y + .50 * p.height). Origin must be
  * in decimal units corresponding to percents.
  *
  * ```
  *  o----------------
  *  |               |
- *  |       x----------------      
+ *  |       x----------------
  *  |       |               |
  *  --------|               |
  *          |               |
- *          ----------------   
+ *          ----------------
  *  o: original rect
  *  x: shifted rect
  * ```
- * 
+ *
  * See [fromOrigin](globals.html#fromorigin)
  */
 export function toOrigin(p: IRect, origin: IPoint | undefined): IRect {
@@ -2050,15 +2052,8 @@ export function convertInputBlockRect(arg: IExRect): IBlockRect {
       <span class="missing-if-branch" title="else path not taken" >E</span>if (v !== undefined) {
         if (typeof v === 'string') {
           const unit = toUnit(v)
-&nbsp;
           <span class="missing-if-branch" title="else path not taken" >E</span>if (unit) {
-            const value = parseFloat(v)
-            if (unit === Unit.pixel || unit === Unit.unmanaged) {
-              // Convert to decimal
-              internal[k] = value
-            } else {
-              internal[k] = value * 0.01
-            }
+            internal[k] = parseUnitValue(v, unit);
             internal[`${k}Unit`] = unit
           }
         } else {
@@ -2071,8 +2066,16 @@ export function convertInputBlockRect(arg: IExRect): IBlockRect {
   return internal
 }
 &nbsp;
+export function parseUnitValue(v: string, unit: Unit) {
+  let value = parseFloat(v);
+  if (unit === Unit.pixel || unit === Unit.unmanaged) {
+    return value;
+  }
+  return value * 0.01;
+}
+&nbsp;
 /**
- * toUnit parses a string for an unit.
+ * toUnit parses a string for an unit. Returns a Unit.
  * @param data
  */
 export function toUnit(data: string) {
@@ -2848,7 +2851,7 @@ export function toYPixel(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 17 2019 22:02:36 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Feb 19 2019 05:28:28 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

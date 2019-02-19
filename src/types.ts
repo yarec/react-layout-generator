@@ -85,11 +85,11 @@ export enum OverflowOptions {
  *
  * IOrigin is expressed in percent of the width and height of
  * an element. An origin of (0, 0) specifies the left top
- * position of the element. An origin of (50,50) specifies
+ * position of the element. An origin of (.50,.50) specifies
  * the center of the element.
  *
- * Generally origins are between 0 and 100 for each axis, but values
- * outside of the 0 to 100 range are allowed. (This will also be useful
+ * Generally origins are between 0 and 1 for each axis, but values
+ * outside of the 0 to 1 range are allowed. (This will also be useful
  * when other transformations are used other than just translation.
  *
  *  ```
@@ -98,22 +98,22 @@ export enum OverflowOptions {
  *     │       │
  *     └───────┘
  *
- * origin: {X: 100, y: 100} - right bottom
+ * origin: {X: 1, y: 1} - right bottom
  *     ┌───────┐
  *     │       │
  *     └───────o
  *
- * origin: (x: 100, y: 0) - right top
+ * origin: (x: 1, y: 0) - right top
  *     ┌───────o
  *     │       │
  *     └───────┘
  *
- *  origin: (x: 50, y: 50) - center center
+ *  origin: (x: .50, y: .50) - center center
  *     ┌───────┐
  *     │   o   │
  *     └───────┘
  *
- *  origin: (x: -20, y: 50) - (-20) center, outside of block
+ *  origin: (x: -.20, y: .50) - (-.20) center, outside of block
  *     ┌───────┐
  *  o  │       │
  *     └───────┘

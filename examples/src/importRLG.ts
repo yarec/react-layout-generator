@@ -91,8 +91,7 @@ export { IEditableTextData, Params, ParamValue } from '../../src/components/Para
 //   Panel,
 //   rowsGenerator,
 //   saveToLocalStorage,  
-//   Status,
-//   toPixel,  
+//   Status, 
 //   Unit,
 //   updateParamLocation
 // } from 'react-layout-generator'

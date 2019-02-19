@@ -143,7 +143,7 @@ export default class Grid extends React.Component<
         <Panel
           data-layout={{
             name: 'square (pixel, pixel)',
-            origin: {x: -150, y: 0},
+            origin: {x: -1.50, y: 0},
             location: { left: 200, top: 50, width: 200, height: 200 },
             layer: 1
           }}

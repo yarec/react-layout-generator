@@ -156,7 +156,7 @@ export default class Solitaire extends React.Component<
           data-layout={{
             name: 'New Game',
 
-            origin: { x: 50, y: 50 },
+            origin: { x: .50, y: .50 },
             location: { left: '50%', top: '90%', width: 90, height: 24 },
             layer: -1
           }}

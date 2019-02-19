@@ -250,8 +250,8 @@ export class Block {
     this.validate(p)
     this._origin = { x: 0, y: 0 }
     if (p.origin) {
-      this._origin.x = p.origin.x * 0.01
-      this._origin.y = p.origin.y * 0.01
+      this._origin.x = p.origin.x
+      this._origin.y = p.origin.y
     }
 
     this._blockRect = convertInputBlockRect(p.location)

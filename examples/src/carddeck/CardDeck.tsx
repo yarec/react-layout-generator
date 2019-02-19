@@ -106,7 +106,7 @@ export default class CardDeck extends React.Component<
             key={'shuffle'}
             data-layout={{
               name: 'shuffle',
-              origin: { x: 100, y: 0 },
+              origin: { x: 1, y: 0 },
               location: { left: '90%', top: '80%', width: 100, height: 24 },
               editor: {
                 selectable: false,
@@ -123,7 +123,7 @@ export default class CardDeck extends React.Component<
           data-layout={{
             name: 'instructions',
 
-            origin: { x: 100, y: 0 },
+            origin: { x: 1, y: 0 },
             location: { left: '90%', top: '10%', width: 200, height: '350u' },
             editor: {
               selectable: false,

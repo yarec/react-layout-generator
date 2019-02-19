@@ -75,32 +75,32 @@
 					</div>
 					<p>IOrigin is expressed in percent of the width and height of
 						an element. An origin of (0, 0) specifies the left top
-						position of the element. An origin of (50,50) specifies
+						position of the element. An origin of (.50,.50) specifies
 					the center of the element.</p>
-					<p>Generally origins are between 0 and 100 for each axis, but values
-						outside of the 0 to 100 range are allowed. (This will also be useful
+					<p>Generally origins are between 0 and 1 for each axis, but values
+						outside of the 0 to 1 range are allowed. (This will also be useful
 					when other transformations are used other than just translation.</p>
 					<pre><code><span class="hljs-attribute">origin</span>: (<span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>) - left top, the default
     o───────┐
     │       │
     └───────┘
 
-<span class="hljs-attribute">origin</span>: {<span class="hljs-attribute">X</span>: <span class="hljs-number">100</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">100</span>} <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">right</span> <span class="hljs-selector-tag">bottom</span>
+<span class="hljs-attribute">origin</span>: {<span class="hljs-attribute">X</span>: <span class="hljs-number">1</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">1</span>} <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">right</span> <span class="hljs-selector-tag">bottom</span>
     ┌───────┐
     │       │
     └───────<span class="hljs-selector-tag">o</span>
 
-<span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: <span class="hljs-number">100</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>) <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">right</span> <span class="hljs-selector-tag">top</span>
+<span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: <span class="hljs-number">1</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>) <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">right</span> <span class="hljs-selector-tag">top</span>
     ┌───────<span class="hljs-selector-tag">o</span>
     │       │
     └───────┘
 
- <span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: <span class="hljs-number">50</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">50</span>) <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">center</span> <span class="hljs-selector-tag">center</span>
+ <span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: .<span class="hljs-number">50</span>, <span class="hljs-attribute">y</span>: .<span class="hljs-number">50</span>) <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">center</span> <span class="hljs-selector-tag">center</span>
     ┌───────┐
     │   <span class="hljs-selector-tag">o</span>   │
     └───────┘
 
- <span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: -<span class="hljs-number">20</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">50</span>) <span class="hljs-selector-tag">-</span> (-<span class="hljs-number">20</span>) <span class="hljs-selector-tag">center</span>, <span class="hljs-selector-tag">outside</span> <span class="hljs-selector-tag">of</span> <span class="hljs-selector-tag">block</span>
+ <span class="hljs-selector-tag">origin</span>: (<span class="hljs-attribute">x</span>: -.<span class="hljs-number">20</span>, <span class="hljs-attribute">y</span>: .<span class="hljs-number">50</span>) <span class="hljs-selector-tag">-</span> (-.<span class="hljs-number">20</span>) <span class="hljs-selector-tag">center</span>, <span class="hljs-selector-tag">outside</span> <span class="hljs-selector-tag">of</span> <span class="hljs-selector-tag">block</span>
     ┌───────┐
  <span class="hljs-selector-tag">o</span>  │       │
     └───────┘
@@ -137,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/types.ts#L124">types.ts:124</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/types.ts#L124">types.ts:124</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -147,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/0f3eb5e/src/types.ts#L125">types.ts:125</a></li>
+							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/types.ts#L125">types.ts:125</a></li>
 						</ul>
 					</aside>
 				</section>

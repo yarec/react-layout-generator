@@ -1,4 +1,4 @@
-# React Layout Generator 0.5.1-alpha.2
+# React Layout Generator 0.5.3-alpha.2
 
 _React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly._
 
@@ -177,7 +177,7 @@ If you have more than one child you will need to use a [React Fragment](https://
 
 ### Responsive Layout
 
-### Responsive Desktop Layout
+### Desktop Layout
 
 RLG provides a number of features to help make layouts responsive.
 
@@ -220,8 +220,7 @@ An example of a responsive generator is defined by the [desktopGenerator](global
 
 RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. You can also specify negative values for Layers. These are used as control layers that set on top any services activated.
 
-Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if
-[encapsulation](interfaces/ilayeroptions.html) is on in layers.
+Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer's stacking context if [encapsulation](interfaces/ilayeroptions.html) is on in layers.
 
 Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.
 
@@ -238,7 +237,7 @@ To specify the layer of a block and all its content add the layer property to it
 >
 ```
 
-To manage the layers add a [layers](interfaces/ilayeroptions.html) property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.
+To manage the layers add an optional [layers](interfaces/ilayeroptions.html) property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3.
 
 ```ts
 <Layout
@@ -251,10 +250,6 @@ To manage the layers add a [layers](interfaces/ilayeroptions.html) property in L
         // hide layer 3
         return undefined
       }
-      if (layer > 4) {
-        // combine all layers greater than 5
-        return 5
-      }
       return layer
     }
   }}
@@ -263,7 +258,21 @@ To manage the layers add a [layers](interfaces/ilayeroptions.html) property in L
 
 To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator#generator). Other animations can be running on other layers or even on the same layer (see [rollHook](globals.html#rollHook).
 
-The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers.
+Layers are numbered from 0 to N. You can also specify negative number for layer. All negative layers will be grouped into a control layer that sets on top of all other layers including the service layer. If you do not put controls in the control layer they will not work if a service layer is activated.
+
+### Placement
+
+RLG is all about computing position and size of blocks using the 'natural' coordinate of a block which is the left top corner of a block. However that is not alway how we would like to think about the position of a block. What if we want to right align blocks, center blocks, or distribute blocks in a regular pattern? To support this we introduce the concept of placement. Placement is an adjustment that is applied after the position is computed. Placement uses a decimal (think percent) from the left top of the block.
+
+To set the placement for a block just add an origin property to data-layout. 
+
+For example, to center a block at its position we need to shift the left top to the left and to the top by 50% of the width and height of the block. So placement becomes a vector {x: .5, y: .5}. We can also think of this as the origin of the position.
+
+To right align blocks set the placement to {x: 1, y: 0} and then set the x values of all the blocks to the same value. Variation include any value for y. Set y to 0 to use the (right, top) corner of the block as the origin. Set y to 1 to use the (right, bottom) corner of the block as the origin.
+
+Values of placement can be negative and include values greater than 1.
+
+Placement can be combined with parametric equations for distribution to present complex layouts. Parametric equations can be used to arrange blocks along a line, around a circle, rectangle, or along a path.
 
 ### Drag and Drop
 
@@ -527,13 +536,13 @@ First way:
 ```ts
 data-layout={{
   name: 'block 1',
-  origin: {x: 100, y: 0},
+  origin: {x: 1, y: 0},
   location: { left: '90%', top: '10%', width: 200, height: '350u' }
 }}
 
 data-layout={{
   name: 'block 2',
-  origin: {x: 100, top: 0},
+  origin: {x: 1, top: 0},
   location: { left: '90%', top: '10%', width: 200, height: 350 }
 }}
 

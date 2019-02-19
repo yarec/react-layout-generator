@@ -1,6 +1,12 @@
 # Changes
 
-## Release 0.5.1-alpha.x+xxxx
+## Release 0.5.3-alpha.2
+
+1. Changed specification of origin to decimal rather than percent. The normal range of origin is now 0 to 1 rather than 0 to 100.
+
+## Release 0.5.2-alpha.2
+
+## Release 0.5.1-alpha.2+xxxx
 
 1. Fixed Drag and drop collision bug on small screens.
 

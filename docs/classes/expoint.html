@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IAlign | react-layout-generator</title>
+	<title>ExPoint | react-layout-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,45 +56,21 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ialign.html">IAlign</a>
+					<a href="expoint.html">ExPoint</a>
 				</li>
 			</ul>
-			<h1>Interface IAlign</h1>
+			<h1>Class ExPoint</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The purpose of this interface is to allow specification of links between blocks. It lets
-							you link &#39;this&#39; block (called &#39;self&#39;) to &#39;source&#39; block by name and offset. The link means that the &#39;this&#39;
-						block&#39;s location is computed based on the location and size of the &#39;source&#39; block.</p>
-					</div>
-					<pre><code>┌────────┐
-│ <span class="hljs-selector-tag">source</span> │
-└────────<span class="hljs-selector-tag">o</span>  (<span class="hljs-attribute">X</span>: <span class="hljs-number">100</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">100</span>)
-         │
-         │
-         └─&gt; <span class="hljs-selector-tag">t</span>──────┐ (<span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>)
-             │ <span class="hljs-selector-tag">self</span> │
-             └──────┘</code></pre><p>In the diagram above &#39;self&#39; block is linked to &#39;source&#39; block
-					with the offset from &#39;o&#39; to &#39;t&#39;.</p>
-					<pre><code class="language-ts"> align: {
-   key: <span class="hljs-string">'source'</span>
-   offset: {x: <span class="hljs-number">20</span>, y: <span class="hljs-number">30</span>}
-   source: {x: <span class="hljs-number">100</span>, y: <span class="hljs-number">100</span>}
-   self: {x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>}
- }</code></pre>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IAlign</span>
+						<span class="target">ExPoint</span>
 					</li>
 				</ul>
 			</section>
@@ -103,86 +79,94 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#key" class="tsd-kind-icon">key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#offset" class="tsd-kind-icon">offset</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#self" class="tsd-kind-icon">self</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ialign.html#source" class="tsd-kind-icon">source</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="expoint.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expoint.html#getpoint" class="tsd-kind-icon">get<wbr>Point</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expoint.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="key" class="tsd-anchor"></a>
-					<h3>key</h3>
-					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L194">components/blockTypes.ts:194</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This is the name of &#39;source&#39; Block (same as the name in data-layout={name: &#39;someName&#39;, ...)</p>
-						</div>
-					</div>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>ExPoint<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/iexpoint.html" class="tsd-signature-type">IExPoint</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="expoint.html" class="tsd-signature-type">ExPoint</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in distributions/pointUtils.ts:27</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/iexpoint.html" class="tsd-signature-type">IExPoint</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="expoint.html" class="tsd-signature-type">ExPoint</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="offset" class="tsd-anchor"></a>
-					<h3>offset</h3>
-					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L205">components/blockTypes.ts:205</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Offset describes the x offset and y offset from the
-								handle on &#39;source&#39;&#39; block to the handle on &#39;self&#39; block.
-								It goes from the connection handle on the &#39;source&#39; block to
-								the connection handle on &#39;self&#39; block so if the &#39;source&#39; block
-							moves the &#39;self&#39; block also moves.</p>
-						</div>
-						<p>Note that align can be used to place &#39;self&#39; block over/behind
-						&#39;source&#39; block.</p>
-					</div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getpoint" class="tsd-anchor"></a>
+					<h3>get<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Point<span class="tsd-signature-symbol">(</span>bounds<span class="tsd-signature-symbol">: </span><a href="../interfaces/ibounds.html" class="tsd-signature-type">IBounds</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ipoint.html" class="tsd-signature-type">IPoint</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in distributions/pointUtils.ts:33</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bounds: <a href="../interfaces/ibounds.html" class="tsd-signature-type">IBounds</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/ipoint.html" class="tsd-signature-type">IPoint</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="self" class="tsd-anchor"></a>
-					<h3>self</h3>
-					<div class="tsd-signature tsd-kind-icon">self<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L215">components/blockTypes.ts:215</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This defines the location of the connection handle on &#39;self&#39;&#39; block.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="source" class="tsd-anchor"></a>
-					<h3>source</h3>
-					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/ad68ede/src/components/blockTypes.ts#L211">components/blockTypes.ts:211</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This defines the location of the connection handle on the &#39;source&#39; block.
-								The units are in percent of the block size starting at the left top of the
-							block.</p>
-						</div>
-					</div>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="update" class="tsd-anchor"></a>
+					<h3>update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>pt<span class="tsd-signature-symbol">: </span><a href="../interfaces/iexpoint.html" class="tsd-signature-type">IExPoint</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in distributions/pointUtils.ts:37</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pt: <a href="../interfaces/iexpoint.html" class="tsd-signature-type">IExPoint</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -198,20 +182,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="ialign.html" class="tsd-kind-icon">IAlign</a>
+					<li class="current tsd-kind-class">
+						<a href="expoint.html" class="tsd-kind-icon">Ex<wbr>Point</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#key" class="tsd-kind-icon">key</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="expoint.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#offset" class="tsd-kind-icon">offset</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="expoint.html#getpoint" class="tsd-kind-icon">get<wbr>Point</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#self" class="tsd-kind-icon">self</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ialign.html#source" class="tsd-kind-icon">source</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="expoint.html#update" class="tsd-kind-icon">update</a>
 							</li>
 						</ul>
 					</li>

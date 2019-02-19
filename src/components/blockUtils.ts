@@ -139,15 +139,8 @@ export function convertInputBlockRect(arg: IExRect): IBlockRect {
       if (v !== undefined) {
         if (typeof v === 'string') {
           const unit = toUnit(v)
-
           if (unit) {
-            const value = parseFloat(v)
-            if (unit === Unit.pixel || unit === Unit.unmanaged) {
-              // Convert to decimal
-              internal[k] = value
-            } else {
-              internal[k] = value * 0.01
-            }
+            internal[k] = parseUnitValue(v, unit)
             internal[`${k}Unit`] = unit
           }
         } else {
@@ -160,8 +153,16 @@ export function convertInputBlockRect(arg: IExRect): IBlockRect {
   return internal
 }
 
+export function parseUnitValue(v: string, unit: Unit) {
+  let value = parseFloat(v)
+  if (unit === Unit.pixel || unit === Unit.unmanaged) {
+    return value
+  }
+  return value * 0.01
+}
+
 /**
- * toUnit parses a string for an unit.
+ * toUnit parses a string for an unit. Returns a Unit.
  * @param data
  */
 export function toUnit(data: string) {

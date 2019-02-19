@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">5% </span>
+        <span class="strong">8.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>1/20</span>
+        <span class='fraction'>2/24</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>0/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">5% </span>
+        <span class="strong">8.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>1/20</span>
+        <span class='fraction'>2/24</span>
       </div>
     </div>
   </div>
@@ -140,7 +140,40 @@
 95
 96
 97
-98</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,6 +212,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -188,19 +240,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,6 +250,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -241,23 +281,24 @@
 import { IGenerator } from '../Generator'
 import { IPoint, ISize, IOrigin } from '../../types'
 import { fnHook } from '../../components/Hooks'
+import { fromOrigin } from '../../components/blockUtils';
 &nbsp;
 /**
  * This is an optional hook that can be used to animate a vector of blocks.
  * It will render as a an animation with the blocks in an infinite loop until
- * the animation is stopped. When a block is moved outside of the container 
+ * the animation is stopped. When a block is moved outside of the container
  * it will be placed at the beginning of the vector.
- * 
- * The following is an example of a vertical vector with blocks distributed 
- * on it. The center of each block is `spacing` distance from the previous 
- * and following block. The velocity is {x: 0, y: .1} ~ 6 pixels per second 
- * downward. 
+ *
+ * The following is an example of a vertical vector with blocks distributed
+ * on it. The center of each block is `spacing` distance from the previous
+ * and following block. The velocity is {x: 0, y: .1} ~ 6 pixels per second
+ * downward.
  * ```
  * container with handle set to {x: 50, y: 0}
  * ┌─────────────────x─────────────────┐
  * │                 │                 │
  * │               ┌─│─┐               │
- * │               │ │ │               │    
+ * │               │ │ │               │
  * │               └─│─┘               │
  * │                 │                 │
  * │               ┌─│─┐               │
@@ -269,30 +310,48 @@ import { fnHook } from '../../components/Hooks'
  *
  * @params Prefix is used to specify unique keys in Params. This can be used
  * for persisting state in [[Params]].
- * @params Layer is the mapped number of the layer. 
- * @params Velocity is the speed of the animation in pixels per frame.
+ * @params Layer is the mapped number of the layer.
+ * @params Velocity is the speed of the animation in pixels per second.
  * @params Handle is a point within the block that the vector will pass through.
  * Note that it is the starting point for distributing the blocks on the vector.
+ * @params Placement is where each block will be placed. To center the placement use
+ * {x: .5, y: .5}.
  * @params Spacing the distance between centered blocks on the vector.
  */
-export function <span class="fstat-no" title="function not covered" >vectorHook(</span>
+export interface IVectorHook {
   prefix: string,
   layer: number,
   velocity: IPoint,
   handle: IOrigin,
+  placement: IOrigin,
   spacing: number,
   g: IGenerator
-): fnHook {
+}
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  g.params().set(`${prefix}init`, 0)</span>
-  
-  function <span class="fstat-no" title="function not covered" >x(</span>t: number, size: ISize) {
-<span class="cstat-no" title="statement not covered" >    return handle.x * size.width + t * velocity.x </span>
+export function <span class="fstat-no" title="function not covered" >vectorHook(</span>args: IVectorHook): fnHook {
+<span class="cstat-no" title="statement not covered" >  args.g.params().set(`${args.prefix}init`, 0)</span>
+&nbsp;
+  const m = <span class="cstat-no" title="statement not covered" >Math.sqrt(Math.pow(args.velocity.x, 2) + Math.pow(args.velocity.y, 2))</span>
+&nbsp;
+  function <span class="fstat-no" title="function not covered" >xL(</span>d: number, size: ISize) {
+    const px = <span class="cstat-no" title="statement not covered" >args.handle.x * size.width</span>
+<span class="cstat-no" title="statement not covered" >    return px + d * args.velocity.x/m</span>
   }
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >y(</span>t: number, size: ISize) {
-<span class="cstat-no" title="statement not covered" >    return handle.y * size.height + t * velocity.y </span>
+  function <span class="fstat-no" title="function not covered" >yL(</span>d: number, size: ISize) {
+    const py = <span class="cstat-no" title="statement not covered" >args.handle.y * size.height</span>
+<span class="cstat-no" title="statement not covered" >    return py + d * args.velocity.y/m</span>
   }
+&nbsp;
+  // function deltaX(d: number, size: ISize) {
+  //   const px = args.handle.x * size.width
+  //   return px + d * args.velocity.x/m
+  // }
+&nbsp;
+  // function deltaY(d: number, size: ISize) {
+  //   const py = args.handle.y * size.height
+  //   return py + d * args.velocity.y/m
+  // }
 &nbsp;
   // const v = Math.pow(velocity.x, 2) + Math.pow(velocity.y, 2)
   // const deltaVelocity = Math.sqrt(v)
@@ -304,21 +363,22 @@ export function <span class="fstat-no" title="function not covered" >vectorHook(
     // const deltaTime = params.get('deltaTime') as number
     // const animate = params.get('animate') as number
     const containersize = <span class="cstat-no" title="statement not covered" >params.get('containersize') as ISize</span>
-    const init = <span class="cstat-no" title="statement not covered" >params.get(`${prefix}init`)</span>
+    const init = <span class="cstat-no" title="statement not covered" >params.get(`${args.prefix}init`)</span>
 &nbsp;
-    let list: Block[] = <span class="cstat-no" title="statement not covered" >blocks.layers(layer)</span>
+    let list: Block[] = <span class="cstat-no" title="statement not covered" >blocks.layers(args.layer)</span>
 <span class="cstat-no" title="statement not covered" >    if (!init &amp;&amp; list.length) {</span>
-<span class="cstat-no" title="statement not covered" >      list = blocks.layers(layer)</span>
-      // Distribute on vector
+      // One time initialization
+<span class="cstat-no" title="statement not covered" >      list = blocks.layers(args.layer)</span>
+      // Distribute blocks on vector
       let offset = <span class="cstat-no" title="statement not covered" >0</span>
-<span class="cstat-no" title="statement not covered" >      list.forEach(<span class="fstat-no" title="function not covered" >(</span>block) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      list.forEach(<span class="fstat-no" title="function not covered" >block =&gt; {</span></span>
         const r = <span class="cstat-no" title="statement not covered" >block.rect</span>
-<span class="cstat-no" title="statement not covered" >        r.x = x(offset, containersize)</span>
-<span class="cstat-no" title="statement not covered" >        r.y = y(offset, containersize) </span>
-<span class="cstat-no" title="statement not covered" >        block.update(r)</span>
-<span class="cstat-no" title="statement not covered" >        offset += spacing</span>
+<span class="cstat-no" title="statement not covered" >        r.x = xL(offset, containersize)</span>
+<span class="cstat-no" title="statement not covered" >        r.y = yL(offset, containersize)</span>
+<span class="cstat-no" title="statement not covered" >        block.update(fromOrigin(r, args.placement))</span>
+<span class="cstat-no" title="statement not covered" >        offset += args.spacing</span>
       })
-<span class="cstat-no" title="statement not covered" >      params.set(`${prefix}init`, 1)</span>
+<span class="cstat-no" title="statement not covered" >      params.set(`${args.prefix}init`, 1)</span>
     }
 &nbsp;
     // if (containersize.width &amp;&amp; containersize.height) {
@@ -340,7 +400,7 @@ export function <span class="fstat-no" title="function not covered" >vectorHook(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 17 2019 22:02:36 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Feb 19 2019 05:28:28 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>

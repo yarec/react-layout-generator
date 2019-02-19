@@ -64,7 +64,7 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="react-layout-generator-0-5-1-alpha-2">React Layout Generator 0.5.1-alpha.2</h1>
+				<h1 id="react-layout-generator-0-5-3-alpha-2">React Layout Generator 0.5.3-alpha.2</h1>
 				<p><em>React-layout-generator (RLG) is exploring a layout system that uses React to compute the layouts directly.</em></p>
 				<p>RLG is focused on layout and position and size editing of both html and svg components. Taking direct control of the layout enables precise and continuous control of responsive layouts. You&#39;re no longer limited to just css and the linear flow of elements.</p>
 				<p>A <a href="https://neq1.io/">live demo</a> is available at <a href="https://neq1.io">https://neq1.io</a>. Source is available at <a href="https://github.com/chetmurphy/react-layout-generator/">Github</a> under the MIT license.</p>
@@ -184,7 +184,7 @@
   )}
 &lt;<span class="hljs-regexp">/Panel&gt;</span></code></pre>
 				<h3 id="responsive-layout">Responsive Layout</h3>
-				<h3 id="responsive-desktop-layout">Responsive Desktop Layout</h3>
+				<h3 id="desktop-layout">Desktop Layout</h3>
 				<p>RLG provides a number of features to help make layouts responsive.</p>
 				<p>On approach is to define all the elements in a generator as a function of the containersize.</p>
 				<p>An example of a responsive generator is defined by the <a href="globals.html#desktopgenerator">desktopGenerator</a>. This generator defines a classical desktop layout consisting of a title, left side panel, header, right side panel, content, and footer. It has a built-in editor to adjust the layout. All the parts are configurable in size and optional. It also can be configured to use full header and footer if desired. It can used like this:</p>
@@ -218,8 +218,7 @@
 &lt;/Layout&gt;</code></pre>
 				<h3 id="layers">Layers</h3>
 				<p>RLG has its own implementation of layers. You can merge, reorder, and hide layers. Layers are arranged in numerical order starting with 0. You can also specify negative values for Layers. These are used as control layers that set on top any services activated.</p>
-				<p>Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer&#39;s stacking context if
-				<a href="interfaces/ilayeroptions.html">encapsulation</a> is on in layers.</p>
+				<p>Note: Layers are NOT related to z-index even though they can achieve similar effects. Layers allows application level grouping of components that are arranged from back to front. Z-index (zIndex) can be used within a layer to arrange elements in the layer&#39;s stacking context if <a href="interfaces/ilayeroptions.html">encapsulation</a> is on in layers.</p>
 				<p>Layers can be used for animations, to hide or show overlays, to visually filter layers (using a semitransparent layer), and in combination with services such as drag and drop, and editing.</p>
 				<p>To specify the layer of a block and all its content add the layer property to its data-layout.</p>
 				<pre><code class="language-ts">&lt;div
@@ -230,7 +229,7 @@
     layer: <span class="hljs-number">2</span>
   }}
 &gt;</code></pre>
-				<p>To manage the layers add a <a href="interfaces/ilayeroptions.html">layers</a> property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3 and merges all layers greater than 4.</p>
+				<p>To manage the layers add an optional <a href="interfaces/ilayeroptions.html">layers</a> property in Layout. It consists of a flag encapsulate and a mapper function that takes the layer specified in a block and maps it to the layers that will be rendered. The default mapper just maps the layers in numerical order. Here is an example of mapper function that hides layer 3.</p>
 				<pre><code class="language-ts">&lt;Layout
   name=<span class="hljs-string">'name'</span>
   ...
@@ -241,16 +240,19 @@
         <span class="hljs-comment">// hide layer 3</span>
         <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>
       }
-      <span class="hljs-keyword">if</span> (layer &gt; <span class="hljs-number">4</span>) {
-        <span class="hljs-comment">// combine all layers greater than 5</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>
-      }
       <span class="hljs-keyword">return</span> layer
     }
   }}
   ...</code></pre>
 				<p>To animate a layer you just collect all the blocks that will participate in the layer animation in a [generator#generator). Other animations can be running on other layers or even on the same layer (see <a href="globals.html#rollHook">rollHook</a>.</p>
-				<p>The reason for having a control layer is that services manage the interactions of lower layers so that event handling will not directly work on these layers, but they will work as normal on the control layer since it is on top of all of the other layers.</p>
+				<p>Layers are numbered from 0 to N. You can also specify negative number for layer. All negative layers will be grouped into a control layer that sets on top of all other layers including the service layer. If you do not put controls in the control layer they will not work if a service layer is activated.</p>
+				<h3 id="placement">Placement</h3>
+				<p>RLG is all about computing position and size of blocks using the &#39;natural&#39; coordinate of a block which is the left top corner of a block. However that is not alway how we would like to think about the position of a block. What if we want to right align blocks, center blocks, or distribute blocks in a regular pattern? To support this we introduce the concept of placement. Placement is an adjustment that is applied after the position is computed. Placement uses a decimal (think percent) from the left top of the block.</p>
+				<p>To set the placement for a block just add an origin property to data-layout. </p>
+				<p>For example, to center a block at its position we need to shift the left top to the left and to the top by 50% of the width and height of the block. So placement becomes a vector {x: .5, y: .5}. We can also think of this as the origin of the position.</p>
+				<p>To right align blocks set the placement to {x: 1, y: 0} and then set the x values of all the blocks to the same value. Variation include any value for y. Set y to 0 to use the (right, top) corner of the block as the origin. Set y to 1 to use the (right, bottom) corner of the block as the origin.</p>
+				<p>Values of placement can be negative and include values greater than 1.</p>
+				<p>Placement can be combined with parametric equations for distribution to present complex layouts. Parametric equations can be used to arrange blocks along a line, around a circle, rectangle, or along a path.</p>
 				<h3 id="drag-and-drop">Drag and Drop</h3>
 				<p>Drag and drop allows you to drag items from one container to another container within a Layout. To activate drag and drop, add the ServiceOptions.dnd to the service property of Layout:</p>
 				<pre><code class="language-ts">      &lt;Layout
@@ -441,13 +443,13 @@
 				<p>First way:</p>
 				<pre><code class="language-ts">data-layout={{
   name: <span class="hljs-string">'block 1'</span>,
-  origin: {x: <span class="hljs-number">100</span>, y: <span class="hljs-number">0</span>},
+  origin: {x: <span class="hljs-number">1</span>, y: <span class="hljs-number">0</span>},
   location: { left: <span class="hljs-string">'90%'</span>, top: <span class="hljs-string">'10%'</span>, width: <span class="hljs-number">200</span>, height: <span class="hljs-string">'350u'</span> }
 }}
 
 data-layout={{
   name: <span class="hljs-string">'block 2'</span>,
-  origin: {x: <span class="hljs-number">100</span>, top: <span class="hljs-number">0</span>},
+  origin: {x: <span class="hljs-number">1</span>, top: <span class="hljs-number">0</span>},
   location: { left: <span class="hljs-string">'90%'</span>, top: <span class="hljs-string">'10%'</span>, width: <span class="hljs-number">200</span>, height: <span class="hljs-number">350</span> }
 }}
 </code></pre>
@@ -565,6 +567,9 @@ data-layout={{
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/edithelper.html" class="tsd-kind-icon">Edit<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/expoint.html" class="tsd-kind-icon">Ex<wbr>Point</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/generator.html" class="tsd-kind-icon">Generator</a>
@@ -713,6 +718,9 @@ data-layout={{
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/iskew.html" class="tsd-kind-icon">ISkew</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ivectorhook.html" class="tsd-kind-icon">IVector<wbr>Hook</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#create" class="tsd-kind-icon">Create</a>
 					</li>
@@ -835,6 +843,9 @@ data-layout={{
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#namedunit" class="tsd-kind-icon">named<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parseunitvalue" class="tsd-kind-icon">parse<wbr>Unit<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#rectpoint" class="tsd-kind-icon">rect<wbr>Point</a>

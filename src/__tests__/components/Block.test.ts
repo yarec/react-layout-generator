@@ -196,7 +196,7 @@ it('location #3', () => {
 
 it('location #4', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: '50%', top: '50%', width: 10, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -213,7 +213,7 @@ it('size #1', () => {
 
 it('size #2', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: 0, top: 10, width: 100, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -222,7 +222,7 @@ it('size #2', () => {
 
 it('size #3', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: 50, top: 50, width: 100, height: 100 }
   }
   const l = new Block('test', p, g)
@@ -231,7 +231,7 @@ it('size #3', () => {
 
 it('size #4', () => {
   const p = {
-    // origin: { x: 50, y: 50 },
+    // origin: { x: .50, y: .50 },
     location: { left: 50, top: 50, width: '10%', height: '10%' }
   }
   const l = new Block('test', p, g)
@@ -248,7 +248,7 @@ it('rect #1', () => {
 
 it('rect #2', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: 500, top: 500, width: 100, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -257,7 +257,7 @@ it('rect #2', () => {
 
 it('rect #3', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: '50%', top: '50%', width: 100, height: 10 }
   }
   const l = new Block('test', p, g)
@@ -266,7 +266,7 @@ it('rect #3', () => {
 
 it('rect #4', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: '50%', top: '50%', width: '10%', height: '5%' }
   }
   const l = new Block('test', p, g)
@@ -284,7 +284,7 @@ it('leftTop only #1', () => {
 
 it('leftTop only #2', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: '50%', top: '50%' }
   }
   const l = new Block('test', p, g)
@@ -294,7 +294,7 @@ it('leftTop only #2', () => {
 
 it('update #1', () => {
   const p = {
-    // origin: { x: 50, y: 50 },
+    // origin: { x: .50, y: .50 },
     location: { left: 50, top: 50, width: 50, height: 50 }
   }
   const l = new Block('test', p, g)
@@ -415,18 +415,18 @@ it('misc #2', () => {
 it('transform #1', () => {
   const p: IDataLayout = {
     location: { left: '250%', top: '250%', width: 100, height: 50 },
-    transform: [{ rotate: 10, origin: { x: 50, y: 50 } }]
+    transform: [{ rotate: 10, origin: { x: 0.5, y: 0.5 } }]
   }
   const b = new Block('test', p, g)
 
   expect(b.reactTransform).toEqual(` rotate(${10}deg)`)
-  expect(b.reactTransformOrigin).toEqual(`${50} ${50}`)
+  expect(b.reactTransformOrigin).toEqual(`${0.5} ${0.5}`)
 })
 
 it('local coordinate #1', () => {
   const p = {
     location: { left: 250, top: 150, width: 100, height: 50 },
-    transform: [{ rotate: 10, origin: { x: 50, y: 50 } }]
+    transform: [{ rotate: 10, origin: { x: 0.5, y: 0.5 } }]
   }
   const b = new Block('test', p, g)
 
@@ -438,7 +438,7 @@ it('local coordinate #1', () => {
 
 it('location left top #1', () => {
   const p = {
-    origin: { x: 50, y: 50 },
+    origin: { x: 0.5, y: 0.5 },
     location: { left: '50%', top: '50%', width: 10, height: 10 }
   }
   const l = new Block('test', p, g)

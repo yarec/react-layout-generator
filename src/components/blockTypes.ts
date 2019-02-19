@@ -127,26 +127,6 @@ export interface IDataLayout {
 }
 
 /**
- * This interface defines an input point that can include [units](#Unit). 
- * 
- * The following example specifies a point at the center of the container:
-
- * ```
- *  const p = {
- *    x: '50%',
- *    y: '50%'
- *  }
- * ```
- * 
- * Passing this point to the function [toPixel](#toPixel) will return a 
- * point that is centered in the container.
- */
-export interface IExPoint {
-  x: number | string
-  y: number | string
-}
-
-/**
  * This interface defines the block's location and size. Its behavior
  * is based on css [size-and-position](https://www.w3.org/TR/css-position-3/)
  * rules. The default units are pixels.
