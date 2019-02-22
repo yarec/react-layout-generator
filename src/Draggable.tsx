@@ -22,7 +22,7 @@ export class Draggable extends React.Component<IDraggableProps> {
     }
     this._block = this.props.g.blocks().set(`${this.props.name}`, p, this.props.g)
     if (this._block) {
-      this._block.setHandler(
+      this._block.setData(
         'dragImage',
         this.dragImage
       )

@@ -445,4 +445,20 @@ it('location left top #1', () => {
   expect(l.rect).toEqual({ x: 495, y: 495, width: 10, height: 10 })
 })
 
+it('updatePosition #1', () => {
+  const p = {
+    origin: { x: 0.5, y: 0.5 },
+    location: { left: '50%', top: '50%', width: 10, height: 10 }
+  }
+  const l = new Block('test', p, g)
+  const r = l.rect
+  expect(r).toEqual({ x: 495, y: 495, width: 10, height: 10 })
+
+  r.x += 0.1
+  l.update(r)
+  l.touch()
+  const r1 = l.rect
+  expect(r1.x - r.x).toEqual(0)
+})
+
 // Test align, connection points

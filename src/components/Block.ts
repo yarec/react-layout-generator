@@ -26,15 +26,14 @@ import { getExtendElement } from '../editors/extendElement'
 import { clone } from '../utils'
 
 /**
- * The purpose of Block is to specify the location and size of an element. This, of course,
- * can be done in css and React. The purpose in RLG to support dynamic computation of
- * the location and size of an element.
+ * The purpose of Block is to specify the location and size of an element.
  *
- * There are two ways to manipulate its position and size. The first is a css like
- * [block specification](interfaces/IExRect.html) - left, top, right, bottom, width, and
+ * There are two ways to manipulate a blocks position and size. The first is a css like
+ * [block specification](../interfaces/IExRect.html) - left, top, right, bottom, width, and
  * height all with optional units. The second is just updating its
- * [result rect](classes/block.html#update) in pixels. The two are automatically kept
+ * [result rect](../classes/block.html#update) in pixels. The two are automatically kept
  * in sync.
+ *
  *
  */
 export class Block {
@@ -59,6 +58,18 @@ export class Block {
   private _changed: boolean = true
   private _cached: Rect
 
+  /**
+   * @param name
+   * The name of the block. It must be unique within a [Layout](../classes/layout.html).
+   * @param p
+   * [Options](../interfaces/idatalayout.html) for a blocks behavior. Note that a block can be
+   * defined in a generator function and then referenced by name in JSX. The
+   * [data-layout](../interfaces/idatalayout.html) property is used in both places. If it is
+   * defined in a generator then only the name will be used in JSX. The other properties of
+   * data-layout will not be used.
+   * @param g
+   * The [generator](../classes/generator.html) for this Layout.
+   */
   constructor(name: string, p: IDataLayout, g: IGenerator) {
     // console.log(`initialize Layout ${name}`)
     this._name = name
@@ -69,6 +80,12 @@ export class Block {
     this._cached = new Rect({ x: 0, y: 0, width: 0, height: 0 })
     this._onMouseDown = this.noop
     this._onClick = this.noop
+
+    if (p.location === undefined) {
+      console.log(
+        `property location is missing from data-layout in ${this._name}`
+      )
+    }
 
     this.updatePosition(p)
   }
@@ -89,10 +106,16 @@ export class Block {
     return this._transformOrigin
   }
 
+  /**
+   * The name of the block.
+   */
   public get name() {
     return this._name
   }
 
+  /**
+   * The layer assigned to this block.
+   */
   public get layer() {
     return this._position.layer
   }
@@ -101,11 +124,22 @@ export class Block {
     this._siblings.set(name, true)
   }
 
-  public setHandler(name: string, value: any) {
+  /**
+   * setData sets a value for this block.
+   * setData and getData provide a generic mechanism for storing and getting
+   * extra data or handlers that are associated with this block.
+   * @param name
+   * @param value
+   */
+  public setData(name: string, value: any) {
     this._handlers.set(name, value)
   }
 
-  public getHandler(name: string) {
+  /**
+   * Returns the value set by setData for this block.
+   * @param name
+   */
+  public getData(name: string) {
     return this._handlers.get(name)
   }
   /**
@@ -137,6 +171,16 @@ export class Block {
     return this._zIndex ? this._zIndex : 0
   }
 
+  public set zIndex(value: number) {
+    const params = this._g.params()
+    const zIndex = params.get(`${this._name}ZIndex`) as number
+    if (zIndex) {
+      this._zIndex = zIndex
+    } else {
+      this._zIndex = value ? value : 0
+    }
+  }
+
   get localParent(): Block | undefined {
     return this._localParent
   }
@@ -145,6 +189,10 @@ export class Block {
     this._localParent = parent
   }
 
+  /**
+   * touch sets the block dirty which will force its location and size to be
+   * recomputed.
+   */
   public touch() {
     this.changed()
   }
@@ -228,21 +276,63 @@ export class Block {
     return b
   }
 
+  /**
+   * [rect](../interfaces/irect.html) gets the position and size of the block in pixels.
+   * Use update to change the blocks position and size.
+   */
   public get rect() {
     this.updateRect()
     return this._cached
   }
 
-  public set zIndex(value: number) {
-    const params = this._g.params()
-    const zIndex = params.get(`${this._name}ZIndex`) as number
-    if (zIndex) {
-      this._zIndex = zIndex
+  /**
+   * sets the position and size using a [rect](../interfaces/irect.html) for the block in pixels.
+   * @params r
+   * The value of the [rect](../interfaces/irect.html).
+   */
+  public update = (r: IRect) => {
+    // Takes in world coordinates
+    // console.log(`Position update x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`)
+
+    if (this._align && this.getRef()) {
+      const align = this._align
+      // Get source and self points
+      const ref = this.getRef()
+      if (ref) {
+        const r1 = ref!.rect
+        const p1 = connectPoint(r1, this._align.source)
+
+        // Use updated r
+        const p2 = connectPoint(r, align.self)
+
+        // Compute new offset
+        const offset: IPoint = {
+          x: p2.x - p1.x,
+          y: p2.y - p1.y
+        }
+
+        // Update align offset
+        this._align.offset = offset
+      }
     } else {
-      this._zIndex = value ? value : 0
+      const _r = toOrigin(r, this._origin)
+
+      const containersize = this._g.params().get('containersize') as ISize
+      const viewport = this._g.params().get('viewport') as ISize
+      this._blockRect = inverseLayout(_r, this._blockRect, {
+        container: containersize,
+        viewport: viewport
+      })
     }
+
+    this.changed()
   }
 
+  /**
+   * updatePosition allows a script to update the blocks behavior. Only specified
+   * properties of [data-layout](../interfaces/idatalayout.html) will be changed.
+   * @param p
+   */
   public updatePosition(p: IDataLayout) {
     if (!p) {
       return
@@ -254,7 +344,12 @@ export class Block {
       this._origin.y = p.origin.y
     }
 
-    this._blockRect = convertInputBlockRect(p.location)
+    if (p.location === undefined && this._blockRect === {}) {
+      console.log(`location is a required property for ${this._name}`)
+    }
+    if (p.location) {
+      this._blockRect = convertInputBlockRect(p.location)
+    }
 
     // Convert percents to decimal
     if (p.align) {
@@ -368,47 +463,6 @@ export class Block {
       }
     }
     return []
-  }
-
-  /**
-   * Change the block state
-   */
-  public update = (r: IRect) => {
-    // Takes in world coordinates
-    // console.log(`Position update x: ${r.x} y: ${r.y} width: ${r.width} height: ${r.height}`)
-
-    if (this._align && this.getRef()) {
-      const align = this._align
-      // Get source and self points
-      const ref = this.getRef()
-      if (ref) {
-        const r1 = ref!.rect
-        const p1 = connectPoint(r1, this._align.source)
-
-        // Use updated r
-        const p2 = connectPoint(r, align.self)
-
-        // Compute new offset
-        const offset: IPoint = {
-          x: p2.x - p1.x,
-          y: p2.y - p1.y
-        }
-
-        // Update align offset
-        this._align.offset = offset
-      }
-    } else {
-      const _r = toOrigin(r, this._origin)
-
-      const containersize = this._g.params().get('containersize') as ISize
-      const viewport = this._g.params().get('viewport') as ISize
-      this._blockRect = inverseLayout(_r, this._blockRect, {
-        container: containersize,
-        viewport: viewport
-      })
-    }
-
-    this.changed()
   }
 
   private changed() {

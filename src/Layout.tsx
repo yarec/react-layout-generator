@@ -33,6 +33,7 @@ import {
 } from './types'
 import { DragDropService } from './services/DragDropService'
 import { isUnmanaged } from './components/blockUtils';
+import gViewport from './global/viewport';
 
 const raf = require('raf')
 
@@ -613,6 +614,7 @@ export class Layout extends React.Component<
             const h = r.bottom - r.top
             if (this.state.width != w || this.state.height != h) {
               params.set('containersize', { width: w, height: h })
+              this._g.containersize({ width: w, height: h })
               this.setState({ width: w, height: h })
               cont = false
             }
@@ -655,6 +657,9 @@ export class Layout extends React.Component<
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     this._g.params().set('viewport', {width: w, height: h})
+
+    gViewport.width = w
+    gViewport.height = h
 
     if (this.state.devicePixelRatio !== window.devicePixelRatio) {
       // tslint:disable-next-line:no-bitwise
@@ -714,6 +719,12 @@ export class Layout extends React.Component<
       width: this.state.width,
       height: this.state.height
     })
+
+    this._g.containersize({
+      width: this.state.width,
+      height: this.state.height
+    })
+
     if (v) {
       // Only if containersize has changed
       const blocks = this._g.blocks()

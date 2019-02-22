@@ -264,7 +264,7 @@ Layers are numbered from 0 to N. You can also specify negative number for layer.
 
 RLG is all about computing position and size of blocks using the 'natural' coordinate of a block which is the left top corner of a block. However that is not alway how we would like to think about the position of a block. What if we want to right align blocks, center blocks, or distribute blocks in a regular pattern? To support this we introduce the concept of placement. Placement is an adjustment that is applied after the position is computed. Placement uses a decimal (think percent) from the left top of the block.
 
-To set the placement for a block just add an origin property to data-layout. 
+To set the placement for a block just add an [origin](interaces/iorigin.html) property to data-layout.
 
 For example, to center a block at its position we need to shift the left top to the left and to the top by 50% of the width and height of the block. So placement becomes a vector {x: .5, y: .5}. We can also think of this as the origin of the position.
 

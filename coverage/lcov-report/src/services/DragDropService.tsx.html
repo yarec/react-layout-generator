@@ -1070,7 +1070,7 @@ export class DragDropService
 <span class="cstat-no" title="statement not covered" >    if (dragBlockParent) {</span>
 <span class="cstat-no" title="statement not covered" >      blocks.map.forEach(<span class="fstat-no" title="function not covered" >block =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >        if (</span>
-          block.getHandler('canDrop') &amp;&amp;
+          block.getData('canDrop') &amp;&amp;
           dragBlockParent.name !== block.name
         ) {
 <span class="cstat-no" title="statement not covered" >            if (r.intersect(block.rect)) {</span>
@@ -1206,7 +1206,7 @@ export class DragDropService
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          this._dragBlock = block</span>
 &nbsp;
-          const dragImage = <span class="cstat-no" title="statement not covered" >block.getHandler('dragImage')</span>
+          const dragImage = <span class="cstat-no" title="statement not covered" >block.getData('dragImage')</span>
 <span class="cstat-no" title="statement not covered" >          if (dragImage) {</span>
 <span class="cstat-no" title="statement not covered" >            this._jsx = dragImage(this._dragData)</span>
             // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
@@ -1232,7 +1232,7 @@ export class DragDropService
     // get dragData
     const localParent = <span class="cstat-no" title="statement not covered" >block.localParent</span>
 <span class="cstat-no" title="statement not covered" >    if (localParent) {</span>
-      const dragData = <span class="cstat-no" title="statement not covered" >localParent.getHandler('dragData')</span>
+      const dragData = <span class="cstat-no" title="statement not covered" >localParent.getData('dragData')</span>
 <span class="cstat-no" title="statement not covered" >      if (dragData) {</span>
 <span class="cstat-no" title="statement not covered" >        this._dragData = dragData(block.name)</span>
 <span class="cstat-no" title="statement not covered" >        if (!this._dragData) {</span>
@@ -1249,7 +1249,7 @@ export class DragDropService
 &nbsp;
     // get drag image as JSX
 <span class="cstat-no" title="statement not covered" >    if (localParent) {</span>
-      const dragImage = <span class="cstat-no" title="statement not covered" >localParent.getHandler('dragImage')</span>
+      const dragImage = <span class="cstat-no" title="statement not covered" >localParent.getData('dragImage')</span>
 <span class="cstat-no" title="statement not covered" >      if (dragImage) {</span>
 <span class="cstat-no" title="statement not covered" >        this._jsx = dragImage(this._dragData)</span>
         // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
@@ -1301,12 +1301,12 @@ export class DragDropService
         }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (candidates.length === 1) {</span>
-          const canDrop = <span class="cstat-no" title="statement not covered" >candidates[0].getHandler('canDrop')</span>
+          const canDrop = <span class="cstat-no" title="statement not covered" >candidates[0].getData('canDrop')</span>
 <span class="cstat-no" title="statement not covered" >          if (canDrop &amp;&amp; canDrop(this._dragData)) {</span>
-            const drop = <span class="cstat-no" title="statement not covered" >candidates[0].getHandler('drop')</span>
+            const drop = <span class="cstat-no" title="statement not covered" >candidates[0].getData('drop')</span>
 <span class="cstat-no" title="statement not covered" >            if (drop &amp;&amp; drop(this._dragData)) {</span>
 <span class="cstat-no" title="statement not covered" >              if (this._parentContainer) {</span>
-                const endDrop = <span class="cstat-no" title="statement not covered" >this._parentContainer.getHandler('endDrop')</span>
+                const endDrop = <span class="cstat-no" title="statement not covered" >this._parentContainer.getData('endDrop')</span>
 <span class="cstat-no" title="statement not covered" >                if (endDrop) {</span>
 <span class="cstat-no" title="statement not covered" >                  endDrop(this._dragData)</span>
                 } else {
@@ -1421,7 +1421,7 @@ export class DragDropService
 &nbsp;
       const blocks: Set&lt;Block&gt; = <span class="cstat-no" title="statement not covered" >new Set()</span>
 <span class="cstat-no" title="statement not covered" >      candidates.forEach(<span class="fstat-no" title="function not covered" >(</span>block: Block) =&gt; {</span>
-        const canDrop = <span class="cstat-no" title="statement not covered" >block.getHandler('canDrop')</span>
+        const canDrop = <span class="cstat-no" title="statement not covered" >block.getData('canDrop')</span>
 <span class="cstat-no" title="statement not covered" >        if (canDrop &amp;&amp; canDrop(this._dragData)) {</span>
 <span class="cstat-no" title="statement not covered" >          blocks.add(block)</span>
           // console.log(`can drop ${block.name}`)
@@ -1431,7 +1431,7 @@ export class DragDropService
       let leave = <span class="cstat-no" title="statement not covered" >difference(this._prevDroppable, blocks)</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      leave.forEach(<span class="fstat-no" title="function not covered" >b =&gt; {</span></span>
-        const dragLeave = <span class="cstat-no" title="statement not covered" >b.getHandler('dragLeave')</span>
+        const dragLeave = <span class="cstat-no" title="statement not covered" >b.getData('dragLeave')</span>
 <span class="cstat-no" title="statement not covered" >        if (dragLeave) {</span>
 <span class="cstat-no" title="statement not covered" >          dragLeave()</span>
         }
@@ -1440,7 +1440,7 @@ export class DragDropService
       let enter = <span class="cstat-no" title="statement not covered" >difference(blocks, this._prevDroppable)</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      enter.forEach(<span class="fstat-no" title="function not covered" >b =&gt; {</span></span>
-        const dragEnter = <span class="cstat-no" title="statement not covered" >b.getHandler('dragEnter')</span>
+        const dragEnter = <span class="cstat-no" title="statement not covered" >b.getData('dragEnter')</span>
 <span class="cstat-no" title="statement not covered" >        if (dragEnter) {</span>
 <span class="cstat-no" title="statement not covered" >          dragEnter()</span>
         }
@@ -1474,7 +1474,7 @@ export class DragDropService
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Feb 19 2019 05:28:28 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Feb 21 2019 22:54:49 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

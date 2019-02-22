@@ -53,13 +53,13 @@ export class DragDrop extends React.Component<IDragDropProps> {
     this._block = this.props.g.blocks().get(this.props.name)
 
     if (this._block) {
-      this._block.setHandler('drop', this.props.drop)
-      this._block.setHandler('canDrop', this.props.canDrop)
-      this._block.setHandler('endDrop', this.props.endDrop)
-      this.props.dragData && this._block.setHandler('dragData', this.props.dragData)
-      this.props.dragImage && this._block.setHandler('dragImage', this.props.dragImage)
-      this.props.dragEnter && this._block.setHandler('dragEnter', this.props.dragEnter)
-      this.props.dragLeave && this._block.setHandler('dragLeave', this.props.dragLeave)
+      this._block.setData('drop', this.props.drop)
+      this._block.setData('canDrop', this.props.canDrop)
+      this._block.setData('endDrop', this.props.endDrop)
+      this.props.dragData && this._block.setData('dragData', this.props.dragData)
+      this.props.dragImage && this._block.setData('dragImage', this.props.dragImage)
+      this.props.dragEnter && this._block.setData('dragEnter', this.props.dragEnter)
+      this.props.dragLeave && this._block.setData('dragLeave', this.props.dragLeave)
     }
   }
 

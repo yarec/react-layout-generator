@@ -9,14 +9,10 @@ import {
   rollGenerator,
   rollHook,
   ServiceOptions,
-  Status,
-  vectorHook
+  Status
 } from '../importRLG'
 
 import * as data from '../assets/data/params.json'
-
-// const Title = styled.h2`
-// `
 
 const Description = styled.div`
   word-break: normal;
@@ -46,19 +42,6 @@ export default class Intro extends React.Component<
     hooks.set(
       'layer2',
       rollHook('layer2', { velocity: { x: 0.25, y: -0.5 } }, this._g)
-    )
-
-    hooks.set(
-      'layer3',
-      vectorHook({
-        prefix: 'layer3',
-        layer: 3,
-        velocity: { x: 0.01, y: 0.01 },
-        handle: { x: 0.1, y: 0 },
-        placement: { x: 0.5, y: 0 },
-        spacing: 200,
-        g: this._g
-      })
     )
   }
 
@@ -97,7 +80,7 @@ export default class Intro extends React.Component<
         debug={DebugOptions.none}
         params={[
           ...(data['rlg.intro'] as Array<[string, ParamValue]>),
-          ['velocity', { x: 0.01, y: 0.05 }]
+          ['velocity', { x: 0.01, y: -0.05 }]
         ]}
         animate={{ active: true }}
         g={this._g}
@@ -118,41 +101,7 @@ export default class Intro extends React.Component<
           <span>Second Animation</span>
         </div>
 
-        <div
-          data-layout={{
-            name: 'animation3.1',
 
-            origin: { x: .50, y: .50 },
-            location: { left: '50%', top: '50%', width: 140, height: 24 },
-            layer: 3
-          }}
-        >
-          <span>Third Animation #1</span>
-        </div>
-
-        <div
-          data-layout={{
-            name: 'animation3.2',
-
-            origin: { x: .50, y: .50 },
-            location: { left: '50%', top: '50%', width: 140, height: 24 },
-            layer: 3
-          }}
-        >
-          <span>Third Animation #2</span>
-        </div>
-
-        <div
-          data-layout={{
-            name: 'animation3.3',
-
-            origin: { x: .50, y: .50 },
-            location: { left: '50%', top: '50%', width: 140, height: 24 },
-            layer: 3
-          }}
-        >
-          <span>Third Animation #3</span>
-        </div>
       </Layout>
     )
   }

@@ -1,5 +1,15 @@
 # Changes
 
+## Release 0.5.4-alpha.2
+
+1. Removed rbush from package.json.
+
+2. Added vectorHook.
+
+3. Added containersize to IGenerator and Generator
+
+4. Added globals/viewport
+
 ## Release 0.5.3-alpha.2
 
 1. Changed specification of origin to decimal rather than percent. The normal range of origin is now 0 to 1 rather than 0 to 100.

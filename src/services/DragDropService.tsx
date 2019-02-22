@@ -75,7 +75,7 @@ export class DragDropService
     if (dragBlockParent) {
       blocks.map.forEach(block => {
         if (
-          block.getHandler('canDrop') &&
+          block.getData('canDrop') &&
           dragBlockParent.name !== block.name
         ) {
             if (r.intersect(block.rect)) {
@@ -211,7 +211,7 @@ export class DragDropService
 
           this._dragBlock = block
 
-          const dragImage = block.getHandler('dragImage')
+          const dragImage = block.getData('dragImage')
           if (dragImage) {
             this._jsx = dragImage(this._dragData)
             // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
@@ -237,7 +237,7 @@ export class DragDropService
     // get dragData
     const localParent = block.localParent
     if (localParent) {
-      const dragData = localParent.getHandler('dragData')
+      const dragData = localParent.getData('dragData')
       if (dragData) {
         this._dragData = dragData(block.name)
         if (!this._dragData) {
@@ -254,7 +254,7 @@ export class DragDropService
 
     // get drag image as JSX
     if (localParent) {
-      const dragImage = localParent.getHandler('dragImage')
+      const dragImage = localParent.getData('dragImage')
       if (dragImage) {
         this._jsx = dragImage(this._dragData)
         // console.log('this._jsx localParent dragImage defined: ', this._jsx ? true : false)
@@ -306,12 +306,12 @@ export class DragDropService
         }
 
         if (candidates.length === 1) {
-          const canDrop = candidates[0].getHandler('canDrop')
+          const canDrop = candidates[0].getData('canDrop')
           if (canDrop && canDrop(this._dragData)) {
-            const drop = candidates[0].getHandler('drop')
+            const drop = candidates[0].getData('drop')
             if (drop && drop(this._dragData)) {
               if (this._parentContainer) {
-                const endDrop = this._parentContainer.getHandler('endDrop')
+                const endDrop = this._parentContainer.getData('endDrop')
                 if (endDrop) {
                   endDrop(this._dragData)
                 } else {
@@ -426,7 +426,7 @@ export class DragDropService
 
       const blocks: Set<Block> = new Set()
       candidates.forEach((block: Block) => {
-        const canDrop = block.getHandler('canDrop')
+        const canDrop = block.getData('canDrop')
         if (canDrop && canDrop(this._dragData)) {
           blocks.add(block)
           // console.log(`can drop ${block.name}`)
@@ -436,7 +436,7 @@ export class DragDropService
       let leave = difference(this._prevDroppable, blocks)
 
       leave.forEach(b => {
-        const dragLeave = b.getHandler('dragLeave')
+        const dragLeave = b.getData('dragLeave')
         if (dragLeave) {
           dragLeave()
         }
@@ -445,7 +445,7 @@ export class DragDropService
       let enter = difference(blocks, this._prevDroppable)
 
       enter.forEach(b => {
-        const dragEnter = b.getHandler('dragEnter')
+        const dragEnter = b.getData('dragEnter')
         if (dragEnter) {
           dragEnter()
         }

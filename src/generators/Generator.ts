@@ -6,6 +6,7 @@ import { EditHelper } from '../editors/EditHelper'
 import { Select } from '../editors/Select'
 import { Stacking } from '../components/Stacking'
 import { Hooks } from '../components/Hooks'
+import { ISize } from '../types'
 
 export interface IGeneratorFunctionArgs {
   name: string
@@ -79,9 +80,13 @@ export interface IGenerator {
    */
   create?: Create
   /**
-   * [EditHelper](classes/edithelper.html) is used to sync builtin edit commands with a custom Editor.
+   * [EditHelper](../classes/edithelper.html) is used to sync builtin edit commands with a custom Editor.
    */
   editor?: () => EditHelper | undefined
+  /**
+   *
+   */
+  containersize: (size?: ISize) => ISize
 }
 
 export class Generator implements IGenerator {
@@ -94,6 +99,7 @@ export class Generator implements IGenerator {
   private _init: IInit
   private _hooks: Hooks
   private _create: Create | undefined
+  private _containersize: ISize
 
   constructor(
     name: string,
@@ -107,8 +113,6 @@ export class Generator implements IGenerator {
     this._editHelper = editHelper
     this._create = create
     this._blocks = new Blocks([])
-    // this._blocksIterator = this._blocks.values()
-    // this.state = this.start
     this._params = params
 
     this._stacking = new Stacking({ name, params, blocks: this._blocks })
@@ -148,16 +152,15 @@ export class Generator implements IGenerator {
     return this._hooks
   }
 
-  // public containersize = (name: string): ISize => {
-  //   const l = this._blocks.get(name)
-  //   if (l) {
-  //     const r = l.rect
-
-  //     return { width: r.width, height: r.height }
-  //   }
-
-  //   return { width: 0, height: 0 }
-  // }
+  public containersize(size?: ISize) {
+    if (size) {
+      this._containersize = size
+    }
+    if (this._containersize === undefined) {
+      this._containersize = { width: 0, height: 0 }
+    }
+    return this._containersize
+  }
 
   public create = (args: ICreate): Block | undefined => {
     if (this._create) {

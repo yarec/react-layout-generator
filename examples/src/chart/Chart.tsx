@@ -14,8 +14,12 @@ import {
   Params,
   PositionRef,
   ServiceOptions,
-  updateParamLocation
+  updateParamLocation,
+  vectorHook,
+  ParamValue
 } from '../importRLG'
+
+import * as data from '../assets/data/params.json'
 
 // import { t1 } from './tree'
 // import TreeMap from './TreeMap'
@@ -43,6 +47,24 @@ export default class Chart extends React.Component<
     }
   }
 
+  public componentDidMount() {
+    const hooks = this._g.hooks()
+    
+    hooks.set(
+      'layer3',
+      vectorHook({
+        prefix: 'layer3',
+        points: [{x: 0, y: 0}, {x: '100%',y: '100%'}],
+        layer: 3,
+        velocity: { x: 0.1, y: 0.05 },
+        handle: { x: 0.1, y: 0 },
+        placement: { x: 0, y: 0 },
+        spacing: 200,
+        g: this._g
+      })
+    )
+  }
+
   public render() {
     return (
       <Layout
@@ -50,7 +72,11 @@ export default class Chart extends React.Component<
         service={ServiceOptions.edit}
         debug={DebugOptions.none}
         g={this._g}
-        
+        params={[
+          ...(data['rlg.intro'] as Array<[string, ParamValue]>),
+          ['velocity', { x: 0.01, y: -0.05 }]
+        ]}
+        animate={{ active: true }}
         layers={{encapsulate: true}}
       >
         <Panel
@@ -75,6 +101,42 @@ export default class Chart extends React.Component<
             </div>
           )}
         </Panel>
+
+        <div
+          data-layout={{
+            name: 'animation3.1',
+
+            // origin: { x: .50, y: .50 },
+            location: { left: 0, top: 0, width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #1</span>
+        </div>
+
+        <div
+          data-layout={{
+            name: 'animation3.2',
+
+            
+            location: { left: 0, top: 0, width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #2</span>
+        </div>
+
+        <div
+          data-layout={{
+            name: 'animation3.3',
+
+            // origin: { x: .50, y: .50 },
+            location: { left: 0, top: 0, width: 140, height: 24 },
+            layer: 3
+          }}
+        >
+          <span>Third Animation #3</span>
+        </div>
       </Layout>
     )
   }

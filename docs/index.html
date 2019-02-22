@@ -248,7 +248,7 @@
 				<p>Layers are numbered from 0 to N. You can also specify negative number for layer. All negative layers will be grouped into a control layer that sets on top of all other layers including the service layer. If you do not put controls in the control layer they will not work if a service layer is activated.</p>
 				<h3 id="placement">Placement</h3>
 				<p>RLG is all about computing position and size of blocks using the &#39;natural&#39; coordinate of a block which is the left top corner of a block. However that is not alway how we would like to think about the position of a block. What if we want to right align blocks, center blocks, or distribute blocks in a regular pattern? To support this we introduce the concept of placement. Placement is an adjustment that is applied after the position is computed. Placement uses a decimal (think percent) from the left top of the block.</p>
-				<p>To set the placement for a block just add an origin property to data-layout. </p>
+				<p>To set the placement for a block just add an <a href="interaces/iorigin.html">origin</a> property to data-layout.</p>
 				<p>For example, to center a block at its position we need to shift the left top to the left and to the top by 50% of the width and height of the block. So placement becomes a vector {x: .5, y: .5}. We can also think of this as the origin of the position.</p>
 				<p>To right align blocks set the placement to {x: 1, y: 0} and then set the x values of all the blocks to the same value. Variation include any value for y. Set y to 0 to use the (right, top) corner of the block as the origin. Set y to 1 to use the (right, bottom) corner of the block as the origin.</p>
 				<p>Values of placement can be negative and include values greater than 1.</p>
@@ -569,9 +569,6 @@ data-layout={{
 						<a href="classes/edithelper.html" class="tsd-kind-icon">Edit<wbr>Helper</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/expoint.html" class="tsd-kind-icon">Ex<wbr>Point</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/generator.html" class="tsd-kind-icon">Generator</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -758,6 +755,15 @@ data-layout={{
 						<a href="globals.html#fnhook" class="tsd-kind-icon">fn<wbr>Hook</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#expoint" class="tsd-kind-icon">Ex<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#line" class="tsd-kind-icon">Line</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#piecewise" class="tsd-kind-icon">Piecewise</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#deepequal" class="tsd-kind-icon">deep<wbr>Equal</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
@@ -792,6 +798,15 @@ data-layout={{
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#create" class="tsd-kind-icon">create</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createexpoint" class="tsd-kind-icon">create<wbr>ExPoint</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createline" class="tsd-kind-icon">create<wbr>Line</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createpiecewise" class="tsd-kind-icon">create<wbr>Piecewise</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#desktopgenerator" class="tsd-kind-icon">desktop<wbr>Generator</a>
@@ -909,6 +924,9 @@ data-layout={{
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
 						<a href="globals.html#containersize" class="tsd-kind-icon">containersize</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#gviewport" class="tsd-kind-icon">g<wbr>Viewport</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
 						<a href="globals.html#viewport" class="tsd-kind-icon">viewport</a>

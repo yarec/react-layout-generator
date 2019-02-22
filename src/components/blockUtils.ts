@@ -679,6 +679,8 @@ export function inverseXUnit(
 ): number {
   // Default is Unit.pixel
   let r: number = value
+  // console.log(`bounds.container.width ${bounds.container.width}`)
+  // console.log(`bounds.viewport.width ${bounds.viewport.width}`)
   switch (unit) {
     case Unit.percent: {
       if (bounds.container.width) {
