@@ -1,10 +1,12 @@
 # Changes
 
+## Release 
+
 ## Release 0.5.4-alpha.2
 
 1. Removed rbush from package.json.
 
-2. Added vectorHook.
+2. Added pathHook.
 
 3. Added containersize to IGenerator and Generator
 

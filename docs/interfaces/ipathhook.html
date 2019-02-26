@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IVectorHook | react-layout-generator</title>
+	<title>IPathHook | react-layout-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ivectorhook.html">IVectorHook</a>
+					<a href="ipathhook.html">IPathHook</a>
 				</li>
 			</ul>
-			<h1>Interface IVectorHook</h1>
+			<h1>Interface IPathHook</h1>
 		</div>
 	</div>
 </header>
@@ -69,17 +69,16 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This is an optional hook that can be used to animate a vector of blocks.
-							It will render as a an animation with the blocks in an infinite loop until
-							the animation is stopped. When a block is moved outside of the container
-						it will be placed at the beginning of the vector.</p>
+						<p>This is an optional hook that can be used to animate a list of blocks on
+						a path.</p>
 					</div>
-					<p>The following is an example of a vertical vector with blocks distributed
+					<p>It will render as a an animation moving the blocks along the path.</p>
+					<p>The following is an example of a vertical path with blocks distributed
 						on it. The center of each block is <code>spacing</code> distance from the previous
 						and following block. The velocity is {x: 0, y: .1} ~ 6 pixels per second
 					downward.</p>
-					<pre><code><span class="hljs-selector-tag">container</span> <span class="hljs-selector-tag">with</span> <span class="hljs-selector-tag">handle</span> <span class="hljs-selector-tag">set</span> <span class="hljs-selector-tag">to</span> {<span class="hljs-attribute">x</span>: <span class="hljs-number">50</span>, y: <span class="hljs-number">0</span>}
-┌─────────────────<span class="hljs-selector-tag">x</span>─────────────────┐
+					<pre><code>container with <span class="hljs-built_in">anchor</span> <span class="hljs-built_in">set</span> <span class="hljs-keyword">to</span> {x: .<span class="hljs-number">50</span>, y: .<span class="hljs-number">0</span>}
+┌─────────────────x─────────────────┐
 │                 │                 │
 │               ┌─│─┐               │
 │               │ │ │               │
@@ -94,21 +93,31 @@
 						<dt>params</dt>
 						<dd><p>prefix -
 								Prefix is used to specify unique keys in Params. This can be used
-								for persisting state in <a href="../classes/params.html">Params</a> by using prefix to make the key
+								for saving state in <a href="../classes/params.html">Params</a> by using prefix to make the key
 							unique. e.g., <code>${prefix}someName</code>.</p>
 						</dd>
 						<dt>params</dt>
-						<dd><p>layer -
-							Specifies the number of the layer.</p>
+						<dd><p>points -
+								Array of pairs of points that define the path by connecting the
+								points with a line. The path may be discontinuous or a step function.
+							Derivatives need not exist through out the path.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>input -
+							Specifies the blocks to place along the path.</p>
+						</dd>
+						<dt>params</dt>
+						<dd><p>output -
+								Location where the the blocks exiting the path are placed. This lets
+							you chain pathHook</p>
 						</dd>
 						<dt>params</dt>
 						<dd><p>velocity -
-							Velocity is the speed of the animation in pixels per second.</p>
+							Velocity is the speed of the animation in pixels per frame on the path.</p>
 						</dd>
 						<dt>params</dt>
-						<dd><p>handle -
-								Handle is a point within the block that the vector will pass through.
-							Note that it is the starting point for distributing the blocks on the vector.</p>
+						<dd><p>anchor -
+							Anchor is a <a href="interfaces/iorigin.html">point</a> that the path will pass through.</p>
 						</dd>
 						<dt>params</dt>
 						<dd><p>placement -
@@ -117,7 +126,7 @@
 						</dd>
 						<dt>params</dt>
 						<dd><p>spacing -
-							Spacing the distance between centered blocks on the vector.</p>
+							Spacing the distance between blocks on the path.</p>
 						</dd>
 					</dl>
 				</div>
@@ -126,7 +135,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IVectorHook</span>
+						<span class="target">IPathHook</span>
 					</li>
 				</ul>
 			</section>
@@ -137,14 +146,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#g" class="tsd-kind-icon">g</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#handle" class="tsd-kind-icon">handle</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#layer" class="tsd-kind-icon">layer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#placement" class="tsd-kind-icon">placement</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#points" class="tsd-kind-icon">points</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#prefix" class="tsd-kind-icon">prefix</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#spacing" class="tsd-kind-icon">spacing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivectorhook.html#velocity" class="tsd-kind-icon">velocity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#active" class="tsd-kind-icon">active</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#anchor" class="tsd-kind-icon">anchor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#complete" class="tsd-kind-icon">complete</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#g" class="tsd-kind-icon">g</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#infinite" class="tsd-kind-icon">infinite</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#input" class="tsd-kind-icon">input</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#output" class="tsd-kind-icon">output</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#placement" class="tsd-kind-icon">placement</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#points" class="tsd-kind-icon">points</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#prefix" class="tsd-kind-icon">prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#spacing" class="tsd-kind-icon">spacing</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipathhook.html#velocity" class="tsd-kind-icon">velocity</a></li>
 							</ul>
 						</section>
 					</div>
@@ -153,42 +166,97 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="active" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> active</h3>
+					<div class="tsd-signature tsd-kind-icon">active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in generators/animations/pathHook.ts:66</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="anchor" class="tsd-anchor"></a>
+					<h3>anchor</h3>
+					<div class="tsd-signature tsd-kind-icon">anchor<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in generators/animations/pathHook.ts:65</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="complete" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> complete</h3>
+					<div class="tsd-signature tsd-kind-icon">complete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in generators/animations/pathHook.ts:67</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="g" class="tsd-anchor"></a>
 					<h3>g</h3>
 					<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <a href="igenerator.html" class="tsd-signature-type">IGenerator</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L60">generators/animations/vectorHook.ts:60</a></li>
+							<li>Defined in generators/animations/pathHook.ts:71</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="handle" class="tsd-anchor"></a>
-					<h3>handle</h3>
-					<div class="tsd-signature tsd-kind-icon">handle<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
+					<a name="infinite" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> infinite</h3>
+					<div class="tsd-signature tsd-kind-icon">infinite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L57">generators/animations/vectorHook.ts:57</a></li>
+							<li>Defined in generators/animations/pathHook.ts:69</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="layer" class="tsd-anchor"></a>
-					<h3>layer</h3>
-					<div class="tsd-signature tsd-kind-icon">layer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="input" class="tsd-anchor"></a>
+					<h3>input</h3>
+					<div class="tsd-signature tsd-kind-icon">input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L55">generators/animations/vectorHook.ts:55</a></li>
+							<li>Defined in generators/animations/pathHook.ts:62</li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">[]</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-returns-title">Returns <a href="../classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">[]</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="output" class="tsd-anchor"></a>
+					<h3>output</h3>
+					<div class="tsd-signature tsd-kind-icon">output<span class="tsd-signature-symbol">:</span> <a href="../classes/block.html" class="tsd-signature-type">Block</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in generators/animations/pathHook.ts:63</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="placement" class="tsd-anchor"></a>
-					<h3>placement</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> placement</h3>
 					<div class="tsd-signature tsd-kind-icon">placement<span class="tsd-signature-symbol">:</span> <a href="iorigin.html" class="tsd-signature-type">IOrigin</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L58">generators/animations/vectorHook.ts:58</a></li>
+							<li>Defined in generators/animations/pathHook.ts:68</li>
 						</ul>
 					</aside>
 				</section>
@@ -198,7 +266,7 @@
 					<div class="tsd-signature tsd-kind-icon">points<span class="tsd-signature-symbol">:</span> <a href="iexpoint.html" class="tsd-signature-type">IExPoint</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L54">generators/animations/vectorHook.ts:54</a></li>
+							<li>Defined in generators/animations/pathHook.ts:61</li>
 						</ul>
 					</aside>
 				</section>
@@ -208,7 +276,7 @@
 					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L53">generators/animations/vectorHook.ts:53</a></li>
+							<li>Defined in generators/animations/pathHook.ts:60</li>
 						</ul>
 					</aside>
 				</section>
@@ -218,17 +286,17 @@
 					<div class="tsd-signature tsd-kind-icon">spacing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L59">generators/animations/vectorHook.ts:59</a></li>
+							<li>Defined in generators/animations/pathHook.ts:70</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="velocity" class="tsd-anchor"></a>
 					<h3>velocity</h3>
-					<div class="tsd-signature tsd-kind-icon">velocity<span class="tsd-signature-symbol">:</span> <a href="ipoint.html" class="tsd-signature-type">IPoint</a></div>
+					<div class="tsd-signature tsd-kind-icon">velocity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/chetmurphy/react-layout-generator/blob/163e0e9/src/generators/animations/vectorHook.ts#L56">generators/animations/vectorHook.ts:56</a></li>
+							<li>Defined in generators/animations/pathHook.ts:64</li>
 						</ul>
 					</aside>
 				</section>
@@ -247,31 +315,43 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ivectorhook.html" class="tsd-kind-icon">IVector<wbr>Hook</a>
+						<a href="ipathhook.html" class="tsd-kind-icon">IPath<wbr>Hook</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#g" class="tsd-kind-icon">g</a>
+								<a href="ipathhook.html#active" class="tsd-kind-icon">active</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#handle" class="tsd-kind-icon">handle</a>
+								<a href="ipathhook.html#anchor" class="tsd-kind-icon">anchor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#layer" class="tsd-kind-icon">layer</a>
+								<a href="ipathhook.html#complete" class="tsd-kind-icon">complete</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#placement" class="tsd-kind-icon">placement</a>
+								<a href="ipathhook.html#g" class="tsd-kind-icon">g</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#points" class="tsd-kind-icon">points</a>
+								<a href="ipathhook.html#infinite" class="tsd-kind-icon">infinite</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#prefix" class="tsd-kind-icon">prefix</a>
+								<a href="ipathhook.html#input" class="tsd-kind-icon">input</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#spacing" class="tsd-kind-icon">spacing</a>
+								<a href="ipathhook.html#output" class="tsd-kind-icon">output</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivectorhook.html#velocity" class="tsd-kind-icon">velocity</a>
+								<a href="ipathhook.html#placement" class="tsd-kind-icon">placement</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipathhook.html#points" class="tsd-kind-icon">points</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipathhook.html#prefix" class="tsd-kind-icon">prefix</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipathhook.html#spacing" class="tsd-kind-icon">spacing</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipathhook.html#velocity" class="tsd-kind-icon">velocity</a>
 							</li>
 						</ul>
 					</li>

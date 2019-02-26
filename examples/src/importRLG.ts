@@ -43,7 +43,7 @@ export {
 export { rowsGenerator } from '../../src/generators/rowsGenerator'
 export { rollGenerator } from '../../src/generators/animations/rollGenerator'
 export { rollHook } from '../../src/generators/animations/rollHook'
-export { vectorHook } from '../../src/generators/animations/vectorHook'
+export { pathHook } from '../../src/generators/animations/pathHook'
 
 export { saveToLocalStorage, loadFromLocalStorage } from '../../src/generators/utils'
 

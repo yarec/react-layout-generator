@@ -139,8 +139,12 @@ export class Block {
    * Returns the value set by setData for this block.
    * @param name
    */
-  public getData(name: string) {
-    return this._handlers.get(name)
+  public getData(name: string, v?: any) {
+    const n = this._handlers.get(name)
+    if (n === undefined) {
+      return v
+    }
+    return n
   }
   /**
    * @Ignore

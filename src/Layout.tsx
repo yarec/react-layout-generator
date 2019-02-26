@@ -355,12 +355,14 @@ export class Layout extends React.Component<
     window.removeEventListener('resize', this.onWindowResize)
 
     if (this._rafId) {
+      console.log(`layout componentWillUnmount ${this.props.name} ${this._rafId}`)
       raf.cancel(this._rafId)
       this._rafId = 0
     }
   }
 
   public componentWillReceiveProps(props: ILayoutProps) {
+    console.log(`layout componentWillReceiveProps ${this.props.name} ${this._lastAnimationFrame}`)
     if (
       this.props.debug !== props.debug ||
       this.props.service !== props.service
@@ -589,7 +591,9 @@ export class Layout extends React.Component<
     }
 
     if (props.animate) {
+      console.log(`layout initProps ${this.props.name} ${props.animate.active && !this._rafId}`)
       if (props.animate.active && !this._rafId) {
+        this._lastAnimationFrame = performance.now()
         this._rafId = raf(this.animationLoop)
       }
     }

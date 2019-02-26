@@ -12,11 +12,10 @@ import {
   Layout,
   Panel,
   Params,
+  ParamValue,
   PositionRef,
   ServiceOptions,
-  updateParamLocation,
-  vectorHook,
-  ParamValue
+  updateParamLocation
 } from '../importRLG'
 
 import * as data from '../assets/data/params.json'
@@ -45,24 +44,6 @@ export default class Chart extends React.Component<
     this.state = {
       node: 'a'
     }
-  }
-
-  public componentDidMount() {
-    const hooks = this._g.hooks()
-    
-    hooks.set(
-      'layer3',
-      vectorHook({
-        prefix: 'layer3',
-        points: [{x: 0, y: 0}, {x: '100%',y: '100%'}],
-        layer: 3,
-        velocity: { x: 0.1, y: 0.05 },
-        handle: { x: 0.1, y: 0 },
-        placement: { x: 0, y: 0 },
-        spacing: 200,
-        g: this._g
-      })
-    )
   }
 
   public render() {

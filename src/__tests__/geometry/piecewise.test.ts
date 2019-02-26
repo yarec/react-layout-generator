@@ -80,20 +80,3 @@ it('Piecewise #3', () => {
   const piecewise1 = new Piecewise([line1, line2, line3])
   expect(piecewise1.point(60)).toEqual(undefined)
 })
-
-it('Piecewise #4', () => {
-  const line1 = new Line(
-    new ExPoint({ x: 10, y: 0 }),
-    new ExPoint({ x: 10, y: 20 })
-  )
-  const line2 = new Line(
-    new ExPoint({ x: 10, y: 20 }),
-    new ExPoint({ x: 30, y: 20 })
-  )
-  const line3 = new Line(
-    new ExPoint({ x: 30, y: 20 }),
-    new ExPoint({ x: 30, y: 0 })
-  )
-  const piecewise1 = new Piecewise([line1, line2, line3], true)
-  expect(piecewise1.point(60)).toEqual({ x: 10, y: 0 })
-})

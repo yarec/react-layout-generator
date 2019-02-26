@@ -36,12 +36,22 @@ export function createLine(g: IGenerator) {
       return this._end.getPoint()
     }
 
+    /**
+     * Returns the length of the line segment.
+     */
     get length() {
       const pt1 = this.start
       const pt2 = this.end
       return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2))
     }
 
+    /**
+     * Returns the point (x,y) that is the specified
+     * distance from the beginning of the line segment.
+     * Returns undefined if d is less than 0 or greater than
+     * the length of the line.
+     * @param d
+     */
     point(d: number) {
       const pt1 = this.start
       const pt2 = this.end
@@ -52,6 +62,14 @@ export function createLine(g: IGenerator) {
       }
     }
 
+    /**
+     * Computes the distance from the beginning of the
+     * line segment to the point (x,y). Returns undefined if the point is
+     * not on the line or the distance is negative or greater than
+     * the length.
+     * @param x
+     * @param y
+     */
     distance(x: number, y: number): number | undefined {
       const p0 = this._start.getPoint()
       const p1 = this._end.getPoint()
@@ -60,10 +78,16 @@ export function createLine(g: IGenerator) {
       const d1 = (x - p0.x) / (p1.x - p0.x)
       const d2 = (y - p0.y) / (p1.y - p0.y)
 
-      // if equal then compute distance and return
+      // if equal then compute distance and return. The ratios
+      // d1 and d2 should be the same if the point is on a line
+      // segment.
       return Math.abs(d1 - d2) < Number.EPSILON ? d1 * this.length : undefined
     }
-
+    /**
+     * intersects tests if a point lies on the line segment.
+     * @param x
+     * @param y
+     */
     intersects(x: number, y: number): boolean {
       return this.distance(x, y) !== undefined
     }

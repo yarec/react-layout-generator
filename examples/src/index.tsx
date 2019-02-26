@@ -29,6 +29,7 @@ import DeskTop from './desktop/DeskTop';
 import Editable from './editable/Editable';
 import Grid from './grid/Grid';
 import Intro from './intro/Intro';
+import Paths from './paths/Paths';
 import Solitaire from './solitaire/Solitaire';
 import Solitaire2 from './solitaire2/Solitaire';
 
@@ -125,6 +126,7 @@ export class Examples extends React.Component<{}, { app: JSX.Element }> {
               { component: <Solitaire2 editHelper={this.getEditHelper} />, name: 'Solitaire2' },
               { component: <Grid editHelper={this.getEditHelper} />, name: 'Grid' },
               { component: <Chart editHelper={this.getEditHelper} />, name: 'Chart' },
+              { component: <Paths editHelper={this.getEditHelper} />, name: 'Paths' },
               { component: <Editable editHelper={this.getEditHelper} />, name: 'Editable' },
             ]}
               callback={this.select}
